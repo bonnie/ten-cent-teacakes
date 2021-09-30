@@ -1,10 +1,6 @@
 {
-  "extends": [
-    "airbnb",
-    "plugin:testing-library/react",
-    "plugin:jsx-a11y/recommended",
-    "plugin:prettier/recommended"
-  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "settings": {
     "import/resolver": {
       "node": {
@@ -13,14 +9,6 @@
       }
     }
   },
-  "plugins": [
-    "testing-library",
-    "jest-dom",
-    "jsx-a11y",
-    "simple-import-sort",
-    "prettier",
-    "react-hooks"
-  ],
   "env": {
     "browser": true,
     "node": true,
@@ -29,9 +17,6 @@
   },
   "rules": {
     "import/no-extraneous-dependencies": [2, { "devDependencies": true }],
-    "testing-library/await-async-query": "error",
-    "testing-library/no-await-sync-query": "error",
-    "testing-library/no-debug": "warn",
     "jest-dom/prefer-checked": "error",
     "jest-dom/prefer-enabled-disabled": "error",
     "jest-dom/prefer-required": "error",

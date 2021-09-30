@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Event {
+  id        Int       @id @default(autoincrement())
+  performAt DateTime
+  venue     Venue     @relation(fields: [venueId], references: [id])
+  venueId   Int
+  photos    Photo[]
+}
+
+model Venue {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  url       String   @db.VarChar(255)
+  events    Event[]
+}
+
+model Photo {
+  id        Int      @id @default(autoincrement())
+  event     Event    @relation(fields: [eventId], references: [id])
+  eventId   Int
+  path      String   @db.VarChar(255)
+}
+
+model Musician {
+  id           Int           @id @default(autoincrement())
+  name         String        @db.VarChar(255)
+  bio          String
+  instruments  Instrument[]
+  imgPath      String        @db.VarChar(255)
+}
+
+model Instrument {
+  id        Int         @id @default(autoincrement())
+  name      String      @db.VarChar(255)
+  musicians Musician[]
+}
+
