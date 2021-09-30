@@ -26,7 +26,7 @@ const createInstruments = async () => {
 const createMusicians = async () => {
   const musicianData: Prisma.MusicianCreateInput[] = [
     {
-      name: "Sarah Grondquist",
+      name: "Sarah Gronquist",
       bio: "Check cat door for ambush 10 times before coming in hiss at vacuum cleaner. Hide head under blanket so no one can see. Cat mojo . Lick master's hand at first then bite because im moody",
       instruments: {
         connect: [
