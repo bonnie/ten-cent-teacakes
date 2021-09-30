@@ -4,7 +4,7 @@ import prisma from "../../../lib/prisma";
 
 export default async function handle(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const events = await prisma.event.findMany({
     take: 3,
