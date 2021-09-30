@@ -39,7 +39,7 @@ const createMusicians = async () => {
     },
     {
       name: "Bonnie Schulkin",
-      bio: "Fish i must find my red catnip fishy fish kick up litter or mouse or meow jump five feet high and sideways when a shadow moves. Fooled again thinking the dog likes me",
+      bio: "Bonnie loves vocal harmony and playing the bass -- vocal harmony because it's rewarding and beautiful, and the bass because you only have to play a few notes per measure (but you can still call yourself an instrumentalist!).",
       instruments: {
         connect: [
           { name: "bass" },
