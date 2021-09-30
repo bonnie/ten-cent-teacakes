@@ -1,20 +1,13 @@
-# Next.js + Jest
+# Ten Cent Teacakes
 
-This example shows how to configure Jest to work with Next.js.
+### Web site for the Ten Cent Teacakes Band
 
-This includes Next.js' built-in support for Global CSS, CSS Modules, and TypeScript!
+## Set up Developer Environment
 
-## How to Use
-
-Quickly get started using [Create Next App](https://github.com/vercel/next.js/tree/canary/packages/create-next-app#readme)!
-
-In your terminal, run the following command:
-
-```bash
-npx create-next-app --example with-jest with-jest-app
-# or
-yarn create next-app --example with-jest with-jest-app
-```
+1. Create a SQL db for the project
+1. `mv .env_template .env`
+1. Add the URL for your db to `.env`
+1. Run `npx prisma migrate dev --name init` to add the tables from the prisma schema to your db
 
 ## Run Jest Tests
 
