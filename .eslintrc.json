@@ -1,11 +1,18 @@
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "extends": ["airbnb", "prettier"],
+  "plugins": [
+    "testing-library",
+    "jest-dom",
+    "jsx-a11y",
+    "simple-import-sort",
+    "prettier",
+    "react-hooks"
+  ],
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"],
-        "paths": ["src"]
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
   },
@@ -17,6 +24,9 @@
   },
   "rules": {
     "import/no-extraneous-dependencies": [2, { "devDependencies": true }],
+    "testing-library/await-async-query": "error",
+    "testing-library/no-await-sync-query": "error",
+    "testing-library/no-debug": "warn",
     "jest-dom/prefer-checked": "error",
     "jest-dom/prefer-enabled-disabled": "error",
     "jest-dom/prefer-required": "error",
@@ -37,9 +47,10 @@
     "react-hooks/exhaustive-deps": "warn",
     "react/no-array-index-key": "off",
     "react/react-in-jsx-scope": "off",
-    "prettier/prettier": "error",
     "react/jsx-one-expression-per-line": "off",
-    "react/jsx-curly-newline": "off"
+    "react/jsx-curly-newline": "off",
+    "quotes": "off",
+    "comma-dangle": ["error", "always-multiline"]
   },
   "overrides": [
     // Only uses Testing Library lint rules in test files

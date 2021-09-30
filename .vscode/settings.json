@@ -1,42 +1,16 @@
 {
   "workbench.colorTheme": "Night Owl (No Italics)",
   "eslint.options": {
-    "configFile": "/Users/bonnieschulkin/src/eslint/.eslintrc.json"
+    "configFile": "./.eslintrc.json"
   },
-  "eslint.nodePath": "/Users/bonnieschulkin/src/eslint/node_modules",
+  "eslint.nodePath": "./node_modules",
   "eslint.validate": [
     "javascript",
     "javascriptreact",
     "typescript",
     "typescriptreact"
   ],
-  "[json]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
-    },
-    "editor.tabSize": 2
-  },
-  "[javascript]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
-    },
-    "editor.tabSize": 2
-  },
-  "[javascriptreact]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
-    },
-    "editor.tabSize": 2
-  },
-  "[typescript]": {
-    "editor.formatOnSave": false,
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
-    },
-    "editor.tabSize": 2
-  },
-  "[typescriptreact]": {
-    "editor.formatOnSave": false,
+  "[json, javascript, javascriptreact, typescript, typescriptreact]": {
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
     },
@@ -48,26 +22,16 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "python.formatting.provider": "autopep8",
-  "python.linting.flake8Enabled": true,
-  "python.linting.mypyEnabled": true,
-  "python.linting.enabled": true,
   "window.zoomLevel": 2,
   "workbench.activityBar.visible": true,
   "editor.minimap.enabled": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "terminal.integrated.automationShell.osx": "",
-  "python.venvPath": "~/.virtualenvs",
-  "python.venvFolders": [".virtualenvs"],
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter-notebook"
   },
   "javascript.updateImportsOnFileMove.enabled": "always",
   "eslint.alwaysShowStatus": true,
   "security.workspace.trust.untrustedFiles": "open",
-  "notebook.cellToolbarLocation": {
-    "default": "right",
-    "jupyter-notebook": "left"
-  },
   "typescript.tsdk": "node_modules/typescript/lib"
 }

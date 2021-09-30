@@ -43,11 +43,7 @@ const createMusicians = async () => {
       lastName: "Schulkin",
       bio: "Bonnie loves vocal harmony and playing the bass. Vocal harmony is rewarding and beautiful, and bassists only have to play a few notes per measure (but can still call themselves instrumentalists!).",
       instruments: {
-        connect: [
-          { name: "bass" },
-          { name: "kazoo" },
-          { name: "vocals" },
-        ],
+        connect: [{ name: "bass" }, { name: "kazoo" }, { name: "vocals" }],
       },
       imagePath: "/musicians/bonnie.jpg",
     },
@@ -56,10 +52,7 @@ const createMusicians = async () => {
       lastName: "Urban",
       bio: "Play with twist ties plan steps for world domination. That box? i can fit in that box claw drapes. Bite the neighbor's bratty kid warm up laptop with butt",
       instruments: {
-        connect: [
-          { name: "fiddle" },
-          { name: "vocals" },
-        ],
+        connect: [{ name: "fiddle" }, { name: "vocals" }],
       },
       imagePath: "/musicians/greg.jpg",
     },
@@ -71,10 +64,10 @@ const createMusicians = async () => {
 };
 
 async function main() {
-  console.log(`Start seeding ...`);
+  console.log("Start seeding ...");
   await createInstruments();
   await createMusicians();
-  console.log(`Seeding finished.`);
+  console.log("Seeding finished.");
 }
 
 main()
