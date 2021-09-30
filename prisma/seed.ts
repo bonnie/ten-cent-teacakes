@@ -26,8 +26,9 @@ const createInstruments = async () => {
 const createMusicians = async () => {
   const musicianData: Prisma.MusicianCreateInput[] = [
     {
-      name: "Sarah Gronquist",
-      bio: "Check cat door for ambush 10 times before coming in hiss at vacuum cleaner. Hide head under blanket so no one can see. Cat mojo . Lick master's hand at first then bite because im moody",
+      firstName: "Sarah",
+      lastName: "Gronquist",
+      bio: "Music and dancing go hand in hand! Sarah's been dancing and playing swing guitar for the last decade, but during the quarantine of 2020, she started digging deeper into gypsy jazz and tango. She's usually got something from 1936 on her mind.",
       instruments: {
         connect: [
           { name: "guitar" },
@@ -38,7 +39,8 @@ const createMusicians = async () => {
       imagePath: "/musicians/sarah.jpg",
     },
     {
-      name: "Bonnie Schulkin",
+      firstName: "Bonnie",
+      lastName: "Schulkin",
       bio: "Bonnie loves vocal harmony and playing the bass -- vocal harmony because it's rewarding and beautiful, and the bass because you only have to play a few notes per measure (but you can still call yourself an instrumentalist!).",
       instruments: {
         connect: [
@@ -50,7 +52,8 @@ const createMusicians = async () => {
       imagePath: "/musicians/bonnie.jpg",
     },
     {
-      name: "Greg Urban",
+      firstName: "Greg",
+      lastName: "Urban",
       bio: "Play with twist ties plan steps for world domination. That box? i can fit in that box claw drapes. Bite the neighbor's bratty kid warm up laptop with butt",
       instruments: {
         connect: [
@@ -62,7 +65,7 @@ const createMusicians = async () => {
     },
   ];
   for (const musician of musicianData) {
-    console.log(`\tcreating musician ${musician.name}`);
+    console.log(`\tcreating musician ${musician.firstName}`);
     prisma.musician.create({ data: musician });
   }
 };
