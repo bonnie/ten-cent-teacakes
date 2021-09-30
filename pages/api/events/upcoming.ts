@@ -6,8 +6,10 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const musicians = await prisma.musician.findMany({
-    orderBy: [{ lastName: "asc" }],
+  const events = await prisma.event.findMany({
+    take: 3,
+    where: { performAt: { gte: new Date() } },
+    orderBy: { performAt: "desc" },
   });
-  res.json(musicians);
+  res.json(events);
 }
