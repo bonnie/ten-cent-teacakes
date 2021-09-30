@@ -20,29 +20,29 @@ model Event {
 
 model Venue {
   id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255)
+  name      String   @db.VarChar(255) @unique
   url       String   @db.VarChar(255)
   events    Event[]
 }
 
 model Photo {
-  id        Int      @id @default(autoincrement())
-  event     Event    @relation(fields: [eventId], references: [id])
-  eventId   Int
-  path      String   @db.VarChar(255)
+  id         Int      @id @default(autoincrement())
+  event      Event    @relation(fields: [eventId], references: [id])
+  eventId    Int
+  imagePath  String   @db.VarChar(255)
 }
 
 model Musician {
   id           Int           @id @default(autoincrement())
-  name         String        @db.VarChar(255)
+  name         String        @db.VarChar(255) @unique
   bio          String
   instruments  Instrument[]
-  imgPath      String        @db.VarChar(255)
+  imagePath    String        @db.VarChar(255)
 }
 
 model Instrument {
   id        Int         @id @default(autoincrement())
-  name      String      @db.VarChar(255)
+  name      String      @db.VarChar(255) @unique
   musicians Musician[]
 }
 
