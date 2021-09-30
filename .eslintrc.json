@@ -50,7 +50,17 @@
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-curly-newline": "off",
     "quotes": "off",
-    "comma-dangle": ["error", "always-multiline"]
+    "comma-dangle": ["error", "always-multiline"],
+    "object-curly-spacing": 1,
+    "array-bracket-spacing": 1,
+    "prettier/prettier": [
+      "warn",
+      {
+        "printWidth": 80,
+        "singleQuote": false,
+        "trailingComma": "all"
+      }
+    ]
   },
   "overrides": [
     // Only uses Testing Library lint rules in test files
