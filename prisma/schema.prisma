@@ -21,7 +21,7 @@ model Event {
 model Venue {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar(255) @unique
-  url       String   @db.VarChar(255)
+  url       String?  @db.VarChar(255)
   events    Event[]
 }
 

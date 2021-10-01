@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "../../../lib/prisma";
 
+// GET /api/events/upcoming
 export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse,
