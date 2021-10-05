@@ -1,13 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import prisma from "../../../lib/prisma";
+import { deleteEvent, patchEvent } from "./queries";
 
 export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
   const { body, method, query } = req;
-  const { id } = query;
+  const { id: idString } = query;
+  const id = Number(idString);
 
   switch (method) {
     case "PATCH":
