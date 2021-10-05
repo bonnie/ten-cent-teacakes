@@ -21,15 +21,17 @@ model Event {
 model Venue {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar(255) @unique
-  url       String   @db.VarChar(255)
+  url       String?  @db.VarChar(255)
   events    Event[]
 }
 
 model Photo {
-  id         Int      @id @default(autoincrement())
-  event      Event    @relation(fields: [eventId], references: [id])
-  eventId    Int
-  imagePath  String   @db.VarChar(255)
+  id            Int      @id @default(autoincrement())
+  event         Event    @relation(fields: [eventId], references: [id])
+  eventId       Int
+  imagePath     String   @db.VarChar(255)
+  photographer  String   @db.VarChar(255)
+  createdAt     DateTime @default(now())
 }
 
 model Musician {

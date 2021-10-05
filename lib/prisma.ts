@@ -18,12 +18,15 @@ declare global {
 
 // eslint-disable-next-line import/no-mutable-exports
 let prisma: PrismaClient;
+const prismaClientOptions = {
+  rejectOnNotFound: true,
+};
 
 if (process.env.NODE_ENV === "production") {
-  prisma = new PrismaClient();
+  prisma = new PrismaClient(prismaClientOptions);
 } else {
   if (!global.prisma) {
-    global.prisma = new PrismaClient();
+    global.prisma = new PrismaClient(prismaClientOptions);
   }
   prisma = global.prisma;
 }
