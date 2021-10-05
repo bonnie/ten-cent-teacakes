@@ -26,11 +26,12 @@ model Venue {
 }
 
 model Photo {
-  id         Int      @id @default(autoincrement())
-  event      Event    @relation(fields: [eventId], references: [id])
-  eventId    Int
-  imagePath  String   @db.VarChar(255)
-  createdAt  DateTime @default(now())
+  id            Int      @id @default(autoincrement())
+  event         Event    @relation(fields: [eventId], references: [id])
+  eventId       Int
+  imagePath     String   @db.VarChar(255)
+  photographer  String   @db.VarChar(255)
+  createdAt     DateTime @default(now())
 }
 
 model Musician {
