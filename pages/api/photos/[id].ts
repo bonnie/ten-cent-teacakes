@@ -1,37 +1,30 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import prisma from "../../../lib/prisma";
+import { processApiError } from "../../../lib/api";
+import { deletePhoto, getPhotoById } from "./queries";
 
 export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const postId = req.query.id;
+  const { method, query } = req;
+  const { id: idString } = query;
+  const id = Number(idString);
 
-  if (req.method === "GET") {
-    handleGET(postId, res);
-  } else if (req.method === "DELETE") {
-    handleDELETE(postId, res);
-  } else {
-    throw new Error(
-      `The HTTP ${req.method} method is not supported at this route.`,
-    );
+  try {
+    switch (method) {
+      case "GET":
+        res.status(200).json(await getPhotoById(id));
+        break;
+      case "DELETE":
+        res.status(204).json(await deletePhoto(id));
+        break;
+      default:
+        res.setHeader("Allow", ["GET", "DELETE"]);
+        res.status(405).end(`Method ${method} Not Allowed`);
+    }
+  } catch (error) {
+    const { status, message } = processApiError(error);
+    res.status(status).json({ message });
   }
-}
-
-// GET /api/post/:id
-async function handleGET(postId, res) {
-  const post = await prisma.post.findUnique({
-    where: { id: Number(postId) },
-    include: { author: true },
-  });
-  res.json(post);
-}
-
-// DELETE /api/post/:id
-async function handleDELETE(postId, res) {
-  const post = await prisma.post.delete({
-    where: { id: Number(postId) },
-  });
-  res.json(post);
 }

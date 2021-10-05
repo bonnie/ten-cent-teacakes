@@ -1,13 +1,21 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import prisma from "../../../lib/prisma";
+import { processApiError } from "../../../lib/api";
+import { getPhotosSortDescending } from "./queries";
 
 export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const photos = await prisma.photo.findMany({
-    orderBy: [{ event: { performAt: "asc" } }],
-  });
-  res.json(photos);
+  try {
+    if (req.method === "GET") {
+      res.json(await getPhotosSortDescending());
+    } else {
+      res.setHeader("Allow", ["GET"]);
+      res.status(405).end(`Method ${req.method} Not Allowed`);
+    }
+  } catch (error) {
+    const { status, message } = processApiError(error);
+    res.status(status).json({ message });
+  }
 }

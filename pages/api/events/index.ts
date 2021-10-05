@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import { processApiError } from "../../../lib/api";
 import { addEvent, getEvents } from "./queries";
 
 export default async function handle(
@@ -21,14 +22,7 @@ export default async function handle(
         res.status(405).end(`Method ${method} Not Allowed`);
     }
   } catch (error) {
-    if (error instanceof Error) {
-      if (error.name === "RecordNotFound") {
-        res.status(404).json({ message: error.message });
-      } else {
-        res.status(500).json({ message: error.message });
-      }
-    } else {
-      res.status(500);
-    }
+    const { status, message } = processApiError(error);
+    res.status(status).json({ message });
   }
 }

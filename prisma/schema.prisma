@@ -30,6 +30,7 @@ model Photo {
   event      Event    @relation(fields: [eventId], references: [id])
   eventId    Int
   imagePath  String   @db.VarChar(255)
+  createdAt  DateTime @default(now())
 }
 
 model Musician {
