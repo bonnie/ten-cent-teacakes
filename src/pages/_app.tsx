@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import "../styles/antd.less";
-
 import { AppProps } from "next/app";
 import React from "react";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
+
+require("../styles/antd.less");
 
 export default function TenCentTeacake({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());

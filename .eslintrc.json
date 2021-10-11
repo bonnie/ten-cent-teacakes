@@ -13,6 +13,9 @@
     "import/resolver": {
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      },
+      "typescript": {
+        "alwaysTryTypes": true
       }
     }
   },
@@ -37,8 +40,6 @@
     "import/prefer-default-export": 0,
     "import/no-anonymous-default-export": 0,
     "import/no-unresolved": 2,
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
     "sort-imports": "off",
     "import/order": "off",
     "no-shadow": "off",
@@ -60,6 +61,13 @@
         "printWidth": 80,
         "singleQuote": false,
         "trailingComma": "all"
+      }
+    ],
+    "simple-import-sort/exports": "error",
+    "simple-import-sort/imports": [
+      "warn",
+      {
+        "groups": [["^\\u0000", "^.prisma"], ["^@?\\w"], ["^"], ["^\\."]]
       }
     ]
   },

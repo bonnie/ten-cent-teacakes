@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { processApiError } from "../../../lib/api";
+import { processApiError } from "@/lib/api/utils";
+
 import { deleteMusician, getMusicianById } from "./queries";
 
 export default async function handle(
