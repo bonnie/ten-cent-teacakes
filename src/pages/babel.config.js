@@ -4,6 +4,9 @@ module.exports = function (api) {
 
   return {
     presets: [["next/babel"]],
-    plugins: [["import", { libraryName: "antd", style: true }]],
+    plugins: [
+      ["import", { libraryName: "antd", style: true }],
+      ["module-resolver", { alias: { "@": "./src" } }],
+    ],
   };
 };

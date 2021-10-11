@@ -2,8 +2,8 @@ import { Typography } from "antd";
 import { ReactElement } from "react";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 
-import { fetchEvents } from "../lib/api";
-import { queryKeys } from "../lib/react-query/query-keys";
+import { fetchEvents } from "@/lib/api";
+import { queryKeys } from "@/lib/react-query/query-keys";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();

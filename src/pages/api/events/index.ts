@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { processApiError } from "../../../lib/api/utils";
+import { processApiError } from "@/lib/api/utils";
+
 import { addEvent, getEvents } from "./queries";
 
 export default async function handle(
