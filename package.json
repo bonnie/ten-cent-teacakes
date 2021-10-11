@@ -9,11 +9,16 @@
     "test:ci": "jest --ci"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@prisma/client": "^3.2.0",
+    "antd": "^4.16.13",
+    "axios": "^0.22.0",
     "fast-json-patch": "^3.1.0",
     "next": "latest",
+    "next-plugin-antd-less": "^1.4.3",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-query": "^3.25.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.14.1",
