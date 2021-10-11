@@ -8,11 +8,12 @@ export default async function handle(
   res: NextApiResponse,
 ) {
   const { body, method } = req;
+  const events = await getEvents();
 
   try {
     switch (method) {
       case "GET":
-        res.json(await getEvents());
+        res.json(events);
         break;
       case "PUT":
         res.status(201).json(await addEvent(body));

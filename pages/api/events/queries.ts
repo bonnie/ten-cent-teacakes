@@ -27,7 +27,6 @@ export const getEvents = () =>
   prisma.event.findMany({
     orderBy: { performAt: "desc" },
   });
-
 const getEventById = (id: number) => prisma.event.findUnique({ where: { id } });
 
 export const addEvent = ({ performAt, venueId, venueData }: EventPutData) => {

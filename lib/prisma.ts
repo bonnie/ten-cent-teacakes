@@ -17,17 +17,17 @@ declare global {
 // https://pris.ly/d/help/next-js-best-practices
 
 // eslint-disable-next-line import/no-mutable-exports
-let prisma: PrismaClient;
+let prismaClient: PrismaClient;
 const prismaClientOptions = {
   rejectOnNotFound: true,
 };
 
 if (process.env.NODE_ENV === "production") {
-  prisma = new PrismaClient(prismaClientOptions);
+  prismaClient = new PrismaClient(prismaClientOptions);
 } else {
   if (!global.prisma) {
     global.prisma = new PrismaClient(prismaClientOptions);
   }
-  prisma = global.prisma;
+  prismaClient = global.prisma;
 }
-export default prisma;
+export default prismaClient;
