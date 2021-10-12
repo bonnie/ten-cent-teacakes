@@ -18,7 +18,6 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>Ten-Cent Teacakes String Band</title>
           <link rel="icon" href="/favicon.ico" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link

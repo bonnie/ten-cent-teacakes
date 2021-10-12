@@ -13,9 +13,7 @@ module.exports = {
   theme: {
     container: {
       padding: "2rem",
-    },
-    bgColor: {
-      color: lightAqua,
+      backgroundColor: lightAqua,
     },
     extend: {
       colors: {
