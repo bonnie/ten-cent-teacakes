@@ -1,7 +1,7 @@
-import { Typography } from "antd";
 import { ReactElement } from "react";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 
+import { Heading } from "@/components/Heading";
 import { fetchEvents } from "@/lib/api";
 import { queryKeys } from "@/lib/react-query/query-keys";
 
@@ -17,15 +17,13 @@ export async function getStaticProps() {
   };
 }
 
-const { Title } = Typography;
-
 // TODO: when to use React.FC and when to use React.ReactElement?
 export default function Events(): ReactElement {
   const { data: events = [] } = useQuery(queryKeys.events, fetchEvents);
 
   return (
     <div>
-      <Title>Upcoming Events</Title>
+      <Heading>Upcoming Events</Heading>
       <ul>
         {events.map((event) => (
           <li>
