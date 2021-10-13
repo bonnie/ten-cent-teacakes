@@ -50,7 +50,7 @@ const createMusicians = async () => {
     {
       firstName: "Greg",
       lastName: "Urban",
-      bio: "Play with twist ties plan steps for world domination. That box? i can fit in that box claw drapes. Bite the neighbor's bratty kid warm up laptop with butt",
+      bio: "Greg has been fiddling for about 10 years now, with genre interests ranging from Scottish folk to Hank Williams to gypsy swing. His dream is to be compared to Stephan Grapelli (hopefully favorably).",
       instruments: {
         connect: [{ name: "fiddle" }, { name: "vocals" }],
       },

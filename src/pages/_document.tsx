@@ -29,12 +29,9 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap"
             rel="stylesheet"
           />
-          <link
-            href="http://fonts.cdnfonts.com/css/ritzyremixnf"
-            rel="stylesheet"
-          />
+          <link href="http://fonts.cdnfonts.com/css/parsons" rel="stylesheet" />
         </Head>
-        <body className="bg-lightAqua">
+        <body className="bg-aqua-light">
           <Main />
           <NextScript />
         </body>
