@@ -30,11 +30,21 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
           <link
-            href="http://fonts.cdnfonts.com/css/ritzyremixnf"
+            href="http://fonts.cdnfonts.com/css/noir-et-blanc"
             rel="stylesheet"
           />
+          {/* <link
+            href="http://fonts.cdnfonts.com/css/antique-book-cover"
+            rel="stylesheet"
+          /> */}
+          {/* <link href="http://fonts.cdnfonts.com/css/duality" rel="stylesheet" /> */}
+          {/* <link
+            href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@400;600;700&display=swap"
+            rel="stylesheet"
+          /> */}
+          {/* <link href="http://fonts.cdnfonts.com/css/parsons" rel="stylesheet" /> */}
         </Head>
-        <body className="bg-lightAqua">
+        <body className="bg-aqua-light">
           <Main />
           <NextScript />
         </body>

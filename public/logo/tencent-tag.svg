@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="25.089077mm"
+   height="24.59091mm"
+   viewBox="0 0 25.089077 24.59091"
+   version="1.1"
+   id="svg1444"
+   inkscape:version="1.1.1 (c3084ef, 2021-09-22)"
+   sodipodi:docname="tencent-tag.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1446"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.72363545"
+     inkscape:cx="1.3819113"
+     inkscape:cy="143.02782"
+     inkscape:window-width="1312"
+     inkscape:window-height="805"
+     inkscape:window-x="0"
+     inkscape:window-y="23"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1441" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-94.288819,-135.60102)">
+    <ellipse
+       style="fill:#cbe0e0;fill-opacity:1;stroke:#000000;stroke-width:0.701018;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path11489"
+       cx="103.0372"
+       cy="151.62288"
+       rx="12.198044"
+       ry="11.940637"
+       transform="matrix(0.99936297,-0.03568821,0.02546973,0.99967559,0,0)"
+       inkscape:export-filename="/Users/bonnieschulkin/Dropbox/My Mac (Bonnies-MacBook-Pro.local)/Desktop/10c 30s 8.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <g
+       id="g1574"
+       transform="translate(7.3126139,-79.341861)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 92.033682,230.18527 2.78361,-7.08669 9.032648,-3.54044 3.80336,10.3308 -10.922638,4.59048 z"
+         id="path14885"
+         inkscape:export-filename="/Users/bonnieschulkin/Dropbox/My Mac (Bonnies-MacBook-Pro.local)/Desktop/10c 30s 8.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:5.61577px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-miterlimit:4;stroke-dasharray:none"
+         x="-43.45636"
+         y="244.20833"
+         id="text57927"
+         transform="matrix(0.82787267,-0.54313686,0.54359977,0.85127938,0,0)"
+         inkscape:transform-center-x="0.84460662"
+         inkscape:transform-center-y="2.727056"
+         inkscape:export-filename="/Users/bonnieschulkin/Dropbox/My Mac (Bonnies-MacBook-Pro.local)/Desktop/10c 30s 8.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96"><tspan
+           sodipodi:role="line"
+           id="tspan57925"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61577px;font-family:'Special Elite';-inkscape-font-specification:'Special Elite';stroke-width:0.264583"
+           x="-43.45636"
+           y="244.20833">10¢</tspan></text>
+    </g>
+  </g>
+</svg>

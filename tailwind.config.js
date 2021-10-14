@@ -1,28 +1,31 @@
-const colors = require("tailwindcss/colors");
+// const colors = require("tailwindcss/colors");
 const defaultTheme = require("tailwindcss/defaultTheme");
-
-const lightAqua = "rgb(203, 224, 224)";
 
 module.exports = {
   purge: [
     "./src/pages/**/*.{js,ts,jsx,tsx}",
     "./src/components/**/*.{js,ts,jsx,tsx}",
   ],
-  mode: "jit",
   darkMode: false, // or 'media' or 'class'
   theme: {
     container: {
-      padding: "2rem",
-      backgroundColor: lightAqua,
+      padding: "1rem",
+    },
+    colors: {
+      aqua: {
+        light: "rgb(239, 245, 245)",
+        medium: "rgb(86, 144, 144)",
+        dark: "rgb(48, 80, 80)",
+      },
+      tan: {
+        light: "rgb(237, 221, 197)",
+        medium: "rgb(200, 154, 81)",
+        dark: "rgb(19, 14, 6)",
+      },
     },
     extend: {
-      colors: {
-        lightAqua,
-        darkBrown: colors.darkBrown,
-      },
       fontFamily: {
-        // fancy: ["SeasideResortNF"],
-        heading: ["RitzyRemixNF"],
+        heading: ["Noir-et-Blanc"],
         body: ["Ubuntu", ...defaultTheme.fontFamily.sans],
       },
     },

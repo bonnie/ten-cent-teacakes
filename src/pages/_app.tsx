@@ -3,24 +3,21 @@ import "tailwindcss/tailwind.css";
 import "@/styles/globals.css";
 
 import { AppProps } from "next/app";
-import { Head } from "next/document";
 import React from "react";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
+
+import { Layout } from "@/components/Layout";
 
 export default function TenCentTeacake({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
 
   return (
-    <>
-      {/* <Head>
-        <title>My new cool app</title>
-      </Head> 
-      leads to TypeError: Cannot destructure property 'styles' of 'this.context' as it is null. */}
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <Component {...pageProps} />
-        </Hydrate>
-      </QueryClientProvider>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <Layout>
+          <Component className="h-full" {...pageProps} />
+        </Layout>
+      </Hydrate>
+    </QueryClientProvider>
   );
 }
