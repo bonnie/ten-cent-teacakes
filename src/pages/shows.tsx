@@ -2,13 +2,13 @@ import { ReactElement } from "react";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 
 import { Heading } from "@/components/Heading";
-import { fetchEvents } from "@/lib/api";
+import { fetchShows } from "@/lib/api";
 import { queryKeys } from "@/lib/react-query/query-keys";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(queryKeys.events, fetchEvents);
+  await queryClient.prefetchQuery(queryKeys.shows, fetchShows);
 
   return {
     props: {
@@ -18,16 +18,16 @@ export async function getStaticProps() {
 }
 
 // TODO: when to use React.FC and when to use React.ReactElement?
-export default function Events(): ReactElement {
-  const { data: events = [] } = useQuery(queryKeys.events, fetchEvents);
+export default function Shows(): ReactElement {
+  const { data: shows = [] } = useQuery(queryKeys.shows, fetchShows);
 
   return (
     <div>
-      <Heading>Upcoming Events</Heading>
+      <Heading>Upcoming Shows</Heading>
       <ul>
-        {events.map((event) => (
+        {shows.map((show) => (
           <li>
-            {event.performAt} {event.venueId}
+            {show.performAt} {show.venueId}
           </li>
         ))}
       </ul>

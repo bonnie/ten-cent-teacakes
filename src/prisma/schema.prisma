@@ -10,7 +10,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Event {
+model Show {
   id        Int       @id @default(autoincrement())
   performAt DateTime
   venue     Venue     @relation(fields: [venueId], references: [id])
@@ -22,13 +22,13 @@ model Venue {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar(255) @unique
   url       String?  @db.VarChar(255)
-  events    Event[]
+  shows     Show[]
 }
 
 model Photo {
   id            Int      @id @default(autoincrement())
-  event         Event    @relation(fields: [eventId], references: [id])
-  eventId       Int
+  show          Show     @relation(fields: [showId], references: [id])
+  showId       Int
   imagePath     String   @db.VarChar(255)
   photographer  String   @db.VarChar(255)
   createdAt     DateTime @default(now())

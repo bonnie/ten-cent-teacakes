@@ -50,7 +50,7 @@ const createMusicians = async () => {
     {
       firstName: "Greg",
       lastName: "Urban",
-      bio: "Greg has been fiddling for about 10 years now, with genre interests ranging from Scottish folk to Hank Williams to gypsy swing. His dream is to be compared to Stephan Grapelli (hopefully favorably).",
+      bio: "In what is perhaps an excess of caution, Greg is peaking late, rather than too early. He enthusiastically plays an eclectic mix of swing, Hank Williams, Celtic, and old-time fiddle. He also bakes teacakes.",
       instruments: {
         connect: [{ name: "fiddle" }, { name: "vocals" }],
       },

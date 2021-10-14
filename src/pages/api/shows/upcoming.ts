@@ -2,15 +2,15 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "@/lib/prisma";
 
-// GET /api/events/upcoming
+// GET /api/shows/upcoming
 export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const events = await prisma.event.findMany({
+  const shows = await prisma.show.findMany({
     take: 3,
     where: { performAt: { gte: new Date() } },
     orderBy: { performAt: "desc" },
   });
-  res.json(events);
+  res.json(shows);
 }

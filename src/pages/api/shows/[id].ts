@@ -2,25 +2,26 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { processApiError } from "@/lib/api/utils";
 
-import { addEvent, getEvents } from "./queries";
+import { deleteShow, patchShow } from "./queries";
 
 export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { body, method } = req;
-  const events = await getEvents();
+  const { body, method, query } = req;
+  const { id: idString } = query;
+  const id = Number(idString);
 
   try {
     switch (method) {
-      case "GET":
-        res.json(events);
+      case "PATCH":
+        res.status(201).json(await patchShow({ body, id }));
         break;
-      case "PUT":
-        res.status(201).json(await addEvent(body));
+      case "DELETE":
+        res.status(204).json(await deleteShow(id));
         break;
       default:
-        res.setHeader("Allow", ["GET", "PUT"]);
+        res.setHeader("Allow", ["PATCH", "DELETE"]);
         res.status(405).end(`Method ${method} Not Allowed`);
     }
   } catch (error) {

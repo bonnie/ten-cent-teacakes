@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 export enum routes {
-  events = "events",
+  shows = "shows",
   musicians = "musicians",
   photos = "photos",
 }

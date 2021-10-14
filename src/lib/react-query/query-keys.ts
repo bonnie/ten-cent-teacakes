@@ -1,5 +1,5 @@
 export const queryKeys = {
-  events: "events",
+  shows: "shows",
   photos: "photos",
   musicians: "musicians",
 };

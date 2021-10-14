@@ -4,7 +4,7 @@ import { Prisma } from ".prisma/client";
 import prisma from "@/lib/prisma";
 
 type PhotoPutData = {
-  eventId: number;
+  showId: number;
   imagePath: string;
   photographer: string;
 };
@@ -14,15 +14,11 @@ export const getPhotosSortDescending = () =>
     orderBy: { createdAt: "desc" },
   });
 
-export const addPhoto = ({
-  imagePath,
-  eventId,
-  photographer,
-}: PhotoPutData) => {
+export const addPhoto = ({ imagePath, showId, photographer }: PhotoPutData) => {
   const data: Prisma.PhotoCreateInput = {
     imagePath,
     photographer,
-    event: { connect: { id: eventId } },
+    show: { connect: { id: showId } },
   };
 
   return prisma.photo.create({ data });

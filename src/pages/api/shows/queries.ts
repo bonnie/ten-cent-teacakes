@@ -13,10 +13,10 @@ type NewOrExistingVenue = {
   venueData?: VenueData;
 };
 
-type EventPutData = { performAt: Date } & NewOrExistingVenue;
+type ShowPutData = { performAt: Date } & NewOrExistingVenue;
 
-type EventPatchData = {
-  body: EventPutData;
+type ShowPatchData = {
+  body: ShowPutData;
   id: number;
 };
 
@@ -24,27 +24,27 @@ const generateVenueData = ({ venueId, venueData }: NewOrExistingVenue) =>
   // connect to venue if id was provided; otherwise create a new one
   venueId ? { connect: { id: venueId } } : { create: venueData };
 
-export const getEvents = () =>
-  prisma.event.findMany({
+export const getShows = () =>
+  prisma.show.findMany({
     orderBy: { performAt: "desc" },
   });
-const getEventById = (id: number) => prisma.event.findUnique({ where: { id } });
+const getShowById = (id: number) => prisma.show.findUnique({ where: { id } });
 
-export const addEvent = ({ performAt, venueId, venueData }: EventPutData) => {
+export const addShow = ({ performAt, venueId, venueData }: ShowPutData) => {
   if (!venueId && !venueData) {
     throw new Error("Either venueId or venueData must be provided");
   }
 
   const venue = generateVenueData({ venueId, venueData });
-  const data: Prisma.EventCreateInput = { performAt, venue };
+  const data: Prisma.ShowCreateInput = { performAt, venue };
 
-  return prisma.event.create({ data });
+  return prisma.show.create({ data });
 };
 
-export const patchEvent = async ({ body, id }: EventPatchData) => {
-  const eventData = getEventById(id);
-  if (!eventData) {
-    throw new Error(`Bad event id: ${id}`);
+export const patchShow = async ({ body, id }: ShowPatchData) => {
+  const showData = getShowById(id);
+  if (!showData) {
+    throw new Error(`Bad show id: ${id}`);
   }
 
   // get the venueId and venueData from the body
@@ -53,12 +53,12 @@ export const patchEvent = async ({ body, id }: EventPatchData) => {
   delete body.venueData;
 
   // add venue in proper format to updatedData
-  const updatedData: Prisma.EventUpdateInput = { ...body };
+  const updatedData: Prisma.ShowUpdateInput = { ...body };
   updatedData.venue = generateVenueData({ venueId, venueData });
 
-  prisma.event.update({ data: updatedData, where: { id } });
+  prisma.show.update({ data: updatedData, where: { id } });
 };
 
-export const deleteEvent = async (id: number) => {
-  prisma.event.delete({ where: { id } });
+export const deleteShow = async (id: number) => {
+  prisma.show.delete({ where: { id } });
 };
