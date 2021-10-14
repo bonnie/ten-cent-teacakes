@@ -33,6 +33,10 @@ class MyDocument extends Document {
             href="http://fonts.cdnfonts.com/css/noir-et-blanc"
             rel="stylesheet"
           />
+          {/* <link
+            href="http://fonts.cdnfonts.com/css/antique-book-cover"
+            rel="stylesheet"
+          /> */}
           {/* <link href="http://fonts.cdnfonts.com/css/duality" rel="stylesheet" /> */}
           {/* <link
             href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@400;600;700&display=swap"

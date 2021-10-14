@@ -15,7 +15,7 @@ export default function TenCentTeacake({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <Layout>
-          <Component {...pageProps} />
+          <Component className="h-full" {...pageProps} />
         </Layout>
       </Hydrate>
     </QueryClientProvider>
