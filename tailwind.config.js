@@ -26,7 +26,6 @@ module.exports = {
     extend: {
       fontFamily: {
         heading: ["Noir-et-Blanc"],
-        // heading: ["Antique Book Cover"],
         body: ["Ubuntu", ...defaultTheme.fontFamily.sans],
       },
     },
