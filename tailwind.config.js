@@ -26,7 +26,7 @@ module.exports = {
     extend: {
       fontFamily: {
         // fancy: ["SeasideResortNF"],
-        heading: ["Parsons"],
+        heading: ["Noir-et-Blanc"],
         body: ["Ubuntu", ...defaultTheme.fontFamily.sans],
       },
     },

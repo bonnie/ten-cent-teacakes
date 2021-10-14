@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 
-import logo from "../../public/logo-shadow.png";
+import logo from "../../public/logo/logo-shadow.png";
 
 export default function Home() {
   const tenCentLogoAltText =

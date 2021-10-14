@@ -5,6 +5,7 @@ import Link from "next/link";
 import React from "react";
 
 import { NavLink } from "./NavLink";
+import { SocialLinks } from "./SocialLinks";
 
 export const Navbar: React.FC = () => {
   const [active, setActive] = React.useState(false);
@@ -14,23 +15,19 @@ export const Navbar: React.FC = () => {
   };
   return (
     <div>
-      <nav className="flex items-center flex-wrap bg-tan-dark p-3 text-aqua-light font-heading">
+      <nav className="flex items-center flex-wrap bg-tan-dark p-3 text-aqua-light font-heading font-normal">
         <Link href="/">
           <button
             type="button"
             className="inline-flex items-center p-0.5 mr-4 "
           >
             <Image
-              src="/tencent-tag.svg"
+              src="/logo/tencent-tag.svg"
               alt="tag reading '10 cents'"
               height={50}
               width={50}
             />
-            <span className="p-1">
-              Ten-Cent
-              <br />
-              Teacakes
-            </span>
+            <span className="p-2 text-3xl">Ten-Cent Teacakes</span>
           </button>
         </Link>
         <button
@@ -62,6 +59,9 @@ export const Navbar: React.FC = () => {
             <NavLink href="/shows" display="Shows" />
             <NavLink href="/photos" display="Photos" />
             <NavLink href="/about" display="About" />
+          </div>
+          <div className="flex items-center lg:inline-flex lg:flex-row lg:h-auto lg:justify-end">
+            <SocialLinks />
           </div>
         </div>
       </nav>

@@ -29,7 +29,16 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap"
             rel="stylesheet"
           />
-          <link href="http://fonts.cdnfonts.com/css/parsons" rel="stylesheet" />
+          <link
+            href="http://fonts.cdnfonts.com/css/noir-et-blanc"
+            rel="stylesheet"
+          />
+          {/* <link href="http://fonts.cdnfonts.com/css/duality" rel="stylesheet" /> */}
+          {/* <link
+            href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@400;600;700&display=swap"
+            rel="stylesheet"
+          /> */}
+          {/* <link href="http://fonts.cdnfonts.com/css/parsons" rel="stylesheet" /> */}
         </Head>
         <body className="bg-aqua-light">
           <Main />
