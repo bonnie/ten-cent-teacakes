@@ -42,7 +42,7 @@ const createMusicians = async () => {
     {
       firstName: "Bonnie",
       lastName: "Schulkin",
-      bio: "Bonnie loves vocal harmony and playing the bass. Vocal harmony is rewarding and beautiful, and bassists only have to play a few notes per measure (but can still call themselves instrumentalists!).",
+      bio: "Bonnie's musical past includes an elementary school chorus solo in \"76 Trombones\" (and it's pretty much downhill from there). She loves the bass because it involves a lot of theory and playing only a few notes per measure.",
       instruments: {
         connect: [{ name: "bass" }, { name: "kazoo" }, { name: "vocals" }],
       },

@@ -54,6 +54,6 @@
     "typescript-eslint": "^0.0.1-alpha.0"
   },
   "prisma": {
-    "seed": "ts-node --project ./node.tsconfig.json prisma/seed.ts"
+    "seed": "ts-node --project ./node.tsconfig.json src/prisma/seed.ts"
   }
 }

@@ -1,3 +1,6 @@
+// TODO: fix
+// Firefox can’t establish a connection to the server at http://localhost:3000/_next/webpack-hmr?page=%2Fabout.
+
 import Head from "next/head";
 import Image from "next/image";
 
