@@ -1,11 +1,11 @@
-import { Event } from ".prisma/client";
+import { Show } from ".prisma/client";
 
 import { instance } from "./axiosInstance";
 import { routes } from "./types";
 
-export const fetchEvents = async (): Promise<Array<Event>> => {
+export const fetchShows = async (): Promise<Array<Show>> => {
   try {
-    const { data } = await instance.get(`/api/${routes.events}`);
+    const { data } = await instance.get(`/api/${routes.shows}`);
     return data;
   } catch (error) {
     // TODO: show error here
