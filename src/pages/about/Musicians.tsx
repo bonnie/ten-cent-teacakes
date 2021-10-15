@@ -32,7 +32,7 @@ export const Musicians: React.FC = () => {
 
   return (
     <div>
-      <div className="flex">
+      <div className="flex flex-wrap justify-center items-stretch gap-5 mx-5">
         {musicians.map((musician) => (
           <MusicianCard key={musician.id} data={musician} />
         ))}

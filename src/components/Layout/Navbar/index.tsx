@@ -15,7 +15,7 @@ export const Navbar: React.FC = () => {
   };
   return (
     <div>
-      <nav className="flex items-center flex-wrap bg-tan-dark p-3 text-aqua-light font-heading font-normal">
+      <nav className="flex items-center flex-wrap bg-aqua-900 p-3 text-aqua-100 font-heading font-normal">
         <Link href="/">
           <button
             type="button"
