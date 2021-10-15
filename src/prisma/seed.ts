@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable no-console */
 /* eslint-disable guard-for-in */
 /* eslint-disable camelcase */
@@ -18,8 +19,8 @@ const createInstruments = async () => {
     "fiddle",
   ];
   for (const name of instrumentNames) {
-    console.log(`\tcreating instrument ${name}`);
-    prisma.instrument.create({ data: { name } });
+    const result = await prisma.instrument.create({ data: { name } });
+    console.log(`\tcreated instrument ${result.name}`);
   }
 };
 
@@ -58,8 +59,8 @@ const createMusicians = async () => {
     },
   ];
   for (const musician of musicianData) {
-    console.log(`\tcreating musician ${musician.firstName}`);
-    prisma.musician.create({ data: musician });
+    const result = await prisma.musician.create({ data: musician });
+    console.log(`\tcreated musician ${result.firstName}`);
   }
 };
 
