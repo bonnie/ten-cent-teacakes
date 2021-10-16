@@ -55,10 +55,10 @@ export const Navbar: React.FC = () => {
             active ? "" : "hidden"
           }   w-full lg:inline-flex lg:flex-grow lg:w-auto`}
         >
-          <div className="lg:inline-flex lg:flex-row lg:w-auto w-full lg:items-center items-start  flex flex-col lg:h-auto lg:divide-x">
-            <NavLink href="/shows" display="Shows" />
-            <NavLink href="/photos" display="Photos" />
-            <NavLink href="/about" display="About" />
+          <div className="lg:inline-flex lg:flex-row lg:w-auto w-full lg:items-center items-start  flex flex-col lg:h-auto">
+            <NavLink href="/shows" pageName="shows" />
+            <NavLink href="/photos" pageName="photos" />
+            <NavLink href="/about" pageName="about" />
           </div>
           <div className="flex items-center lg:inline-flex lg:flex-row lg:w-full lg:justify-end items-start flex flex-col">
             <SocialLinks />
