@@ -30,4 +30,5 @@ if (process.env.NODE_ENV === "production") {
   }
   prismaClient = global.prisma;
 }
+
 export default prismaClient;

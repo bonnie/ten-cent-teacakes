@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable no-console */
 /* eslint-disable guard-for-in */
 /* eslint-disable camelcase */
@@ -18,8 +19,8 @@ const createInstruments = async () => {
     "fiddle",
   ];
   for (const name of instrumentNames) {
-    console.log(`\tcreating instrument ${name}`);
-    prisma.instrument.create({ data: { name } });
+    const result = await prisma.instrument.create({ data: { name } });
+    console.log(`\tcreated instrument ${result.name}`);
   }
 };
 
@@ -41,7 +42,7 @@ const createMusicians = async () => {
     {
       firstName: "Bonnie",
       lastName: "Schulkin",
-      bio: "Bonnie loves vocal harmony and playing the bass. Vocal harmony is rewarding and beautiful, and bassists only have to play a few notes per measure (but can still call themselves instrumentalists!).",
+      bio: "Bonnie's musical past includes an elementary school chorus solo in \"76 Trombones\" (and it's pretty much downhill from there). She loves the bass because it involves a lot of theory and playing only a few notes per measure.",
       instruments: {
         connect: [{ name: "bass" }, { name: "kazoo" }, { name: "vocals" }],
       },
@@ -58,8 +59,8 @@ const createMusicians = async () => {
     },
   ];
   for (const musician of musicianData) {
-    console.log(`\tcreating musician ${musician.firstName}`);
-    prisma.musician.create({ data: musician });
+    const result = await prisma.musician.create({ data: musician });
+    console.log(`\tcreated musician ${result.firstName}`);
   }
 };
 

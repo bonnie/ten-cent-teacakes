@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import React from "react";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 
 import { Heading } from "@/components/Heading";
@@ -18,7 +18,7 @@ export async function getStaticProps() {
 }
 
 // TODO: when to use React.FC and when to use React.ReactElement?
-export default function Shows(): ReactElement {
+const Shows: React.FC = () => {
   const { data: shows = [] } = useQuery(queryKeys.shows, fetchShows);
 
   return (
@@ -33,4 +33,6 @@ export default function Shows(): ReactElement {
       </ul>
     </div>
   );
-}
+};
+
+export default Shows;

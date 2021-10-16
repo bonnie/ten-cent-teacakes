@@ -44,7 +44,7 @@ class MyDocument extends Document {
           /> */}
           {/* <link href="http://fonts.cdnfonts.com/css/parsons" rel="stylesheet" /> */}
         </Head>
-        <body className="bg-aqua-light">
+        <body className="bg-aqua-100">
           <Main />
           <NextScript />
         </body>

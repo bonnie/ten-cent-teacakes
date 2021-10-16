@@ -38,10 +38,15 @@ const generateInstrumentData = (
   return { create: createInstruments, connect: connectInstruments };
 };
 
-export const getMusiciansSortAscending = () =>
-  prisma.musician.findMany({
+export const getMusiciansSortAscending = async () => {
+  const musicians = await prisma.musician.findMany({
+    include: {
+      instruments: { select: { name: true } },
+    },
     orderBy: { lastName: "asc" },
   });
+  return musicians;
+};
 
 export const addMusician = (rawData: MusicianPutData) => {
   const { firstName, lastName, bio, imagePath, instruments } = rawData;
