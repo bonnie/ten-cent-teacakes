@@ -9,21 +9,23 @@ type SocialLinkProps = {
 };
 
 const SocialLink: React.FC<SocialLinkProps> = ({ Icon, target, label }) => (
-  <a
-    href={target}
-    key={label}
-    aria-label={label}
-    title={label}
-    color="primary"
-    target="_blank"
-    rel="noreferrer"
-  >
-    <Icon size="50" />
-  </a>
+  <div className="rounded-lg hover:text-aqua-700 min-h-full">
+    <a
+      href={target}
+      key={label}
+      aria-label={label}
+      title={label}
+      color="primary"
+      target="_blank"
+      rel="noreferrer"
+    >
+      <Icon size="30" />
+    </a>
+  </div>
 );
 
 export const SocialLinks = () => (
-  <>
+  <div className="flex space-x-2">
     <SocialLink
       Icon={AiFillTwitterCircle}
       label="Twitter"
@@ -34,5 +36,5 @@ export const SocialLinks = () => (
       label="YouTube"
       target="https://www.youtube.com/channel/UCPSpw7w0yCJ4MNuUpBiALxw/"
     />
-  </>
+  </div>
 );
