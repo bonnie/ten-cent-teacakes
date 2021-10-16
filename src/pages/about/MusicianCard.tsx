@@ -43,7 +43,7 @@ export const MusicianCard: React.FC<MusicianProps> = ({ data }) => (
             alt={data.firstName}
           />
         </div>
-        <p className="font-heading text-2xl text-center">{data.firstName}</p>
+        <p className="font-heading text-4xl text-center">{data.firstName}</p>
         <p>{data.bio}</p>
       </div>
       <div className="flex flex-row flex-wrap w-full justify-center gap-2 pt-2">

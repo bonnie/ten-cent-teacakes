@@ -32,7 +32,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        heading: ["Noir-et-Blanc"],
+        heading: ["Delfina"],
         body: ["Ubuntu", ...defaultTheme.fontFamily.sans],
       },
     },

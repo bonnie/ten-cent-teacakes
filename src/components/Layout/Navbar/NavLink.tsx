@@ -12,7 +12,7 @@ export const NavLink: React.FC<NavLinkProps> = ({ href, pageName }) => (
     >
       <Image
         src={`/nav-banners/${pageName}-light.png`}
-        height={100}
+        height={80}
         width={180}
         alt={`banner containing the word ${pageName}`}
         placeholder="blur"
