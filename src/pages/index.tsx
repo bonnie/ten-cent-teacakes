@@ -4,8 +4,6 @@
 import Head from "next/head";
 import Image from "next/image";
 
-import logo from "../../public/logo/logo-shadow.png";
-
 export default function Home() {
   const tenCentLogoAltText =
     "Ten-Cent Teacakes logo: teacake with a tag reading '10¢', and a banner reading 'String Band'";
@@ -14,7 +12,14 @@ export default function Home() {
       <Head>
         <title>Ten-Cent Teacakes String Band</title>
       </Head>
-      <Image src={logo} alt={tenCentLogoAltText} />
+      <Image
+        src="/logo/logo-shadow.png"
+        width={725}
+        height={358}
+        alt={tenCentLogoAltText}
+        placeholder="blur"
+        blurDataURL="/logo/logo-shadow-blur.png"
+      />
       <p className="font-body text-2xl">
         Eclectic string band music and cheap baked goods
       </p>

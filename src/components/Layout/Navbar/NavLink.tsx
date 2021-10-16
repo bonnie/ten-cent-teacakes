@@ -15,6 +15,8 @@ export const NavLink: React.FC<NavLinkProps> = ({ href, pageName }) => (
         height={100}
         width={180}
         alt={`banner containing the word ${pageName}`}
+        placeholder="blur"
+        blurDataURL={`/nav-banners/${pageName}-light-blur.png`}
       />
     </button>
   </Link>
