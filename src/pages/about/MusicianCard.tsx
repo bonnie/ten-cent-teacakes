@@ -19,20 +19,9 @@ const cardClasses = [
   "justify-between",
   "min-h-full",
 ].join(" ");
-const imageContainerClasses = [
-  "rounded-lg -mt-12 position-relative h-230 text-center w-full px-12",
-].join(" ");
-const imageClasses = ["rounded-lg shadow-lg p-10"].join(" ");
-const titleClasses = ["font-heading text-2xl text-center"].join(" ");
-const instrumentsContainerClasses = [
-  "flex",
-  "flex-row",
-  "flex-wrap",
-  "w-full",
-  "justify-center",
-  "gap-2",
-  "pt-2",
-].join(" ");
+
+const imageTransitionClass =
+  "transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110";
 
 type InstrumentProps = { name: string };
 const Instrument: React.FC<InstrumentProps> = ({ name }) => (
@@ -44,9 +33,9 @@ export const MusicianCard: React.FC<MusicianProps> = ({ data }) => (
   <div className="pt-12">
     <div className={cardClasses}>
       <div>
-        <div className={imageContainerClasses}>
+        <div className="rounded-lg -mt-12 position-relative h-230 text-center w-full px-12">
           <Image
-            className={imageClasses}
+            className={`rounded-lg shadow-lg p-10 ${imageTransitionClass}`}
             objectFit="cover"
             height="250"
             width="250"
@@ -54,10 +43,10 @@ export const MusicianCard: React.FC<MusicianProps> = ({ data }) => (
             alt={data.firstName}
           />
         </div>
-        <p className={titleClasses}>{data.firstName}</p>
+        <p className="font-heading text-2xl text-center">{data.firstName}</p>
         <p>{data.bio}</p>
       </div>
-      <div className={instrumentsContainerClasses}>
+      <div className="flex flex-row flex-wrap w-full justify-center gap-2 pt-2">
         {data.instruments
           .sort((a, b) => (a.name > b.name ? 1 : 0))
           .map((instrument) => (
