@@ -42,7 +42,7 @@ const createMusicians = async () => {
     {
       firstName: "Bonnie",
       lastName: "Schulkin",
-      bio: "Bonnie's musical past includes an elementary school chorus solo in \"76 Trombones\" (and it's pretty much downhill from there). She loves the bass because it involves a lot of theory and playing only a few notes per measure.",
+      bio: "Bonnie's musical past includes an elementary school chorus solo in \"76 Trombones\" (and it's pretty much downhill from there). She loves the bass because it's heavy on theory and light on actual number of notes to be played.",
       instruments: {
         connect: [{ name: "bass" }, { name: "kazoo" }, { name: "vocals" }],
       },
