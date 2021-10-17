@@ -1,5 +1,7 @@
+export type ToastStatus = "success" | "info" | "warning" | "error";
+
 export type Toast = {
-  status: "success" | "info" | "warning" | "error";
+  status: ToastStatus;
   message: string;
   id: number;
 };
