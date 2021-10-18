@@ -7,17 +7,22 @@ import React from "react";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 
 import { Layout } from "@/components/Layout";
+import { ToastContainer } from "@/components/toasts/ToastContainer";
+import { ToastProvider } from "@/components/toasts/ToastContext";
 
 export default function TenCentTeacake({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <Layout>
-          <Component className="h-full" {...pageProps} />
-        </Layout>
-      </Hydrate>
+      <ToastProvider>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Layout>
+            <Component className="h-full" {...pageProps} />
+            <ToastContainer />
+          </Layout>
+        </Hydrate>
+      </ToastProvider>
     </QueryClientProvider>
   );
 }
