@@ -27,11 +27,6 @@ const getToasDetailsByStatus = (status: ToastStatus) => {
 
 export default function Toast({ status, message, id }: ToastType) {
   const dispatch = useToastDispatchContext();
-  if (!dispatch) {
-    // eslint-disable-next-line no-console
-    console.error("ERROR: toast dispatch is null");
-    return null;
-  }
   const { color, Icon } = getToasDetailsByStatus(status);
   return (
     <>

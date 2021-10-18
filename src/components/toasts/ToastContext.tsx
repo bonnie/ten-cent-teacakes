@@ -8,8 +8,12 @@ type ToastState = {
   toasts: Array<Toast>;
 };
 
-const ToastStateContext = createContext<ToastState>({ toasts: [] });
-const ToastDispatchContext = createContext<Dispatch<ToastAction> | null>(null);
+const defaultState: ToastState = { toasts: [] };
+
+const ToastStateContext = createContext<ToastState>(defaultState);
+const ToastDispatchContext = createContext<Dispatch<ToastAction>>(
+  () => defaultState,
+);
 
 function ToastReducer(state: ToastState, action: ToastAction) {
   switch (action.type) {

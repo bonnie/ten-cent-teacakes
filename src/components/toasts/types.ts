@@ -3,7 +3,7 @@ export type ToastStatus = "success" | "info" | "warning" | "error";
 export type Toast = {
   status: ToastStatus;
   message: string;
-  id: number;
+  id: string;
 };
 
 export type AddToastAction = {
@@ -13,7 +13,7 @@ export type AddToastAction = {
 
 export type DeleteToastAction = {
   type: "DELETE_TOAST";
-  id: number;
+  id: string;
 };
 
 export type ToastAction = AddToastAction | DeleteToastAction;
