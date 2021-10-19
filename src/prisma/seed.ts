@@ -19,8 +19,15 @@ const createInstruments = async () => {
     "fiddle",
   ];
   for (const name of instrumentNames) {
-    const result = await prisma.instrument.create({ data: { name } });
-    console.log(`\tcreated instrument ${result.name}`);
+    const existingInstrument = await prisma.instrument.findUnique({
+      where: { name },
+    });
+    if (!existingInstrument) {
+      const result = await prisma.instrument.create({ data: { name } });
+      console.log(`\tcreated instrument ${result.name}`);
+    } else {
+      console.log(`\tskipping ${name}... already exists`);
+    }
   }
 };
 
@@ -59,8 +66,19 @@ const createMusicians = async () => {
     },
   ];
   for (const musician of musicianData) {
-    const result = await prisma.musician.create({ data: musician });
-    console.log(`\tcreated musician ${result.firstName}`);
+    const existingMusician = await prisma.musician.findFirst({
+      where: { firstName: musician.firstName, lastName: musician.lastName },
+    });
+    if (existingMusician) {
+      const result = await prisma.musician.update({
+        where: { id: existingMusician.id },
+        data: musician,
+      });
+      console.log(`\tupdated musician ${result.firstName}`);
+    } else {
+      const result = await prisma.musician.create({ data: musician });
+      console.log(`\tcreated musician ${result.firstName}`);
+    }
   }
 };
 
