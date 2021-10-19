@@ -2,6 +2,7 @@
 import "tailwindcss/tailwind.css";
 import "@/styles/globals.css";
 
+import { UserProvider } from "@auth0/nextjs-auth0";
 import { AppProps } from "next/app";
 import React from "react";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
@@ -14,15 +15,17 @@ export default function TenCentTeacake({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ToastProvider>
-        <Hydrate state={pageProps.dehydratedState}>
-          <Layout>
-            <Component className="h-full" {...pageProps} />
-            <ToastContainer />
-          </Layout>
-        </Hydrate>
-      </ToastProvider>
-    </QueryClientProvider>
+    <ToastProvider>
+      <UserProvider>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <Layout>
+              <Component className="h-full" {...pageProps} />
+              <ToastContainer />
+            </Layout>
+          </Hydrate>
+        </QueryClientProvider>
+      </UserProvider>
+    </ToastProvider>
   );
 }
