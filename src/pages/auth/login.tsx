@@ -19,7 +19,7 @@ const Login = () => {
         <Heading>Welcome!</Heading>
         <p className="text-xl">You are logged in as {user.name}</p>
         <a href="/api/auth/logout">
-          <Button buttonText="Log out" />
+          <Button contents="Log out" />
         </a>
       </div>
     );
@@ -30,7 +30,7 @@ const Login = () => {
       <Heading>Log in</Heading>
       <p>Note: this button will take you to an Auth0 login screen.</p>
       <a href="/api/auth/login">
-        <Button buttonText="Log in" />
+        <Button contents="Log in" />
       </a>
     </div>
   );
