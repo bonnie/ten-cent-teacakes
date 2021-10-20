@@ -8,4 +8,4 @@ if (process.env.NODE === "test") {
   config.cancelToken = cancelTokenSource.token;
 }
 
-export const instance = axios.create(config);
+export const axiosInstance = axios.create(config);

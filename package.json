@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "source .env.local && next dev",
     "lint": "next lint",
     "build": "next build",
     "start": "next start",
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@auth0/nextjs-auth0": "^1.6.1",
     "@prisma/client": "^3.2.0",
     "axios": "^0.22.0",
     "dayjs": "^1.10.7",

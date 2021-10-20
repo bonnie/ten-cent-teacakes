@@ -4,6 +4,8 @@
 
 ## Set up Developer Environment
 
+TODO: update for auth0
+
 1. Create a SQL db for the project
 1. `mv .env_template .env`
 1. Add the URL for your db to `.env`

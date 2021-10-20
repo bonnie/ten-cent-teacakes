@@ -1,11 +1,27 @@
 // adapted from
 // https://dev.to/andrewespejo/how-to-design-a-simple-and-beautiful-navbar-using-nextjs-and-tailwindcss-26p1
+import { useUser } from "@auth0/nextjs-auth0";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { RiLogoutCircleRLine } from "react-icons/ri";
+
+import { Button } from "@/components/Button";
 
 import { NavLink } from "./NavLink";
 import { SocialLinks } from "./SocialLinks";
+
+const LogoutButton: React.FC = () => {
+  const { user } = useUser();
+
+  if (!user) return <></>;
+
+  return (
+    <a href="/api/auth/logout">
+      <Button contents={<RiLogoutCircleRLine />} />
+    </a>
+  );
+};
 
 export const Navbar: React.FC = () => {
   const [active, setActive] = React.useState(false);
@@ -63,6 +79,9 @@ export const Navbar: React.FC = () => {
           <div className="flex items-center lg:inline-flex lg:flex-row lg:w-full lg:justify-end items-start flex flex-col">
             <SocialLinks />
           </div>
+        </div>
+        <div className="self-center ml-4">
+          <LogoutButton />
         </div>
       </nav>
     </div>

@@ -1,3 +1,4 @@
+import { useUser } from "@auth0/nextjs-auth0";
 import React from "react";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 
@@ -29,6 +30,7 @@ export const Musicians: React.FC = () => {
     queryKeys.musicians,
     fetchMusiciansWithInstruments,
   );
+  const { user } = useUser();
 
   return (
     <div>
