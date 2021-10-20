@@ -1,3 +1,4 @@
+import { useUser } from "@auth0/nextjs-auth0";
 import React from "react";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 
@@ -7,7 +8,6 @@ import {
 } from "@/lib/api";
 import { queryKeys } from "@/lib/react-query/query-keys";
 
-import { useWhitelistUser } from "../auth/useWhitelistUser";
 import { MusicianCard } from "./MusicianCard";
 
 export async function getStaticProps() {
@@ -30,6 +30,7 @@ export const Musicians: React.FC = () => {
     queryKeys.musicians,
     fetchMusiciansWithInstruments,
   );
+  const { user } = useUser();
 
   return (
     <div>
