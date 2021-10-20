@@ -7,6 +7,7 @@ import {
 } from "@/lib/api";
 import { queryKeys } from "@/lib/react-query/query-keys";
 
+import { useWhitelistUser } from "../auth/useWhitelistUser";
 import { MusicianCard } from "./MusicianCard";
 
 export async function getStaticProps() {
