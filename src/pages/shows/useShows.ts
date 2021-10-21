@@ -1,18 +1,16 @@
-import { Show } from ".prisma/client";
-
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
-import { fetchShows } from "@/lib/api";
+import { fetchShows, ShowWithVenue } from "@/lib/api";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { useHandleError } from "@/lib/react-query/useHandleError";
 
 type SortedShows = {
-  upcomingShows: Array<Show>;
-  pastShows: Array<Show>;
+  upcomingShows: Array<ShowWithVenue>;
+  pastShows: Array<ShowWithVenue>;
 };
 
-const sortShows = (data: Array<Show>): SortedShows => {
+const sortShows = (data: Array<ShowWithVenue>): SortedShows => {
   const sortedShows: SortedShows = {
     upcomingShows: [],
     pastShows: [],
@@ -44,9 +42,13 @@ export const useShows = (): SortedShows => {
   });
 
   const { handleError } = useHandleError();
-  const { data = [] } = useQuery<Array<Show>>(queryKeys.shows, fetchShows, {
-    onError: handleError,
-  });
+  const { data = [] } = useQuery<Array<ShowWithVenue>>(
+    queryKeys.shows,
+    fetchShows,
+    {
+      onError: handleError,
+    },
+  );
 
   useEffect(() => {
     setShows(sortShows(data));

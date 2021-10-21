@@ -6,7 +6,7 @@ import Link from "next/link";
 import React from "react";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 
-import { Button } from "@/components/Button";
+import { Button } from "@/components/lib/Button";
 
 import { NavLink } from "./NavLink";
 import { SocialLinks } from "./SocialLinks";

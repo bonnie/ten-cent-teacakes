@@ -1,18 +1,23 @@
-import { Show as ShowType } from ".prisma/client";
-
 import React from "react";
 
-import { Heading } from "@/components/Heading";
+import { Heading } from "@/components/lib/Heading";
+import { ShowWithVenue } from "@/lib/api";
 
-const Show: React.FC<{ show: ShowType }> = ({ show }) => <div />;
+const Show: React.FC<{ show: ShowWithVenue }> = ({ show }) => (
+  <div>
+    <p>
+      {show.venue.name} {show.performAt}
+    </p>
+  </div>
+);
 
 type ShowsProps = {
   title: string;
-  shows: Array<ShowType>;
+  shows: Array<ShowWithVenue>;
 };
 
 export const ShowsSegment: React.FC<ShowsProps> = ({ title, shows }) => (
-  <div className="m-4">
+  <div>
     <Heading textSize="4xl" align="left" margin={0}>
       {title}
     </Heading>

@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { dehydrate, QueryClient } from "react-query";
 
-import { Heading } from "@/components/Heading";
+import { AddButton } from "@/components/lib/AddButton";
+import { Heading } from "@/components/lib/Heading";
 import { fetchShows } from "@/lib/api";
+import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { queryKeys } from "@/lib/react-query/query-keys";
 
+import { AddShow } from "./AddShow";
 import { ShowsSegment } from "./ShowsSegment";
 import { useShows } from "./useShows";
 
@@ -20,13 +23,20 @@ export async function getStaticProps() {
   };
 }
 
-// TODO: when to use React.FC and when to use React.ReactElement?
 const Shows: React.FC = () => {
   const { pastShows, upcomingShows } = useShows();
+  const [addingShow, setAddingShow] = useState(false);
+  const { user } = useWhitelistUser();
+
+  const addShow = () => {
+    setAddingShow((state) => !state);
+  };
 
   return (
-    <div>
+    <div className="mx-4">
       <Heading>Shows</Heading>
+      {user ? <AddButton clickHandler={addShow} /> : null}
+      {addingShow ? <AddShow setAddingShow={setAddingShow} /> : null}
       <ShowsSegment title="Upcoming Shows" shows={upcomingShows} />
       <ShowsSegment title="Past Shows" shows={pastShows} />
     </div>

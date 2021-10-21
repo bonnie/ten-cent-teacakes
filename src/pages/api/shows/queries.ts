@@ -3,7 +3,7 @@ import { Prisma } from ".prisma/client";
 
 import prisma from "@/lib/prisma";
 
-type VenueData = {
+export type VenueData = {
   name: string;
   url?: string;
 };
@@ -13,9 +13,9 @@ type NewOrExistingVenue = {
   venueData?: VenueData;
 };
 
-type ShowPutData = { performAt: Date } & NewOrExistingVenue;
+export type ShowPutData = { performAt: Date } & NewOrExistingVenue;
 
-type ShowPatchData = {
+export type ShowPatchData = {
   body: ShowPutData;
   id: number;
 };
@@ -27,6 +27,7 @@ const generateVenueData = ({ venueId, venueData }: NewOrExistingVenue) =>
 export const getShows = () =>
   prisma.show.findMany({
     orderBy: { performAt: "desc" },
+    include: { venue: true },
   });
 const getShowById = (id: number) => prisma.show.findUnique({ where: { id } });
 

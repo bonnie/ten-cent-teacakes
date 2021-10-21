@@ -4,7 +4,7 @@ import { useToastDispatchContext } from "./ToastContext";
 import { ToastStatus } from "./types";
 
 // eslint-disable-next-line no-unused-vars
-type ToastFunction = (status: ToastStatus, message: string) => string;
+export type ToastFunction = (status: ToastStatus, message: string) => string;
 
 export function useToast(delayInMs: number = 4000) {
   const dispatch = useToastDispatchContext();
