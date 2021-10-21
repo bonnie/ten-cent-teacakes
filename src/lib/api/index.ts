@@ -1,10 +1,15 @@
-import { Musician, Show } from ".prisma/client";
+import { Musician, Show, Venue } from ".prisma/client";
 
 import { axiosInstance } from "./axiosInstance";
 import { routes } from "./types";
 
 export const fetchShows = async (): Promise<Array<Show>> => {
   const { data } = await axiosInstance.get(`/api/${routes.shows}`);
+  return data;
+};
+
+export const fetchVenues = async (): Promise<Array<Venue>> => {
+  const { data } = await axiosInstance.get(`/api/${routes.venues}`);
   return data;
 };
 
