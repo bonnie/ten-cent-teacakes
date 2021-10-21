@@ -1,10 +1,12 @@
 import React from "react";
-import { dehydrate, QueryClient, useQuery } from "react-query";
+import { dehydrate, QueryClient } from "react-query";
 
 import { Heading } from "@/components/Heading";
 import { fetchShows } from "@/lib/api";
 import { queryKeys } from "@/lib/react-query/query-keys";
-import { useHandleError } from "@/lib/react-query/useHandleError";
+
+import { ShowsSegment } from "./ShowsSegment";
+import { useShows } from "./useShows";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -20,22 +22,13 @@ export async function getStaticProps() {
 
 // TODO: when to use React.FC and when to use React.ReactElement?
 const Shows: React.FC = () => {
-  const { handleError } = useHandleError();
-
-  const { data: shows = [] } = useQuery(queryKeys.shows, fetchShows, {
-    onError: handleError,
-  });
+  const { pastShows, upcomingShows } = useShows();
 
   return (
     <div>
-      <Heading>Upcoming Shows</Heading>
-      <ul>
-        {shows.map((show) => (
-          <li>
-            {show.performAt} {show.venueId}
-          </li>
-        ))}
-      </ul>
+      <Heading>Shows</Heading>
+      <ShowsSegment title="Upcoming Shows" shows={upcomingShows} />
+      <ShowsSegment title="Past Shows" shows={pastShows} />
     </div>
   );
 };
