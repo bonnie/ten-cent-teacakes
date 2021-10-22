@@ -1,4 +1,4 @@
 import dayjs from "dayjs";
 
 export const formattedPerformAt = (performAt: Date): string =>
-  dayjs(performAt).format("YYYY MMM D");
+  dayjs(performAt).format("YYYY MMM D HH:MM");

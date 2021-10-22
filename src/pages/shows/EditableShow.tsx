@@ -1,6 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
+// https://github.com/wojtekmaj/react-datetime-picker/issues/143#issuecomment-853834044
+import "react-calendar/dist/Calendar.css";
+import "react-clock/dist/Clock.css";
+import "react-datetime-picker/dist/DateTimePicker.css";
+
+import dayjs from "dayjs";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
+import { Controller, useForm } from "react-hook-form";
 
 import { EditButtons } from "@/components/lib/EditButtons";
 import { ShowWithVenue } from "@/lib/api";
@@ -74,8 +81,12 @@ const EditableShow: React.FC<EditShowProps> = ({
   handleDelete,
 }) => {
   const [editing, setEditing] = useState(startWithEditing);
+
+  const dateString = dayjs(show.performAt).format("YYYY-MM-DDTHH:MM");
+  const [performAt, setPerformAt] = useState(dateString);
   const {
     register,
+    control,
     handleSubmit,
     watch,
     formState: { errors },
@@ -96,10 +107,16 @@ const EditableShow: React.FC<EditShowProps> = ({
             onDelete={handleDelete}
           />
           {editing ? (
-            <input
-              type="datetime-local"
-              defaultValue={show.performAt.toLocaleDateString()}
-              {...(register("performAt"), { required: true })}
+            <Controller
+              control={control}
+              name="performAt"
+              defaultValue={show.performAt}
+              render={({ field }) => (
+                <DateTimePicker
+                  onChange={(date: Date) => field.onChange(date)}
+                  value={field.value}
+                />
+              )}
             />
           ) : (
             formattedPerformAt(show.performAt)
