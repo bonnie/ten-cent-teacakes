@@ -1,6 +1,12 @@
-import React, { MouseEventHandler } from "react";
+import React, {
+  Dispatch,
+  MouseEvent as ReactMouseEvent,
+  MouseEventHandler,
+  SetStateAction,
+} from "react";
 import { IconType } from "react-icons";
 import { AiOutlineStop } from "react-icons/ai";
+import { FiEdit } from "react-icons/fi";
 import { HiOutlineSave } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 
@@ -20,18 +26,39 @@ const IconButton: React.FC<IconButtonProps> = ({
 );
 
 type EditButtonProps = {
-  onDelete: MouseEventHandler<HTMLButtonElement>;
-  onSave: MouseEventHandler<HTMLButtonElement>;
-  onCancel: MouseEventHandler<HTMLButtonElement>;
+  editing: boolean;
+  setEditing: Dispatch<SetStateAction<boolean>>;
+  handleDelete: MouseEventHandler<HTMLButtonElement>;
+  handleSave: MouseEventHandler<HTMLButtonElement>;
 };
 export const EditButtons: React.FC<EditButtonProps> = ({
-  onDelete,
-  onSave,
-  onCancel,
-}) => (
-  <>
-    <IconButton Icon={AiOutlineStop} label="cancel" handleClick={onCancel} />
-    <IconButton Icon={HiOutlineSave} label="save" handleClick={onSave} />
-    <IconButton Icon={RiDeleteBinLine} label="delete" handleClick={onDelete} />
-  </>
-);
+  editing,
+  setEditing,
+  handleDelete,
+  handleSave,
+}) => {
+  const handleCancel = () => {
+    setEditing(false);
+  };
+  return editing ? (
+    <>
+      <IconButton
+        Icon={AiOutlineStop}
+        label="cancel"
+        handleClick={handleCancel}
+      />
+      <IconButton Icon={HiOutlineSave} label="save" handleClick={handleSave} />
+      <IconButton
+        Icon={RiDeleteBinLine}
+        label="delete"
+        handleClick={handleDelete}
+      />
+    </>
+  ) : (
+    <IconButton
+      Icon={FiEdit}
+      label="edit"
+      handleClick={() => setEditing(true)}
+    />
+  );
+};

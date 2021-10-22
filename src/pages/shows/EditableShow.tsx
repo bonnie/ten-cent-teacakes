@@ -15,7 +15,7 @@ import { ShowWithVenue } from "@/lib/api";
 import { ShowPatchData, ShowPutData } from "@/pages/api/shows/queries";
 
 import { formattedPerformAt } from "./utils";
-import { DisplayVenue, EditableVenue } from "./Venue";
+import { DisplayShowVenue, EditableShowVenue } from "./Venue";
 
 type EditableNewShowProps = {
   setAddingShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -80,8 +80,8 @@ const venueDisplay = (
 ): React.ReactElement => {
   const venue = "venue" in show ? show.venue : undefined;
 
-  if (editing) return <EditableVenue venue={venue} />;
-  if (venue) return <DisplayVenue venue={venue} />;
+  if (editing) return <EditableShowVenue venue={venue} />;
+  if (venue) return <DisplayShowVenue venue={venue} />;
   return <span>TBD</span>;
 };
 
@@ -104,17 +104,15 @@ const EditableShow: React.FC<EditShowProps> = ({
     formState: { errors },
   } = useForm();
 
-  const stopEditing = () => {
-    setEditing(false);
-  };
   return (
     <div>
       <p>
         <form onSubmit={handleSubmit(handleSave)}>
           <EditButtons
-            onCancel={handleCancel ?? stopEditing}
-            onSave={() => handleSubmit(handleSave)}
-            onDelete={handleDelete}
+            editing={editing}
+            setEditing={setEditing}
+            handleSave={() => handleSubmit(handleSave)}
+            handleDelete={handleDelete}
           />
           {editing ? (
             <Controller

@@ -6,7 +6,7 @@ import { ToastStatus } from "./types";
 // eslint-disable-next-line no-unused-vars
 export type ToastFunction = (status: ToastStatus, message: string) => string;
 
-export function useToast(delayInMs: number = 4000) {
+export function useToast(delayInMs: number = 5000) {
   const dispatch = useToastDispatchContext();
   const showToast: ToastFunction = (status, message) => {
     const id = Math.random().toString(36).substr(2, 9);

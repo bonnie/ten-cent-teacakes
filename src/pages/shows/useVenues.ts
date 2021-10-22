@@ -1,26 +1,45 @@
 import { Venue } from ".prisma/client";
 
-import { UseMutateFunction, useMutation, useQuery } from "react-query";
+import {
+  UseMutateFunction,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 
-import { addVenue, fetchVenues } from "@/lib/api";
+import { useToast } from "@/components/toasts/useToast";
+import {
+  addVenue,
+  deleteVenue,
+  fetchVenues,
+  patchVenue,
+  VenuePatchArgs,
+  VenueResponse,
+} from "@/lib/api";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { useHandleError } from "@/lib/react-query/useHandleError";
 import { VenuePutData } from "@/pages/api/venues/queries";
 
 type UseVenuesReturnValue = {
   venues: Array<Venue>;
-  addVenue: UseMutateFunction<
-    {
-      venue: Venue;
-    },
+  addVenue: UseMutateFunction<VenueResponse, unknown, VenuePutData, unknown>;
+  deleteVenue: UseMutateFunction<void, unknown, number, unknown>;
+  updateVenue: UseMutateFunction<
+    VenueResponse,
     unknown,
-    VenuePutData,
+    VenuePatchArgs,
     unknown
   >;
 };
 
 export const useVenues = (): UseVenuesReturnValue => {
+  const { showToast } = useToast();
   const { handleError } = useHandleError();
+  const queryClient = useQueryClient();
+
+  const invalidateVenues = () =>
+    queryClient.invalidateQueries([queryKeys.venues]);
+
   const { data: venues = [] } = useQuery<Array<Venue>>(
     queryKeys.venues,
     fetchVenues,
@@ -29,7 +48,35 @@ export const useVenues = (): UseVenuesReturnValue => {
     },
   );
 
-  const { mutate: addVenueMutate } = useMutation(queryKeys.venues, addVenue);
+  const { mutate: addVenueMutate } = useMutation(queryKeys.venues, addVenue, {
+    onSuccess: (data) => {
+      invalidateVenues();
+      showToast("success", `You have added the venue "${data.venue.name}"`);
+    },
+  });
 
-  return { venues, addVenue: addVenueMutate };
+  const { mutate: deleteVenueMutate } = useMutation(
+    queryKeys.venues,
+    deleteVenue,
+    {
+      onSuccess: () => {
+        invalidateVenues();
+        showToast("success", `You have deleted the venue`);
+      },
+    },
+  );
+
+  const { mutate: updateVenue } = useMutation(queryKeys.venues, patchVenue, {
+    onSuccess: (data) => {
+      invalidateVenues();
+      showToast("success", `You have updated the venue "${data.venue.name}"`);
+    },
+  });
+
+  return {
+    venues,
+    addVenue: addVenueMutate,
+    deleteVenue: deleteVenueMutate,
+    updateVenue,
+  };
 };

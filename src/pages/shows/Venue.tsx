@@ -11,7 +11,7 @@ import { VenuePutData } from "@/pages/api/venues/queries";
 
 import { useVenues } from "./useVenues";
 
-export const DisplayVenue: React.FC<{ venue: VenueType }> = ({ venue }) => {
+export const DisplayShowVenue: React.FC<{ venue: VenueType }> = ({ venue }) => {
   const { url } = venue;
   if (!url) return <span>{venue.name}</span>;
 
@@ -29,11 +29,11 @@ export const DisplayVenue: React.FC<{ venue: VenueType }> = ({ venue }) => {
   );
 };
 
-type AddVenueFormProps = {
+type AddShowVenueFormProps = {
   setAddNew: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const AddVenueForm: React.FC<AddVenueFormProps> = ({ setAddNew }) => {
+const AddShowVenueForm: React.FC<AddShowVenueFormProps> = ({ setAddNew }) => {
   const { addVenue } = useVenues();
   const {
     register,
@@ -57,22 +57,24 @@ const AddVenueForm: React.FC<AddVenueFormProps> = ({ setAddNew }) => {
   );
 };
 
-type EditableVenueProps = {
+type EditableShowVenueProps = {
   venue: VenueType | undefined;
 };
 
-export const EditableVenue: React.FC<EditableVenueProps> = ({ venue }) => {
+export const EditableShowVenue: React.FC<EditableShowVenueProps> = ({
+  venue,
+}) => {
   const { venues } = useVenues();
   const [addNew, setAddNew] = useState(false);
   return (
     <>
       <select>
         {venues.map((venue) => (
-          <option value={venue.id}>venue.name</option>
+          <option value={venue.id}>{venue.name}</option>
         ))}
       </select>
       <AddButton clickHandler={() => setAddNew((addNew) => !addNew)} />
-      {addNew ? <AddVenueForm setAddNew={setAddNew} /> : null}
+      {addNew ? <AddShowVenueForm setAddNew={setAddNew} /> : null}
     </>
   );
 };

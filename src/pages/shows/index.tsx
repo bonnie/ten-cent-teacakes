@@ -8,6 +8,7 @@ import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { queryKeys } from "@/lib/react-query/query-keys";
 
 import { AddShow } from "./AddShow";
+import { EditVenues } from "./EditVenues";
 import { ShowsSegment } from "./ShowsSegment";
 import { useShows } from "./useShows";
 
@@ -38,6 +39,7 @@ const Shows: React.FC = () => {
       {addingShow ? <AddShow setAddingShow={setAddingShow} /> : null}
       <ShowsSegment title="Upcoming Shows" shows={upcomingShows} />
       <ShowsSegment title="Past Shows" shows={pastShows} />
+      {user ? <EditVenues /> : null}
     </div>
   );
 };

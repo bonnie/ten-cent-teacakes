@@ -15,9 +15,9 @@ const getToasDetailsByStatus = (status: ToastStatus) => {
     case "info":
       return { color: "blue", Icon: AiOutlineInfoCircle };
     case "success":
-      return { color: "green", Icon: AiOutlineWarning };
+      return { color: "green", Icon: AiOutlineCheckCircle };
     case "warning":
-      return { color: "yellow", Icon: AiOutlineCheckCircle };
+      return { color: "yellow", Icon: AiOutlineWarning };
     case "error":
       return { color: "red", Icon: MdOutlineSmsFailed };
     default:
@@ -31,7 +31,9 @@ export default function Toast({ status, message, id }: ToastType) {
   return (
     <>
       {status === "success" && (
-        <div className={`rounded-md bg-${color}-50 p-4 m-3`}>
+        <div
+          className={`rounded-md bg-${color}-50 border-${color}-800 border-solid border-4 p-4 m-3`}
+        >
           <div className="flex">
             <div className="flex-shrink-0">
               <svg
