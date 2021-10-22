@@ -3,6 +3,7 @@
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import "react-datetime-picker/dist/DateTimePicker.css";
+import { Show } from ".prisma/client";
 
 import dayjs from "dayjs";
 import React, { useState } from "react";
@@ -14,7 +15,7 @@ import { ShowWithVenue } from "@/lib/api";
 import { ShowPatchData, ShowPutData } from "@/pages/api/shows/queries";
 
 import { formattedPerformAt } from "./utils";
-import { Venue } from "./Venue";
+import { DisplayVenue, EditableVenue } from "./Venue";
 
 type EditableNewShowProps = {
   setAddingShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -73,6 +74,17 @@ type EditShowProps = {
   handleDelete: () => void;
 };
 
+const venueDisplay = (
+  show: ShowWithVenue | ShowPutData,
+  editing: boolean,
+): React.ReactElement => {
+  const venue = "venue" in show ? show.venue : undefined;
+
+  if (editing) return <EditableVenue venue={venue} />;
+  if (venue) return <DisplayVenue venue={venue} />;
+  return <span>TBD</span>;
+};
+
 const EditableShow: React.FC<EditShowProps> = ({
   show,
   startWithEditing,
@@ -95,8 +107,6 @@ const EditableShow: React.FC<EditShowProps> = ({
   const stopEditing = () => {
     setEditing(false);
   };
-  const venue = "venue" in show ? show.venue : undefined;
-
   return (
     <div>
       <p>
@@ -121,7 +131,7 @@ const EditableShow: React.FC<EditShowProps> = ({
           ) : (
             formattedPerformAt(show.performAt)
           )}
-          <Venue venue={venue} editing={editing} />
+          {venueDisplay(show, editing)}
         </form>
       </p>
     </div>

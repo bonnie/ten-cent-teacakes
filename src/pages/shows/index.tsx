@@ -11,17 +11,16 @@ import { AddShow } from "./AddShow";
 import { ShowsSegment } from "./ShowsSegment";
 import { useShows } from "./useShows";
 
-export async function getStaticProps() {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery(queryKeys.shows, fetchShows);
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+// TODO: this is resulting in "Error: connect ECONNREFUSED 127.0.0.1:80"
+// export async function getStaticProps() {
+//   const queryClient = new QueryClient();
+//   await queryClient.prefetchQuery(queryKeys.shows, fetchShows);
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// }
 
 const Shows: React.FC = () => {
   const { pastShows, upcomingShows } = useShows();

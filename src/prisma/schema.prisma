@@ -21,14 +21,14 @@ model Show {
 model Venue {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar(255) @unique
-  url       String?  @db.VarChar(255)
+  url       String?  @db.VarChar(255) @unique
   shows     Show[]
 }
 
 model Photo {
   id            Int      @id @default(autoincrement())
   show          Show     @relation(fields: [showId], references: [id])
-  showId       Int
+  showId        Int
   imagePath     String   @db.VarChar(255)
   photographer  String   @db.VarChar(255)
   createdAt     DateTime @default(now())

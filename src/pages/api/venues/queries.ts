@@ -1,8 +1,8 @@
 import prisma from "@/lib/prisma";
 
-type VenuePutData = { name: string; url?: string };
+export type VenuePutData = { name: string; url?: string };
 
-type VenuePatchData = {
+export type VenuePatchData = {
   body: VenuePutData;
   id: number;
 };
@@ -12,9 +12,13 @@ export const getVenues = () =>
     orderBy: { name: "asc" },
   });
 
-const getVenueById = (id: number) => prisma.venue.findUnique({ where: { id } });
+export const getVenueById = (id: number) =>
+  prisma.venue.findUnique({ where: { id } });
 
-export const addVenue = (data: VenuePutData) => prisma.venue.create({ data });
+export const addVenue = async (data: VenuePutData) => {
+  await prisma.venue.create({ data });
+  return prisma.venue.findUnique({ where: { name: data.name } });
+};
 
 export const patchVenue = async ({ body, id }: VenuePatchData) => {
   const venueData = getVenueById(id);
