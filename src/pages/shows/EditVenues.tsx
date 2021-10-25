@@ -21,15 +21,21 @@ const EditableVenue: React.FC<{ venue: Venue }> = ({ venue }) => {
     formState: { errors },
   } = useForm();
 
+  const handleDelete = () => {
+    setEditing(false);
+    deleteVenue(venue.id);
+  };
+  const handleSave = () => {
+    handleSubmit((data) => updateVenue({ id: venue.id, data }));
+  };
+
   return (
     <div>
       <EditButtons
         editing={editing}
         setEditing={setEditing}
-        handleDelete={() => deleteVenue(venue.id)}
-        handleSave={() => {
-          handleSubmit((data) => updateVenue({ id: venue.id, data }));
-        }}
+        handleDelete={handleDelete}
+        handleSave={handleSave}
       />
       {editing ? (
         <input

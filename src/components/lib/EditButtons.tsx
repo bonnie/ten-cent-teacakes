@@ -6,8 +6,8 @@ import React, {
 } from "react";
 import { IconType } from "react-icons";
 import { AiOutlineStop } from "react-icons/ai";
+import { BiSave } from "react-icons/bi";
 import { FiEdit } from "react-icons/fi";
-import { HiOutlineSave } from "react-icons/hi";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 type IconButtonProps = {
@@ -47,7 +47,7 @@ export const EditButtons: React.FC<EditButtonProps> = ({
         label="cancel"
         handleClick={handleCancel}
       />
-      <IconButton Icon={HiOutlineSave} label="save" handleClick={handleSave} />
+      <IconButton Icon={BiSave} label="save" handleClick={handleSave} />
       <IconButton
         Icon={RiDeleteBinLine}
         label="delete"
