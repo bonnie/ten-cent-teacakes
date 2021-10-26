@@ -2,6 +2,7 @@
 import { Venue as VenueType } from ".prisma/client";
 
 import React from "react";
+import { FieldValues, UseFormRegister } from "react-hook-form";
 
 import { useVenues } from "../hooks/useVenues";
 
@@ -23,31 +24,24 @@ export const DisplayShowVenue: React.FC<{ venue: VenueType }> = ({ venue }) => {
   );
 };
 
-type EditableShowVenueProps = {
+type VenueSelectProps = {
   value: number | undefined;
   // eslint-disable-next-line no-unused-vars
   updateField: (venueId: number) => void;
 };
 
-export const EditableShowVenue: React.FC<EditableShowVenueProps> = ({
-  value,
-  updateField,
-}) => {
+export const EditableShowVenue: React.FC<{
+  venueId: number | undefined;
+  register: UseFormRegister<FieldValues>;
+}> = ({ venueId, register }) => {
   const { venues } = useVenues();
-  const onChange = (event: React.ChangeEvent<HTMLSelectElement>) =>
-    updateField(Number(event.target.value));
   return (
-    <>
-      <select onChange={onChange}>
-        {venues.map((venue) => {
-          const selected = value === venue.id;
-          return (
-            <option value={venue.id} selected={selected}>
-              {venue.name}
-            </option>
-          );
-        })}
-      </select>
-    </>
+    <select {...register("venueId")} defaultValue={venueId}>
+      {venues.map((venue) => (
+        <option key={venue.id} value={venue.id}>
+          {venue.name}
+        </option>
+      ))}
+    </select>
   );
 };

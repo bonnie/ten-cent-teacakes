@@ -8,7 +8,7 @@ import { Button } from "@/components/lib/Button";
 import { EditButtons } from "@/components/lib/EditButtons";
 import { Heading } from "@/components/lib/Heading";
 
-import { useVenues } from "./useVenues";
+import { useVenues } from "../hooks/useVenues";
 
 const EditableVenue: React.FC<{ venue: Venue }> = ({ venue }) => {
   const [editing, setEditing] = useState(false);
