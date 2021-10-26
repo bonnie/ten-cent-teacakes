@@ -1,11 +1,5 @@
+import { VenuePatchData, VenuePutData } from "@/lib/api/venues/types";
 import prisma from "@/lib/prisma";
-
-export type VenuePutData = { name: string; url?: string };
-
-export type VenuePatchData = {
-  body: VenuePutData;
-  id: number;
-};
 
 export const getVenues = () =>
   prisma.venue.findMany({

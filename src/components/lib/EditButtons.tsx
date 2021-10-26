@@ -1,9 +1,4 @@
-import React, {
-  Dispatch,
-  MouseEvent as ReactMouseEvent,
-  MouseEventHandler,
-  SetStateAction,
-} from "react";
+import React, { Dispatch, MouseEventHandler, SetStateAction } from "react";
 import { IconType } from "react-icons";
 import { AiOutlineStop } from "react-icons/ai";
 import { BiSave } from "react-icons/bi";

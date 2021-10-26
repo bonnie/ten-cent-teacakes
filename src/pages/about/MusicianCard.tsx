@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-import { MusicianWithInstruments } from "@/lib/api";
+import { MusicianWithInstruments } from "@/lib/musicians";
 
 const cardClasses = [
   "sm:min-w-full",

@@ -3,9 +3,9 @@ import { dehydrate, QueryClient } from "react-query";
 
 import { AddButton } from "@/components/lib/AddButton";
 import { Heading } from "@/components/lib/Heading";
-import { fetchShows } from "@/lib/api";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { queryKeys } from "@/lib/react-query/query-keys";
+import { fetchShows } from "@/lib/shows";
 
 import { AddShow } from "./AddShow";
 import { EditVenues } from "./EditVenues";

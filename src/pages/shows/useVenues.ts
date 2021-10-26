@@ -8,17 +8,17 @@ import {
 } from "react-query";
 
 import { useToast } from "@/components/toasts/useToast";
+import { queryKeys } from "@/lib/react-query/query-keys";
+import { useHandleError } from "@/lib/react-query/useHandleError";
 import {
   addVenue,
   deleteVenue,
   fetchVenues,
   patchVenue,
   VenuePatchArgs,
+  VenuePutData,
   VenueResponse,
-} from "@/lib/api";
-import { queryKeys } from "@/lib/react-query/query-keys";
-import { useHandleError } from "@/lib/react-query/useHandleError";
-import { VenuePutData } from "@/pages/api/venues/queries";
+} from "@/lib/venues";
 
 type UseVenuesReturnValue = {
   venues: Array<Venue>;

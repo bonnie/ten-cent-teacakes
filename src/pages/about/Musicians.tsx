@@ -5,7 +5,7 @@ import { dehydrate, QueryClient, useQuery } from "react-query";
 import {
   fetchMusiciansWithInstruments,
   MusicianWithInstruments,
-} from "@/lib/api";
+} from "@/lib/musicians";
 import { queryKeys } from "@/lib/react-query/query-keys";
 
 import { MusicianCard } from "./MusicianCard";

@@ -1,5 +1,5 @@
 import React, { MouseEventHandler } from "react";
-import { HiOutlineSave } from "react-icons/hi";
+import { BiSave } from "react-icons/bi";
 
 export const SubmitButton: React.FC<{
   handleClick: MouseEventHandler<HTMLButtonElement>;
@@ -10,6 +10,6 @@ export const SubmitButton: React.FC<{
     aria-label="submit"
     title="submit"
   >
-    <HiOutlineSave size={30} />
+    <BiSave size={30} />
   </button>
 );

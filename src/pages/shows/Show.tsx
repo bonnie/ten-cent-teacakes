@@ -1,8 +1,8 @@
 import React from "react";
 
-import { ShowWithVenue } from "@/lib/api";
+import { ShowWithVenue } from "@/lib/shows";
 
-import { DisplayShowVenue } from "./Venue";
+import { DisplayShowVenue } from "./ShowVenue";
 
 export const Show: React.FC<{ show: ShowWithVenue }> = ({ show }) => (
   <div>

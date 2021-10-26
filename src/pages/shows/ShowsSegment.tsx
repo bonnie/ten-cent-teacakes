@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Heading } from "@/components/lib/Heading";
-import { ShowWithVenue } from "@/lib/api";
+import { ShowWithVenue } from "@/lib/shows";
 
 const Show: React.FC<{ show: ShowWithVenue }> = ({ show }) => (
   <div>

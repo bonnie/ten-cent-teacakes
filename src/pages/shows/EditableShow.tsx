@@ -11,11 +11,11 @@ import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
 import { Controller, useForm } from "react-hook-form";
 
 import { EditButtons } from "@/components/lib/EditButtons";
-import { ShowWithVenue } from "@/lib/api";
+import { axiosInstance, ShowWithVenue } from "@/lib/axios/axiosInstance";
 import { ShowPatchData, ShowPutData } from "@/pages/api/shows/queries";
 
+import { DisplayShowVenue, EditableShowVenue } from "./ShowVenue";
 import { formattedPerformAt } from "./utils";
-import { DisplayShowVenue, EditableShowVenue } from "./Venue";
 
 type EditableNewShowProps = {
   setAddingShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,7 +29,7 @@ export const EditableNewShow: React.FC<EditableNewShowProps> = ({
   };
   const cancelAddingShow = () => setAddingShow(false);
   const handleSave = (data: ShowPutData) => {
-    // TODO: server call to save new show
+    axiosInstance.put("/api/shows", { data });
   };
   return (
     <EditableShow
@@ -72,17 +72,6 @@ type EditShowProps = {
   handleCancel: (() => void) | undefined;
   handleSave: ((data: ShowPatchData) => void) | ((data: ShowPutData) => void);
   handleDelete: () => void;
-};
-
-const venueDisplay = (
-  show: ShowWithVenue | ShowPutData,
-  editing: boolean,
-): React.ReactElement => {
-  const venue = "venue" in show ? show.venue : undefined;
-
-  if (editing) return <EditableShowVenue venue={venue} />;
-  if (venue) return <DisplayShowVenue venue={venue} />;
-  return <span>TBD</span>;
 };
 
 const EditableShow: React.FC<EditShowProps> = ({
@@ -129,7 +118,24 @@ const EditableShow: React.FC<EditShowProps> = ({
           ) : (
             formattedPerformAt(show.performAt)
           )}
-          {venueDisplay(show, editing)}
+          {editing ? (
+            <Controller
+              control={control}
+              name="venueId"
+              defaultValue={show.venueId}
+              render={({ field }) => (
+                <EditableShowVenue
+                  value={field.value}
+                  updateField={(venueId: number) => field.onChange(venueId)}
+                />
+              )}
+            />
+          ) : null}
+          {"venue" in show ? (
+            <DisplayShowVenue venue={show.venue} />
+          ) : (
+            <span>TBD</span>
+          )}
         </form>
       </p>
     </div>

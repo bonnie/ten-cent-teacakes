@@ -74,15 +74,16 @@ export const EditVenues: React.FC = () => {
           <Heading textSize="4xl" align="left" margin={0}>
             Edit Venues
           </Heading>
-          {venues.map((venue) => (
-            <EditableVenue venue={venue} />
-          ))}
+          {venues
+            .sort((a, b) => (a.name > b.name ? 1 : -1))
+            .map((venue) => (
+              <EditableVenue venue={venue} />
+            ))}
         </>
       )}
     </>
   );
 };
 
-// TODO: why does deleting a venue make the one *below* it disappear until refresh?
 // TODO: implementing venue update
 // TODO: implement add venue for this component

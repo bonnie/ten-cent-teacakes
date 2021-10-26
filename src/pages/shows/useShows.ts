@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { UseMutateFunction, useMutation, useQuery } from "react-query";
 
-import { fetchShows, ShowWithVenue } from "@/lib/api";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { useHandleError } from "@/lib/react-query/useHandleError";
+import { fetchShows, ShowWithVenue } from "@/lib/shows";
 
 type SortedShows = {
   upcomingShows: Array<ShowWithVenue>;
@@ -35,7 +35,15 @@ const sortShows = (data: Array<ShowWithVenue>): SortedShows => {
   return sortedShows;
 };
 
-export const useShows = (): SortedShows => {
+type UseShowsReturnValue = {
+  pastShows: Array<ShowWithVenue>;
+  upcomingShows: Array<ShowWithVenue>;
+  addShow: UseMutateFunction<ShowResponse, unknown, ShowPutData, unknown>;
+  deleteShow: UseMutateFunction<void, unknown, number, unknown>;
+  updateShow: UseMutateFunction<ShowResponse, unknown, ShowPatchArgs, unknown>;
+};
+
+export const useShows = (): UseShowsReturnValue => {
   const [shows, setShows] = useState<SortedShows>({
     upcomingShows: [],
     pastShows: [],
@@ -54,5 +62,5 @@ export const useShows = (): SortedShows => {
     setShows(sortShows(data));
   }, [data]);
 
-  return shows;
+  return { ...shows, updateShow };
 };
