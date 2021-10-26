@@ -12,10 +12,12 @@ export type ShowWithVenue = Show & {
 
 export type ShowResponse = { show: Show };
 
-export type ShowPutData = { performAt: Date; venueId: number };
+export type ShowPutData = { performAt: Date; venueId?: number };
 
-export type ShowPatchData = { performAt?: Date; venueId?: number };
-
+export type ShowPatchData = {
+  body: { performAt?: Date; venueId?: number };
+  id: number;
+};
 export type ShowPatchArgs = {
   id: number;
   data: ShowPatchData;

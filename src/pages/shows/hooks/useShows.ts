@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
-import { UseMutateFunction, useMutation, useQuery } from "react-query";
+import {
+  UseMutateFunction,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 
+import { useToast } from "@/components/toasts/useToast";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { useHandleError } from "@/lib/react-query/useHandleError";
 import {
@@ -58,6 +64,7 @@ export const useShows = (): UseShowsReturnValue => {
     pastShows: [],
   });
 
+  const { showToast } = useToast();
   const { handleError } = useHandleError();
   const { data = [] } = useQuery<Array<ShowWithVenue>>(
     queryKeys.shows,
@@ -67,9 +74,43 @@ export const useShows = (): UseShowsReturnValue => {
     },
   );
 
+  const queryClient = useQueryClient();
+  const invalidateShows = () =>
+    queryClient.invalidateQueries([queryKeys.shows]);
+
+  const { mutate: addShowMutate } = useMutation(queryKeys.shows, addShow, {
+    onSuccess: () => {
+      invalidateShows();
+      showToast("success", "You have added a show");
+    },
+  });
+
+  const { mutate: deleteShowMutate } = useMutation(
+    queryKeys.shows,
+    deleteShow,
+    {
+      onSuccess: () => {
+        invalidateShows();
+        showToast("success", `You have deleted the show`);
+      },
+    },
+  );
+
+  const { mutate: updateShow } = useMutation(queryKeys.shows, patchShow, {
+    onSuccess: () => {
+      invalidateShows();
+      showToast("success", "You have updated the show");
+    },
+  });
+
   useEffect(() => {
     setShows(sortShows(data));
   }, [data]);
 
-  return { ...shows, updateShow };
+  return {
+    ...shows,
+    addShow: addShowMutate,
+    updateShow,
+    deleteShow: deleteShowMutate,
+  };
 };

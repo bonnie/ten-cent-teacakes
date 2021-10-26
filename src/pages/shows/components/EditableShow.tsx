@@ -11,11 +11,12 @@ import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
 import { Controller, useForm } from "react-hook-form";
 
 import { EditButtons } from "@/components/lib/EditButtons";
-import { axiosInstance, ShowWithVenue } from "@/lib/axios/axiosInstance";
-import { ShowPatchData, ShowPutData } from "@/pages/api/shows/queries";
+import { axiosInstance } from "@/lib/axios/axiosInstance";
+import { ShowPatchData, ShowPutData, ShowWithVenue } from "@/lib/shows";
 
+import { useShows } from "../hooks/useShows";
+import { formattedPerformAt } from "../utils";
 import { DisplayShowVenue, EditableShowVenue } from "./ShowVenue";
-import { formattedPerformAt } from "./utils";
 
 type EditableNewShowProps = {
   setAddingShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,13 +25,12 @@ type EditableNewShowProps = {
 export const EditableNewShow: React.FC<EditableNewShowProps> = ({
   setAddingShow,
 }) => {
+  const { addShow } = useShows();
   const newShow: ShowPutData = {
     performAt: new Date(),
   };
   const cancelAddingShow = () => setAddingShow(false);
-  const handleSave = (data: ShowPutData) => {
-    axiosInstance.put("/api/shows", { data });
-  };
+  const handleSave = addShow;
   return (
     <EditableShow
       show={newShow}
@@ -49,11 +49,13 @@ type EditableExistingShowProps = {
 export const EditableExistingShow: React.FC<EditableExistingShowProps> = ({
   show,
 }) => {
+  const { updateShow, deleteShow } = useShows();
+
   const handleDelete = () => {
-    // TODO server call to delete show
+    deleteShow(show.id);
   };
   const handleSave = (data: ShowPatchData) => {
-    // TODO: server call to save show
+    updateShow({ id: show.id, data });
   };
   return (
     <EditableShow
