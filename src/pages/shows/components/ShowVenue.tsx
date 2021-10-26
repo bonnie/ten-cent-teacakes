@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Venue as VenueType } from ".prisma/client";
 
-import React from "react";
+import React, { useState } from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 
 import { useVenues } from "../hooks/useVenues";
+import { AddVenueForm } from "./AddVenueForm";
 
 export const DisplayShowVenue: React.FC<{ venue: VenueType }> = ({ venue }) => {
   const { url } = venue;
@@ -24,24 +25,25 @@ export const DisplayShowVenue: React.FC<{ venue: VenueType }> = ({ venue }) => {
   );
 };
 
-type VenueSelectProps = {
-  value: number | undefined;
-  // eslint-disable-next-line no-unused-vars
-  updateField: (venueId: number) => void;
-};
-
 export const EditableShowVenue: React.FC<{
   venueId: number | undefined;
   register: UseFormRegister<FieldValues>;
-}> = ({ venueId, register }) => {
+  setShowAddVenue: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ venueId, register, setShowAddVenue }) => {
   const { venues } = useVenues();
+  const addNewText = "Add new...";
+  const onChange = (event: React.ChangeEvent<HTMLSelectElement>) =>
+    setShowAddVenue(event.target.value === addNewText);
   return (
-    <select {...register("venueId")} defaultValue={venueId}>
-      {venues.map((venue) => (
-        <option key={venue.id} value={venue.id}>
-          {venue.name}
-        </option>
-      ))}
-    </select>
+    <>
+      <select {...register("venueId", { onChange })} defaultValue={venueId}>
+        {venues.map((venue) => (
+          <option key={venue.id} value={venue.id}>
+            {venue.name}
+          </option>
+        ))}
+        <option value={undefined}>Add new...</option>
+      </select>
+    </>
   );
 };

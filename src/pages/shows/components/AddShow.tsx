@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { EditButtons } from "@/components/lib/EditButtons";
@@ -6,6 +6,7 @@ import { Heading } from "@/components/lib/Heading";
 import { ShowPutData } from "@/lib/shows";
 
 import { useShows } from "../hooks/useShows";
+import { AddVenueForm } from "./AddVenueForm";
 import { EditableShowDate } from "./ShowDate";
 import { EditableShowVenue } from "./ShowVenue";
 
@@ -15,8 +16,8 @@ type AddShowProps = {
 
 export const AddShow: React.FC<AddShowProps> = ({ setAddingShow }) => {
   const { addShow } = useShows();
+  const [showAddVenue, setShowAddVenue] = useState(false);
   const handleSave = (data: ShowPutData) => {
-    console.log("SAVING!!", data);
     addShow(data);
   };
   const today = new Date();
@@ -28,8 +29,6 @@ export const AddShow: React.FC<AddShowProps> = ({ setAddingShow }) => {
     watch,
     formState: { errors, isValid },
   } = useForm();
-  console.log(watch());
-  // console.log("isValid", isValid);
   return (
     <div>
       <Heading textSize="4xl" align="left" margin={0}>
@@ -39,12 +38,17 @@ export const AddShow: React.FC<AddShowProps> = ({ setAddingShow }) => {
         <EditButtons
           editing
           setEditing={setAddingShow}
-          handleSave={() => handleSubmit(handleSave)}
+          // handleSave={(e) => {e.preventDefault(); formRef?.current?.submit()}}
           handleDelete={() => setAddingShow(false)}
         />
         <EditableShowDate control={control} performAt={today} />
-        <EditableShowVenue register={register} venueId={undefined} />
+        <EditableShowVenue
+          register={register}
+          venueId={undefined}
+          setShowAddVenue={setShowAddVenue}
+        />
       </form>
+      <AddVenueForm visible={showAddVenue} setVisible={setShowAddVenue} />
     </div>
   );
 };

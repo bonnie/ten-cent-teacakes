@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/lib/Button";
 import { EditButtons } from "@/components/lib/EditButtons";
 import { Heading } from "@/components/lib/Heading";
+import { VenuePatchData } from "@/lib/venues";
 
 import { useVenues } from "../hooks/useVenues";
 
@@ -25,17 +26,15 @@ const EditableVenue: React.FC<{ venue: Venue }> = ({ venue }) => {
     setEditing(false);
     deleteVenue(venue.id);
   };
-  const handleSave = () => {
-    handleSubmit((data) => updateVenue({ id: venue.id, data }));
-  };
+  const handleSave = (data: VenuePatchData) =>
+    updateVenue({ id: venue.id, data });
 
   return (
-    <div>
+    <form onSubmit={handleSubmit(handleSave)}>
       <EditButtons
         editing={editing}
         setEditing={setEditing}
         handleDelete={handleDelete}
-        handleSave={handleSave}
       />
       {editing ? (
         <input
@@ -55,7 +54,7 @@ const EditableVenue: React.FC<{ venue: Venue }> = ({ venue }) => {
       ) : (
         venue.url
       )}
-    </div>
+    </form>
   );
 };
 
@@ -77,13 +76,10 @@ export const EditVenues: React.FC = () => {
           {venues
             .sort((a, b) => (a.name > b.name ? 1 : -1))
             .map((venue) => (
-              <EditableVenue venue={venue} />
+              <EditableVenue key={venue.id} venue={venue} />
             ))}
         </>
       )}
     </>
   );
 };
-
-// TODO: implementing venue update
-// TODO: implement add venue for this component

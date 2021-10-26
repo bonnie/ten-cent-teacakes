@@ -10,6 +10,7 @@ import { EditButtons } from "@/components/lib/EditButtons";
 import { ShowPatchData, ShowWithVenue } from "@/lib/shows";
 
 import { useShows } from "../hooks/useShows";
+import { AddVenueForm } from "./AddVenueForm";
 import { EditableShowDate, ShowDate } from "./ShowDate";
 import { DisplayShowVenue, EditableShowVenue } from "./ShowVenue";
 
@@ -24,22 +25,29 @@ type ShowWithInputsProps = {
   show: ShowWithVenue;
   control: Control;
   register: UseFormRegister<FieldValues>;
+  setShowAddVenue: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ShowWithInputs: React.FC<ShowWithInputsProps> = ({
   show,
   control,
   register,
+  setShowAddVenue,
 }) => (
   <>
     <EditableShowDate control={control} performAt={show.performAt} />
-    <EditableShowVenue register={register} venueId={show.venueId} />
+    <EditableShowVenue
+      register={register}
+      venueId={show.venueId}
+      setShowAddVenue={setShowAddVenue}
+    />
   </>
 );
 
 export const EditableShow: React.FC<{ show: ShowWithVenue }> = ({ show }) => {
   const [editing, setEditing] = useState(false);
   const { updateShow, deleteShow } = useShows();
+  const [showAddVenue, setShowAddVenue] = useState(false);
 
   const {
     register,
@@ -53,20 +61,25 @@ export const EditableShow: React.FC<{ show: ShowWithVenue }> = ({ show }) => {
   const handleDelete = () => deleteShow(show.id);
 
   return (
-    <p>
+    <>
       <form onSubmit={handleSubmit(handleSave)}>
         <EditButtons
           editing={editing}
           setEditing={setEditing}
-          handleSave={() => handleSubmit(handleSave)}
           handleDelete={handleDelete}
         />
         {editing ? (
-          <ShowWithInputs show={show} control={control} register={register} />
+          <ShowWithInputs
+            show={show}
+            control={control}
+            register={register}
+            setShowAddVenue={setShowAddVenue}
+          />
         ) : (
           <Show show={show} />
         )}
       </form>
-    </p>
+      <AddVenueForm visible={showAddVenue} setVisible={setShowAddVenue} />
+    </>
   );
 };

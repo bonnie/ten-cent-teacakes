@@ -5,6 +5,8 @@ import { BiSave } from "react-icons/bi";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 
+import { SubmitButton } from "@/components/lib/SubmitButton";
+
 type IconButtonProps = {
   Icon: IconType;
   label: string;
@@ -24,13 +26,13 @@ type EditButtonProps = {
   editing: boolean;
   setEditing: Dispatch<SetStateAction<boolean>>;
   handleDelete: MouseEventHandler<HTMLButtonElement>;
-  handleSave: MouseEventHandler<HTMLButtonElement>;
+  // handleSave: MouseEventHandler<HTMLButtonElement>;
 };
 export const EditButtons: React.FC<EditButtonProps> = ({
   editing,
   setEditing,
   handleDelete,
-  handleSave,
+  // handleSave,
 }) => {
   const handleCancel = () => {
     setEditing(false);
@@ -42,7 +44,11 @@ export const EditButtons: React.FC<EditButtonProps> = ({
         label="cancel"
         handleClick={handleCancel}
       />
-      <IconButton Icon={BiSave} label="save" handleClick={handleSave} />
+      {/* <IconButton Icon={BiSave} label="save" handleClick={handleSave} /> */}
+      <button type="submit" aria-label="save" title="save">
+        <BiSave size={30} />
+      </button>
+      {/* <SubmitButton /> TODO: why can't I use submitbutton here? */}
       <IconButton
         Icon={RiDeleteBinLine}
         label="delete"

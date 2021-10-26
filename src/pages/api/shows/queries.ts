@@ -19,7 +19,7 @@ const getShowById = (id: number) => prisma.show.findUnique({ where: { id } });
 export const addShow = ({ performAt, venueId }: ShowPutData) => {
   const data: Prisma.ShowCreateInput = {
     performAt,
-    venue: { connect: { id: venueId } },
+    venue: { connect: { id: Number(venueId) } },
   };
   return prisma.show.create({ data });
 };
