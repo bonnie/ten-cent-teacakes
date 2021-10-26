@@ -3,7 +3,6 @@
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import "react-datetime-picker/dist/DateTimePicker.css";
-import { Show } from ".prisma/client";
 
 import dayjs from "dayjs";
 import React, { useState } from "react";
@@ -11,7 +10,6 @@ import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
 import { Controller, useForm } from "react-hook-form";
 
 import { EditButtons } from "@/components/lib/EditButtons";
-import { axiosInstance } from "@/lib/axios/axiosInstance";
 import { ShowPatchData, ShowPutData, ShowWithVenue } from "@/lib/shows";
 
 import { useShows } from "../hooks/useShows";
