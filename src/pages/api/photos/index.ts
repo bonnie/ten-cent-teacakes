@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { processApiError } from "@/lib/api/utils";
+import { processApiError } from "@/lib/axios/utils";
 
 import { getPhotosSortDescending } from "./queries";
 

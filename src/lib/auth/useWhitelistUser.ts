@@ -2,8 +2,8 @@ import { UserProfile, useUser } from "@auth0/nextjs-auth0";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import { ToastFunction, useToast } from "@/components/toasts/useToast";
-import { axiosInstance } from "@/lib/api/axiosInstance";
 import { WhitelistResponse } from "@/lib/auth/types";
+import { axiosInstance } from "@/lib/axios/axiosInstance";
 
 type WhitelistUser = UserProfile | undefined;
 type WhitelistUserReturn = { user: UserProfile | undefined };

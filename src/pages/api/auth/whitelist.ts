@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { processApiError } from "@/lib/api/utils";
 import { WhitelistResponse } from "@/lib/auth/types";
+import { processApiError } from "@/lib/axios/utils";
 
 export default async function handle(
   req: NextApiRequest,
