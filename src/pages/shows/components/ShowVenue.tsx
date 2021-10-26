@@ -3,7 +3,7 @@ import { Venue as VenueType } from ".prisma/client";
 
 import React from "react";
 
-import { useVenues } from "./useVenues";
+import { useVenues } from "../hooks/useVenues";
 
 export const DisplayShowVenue: React.FC<{ venue: VenueType }> = ({ venue }) => {
   const { url } = venue;

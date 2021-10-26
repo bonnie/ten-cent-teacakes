@@ -3,7 +3,16 @@ import { UseMutateFunction, useMutation, useQuery } from "react-query";
 
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { useHandleError } from "@/lib/react-query/useHandleError";
-import { fetchShows, ShowWithVenue } from "@/lib/shows";
+import {
+  addShow,
+  deleteShow,
+  fetchShows,
+  patchShow,
+  ShowPatchArgs,
+  ShowPutData,
+  ShowResponse,
+  ShowWithVenue,
+} from "@/lib/shows";
 
 type SortedShows = {
   upcomingShows: Array<ShowWithVenue>;

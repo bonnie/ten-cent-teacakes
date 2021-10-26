@@ -2,7 +2,7 @@ import React from "react";
 
 import { Heading } from "@/components/lib/Heading";
 
-import { Musicians } from "./Musicians";
+import { Musicians } from "./components/Musicians";
 
 const About: React.FC = () => (
   <div className="w-full">

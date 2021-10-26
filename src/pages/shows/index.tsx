@@ -7,10 +7,10 @@ import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { fetchShows } from "@/lib/shows";
 
-import { AddShow } from "./AddShow";
-import { EditVenues } from "./EditVenues";
-import { ShowsSegment } from "./ShowsSegment";
-import { useShows } from "./useShows";
+import { AddShow } from "./components/AddShow";
+import { EditVenues } from "./components/EditVenues";
+import { ShowsSegment } from "./components/ShowsSegment";
+import { useShows } from "./hooks/useShows";
 
 // TODO: this is resulting in "Error: connect ECONNREFUSED 127.0.0.1:80"
 // export async function getStaticProps() {
