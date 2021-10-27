@@ -33,11 +33,11 @@ export const patchShow = async ({ body, id }: ShowPatchData) => {
   // add venue in proper format to updatedData
   const updatedData: Prisma.ShowUpdateInput = {
     performAt: body.performAt,
-    venue: { connect: { id: body.venueId } },
+    venue: { connect: { id: Number(body.venueId) } },
   };
-  prisma.show.update({ data: updatedData, where: { id } });
+  await prisma.show.update({ data: updatedData, where: { id } });
 };
 
 export const deleteShow = async (id: number) => {
-  prisma.show.delete({ where: { id } });
+  await prisma.show.delete({ where: { id } });
 };

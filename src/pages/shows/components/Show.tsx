@@ -57,8 +57,14 @@ export const EditableShow: React.FC<{ show: ShowWithVenue }> = ({ show }) => {
     formState: { errors },
   } = useForm();
 
-  const handleSave = (data: ShowPatchData) => updateShow({ id: show.id, data });
-  const handleDelete = () => deleteShow(show.id);
+  const handleSave = (data: ShowPatchData) => {
+    setEditing(false);
+    updateShow({ id: show.id, data });
+  };
+  const handleDelete = () => {
+    setEditing(false);
+    deleteShow(show.id);
+  };
 
   return (
     <>

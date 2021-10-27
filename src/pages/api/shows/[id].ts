@@ -15,7 +15,7 @@ export default async function handle(
   try {
     switch (method) {
       case "PATCH":
-        res.status(201).json(await patchShow({ body, id }));
+        res.status(201).json(await patchShow({ body: body.body, id }));
         break;
       case "DELETE":
         res.status(204).json(await deleteShow(id));
