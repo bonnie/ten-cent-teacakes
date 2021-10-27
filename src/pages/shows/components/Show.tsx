@@ -15,10 +15,10 @@ import { EditableShowDate, ShowDate } from "./ShowDate";
 import { DisplayShowVenue, EditableShowVenue } from "./ShowVenue";
 
 export const Show: React.FC<{ show: ShowWithVenue }> = ({ show }) => (
-  <p>
+  <span>
     <ShowDate performAt={show.performAt} />
     <DisplayShowVenue venue={show.venue} />
-  </p>
+  </span>
 );
 
 type ShowWithInputsProps = {

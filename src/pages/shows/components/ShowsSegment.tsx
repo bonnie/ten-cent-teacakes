@@ -13,6 +13,7 @@ type ShowsProps = {
 
 export const ShowsSegment: React.FC<ShowsProps> = ({ title, shows }) => {
   const { user } = useWhitelistUser();
+  const ShowComponent = user ? EditableShow : Show;
   return (
     <div>
       <Heading textSize="4xl" align="left" margin={0}>
@@ -21,13 +22,7 @@ export const ShowsSegment: React.FC<ShowsProps> = ({ title, shows }) => {
       {shows.length === 0 ? (
         <p>No {title.toLowerCase()} just now; check back soon!</p>
       ) : (
-        shows.map((show) =>
-          user ? (
-            <Show key={show.id} show={show} />
-          ) : (
-            <EditableShow key={show.id} show={show} />
-          ),
-        )
+        shows.map((show) => <ShowComponent key={show.id} show={show} />)
       )}
     </div>
   );

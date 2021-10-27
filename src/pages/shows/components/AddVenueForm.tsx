@@ -1,10 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { BiSave } from "react-icons/bi";
-import { UseMutateFunction } from "react-query";
+import React from "react";
+import { useForm } from "react-hook-form";
 
-import { AddButton } from "@/components/lib/AddButton";
 import { SubmitButton } from "@/components/lib/SubmitButton";
 import { VenuePutData } from "@/lib/venues/types";
 
@@ -14,26 +11,47 @@ export const AddVenueForm: React.FC<{
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ visible, setVisible }) => {
-  const { addVenue } = useVenues();
+  const { venues, addVenue } = useVenues();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    setError,
+    formState: { errors, isValid },
   } = useForm();
+  // console.log("ERRORS", errors);
+  // console.log("ISVALID", isValid);
 
   if (!visible) return null;
 
   const onSubmit = (data: VenuePutData) => {
-    console.log("SUBMITTING");
     addVenue(data);
     setVisible(false);
   };
 
   return (
     <form onSubmit={handleSubmit<VenuePutData>(onSubmit)}>
-      <input placeholder="name" {...register("name", { required: true })} />
+      <input
+        placeholder="name"
+        {...register("name", {
+          required: true,
+          validate: (value) => {
+            console.log("RUNNING VALIDATE ON", value);
+            const invalid = value in venues;
+            if (invalid) {
+              console.log("SETTING ERROR");
+              setError("name", { message: `Venue "${value}" exists` });
+            }
+            return !invalid;
+          },
+        })}
+      />
       <input placeholder="url" {...register("url")} />
-      <SubmitButton />
+      <SubmitButton disabled={!isValid} />
+      {Object.keys(errors).forEach((error) => (
+        <span key={error} className="text-red-700">
+          {error}: {errors[error]}
+        </span>
+      ))}
     </form>
   );
 };

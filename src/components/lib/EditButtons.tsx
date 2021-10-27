@@ -37,6 +37,7 @@ export const EditButtons: React.FC<EditButtonProps> = ({
   const handleCancel = () => {
     setEditing(false);
   };
+
   return editing ? (
     <>
       <IconButton
