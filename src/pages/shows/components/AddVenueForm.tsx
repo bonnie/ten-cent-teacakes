@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from "react";
-import { useForm } from "react-hook-form";
+import { Formik } from "formik";
+import React, { useMemo } from "react";
 
 import { SubmitButton } from "@/components/lib/SubmitButton";
 import { VenuePutData } from "@/lib/venues/types";
@@ -12,46 +12,64 @@ export const AddVenueForm: React.FC<{
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ visible, setVisible }) => {
   const { venues, addVenue } = useVenues();
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors, isValid },
-  } = useForm();
-  // console.log("ERRORS", errors);
-  // console.log("ISVALID", isValid);
+  const venueNames = useMemo(
+    () => venues.map((venue) => venue.name.toLowerCase()),
+    [venues],
+  );
 
   if (!visible) return null;
 
-  const onSubmit = (data: VenuePutData) => {
-    addVenue(data);
-    setVisible(false);
-  };
+  const onSubmit = (data: VenuePutData) => {};
 
   return (
-    <form onSubmit={handleSubmit<VenuePutData>(onSubmit)}>
-      <input
-        placeholder="name"
-        {...register("name", {
-          required: true,
-          validate: (value) => {
-            console.log("RUNNING VALIDATE ON", value);
-            const invalid = value in venues;
-            if (invalid) {
-              console.log("SETTING ERROR");
-              setError("name", { message: `Venue "${value}" exists` });
-            }
-            return !invalid;
-          },
-        })}
-      />
-      <input placeholder="url" {...register("url")} />
-      <SubmitButton disabled={!isValid} />
-      {Object.keys(errors).forEach((error) => (
-        <span key={error} className="text-red-700">
-          {error}: {errors[error]}
-        </span>
-      ))}
-    </form>
+    <Formik
+      initialValues={{ name: "", url: "" }}
+      validate={(values) => {
+        const errors: { name?: string; url?: string } = {};
+        if (!values.name) {
+          errors.name = "Venue name is required";
+        } else if (
+          values.name &&
+          venueNames.includes(values.name.toLowerCase())
+        ) {
+          errors.name = `Venue "${values.name}" already exists`;
+        }
+        return errors;
+      }}
+      onSubmit={(values) => {
+        if (values.name) {
+          addVenue(values);
+          setVisible(false);
+        }
+      }}
+    >
+      {({
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+      }) => (
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="name"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.name}
+          />
+          <input
+            type="text"
+            name="url"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.url}
+          />
+          <SubmitButton disabled={!!errors.name} />
+          {errors.name && touched.name && errors.name}
+        </form>
+      )}
+    </Formik>
   );
 };
