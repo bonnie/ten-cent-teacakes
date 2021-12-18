@@ -3,7 +3,6 @@ import { Formik } from "formik";
 import React, { useMemo } from "react";
 
 import { SubmitButton } from "@/components/lib/SubmitButton";
-import { VenuePutData } from "@/lib/venues/types";
 
 import { useVenues } from "../hooks/useVenues";
 
@@ -18,8 +17,6 @@ export const AddVenueForm: React.FC<{
   );
 
   if (!visible) return null;
-
-  const onSubmit = (data: VenuePutData) => {};
 
   return (
     <Formik
@@ -55,6 +52,7 @@ export const AddVenueForm: React.FC<{
           <input
             type="text"
             name="name"
+            placeholder="venue name"
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.name}
@@ -62,12 +60,13 @@ export const AddVenueForm: React.FC<{
           <input
             type="text"
             name="url"
+            placeholder="venue url"
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.url}
           />
           <SubmitButton disabled={!!errors.name} />
-          {errors.name && touched.name && errors.name}
+          {touched.name && errors.name}
         </form>
       )}
     </Formik>

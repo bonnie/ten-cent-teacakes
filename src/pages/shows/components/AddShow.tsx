@@ -1,5 +1,5 @@
+import { Formik } from "formik";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 
 import { EditButtons } from "@/components/lib/EditButtons";
 import { Heading } from "@/components/lib/Heading";
@@ -34,6 +34,9 @@ export const AddShow: React.FC<AddShowProps> = ({ setAddingShow }) => {
       <Heading textSize="4xl" align="left" margin={0}>
         Add Show
       </Heading>
+      <Formik
+      initialValues={{performAt: today, venueId: undefined}}
+      >
       <form onSubmit={handleSubmit(handleSave)}>
         <EditButtons
           editing

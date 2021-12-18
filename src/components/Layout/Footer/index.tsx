@@ -7,3 +7,14 @@ export const Footer: React.FC = () => (
     <p>© {dayjs().year()}</p>
   </div>
 );
+
+// https://twitter.com/AdaRoseCannon/status/1471855546580049925?s=20
+// Damn i love the CSS inset property, it's short hand for top, left, bottom and right:
+
+// stick to bottom:
+//         position: absolute;
+//         inset: auto 0 0 0;
+
+// full screen:
+//         position: absolute;
+//         inset: 0;
