@@ -103,9 +103,10 @@ export const useShows = (): UseShowsReturnValue => {
     },
   });
 
-  useEffect(() => {
-    setShows(sortShows(data));
-  }, [data]);
+  // Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.
+  // useEffect(() => {
+  //   setShows(sortShows(data));
+  // }, [data]);
 
   return {
     ...shows,

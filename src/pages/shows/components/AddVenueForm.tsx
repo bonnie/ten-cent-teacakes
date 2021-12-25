@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Formik } from "formik";
+import { useFormik } from "formik";
 import React, { useMemo } from "react";
 
 import { SubmitButton } from "@/components/lib/SubmitButton";
+import { VenuePutData } from "@/lib/venues/types";
 
 import { useVenues } from "../hooks/useVenues";
 
@@ -16,12 +17,11 @@ export const AddVenueForm: React.FC<{
     [venues],
   );
 
-  if (!visible) return null;
-
-  return (
-    <Formik
-      initialValues={{ name: "", url: "" }}
-      validate={(values) => {
+  const initialValues: VenuePutData = { name: "", url: "" };
+  const { handleSubmit, handleBlur, handleChange, values, touched, errors } =
+    useFormik({
+      initialValues,
+      validate: (values) => {
         const errors: { name?: string; url?: string } = {};
         if (!values.name) {
           errors.name = "Venue name is required";
@@ -32,43 +32,37 @@ export const AddVenueForm: React.FC<{
           errors.name = `Venue "${values.name}" already exists`;
         }
         return errors;
-      }}
-      onSubmit={(values) => {
+      },
+      onSubmit: (values: VenuePutData) => {
         if (values.name) {
           addVenue(values);
           setVisible(false);
         }
-      }}
-    >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-      }) => (
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="name"
-            placeholder="venue name"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.name}
-          />
-          <input
-            type="text"
-            name="url"
-            placeholder="venue url"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.url}
-          />
-          <SubmitButton disabled={!!errors.name} />
-          {touched.name && errors.name}
-        </form>
-      )}
-    </Formik>
+      },
+    });
+
+  if (!visible) return null;
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="name"
+        placeholder="venue name"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values.name}
+      />
+      <input
+        type="text"
+        name="url"
+        placeholder="venue url"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values.url}
+      />
+      <SubmitButton disabled={!!errors.name} />
+      {touched.name && errors.name}
+    </form>
   );
 };

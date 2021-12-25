@@ -11,7 +11,7 @@ type ShowsProps = {
   shows: Array<ShowWithVenue>;
 };
 
-export const ShowsSegment: React.FC<ShowsProps> = ({ title, shows }) => {
+export const ShowsGroup: React.FC<ShowsProps> = ({ title, shows }) => {
   const { user } = useWhitelistUser();
   const ShowComponent = user ? EditableShow : Show;
   return (

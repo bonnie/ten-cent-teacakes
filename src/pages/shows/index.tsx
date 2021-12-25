@@ -7,9 +7,9 @@ import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { fetchShows } from "@/lib/shows";
 
-import { AddShow } from "./components/AddShow";
+import { AddShowForm } from "./components/AddShowForm";
 import { EditVenues } from "./components/EditVenues";
-import { ShowsSegment } from "./components/ShowsSegment";
+import { ShowsGroup } from "./components/ShowsGroup";
 import { useShows } from "./hooks/useShows";
 
 // TODO: this is resulting in "Error: connect ECONNREFUSED 127.0.0.1:80"
@@ -36,9 +36,9 @@ const Shows: React.FC = () => {
     <div className="mx-4">
       <Heading>Shows</Heading>
       {user ? <AddButton clickHandler={addShow} /> : null}
-      {addingShow ? <AddShow setAddingShow={setAddingShow} /> : null}
-      <ShowsSegment title="Upcoming Shows" shows={upcomingShows} />
-      <ShowsSegment title="Past Shows" shows={pastShows} />
+      {addingShow ? <AddShowForm setAddingShow={setAddingShow} /> : null}
+      <ShowsGroup title="Upcoming Shows" shows={upcomingShows} />
+      <ShowsGroup title="Past Shows" shows={pastShows} />
       {user ? <EditVenues /> : null}
     </div>
   );

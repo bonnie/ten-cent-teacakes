@@ -4,9 +4,9 @@ import "react-clock/dist/Clock.css";
 import "react-datetime-picker/dist/DateTimePicker.css";
 
 import dayjs from "dayjs";
+import { useField, useFormikContext } from "formik";
 import React from "react";
 import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
-import { Control, Controller } from "react-hook-form";
 
 export const formattedPerformAt = (performAt: Date): string =>
   dayjs(performAt).format("YYYY MMM D HH:MM");
@@ -15,17 +15,21 @@ export const ShowDate: React.FC<{ performAt: Date }> = ({ performAt }) => (
   <span>{formattedPerformAt(performAt)}</span>
 );
 
-export const EditableShowDate: React.FC<{ performAt: Date; control: Control }> =
-  ({ performAt, control }) => (
-    <Controller
-      control={control}
+// adapted from https://stackoverflow.com/a/58650742
+export const EditableShowDate: React.FC<{ performAt: Date }> = ({
+  performAt,
+}) => {
+  const { setFieldValue } = useFormikContext();
+  const [field] = useField<Date>({ name: "performAt" });
+  return (
+    <DateTimePicker
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...field}
       name="performAt"
-      defaultValue={performAt}
-      render={({ field }) => (
-        <DateTimePicker
-          onChange={(date: Date) => field.onChange(date)}
-          value={field.value}
-        />
-      )}
+      selected={(field.value && performAt) || null}
+      onChange={(val: Date) => {
+        setFieldValue(field.name, val);
+      }}
     />
   );
+};

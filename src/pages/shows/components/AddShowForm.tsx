@@ -1,4 +1,6 @@
-import { Formik } from "formik";
+import { Show } from "@prisma/client";
+
+import { useFormik } from "formik";
 import React, { useState } from "react";
 
 import { EditButtons } from "@/components/lib/EditButtons";
@@ -14,39 +16,42 @@ type AddShowProps = {
   setAddingShow: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const AddShow: React.FC<AddShowProps> = ({ setAddingShow }) => {
+export const AddShowForm: React.FC<AddShowProps> = ({ setAddingShow }) => {
   const { addShow } = useShows();
   const [showAddVenue, setShowAddVenue] = useState(false);
-  const handleSave = (data: ShowPutData) => {
-    addShow(data);
-  };
   const today = new Date();
 
-  const {
-    register,
-    control,
-    handleSubmit,
-    watch,
-    formState: { errors, isValid },
-  } = useForm();
+  const initialValues: ShowPutData = { performAt: today, venueId: undefined };
+  const { handleSubmit, handleBlur, handleChange, values, touched, errors } =
+    useFormik({
+      initialValues,
+      validate: (values) => {
+        const errors: { performAt?: string } = {};
+        if (!values.performAt) {
+          errors.performAt = "Performance date is required";
+        }
+        return errors;
+      },
+      onSubmit: (values: ShowPutData) => {
+        addShow(values);
+        setAddingShow(false);
+      },
+    });
+
   return (
     <div>
       <Heading textSize="4xl" align="left" margin={0}>
         Add Show
       </Heading>
-      <Formik
-      initialValues={{performAt: today, venueId: undefined}}
-      >
-      <form onSubmit={handleSubmit(handleSave)}>
+      <form onSubmit={handleSubmit}>
         <EditButtons
           editing
           setEditing={setAddingShow}
           // handleSave={(e) => {e.preventDefault(); formRef?.current?.submit()}}
           handleDelete={() => setAddingShow(false)}
         />
-        <EditableShowDate control={control} performAt={today} />
+        <EditableShowDate performAt={today} />
         <EditableShowVenue
-          register={register}
           venueId={undefined}
           setShowAddVenue={setShowAddVenue}
         />
