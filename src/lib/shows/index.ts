@@ -15,8 +15,8 @@ export type ShowResponse = { show: Show };
 export type ShowPutData = { performAt: Date; venueId?: number };
 
 export type ShowPatchData = {
-  body: { performAt?: Date; venueId?: number };
-  id: number;
+  performAt?: Date;
+  venueId?: number;
 };
 export type ShowPatchArgs = {
   id: number;

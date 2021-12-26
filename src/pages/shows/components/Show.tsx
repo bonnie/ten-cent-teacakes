@@ -1,10 +1,5 @@
+import { useFormik } from "formik";
 import React, { useState } from "react";
-import {
-  Control,
-  FieldValues,
-  useForm,
-  UseFormRegister,
-} from "react-hook-form";
 
 import { EditButtons } from "@/components/lib/EditButtons";
 import { ShowPatchData, ShowWithVenue } from "@/lib/shows";
@@ -23,21 +18,16 @@ export const Show: React.FC<{ show: ShowWithVenue }> = ({ show }) => (
 
 type ShowWithInputsProps = {
   show: ShowWithVenue;
-  control: Control;
-  register: UseFormRegister<FieldValues>;
   setShowAddVenue: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ShowWithInputs: React.FC<ShowWithInputsProps> = ({
   show,
-  control,
-  register,
   setShowAddVenue,
 }) => (
   <>
-    <EditableShowDate control={control} performAt={show.performAt} />
+    <EditableShowDate performAt={show.performAt} />
     <EditableShowVenue
-      register={register}
       venueId={show.venueId}
       setShowAddVenue={setShowAddVenue}
     />
@@ -49,18 +39,15 @@ export const EditableShow: React.FC<{ show: ShowWithVenue }> = ({ show }) => {
   const { updateShow, deleteShow } = useShows();
   const [showAddVenue, setShowAddVenue] = useState(false);
 
-  const {
-    register,
-    control,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { handleSubmit, handleBlur, handleChange, values, touched, errors } =
+    useFormik({
+      initialValues: { performAt: show.performAt, venueId: show.venueId },
+      onSubmit: (values: ShowPatchData) => {
+        setEditing(false);
+        updateShow({ id: show.id, data: values });
+      },
+    });
 
-  const handleSave = (data: ShowPatchData) => {
-    setEditing(false);
-    updateShow({ id: show.id, data });
-  };
   const handleDelete = () => {
     setEditing(false);
     deleteShow(show.id);
@@ -68,19 +55,14 @@ export const EditableShow: React.FC<{ show: ShowWithVenue }> = ({ show }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(handleSave)}>
+      <form onSubmit={handleSubmit}>
         <EditButtons
           editing={editing}
           setEditing={setEditing}
           handleDelete={handleDelete}
         />
         {editing ? (
-          <ShowWithInputs
-            show={show}
-            control={control}
-            register={register}
-            setShowAddVenue={setShowAddVenue}
-          />
+          <ShowWithInputs show={show} setShowAddVenue={setShowAddVenue} />
         ) : (
           <Show show={show} />
         )}

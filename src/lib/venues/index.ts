@@ -11,8 +11,8 @@ export type VenueResponse = { venue: Venue };
 export type VenuePutData = { name: string; url?: string };
 
 export type VenuePatchData = {
-  body: VenuePutData;
-  id: number;
+  name: string;
+  url?: string;
 };
 
 export type VenuePatchArgs = {

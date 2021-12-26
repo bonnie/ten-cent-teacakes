@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useFormik } from "formik";
-import React, { useMemo } from "react";
+import React from "react";
 
 import { SubmitButton } from "@/components/lib/SubmitButton";
 import { VenuePutData } from "@/lib/venues/types";
@@ -11,11 +11,7 @@ export const AddVenueForm: React.FC<{
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ visible, setVisible }) => {
-  const { venues, addVenue } = useVenues();
-  const venueNames = useMemo(
-    () => venues.map((venue) => venue.name.toLowerCase()),
-    [venues],
-  );
+  const { addVenue, venueNamesLower } = useVenues();
 
   const initialValues: VenuePutData = { name: "", url: "" };
   const { handleSubmit, handleBlur, handleChange, values, touched, errors } =
@@ -23,11 +19,12 @@ export const AddVenueForm: React.FC<{
       initialValues,
       validate: (values) => {
         const errors: { name?: string; url?: string } = {};
+        // TODO: repeated code from EditVenues.tsx
         if (!values.name) {
           errors.name = "Venue name is required";
         } else if (
           values.name &&
-          venueNames.includes(values.name.toLowerCase())
+          venueNamesLower.includes(values.name.toLowerCase())
         ) {
           errors.name = `Venue "${values.name}" already exists`;
         }

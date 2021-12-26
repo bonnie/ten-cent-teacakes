@@ -10,23 +10,37 @@ import { SubmitButton } from "@/components/lib/SubmitButton";
 type IconButtonProps = {
   Icon: IconType;
   label: string;
-  handleClick: MouseEventHandler<HTMLButtonElement>;
+  handleClick?: MouseEventHandler<HTMLButtonElement>;
+  submit?: boolean;
 };
 const IconButton: React.FC<IconButtonProps> = ({
   Icon,
   label,
   handleClick,
+  submit,
 }) => (
-  <button type="button" aria-label={label} onClick={handleClick} title={label}>
+  <button
+    type={submit ? "submit" : "button"}
+    aria-label={label}
+    title={label}
+    onClick={handleClick}
+  >
     <Icon size={30} />
   </button>
 );
+IconButton.defaultProps = {
+  submit: false,
+  handleClick: undefined,
+};
 
+// NOTE: intented to be declared from within a form
 type EditButtonProps = {
   editing: boolean;
   setEditing: Dispatch<SetStateAction<boolean>>;
   handleDelete: MouseEventHandler<HTMLButtonElement>;
   // handleSave: MouseEventHandler<HTMLButtonElement>;
+  // eslint-disable-next-line no-unused-vars
+  // handleSave: (e?: React.FormEvent<HTMLFormElement> | undefined) => void;
 };
 export const EditButtons: React.FC<EditButtonProps> = ({
   editing,
@@ -45,16 +59,13 @@ export const EditButtons: React.FC<EditButtonProps> = ({
         label="cancel"
         handleClick={handleCancel}
       />
-      {/* <IconButton Icon={BiSave} label="save" handleClick={handleSave} /> */}
-      <button type="submit" aria-label="save" title="save">
-        <BiSave size={30} />
-      </button>
-      {/* <SubmitButton /> TODO: why can't I use submitbutton here? */}
+      {/* <SubmitButton disabled={false} /> */}
       <IconButton
         Icon={RiDeleteBinLine}
         label="delete"
         handleClick={handleDelete}
       />
+      <IconButton Icon={BiSave} label="save" submit />
     </>
   ) : (
     <IconButton

@@ -1,5 +1,6 @@
 import { Venue } from ".prisma/client";
 
+import { useMemo } from "react";
 import {
   UseMutateFunction,
   useMutation,
@@ -22,6 +23,7 @@ import {
 
 type UseVenuesReturnValue = {
   venues: Array<Venue>;
+  venueNamesLower: Array<string>;
   addVenue: UseMutateFunction<VenueResponse, unknown, VenuePutData, unknown>;
   deleteVenue: UseMutateFunction<void, unknown, number, unknown>;
   updateVenue: UseMutateFunction<
@@ -46,6 +48,11 @@ export const useVenues = (): UseVenuesReturnValue => {
     {
       onError: handleError,
     },
+  );
+
+  const venueNamesLower = useMemo(
+    () => venues.map((venue) => venue.name.toLowerCase()),
+    [venues],
   );
 
   const { mutate: addVenueMutate } = useMutation(queryKeys.venues, addVenue, {
@@ -75,6 +82,7 @@ export const useVenues = (): UseVenuesReturnValue => {
 
   return {
     venues,
+    venueNamesLower,
     addVenue: addVenueMutate,
     deleteVenue: deleteVenueMutate,
     updateVenue,

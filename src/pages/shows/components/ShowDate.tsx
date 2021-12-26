@@ -26,7 +26,7 @@ export const EditableShowDate: React.FC<{ performAt: Date }> = ({
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...field}
       name="performAt"
-      selected={(field.value && performAt) || null}
+      selected={(field.value ?? performAt) || null}
       onChange={(val: Date) => {
         setFieldValue(field.name, val);
       }}
