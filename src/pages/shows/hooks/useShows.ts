@@ -30,11 +30,10 @@ const sortShows = (data: Array<ShowWithVenue>): SortedShows => {
     upcomingShows: [],
     pastShows: [],
   };
-  const today = new Date();
 
   // first sort into two buckets
   data.forEach((show) => {
-    if (show.performAt < today) {
+    if (show.performAt < new Date()) {
       sortedShows.pastShows.push(show);
     } else {
       sortedShows.upcomingShows.push(show);
@@ -71,6 +70,7 @@ export const useShows = (): UseShowsReturnValue => {
     fetchShows,
     {
       onError: handleError,
+      onSuccess: (data) => setShows(sortShows(data)),
     },
   );
 
@@ -102,11 +102,6 @@ export const useShows = (): UseShowsReturnValue => {
       showToast("success", "You have updated the show");
     },
   });
-
-  // Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.
-  // useEffect(() => {
-  //   setShows(sortShows(data));
-  // }, [data]);
 
   return {
     ...shows,

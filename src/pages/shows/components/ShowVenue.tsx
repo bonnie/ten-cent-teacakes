@@ -31,6 +31,7 @@ export const EditableShowVenue: React.FC<{
   const { venues } = useVenues();
   useEffect(() => {
     setShowAddVenue(venues.length === 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addNewText = "Add new...";
