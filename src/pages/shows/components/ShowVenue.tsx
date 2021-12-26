@@ -2,7 +2,7 @@
 import { Venue as VenueType } from ".prisma/client";
 
 import { useField } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useVenues } from "../hooks/useVenues";
 
@@ -29,22 +29,29 @@ export const EditableShowVenue: React.FC<{
   setShowAddVenue: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ venueId, setShowAddVenue }) => {
   const { venues } = useVenues();
+  useEffect(() => {
+    setShowAddVenue(venues.length === 0);
+  }, []);
+
   const addNewText = "Add new...";
   const [field] = useField({
     name: "venueId",
     type: "select",
-    onChange: (event: React.ChangeEvent<HTMLSelectElement>) =>
-      setShowAddVenue(event.target.value === addNewText),
   });
 
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    field.onChange(event);
+    setShowAddVenue(event.target.value === addNewText);
+  };
+
   return (
-    <select {...field} defaultValue={venueId}>
+    <select {...field} onChange={handleChange} defaultValue={venueId}>
       {venues.map((venue) => (
         <option key={venue.id} value={venue.id}>
           {venue.name}
         </option>
       ))}
-      <option value={undefined}>Add new...</option>
+      <option value={undefined}>{addNewText}</option>
     </select>
   );
 };
