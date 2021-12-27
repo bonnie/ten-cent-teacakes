@@ -36,7 +36,7 @@ type UseVenuesReturnValue = {
 
 export const useVenues = (): UseVenuesReturnValue => {
   const { showToast } = useToast();
-  const { handleError } = useHandleError();
+  const { handleQueryError, handleMutateError } = useHandleError();
   const queryClient = useQueryClient();
 
   const invalidateVenues = () =>
@@ -46,7 +46,7 @@ export const useVenues = (): UseVenuesReturnValue => {
     queryKeys.venues,
     fetchVenues,
     {
-      onError: handleError,
+      onError: handleQueryError,
     },
   );
 
@@ -60,6 +60,7 @@ export const useVenues = (): UseVenuesReturnValue => {
       invalidateVenues();
       showToast("success", `You have added the venue "${data.venue.name}"`);
     },
+    onError: (error) => handleMutateError(error, "add venue"),
   });
 
   const { mutate: deleteVenueMutate } = useMutation(
@@ -70,6 +71,7 @@ export const useVenues = (): UseVenuesReturnValue => {
         invalidateVenues();
         showToast("success", `You have deleted the venue`);
       },
+      onError: (error) => handleMutateError(error, "delete venue"),
     },
   );
 
@@ -78,6 +80,7 @@ export const useVenues = (): UseVenuesReturnValue => {
       invalidateVenues();
       showToast("success", `You have updated the venue "${data.venue.name}"`);
     },
+    onError: (error) => handleMutateError(error, "update venue"),
   });
 
   return {

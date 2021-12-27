@@ -31,7 +31,7 @@ function ToastReducer(state: ToastState, action: ToastAction) {
       };
     }
     default: {
-      throw new Error("unhandled action");
+      throw new Error("unhandled toast action");
     }
   }
 }

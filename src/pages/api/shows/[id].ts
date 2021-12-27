@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { processApiError } from "@/lib/axios/utils";
+import { processApiError } from "@/lib/api/utils";
 
 import { deleteShow, patchShow } from "./queries";
 
@@ -15,7 +15,7 @@ export default async function handle(
   try {
     switch (method) {
       case "PATCH":
-        res.status(201).json(await patchShow({ body: body.body, id }));
+        res.status(201).json(await patchShow({ data: body.body, id }));
         break;
       case "DELETE":
         res.status(204).json(await deleteShow(id));

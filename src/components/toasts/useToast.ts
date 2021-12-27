@@ -9,7 +9,7 @@ export type ToastFunction = (status: ToastStatus, message: string) => string;
 export function useToast(delayInMs: number = 5000) {
   const dispatch = useToastDispatchContext();
   const showToast: ToastFunction = (status, message) => {
-    const id = Math.random().toString(36).substr(2, 9);
+    const id = Math.random().toString(36).substring(2, 9);
     dispatch({
       type: "ADD_TOAST",
       toast: {

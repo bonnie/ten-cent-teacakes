@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import {
@@ -65,12 +66,12 @@ export const useShows = (): UseShowsReturnValue => {
   });
 
   const { showToast } = useToast();
-  const { handleError } = useHandleError();
+  const { handleQueryError, handleMutateError } = useHandleError();
   const { data = [] } = useQuery<Array<ShowWithVenue>>(
     queryKeys.shows,
     fetchShows,
     {
-      onError: handleError,
+      onError: handleQueryError,
       onSuccess: (data) => setShows(sortShows(data)),
     },
   );
@@ -84,6 +85,7 @@ export const useShows = (): UseShowsReturnValue => {
       invalidateShows();
       showToast("success", "You have added a show");
     },
+    onError: (error) => handleMutateError(error, "add show"),
   });
 
   const { mutate: deleteShowMutate } = useMutation(
@@ -94,6 +96,7 @@ export const useShows = (): UseShowsReturnValue => {
         invalidateShows();
         showToast("success", `You have deleted the show`);
       },
+      onError: (error) => handleMutateError(error, "delete show"),
     },
   );
 
@@ -102,6 +105,7 @@ export const useShows = (): UseShowsReturnValue => {
       invalidateShows();
       showToast("success", "You have updated the show");
     },
+    onError: (error) => handleMutateError(error, "update show"),
   });
 
   return {
