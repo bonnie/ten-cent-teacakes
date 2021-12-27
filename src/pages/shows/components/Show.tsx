@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { EditButtons } from "@/components/lib/EditButtons";
 import {
   getShowDateFieldValues,
+  getShowDateTimeFromForm,
   ShowFormData,
-  ShowPatchData,
   ShowWithVenue,
 } from "@/lib/shows";
 
@@ -31,7 +31,7 @@ const ShowWithInputs: React.FC<ShowWithInputsProps> = ({
   setShowAddVenue,
 }) => (
   <>
-    <EditableShowDate performAt={show.performAt} />
+    <EditableShowDate dateFieldName="performDate" timeFieldName="performTime" />{" "}
     <EditableShowVenue
       venueId={show.venueId}
       setShowAddVenue={setShowAddVenue}
@@ -49,14 +49,22 @@ export const EditableShow: React.FC<{ show: ShowWithVenue }> = ({ show }) => {
     performDate,
     performTime,
     venueId: show.venueId,
+    url: show.url ?? undefined,
   };
 
   const { handleSubmit, handleBlur, handleChange, values, touched, errors } =
     useFormik({
       initialValues,
-      onSubmit: (values: ShowPatchData) => {
+      onSubmit: (values: ShowFormData) => {
         setEditing(false);
-        updateShow({ id: show.id, data: values });
+        updateShow({
+          id: show.id,
+          data: {
+            venueId: values.venueId,
+            performAt: getShowDateTimeFromForm(values),
+            url: values.url,
+          },
+        });
       },
     });
 

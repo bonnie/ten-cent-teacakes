@@ -2,9 +2,14 @@ import { Show, Venue } from ".prisma/client";
 
 import { AxiosResponse } from "axios";
 import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 
 import { axiosInstance } from "../axios/axiosInstance";
 import { routes } from "../axios/constants";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 /* * types * */
 export type ShowWithVenue = Show & {
@@ -25,6 +30,7 @@ export type ShowPutData = { performAt: Date; venueId?: number; url?: string };
 export type ShowPatchData = {
   performAt?: Date;
   venueId?: number;
+  url?: string;
 };
 export type ShowPatchArgs = {
   id: number;
@@ -65,3 +71,11 @@ export const getShowDateFieldValues = (
   performDate: dayjs(performAt).format("YYYY-MM-DD"),
   performTime: dayjs(performAt).format("HH:MM"),
 });
+
+export const getShowDateTimeFromForm = (values: ShowFormData): Date => {
+  const timeZone = "America/Los_Angeles";
+
+  return dayjs
+    .tz(`${values.performDate} ${values.performTime}`, timeZone)
+    .toDate();
+};

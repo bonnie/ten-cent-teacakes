@@ -1,23 +1,20 @@
 // import { Show } from "@prisma/client";
 
-import dayjs from "dayjs";
-import timezone from "dayjs/plugin/timezone";
-import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
 import React, { useState } from "react";
 
 import { EditButtons } from "@/components/lib/EditButtons";
 import { Heading } from "@/components/lib/Heading";
-import { getShowDateFieldValues, ShowFormData } from "@/lib/shows";
+import {
+  getShowDateFieldValues,
+  getShowDateTimeFromForm,
+  ShowFormData,
+} from "@/lib/shows";
 
 import { useShows } from "../hooks/useShows";
 import { AddVenueForm } from "./AddVenueForm";
 import { EditableShowDate } from "./ShowDate";
 import { EditableShowVenue } from "./ShowVenue";
-
-const timeZone = "America/Los_Angeles";
-dayjs.extend(utc);
-dayjs.extend(timezone);
 
 type AddShowProps = {
   setAddingShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -52,9 +49,7 @@ export const AddShowForm: React.FC<AddShowProps> = ({ setAddingShow }) => {
         onSubmit={(values: ShowFormData) => {
           addShow({
             venueId: values.venueId,
-            performAt: dayjs
-              .tz(`${values.performDate} ${values.performTime}`, timeZone)
-              .toDate(),
+            performAt: getShowDateTimeFromForm(values),
             url: values.url,
           });
           setAddingShow(false);

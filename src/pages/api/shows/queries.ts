@@ -2,7 +2,7 @@
 import { Prisma } from ".prisma/client";
 
 import prisma from "@/lib/prisma";
-import { ShowPatchData, ShowPutData } from "@/lib/shows";
+import { ShowPatchArgs, ShowPutData } from "@/lib/shows";
 
 // const generateVenueData = ({ venueId, venueData }: NewOrExistingVenue) =>
 //   // connect to venue if id was provided; otherwise create a new one
@@ -16,15 +16,20 @@ export const getShows = () =>
 
 const getShowById = (id: number) => prisma.show.findUnique({ where: { id } });
 
-export const addShow = ({ performAt, venueId }: ShowPutData) => {
+export const addShow = ({ performAt, venueId, url }: ShowPutData) => {
+  console.log("performAt", performAt);
+  console.log("venueId", venueId);
+  console.log("url", url);
   const data: Prisma.ShowCreateInput = {
     performAt,
+    url,
     venue: { connect: { id: Number(venueId) } },
   };
+  console.log("creating show!!");
   return prisma.show.create({ data });
 };
 
-export const patchShow = async ({ body, id }: ShowPatchData) => {
+export const patchShow = async ({ data, id }: ShowPatchArgs) => {
   const showData = getShowById(id);
   if (!showData) {
     throw new Error(`Bad show id: ${id}`);
@@ -32,8 +37,9 @@ export const patchShow = async ({ body, id }: ShowPatchData) => {
 
   // add venue in proper format to updatedData
   const updatedData: Prisma.ShowUpdateInput = {
-    performAt: body.performAt,
-    venue: { connect: { id: Number(body.venueId) } },
+    performAt: data.performAt,
+    venue: { connect: { id: Number(data.venueId) } },
+    url: data.url,
   };
   await prisma.show.update({ data: updatedData, where: { id } });
 };
