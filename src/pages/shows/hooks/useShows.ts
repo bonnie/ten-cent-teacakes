@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import {
   UseMutateFunction,
@@ -33,7 +34,7 @@ const sortShows = (data: Array<ShowWithVenue>): SortedShows => {
 
   // first sort into two buckets
   data.forEach((show) => {
-    if (show.performAt < new Date()) {
+    if (dayjs(show.performAt) < dayjs()) {
       sortedShows.pastShows.push(show);
     } else {
       sortedShows.upcomingShows.push(show);
