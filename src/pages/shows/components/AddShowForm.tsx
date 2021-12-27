@@ -30,8 +30,7 @@ export const AddShowForm: React.FC<AddShowProps> = ({ setAddingShow }) => {
   const initialValues: ShowFormData = {
     performDate,
     performTime,
-    venueId: undefined,
-    // venueId: venues[0]?.id ?? undefined,
+    venueId: venues[0]?.id ?? undefined,
   };
 
   return (
