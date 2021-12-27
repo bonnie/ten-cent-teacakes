@@ -2,7 +2,12 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 
 import { EditButtons } from "@/components/lib/EditButtons";
-import { ShowPatchData, ShowWithVenue } from "@/lib/shows";
+import {
+  getShowDateFieldValues,
+  ShowFormData,
+  ShowPatchData,
+  ShowWithVenue,
+} from "@/lib/shows";
 
 import { useShows } from "../hooks/useShows";
 import { AddVenueForm } from "./AddVenueForm";
@@ -39,9 +44,16 @@ export const EditableShow: React.FC<{ show: ShowWithVenue }> = ({ show }) => {
   const { updateShow, deleteShow } = useShows();
   const [showAddVenue, setShowAddVenue] = useState(false);
 
+  const { performDate, performTime } = getShowDateFieldValues(show.performAt);
+  const initialValues: ShowFormData = {
+    performDate,
+    performTime,
+    venueId: show.venueId,
+  };
+
   const { handleSubmit, handleBlur, handleChange, values, touched, errors } =
     useFormik({
-      initialValues: { performAt: show.performAt, venueId: show.venueId },
+      initialValues,
       onSubmit: (values: ShowPatchData) => {
         setEditing(false);
         updateShow({ id: show.id, data: values });

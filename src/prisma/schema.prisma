@@ -13,6 +13,7 @@ generator client {
 model Show {
   id        Int       @id @default(autoincrement())
   performAt DateTime
+  url       String?   @db.VarChar(255) @unique
   venue     Venue     @relation(fields: [venueId], references: [id])
   venueId   Int
   photos    Photo[]

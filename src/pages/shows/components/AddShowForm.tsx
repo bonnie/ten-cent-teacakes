@@ -1,16 +1,23 @@
 // import { Show } from "@prisma/client";
 
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
 import React, { useState } from "react";
 
 import { EditButtons } from "@/components/lib/EditButtons";
 import { Heading } from "@/components/lib/Heading";
-import { ShowPutData } from "@/lib/shows";
+import { getShowDateFieldValues, ShowFormData } from "@/lib/shows";
 
 import { useShows } from "../hooks/useShows";
 import { AddVenueForm } from "./AddVenueForm";
 import { EditableShowDate } from "./ShowDate";
 import { EditableShowVenue } from "./ShowVenue";
+
+const timeZone = "America/Los_Angeles";
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 type AddShowProps = {
   setAddingShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,9 +26,14 @@ type AddShowProps = {
 export const AddShowForm: React.FC<AddShowProps> = ({ setAddingShow }) => {
   const { addShow } = useShows();
   const [showAddVenue, setShowAddVenue] = useState(false);
-  const today = new Date();
 
-  const initialValues: ShowPutData = { performAt: today, venueId: undefined };
+  const { performDate, performTime } = getShowDateFieldValues(new Date());
+  const initialValues: ShowFormData = {
+    performDate,
+    performTime,
+    venueId: undefined,
+  };
+
   return (
     <div>
       <Heading textSize="4xl" align="left" margin={0}>
@@ -31,14 +43,20 @@ export const AddShowForm: React.FC<AddShowProps> = ({ setAddingShow }) => {
       <Formik
         initialValues={initialValues}
         validate={(values) => {
-          const errors: { performAt?: string } = {};
-          if (!values.performAt) {
-            errors.performAt = "Performance date is required";
+          const errors: { performDate?: string } = {};
+          if (!values.performDate) {
+            errors.performDate = "Performance date is required";
           }
           return errors;
         }}
-        onSubmit={(values: ShowPutData) => {
-          addShow(values);
+        onSubmit={(values: ShowFormData) => {
+          addShow({
+            venueId: values.venueId,
+            performAt: dayjs
+              .tz(`${values.performDate} ${values.performTime}`, timeZone)
+              .toDate(),
+            url: values.url,
+          });
           setAddingShow(false);
         }}
       >
@@ -49,12 +67,15 @@ export const AddShowForm: React.FC<AddShowProps> = ({ setAddingShow }) => {
               setEditing={setAddingShow}
               handleDelete={() => setAddingShow(false)}
             />
-            <EditableShowDate performAt={today} />
+            <EditableShowDate
+              dateFieldName="performDate"
+              timeFieldName="performTime"
+            />
             <EditableShowVenue
               venueId={undefined}
               setShowAddVenue={setShowAddVenue}
             />
-            {props.touched.performAt && props.errors.performAt}
+            {props.touched.performDate && props.errors.performDate}
           </form>
         )}
       </Formik>

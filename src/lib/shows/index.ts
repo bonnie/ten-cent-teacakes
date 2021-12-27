@@ -1,6 +1,7 @@
 import { Show, Venue } from ".prisma/client";
 
 import { AxiosResponse } from "axios";
+import dayjs from "dayjs";
 
 import { axiosInstance } from "../axios/axiosInstance";
 import { routes } from "../axios/constants";
@@ -12,7 +13,14 @@ export type ShowWithVenue = Show & {
 
 export type ShowResponse = { show: Show };
 
-export type ShowPutData = { performAt: Date; venueId?: number };
+export type ShowFormData = {
+  venueId: number | undefined;
+  performDate: string;
+  performTime: string;
+  url?: string;
+};
+
+export type ShowPutData = { performAt: Date; venueId?: number; url?: string };
 
 export type ShowPatchData = {
   performAt?: Date;
@@ -50,3 +58,10 @@ export const patchShow = async ({
 
 export const deleteShow = async (id: number): Promise<void> =>
   axiosInstance.delete(`/api/${routes.shows}/${id}`);
+
+export const getShowDateFieldValues = (
+  performAt: Date,
+): { performDate: string; performTime: string } => ({
+  performDate: dayjs(performAt).format("YYYY-MM-DD"),
+  performTime: dayjs(performAt).format("HH:MM"),
+});
