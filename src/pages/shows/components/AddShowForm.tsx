@@ -12,6 +12,7 @@ import {
 } from "@/lib/shows";
 
 import { useShows } from "../hooks/useShows";
+import { useVenues } from "../hooks/useVenues";
 import { AddVenueForm } from "./AddVenueForm";
 import { EditableShowDate } from "./ShowDate";
 import { EditableShowVenue } from "./ShowVenue";
@@ -22,13 +23,14 @@ type AddShowProps = {
 
 export const AddShowForm: React.FC<AddShowProps> = ({ setAddingShow }) => {
   const { addShow } = useShows();
+  const { venues } = useVenues();
   const [showAddVenue, setShowAddVenue] = useState(false);
 
   const { performDate, performTime } = getShowDateFieldValues(new Date());
   const initialValues: ShowFormData = {
     performDate,
     performTime,
-    venueId: undefined,
+    venueId: venues[0]?.id ?? undefined,
   };
 
   return (
@@ -47,6 +49,7 @@ export const AddShowForm: React.FC<AddShowProps> = ({ setAddingShow }) => {
           return errors;
         }}
         onSubmit={(values: ShowFormData) => {
+          console.log(values);
           addShow({
             venueId: values.venueId,
             performAt: getShowDateTimeFromForm(values),

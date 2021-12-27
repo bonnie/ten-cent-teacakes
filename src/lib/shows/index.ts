@@ -1,6 +1,6 @@
 import { Show, Venue } from ".prisma/client";
 
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
@@ -44,11 +44,16 @@ export const fetchShows = async (): Promise<Array<ShowWithVenue>> => {
 };
 
 export const addShow = async (data: ShowPutData): Promise<ShowResponse> => {
-  const { data: show } = await axiosInstance.put<
-    { body: ShowPutData },
-    AxiosResponse<Show>
-  >(`/api/${routes.shows}`, { body: data });
-  return { show };
+  try {
+    const response = await axiosInstance.put<
+      { body: ShowPutData },
+      AxiosResponse<Show>
+    >(`/api/${routes.shows}`, { body: data });
+    return { show: response.data };
+    // @ts-expect-error (illegal to type error in catch clause function arg)
+  } catch (error: AxiosResponse) {
+    console.log(error.response.data.message);
+  }
 };
 
 export const patchShow = async ({

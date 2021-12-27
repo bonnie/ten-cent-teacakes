@@ -17,15 +17,11 @@ export const getShows = () =>
 const getShowById = (id: number) => prisma.show.findUnique({ where: { id } });
 
 export const addShow = ({ performAt, venueId, url }: ShowPutData) => {
-  console.log("performAt", performAt);
-  console.log("venueId", venueId);
-  console.log("url", url);
   const data: Prisma.ShowCreateInput = {
     performAt,
     url,
     venue: { connect: { id: Number(venueId) } },
   };
-  console.log("creating show!!");
   return prisma.show.create({ data });
 };
 
