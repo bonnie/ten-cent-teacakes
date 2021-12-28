@@ -2,7 +2,7 @@ import { Show } from "@prisma/client";
 
 import dayjs from "dayjs";
 import { FormikProps } from "formik";
-import React, { ReactChildren, useState } from "react";
+import React, { useState } from "react";
 
 import { EditItemModal } from "@/components/lib/EditItemModal";
 import { TextInput } from "@/components/lib/form/TextInput";
@@ -76,13 +76,14 @@ export const AddShowModal: React.FC = () => {
     performDate,
     performTime,
     venueId: venues[0]?.id ?? undefined,
+    url: "",
   };
 
   const onSubmit = (values: ShowFormData) =>
     addShow({
       venueId: values.venueId,
       performAt: getShowDateTimeFromForm(values),
-      url: values.url,
+      url: values.url ?? "",
     });
 
   const formikConfig = { initialValues, validate, onSubmit };
@@ -90,7 +91,7 @@ export const AddShowModal: React.FC = () => {
   return (
     <EditItemModal
       title="Add Show"
-      Form={EditShowForm}
+      FormFields={EditShowForm}
       formikConfig={formikConfig}
     />
   );
@@ -123,7 +124,7 @@ export const EditShowModal: React.FC<{ show: Show }> = ({ show }) => {
   return (
     <EditItemModal
       title="Edit Show"
-      Form={EditShowForm}
+      FormFields={EditShowForm}
       formikConfig={formikConfig}
     />
   );

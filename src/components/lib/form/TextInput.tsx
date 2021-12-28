@@ -18,7 +18,7 @@ export const TextInput: React.FC<TextInputProps> = ({
   prefix = undefined,
   required = true,
 }) => {
-  const field = useField({ name, type: "text" });
+  const [field] = useField({ name, type: "text" });
   return (
     <div className="grid grid-cols-3 gap-6">
       <div className="col-span-3 sm:col-span-2">

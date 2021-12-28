@@ -12,13 +12,13 @@ type Values = ShowFormData;
 
 type EditItemModalProps = {
   title: string;
-  Form: React.FC<{ props: FormikProps<Values> }>;
+  FormFields: React.FC<{ props: FormikProps<Values> }>;
   formikConfig: FormikConfig<Values>;
 };
 
 export const EditItemModal: React.FC<EditItemModalProps> = ({
   title,
-  Form,
+  FormFields,
   formikConfig,
 }) => {
   const [showModal, setShowModal] = React.useState(false);
@@ -35,12 +35,13 @@ export const EditItemModal: React.FC<EditItemModalProps> = ({
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/* header */}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                  <Heading>{title}</Heading>
+                  <Heading textSize="4xl">{title}</Heading>
                 </div>
                 {/* body */}
                 <Formik {...formikConfig}>
                   {(props) => (
-                    <Form props={props}>
+                    <>
+                      <FormFields props={props} />
                       {/* footer */}
                       <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                         <button
@@ -59,7 +60,7 @@ export const EditItemModal: React.FC<EditItemModalProps> = ({
                           contents="Save Changes"
                         />
                       </div>
-                    </Form>
+                    </>
                   )}
                 </Formik>
               </div>

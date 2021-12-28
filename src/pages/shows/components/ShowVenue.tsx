@@ -12,7 +12,7 @@ export const DisplayShowVenue: React.FC<{
 }> = ({ venue, rawUrl }) => {
   if (!rawUrl) return <span>{venue.name}</span>;
 
-  const url = !rawUrl.search(/^https?\/\//) ? rawUrl : `http://${rawUrl}`;
+  const url = rawUrl.search(/^https?:\/\//) === 0 ? rawUrl : `http://${rawUrl}`;
   return (
     <a
       href={url}
