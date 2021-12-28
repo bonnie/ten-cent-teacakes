@@ -11,25 +11,13 @@ export const AddVenueForm: React.FC<{
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ visible, setVisible }) => {
-  const { addVenue, venueNamesLower } = useVenues();
+  const { addVenue, venueFormValidation } = useVenues();
 
   const initialValues: VenuePutData = { name: "", url: "" };
   const { handleSubmit, handleBlur, handleChange, values, touched, errors } =
     useFormik({
       initialValues,
-      validate: (values) => {
-        const errors: { name?: string; url?: string } = {};
-        // TODO: repeated code from EditVenues.tsx
-        if (!values.name) {
-          errors.name = "Venue name is required";
-        } else if (
-          values.name &&
-          venueNamesLower.includes(values.name.toLowerCase())
-        ) {
-          errors.name = `Venue "${values.name}" already exists`;
-        }
-        return errors;
-      },
+      validate: venueFormValidation,
       onSubmit: (values: VenuePutData) => {
         if (values.name) {
           addVenue(values);
@@ -58,8 +46,8 @@ export const AddVenueForm: React.FC<{
         onBlur={handleBlur}
         value={values.url}
       />
-      <SubmitButton disabled={!!errors.name} />
-      {touched.name && errors.name}
+      <SubmitButton disabled={Object.keys(errors).length > 0} />
+      {(touched.name && errors.name) || (touched.url && errors.url)}
     </form>
   );
 };

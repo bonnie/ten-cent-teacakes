@@ -23,7 +23,10 @@ import {
 
 type UseVenuesReturnValue = {
   venues: Array<Venue>;
-  venueNamesLower: Array<string>;
+  venueFormValidation: (values: VenuePutData) => {
+    name?: string;
+    url?: string;
+  };
   addVenue: UseMutateFunction<VenueResponse, unknown, VenuePutData, unknown>;
   deleteVenue: UseMutateFunction<void, unknown, number, unknown>;
   updateVenue: UseMutateFunction<
@@ -48,11 +51,6 @@ export const useVenues = (): UseVenuesReturnValue => {
     {
       onError: handleQueryError,
     },
-  );
-
-  const venueNamesLower = useMemo(
-    () => venues.map((venue) => venue.name.toLowerCase()),
-    [venues],
   );
 
   const { mutate: addVenueMutate } = useMutation(queryKeys.venues, addVenue, {
@@ -83,9 +81,38 @@ export const useVenues = (): UseVenuesReturnValue => {
     onError: (error) => handleMutateError(error, "update venue"),
   });
 
+  const venueNamesLower = useMemo(
+    () => venues.map((venue) => venue.name.toLowerCase()),
+    [venues],
+  );
+
+  const venueUrlsLower = useMemo(
+    () =>
+      venues
+        .filter((venue) => venue.url)
+        .map((venue) => venue.url?.toLowerCase()),
+    [venues],
+  );
+
+  const venueFormValidation = (values: VenuePutData) => {
+    const errors: { name?: string; url?: string } = {};
+    if (!values.name) {
+      errors.name = "Venue name is required";
+    } else if (
+      values.name &&
+      venueNamesLower.includes(values.name.toLowerCase())
+    ) {
+      errors.name = `Venue "${values.name}" already exists`;
+    }
+    if (values.url && venueUrlsLower.includes(values.url.toLowerCase())) {
+      errors.url = `Venue with URL "${values.url}" already exists`;
+    }
+    return errors;
+  };
+
   return {
     venues,
-    venueNamesLower,
+    venueFormValidation,
     addVenue: addVenueMutate,
     deleteVenue: deleteVenueMutate,
     updateVenue,

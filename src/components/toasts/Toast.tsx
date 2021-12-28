@@ -1,4 +1,5 @@
 // adapted from https://adamrichardson.dev/blog/custom-tailwind-toast-component
+// TODO: https://tailwindui.com/components/application-ui/feedback/alerts
 
 import {
   AiOutlineCheckCircle,
