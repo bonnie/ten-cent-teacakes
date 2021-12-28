@@ -1,10 +1,11 @@
 import { Show } from "@prisma/client";
 
 import dayjs from "dayjs";
-import { Formik } from "formik";
-import React, { useState } from "react";
+import { FormikProps } from "formik";
+import React, { ReactChildren, useState } from "react";
 
 import { EditItemModal } from "@/components/lib/EditItemModal";
+import { TextInput } from "@/components/lib/form/TextInput";
 import { ShowFormData } from "@/lib/shows";
 
 import { useShows } from "../hooks/useShows";
@@ -29,41 +30,40 @@ export const getShowDateTimeFromForm = (values: ShowFormData): Date => {
 };
 
 const EditShowForm: React.FC<{
-  initialValues: ShowFormData;
-  handleSubmit: (values: ShowFormData) => void;
-}> = ({ initialValues, handleSubmit }) => {
+  props: FormikProps<ShowFormData>;
+}> = ({ props }) => {
   const [showAddVenue, setShowAddVenue] = useState(false);
   return (
     <>
-      {/* need Formik context (not useFormik) for useField in EditableShowVenue */}
-      <Formik
-        initialValues={initialValues}
-        validate={(values: ShowFormData) => {
-          const errors: { performDate?: string } = {};
-          if (!values.performDate) {
-            errors.performDate = "Performance date is required";
-          }
-          return errors;
-        }}
-        onSubmit={handleSubmit}
-      >
-        {(props) => (
-          <form onSubmit={props.handleSubmit}>
-            <EditableShowDate
-              dateFieldName="performDate"
-              timeFieldName="performTime"
-            />
-            <EditableShowVenue
-              venueId={initialValues.venueId}
-              setShowAddVenue={setShowAddVenue}
-            />
-            {props.touched.performDate && props.errors.performDate}
-          </form>
-        )}
-      </Formik>
+      <form onSubmit={props.handleSubmit}>
+        <EditableShowDate
+          dateFieldName="performDate"
+          timeFieldName="performTime"
+        />
+        <EditableShowVenue
+          venueId={props.values.venueId}
+          setShowAddVenue={setShowAddVenue}
+        />
+        <TextInput
+          name="url"
+          label="Show URL (if different from venue URL)"
+          placeholderText="www.example.com"
+          prefix="http://"
+          required={false}
+        />
+        {props.touched.performDate && props.errors.performDate}
+      </form>
       <AddVenueForm visible={showAddVenue} setVisible={setShowAddVenue} />
     </>
   );
+};
+
+const validate = (values: ShowFormData) => {
+  const errors: { performDate?: string } = {};
+  if (!values.performDate) {
+    errors.performDate = "Performance date is required";
+  }
+  return errors;
 };
 
 export const AddShowModal: React.FC = () => {
@@ -78,22 +78,20 @@ export const AddShowModal: React.FC = () => {
     venueId: venues[0]?.id ?? undefined,
   };
 
-  const handleSubmit = (values: ShowFormData) =>
+  const onSubmit = (values: ShowFormData) =>
     addShow({
       venueId: values.venueId,
       performAt: getShowDateTimeFromForm(values),
       url: values.url,
     });
 
+  const formikConfig = { initialValues, validate, onSubmit };
+
   return (
     <EditItemModal
       title="Add Show"
-      form={
-        <EditShowForm
-          initialValues={initialValues}
-          handleSubmit={handleSubmit}
-        />
-      }
+      Form={EditShowForm}
+      formikConfig={formikConfig}
     />
   );
 };
@@ -109,7 +107,7 @@ export const EditShowModal: React.FC<{ show: Show }> = ({ show }) => {
     url: show.url ?? undefined,
   };
 
-  const handleSubmit = (values: ShowFormData) => {
+  const onSubmit = (values: ShowFormData) => {
     updateShow({
       id: show.id,
       data: {
@@ -120,15 +118,13 @@ export const EditShowModal: React.FC<{ show: Show }> = ({ show }) => {
     });
   };
 
+  const formikConfig = { initialValues, validate, onSubmit };
+
   return (
     <EditItemModal
       title="Edit Show"
-      form={
-        <EditShowForm
-          initialValues={initialValues}
-          handleSubmit={handleSubmit}
-        />
-      }
+      Form={EditShowForm}
+      formikConfig={formikConfig}
     />
   );
 };

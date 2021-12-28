@@ -6,10 +6,13 @@ import React, { useEffect } from "react";
 
 import { useVenues } from "../hooks/useVenues";
 
-export const DisplayShowVenue: React.FC<{ venue: VenueType }> = ({ venue }) => {
-  const { url } = venue;
-  if (!url) return <span>{venue.name}</span>;
+export const DisplayShowVenue: React.FC<{
+  venue: VenueType;
+  rawUrl: string | null;
+}> = ({ venue, rawUrl }) => {
+  if (!rawUrl) return <span>{venue.name}</span>;
 
+  const url = !rawUrl.search(/^https?\/\//) ? rawUrl : `http://${rawUrl}`;
   return (
     <a
       href={url}

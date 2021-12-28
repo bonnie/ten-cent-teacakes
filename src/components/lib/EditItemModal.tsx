@@ -1,19 +1,25 @@
+/* eslint-disable react/jsx-props-no-spreading */
 // adapted from https://www.creative-tim.com/learning-lab/tailwind-starter-kit/documentation/react/modals/regular
 
-import React, { MouseEventHandler, ReactElement } from "react";
+import { Formik, FormikConfig, FormikProps } from "formik";
+import React from "react";
 
 import { Button } from "@/components/lib/Button";
 import { Heading } from "@/components/lib/Heading";
-import { SubmitButton } from "@/components/lib/SubmitButton";
+import { ShowFormData } from "@/lib/shows";
+
+type Values = ShowFormData;
 
 type EditItemModalProps = {
   title: string;
-  form: ReactElement;
+  Form: React.FC<{ props: FormikProps<Values> }>;
+  formikConfig: FormikConfig<Values>;
 };
 
 export const EditItemModal: React.FC<EditItemModalProps> = ({
   title,
-  form,
+  Form,
+  formikConfig,
 }) => {
   const [showModal, setShowModal] = React.useState(false);
   return (
@@ -32,22 +38,30 @@ export const EditItemModal: React.FC<EditItemModalProps> = ({
                   <Heading>{title}</Heading>
                 </div>
                 {/* body */}
-                {form}
-                {/* footer */}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Close
-                  </button>
-                  <Button
-                    type="submit"
-                    clickHandler={() => setShowModal(false)}
-                    contents="Save Changes"
-                  />
-                </div>
+                <Formik {...formikConfig}>
+                  {(props) => (
+                    <Form props={props}>
+                      {/* footer */}
+                      <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                        <button
+                          className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                          type="button"
+                          onClick={() => setShowModal(false)}
+                        >
+                          Close
+                        </button>
+                        <Button
+                          type="submit"
+                          clickHandler={() => {
+                            props.submitForm();
+                            setShowModal(false);
+                          }}
+                          contents="Save Changes"
+                        />
+                      </div>
+                    </Form>
+                  )}
+                </Formik>
               </div>
             </div>
           </div>
