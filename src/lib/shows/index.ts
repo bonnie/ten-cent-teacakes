@@ -1,6 +1,6 @@
 import { Show, Venue } from ".prisma/client";
 
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
@@ -44,15 +44,11 @@ export const fetchShows = async (): Promise<Array<ShowWithVenue>> => {
 };
 
 export const addShow = async (data: ShowPutData): Promise<ShowResponse> => {
-  // try {
   const { data: show } = await axiosInstance.put<
     { body: ShowPutData },
     AxiosResponse<Show>
   >(`/api/${routes.shows}`, { body: data });
   return { show };
-  // } catch (error: AxiosResponse) {
-  //   console.log(error.response.data.message);
-  // }
 };
 
 export const patchShow = async ({
@@ -68,19 +64,3 @@ export const patchShow = async ({
 
 export const deleteShow = async (id: number): Promise<void> =>
   axiosInstance.delete(`/api/${routes.shows}/${id}`);
-
-/* *form helpers */
-export const getShowDateFieldValues = (
-  performAt: Date,
-): { performDate: string; performTime: string } => ({
-  performDate: dayjs(performAt).format("YYYY-MM-DD"),
-  performTime: dayjs(performAt).format("HH:MM"),
-});
-
-export const getShowDateTimeFromForm = (values: ShowFormData): Date => {
-  const timeZone = "America/Los_Angeles";
-
-  return dayjs
-    .tz(`${values.performDate} ${values.performTime}`, timeZone)
-    .toDate();
-};

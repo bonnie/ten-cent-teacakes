@@ -7,7 +7,7 @@ import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { fetchShows } from "@/lib/shows";
 
-import { AddShowForm } from "./components/AddShowForm";
+import { AddShowModal } from "./components/EditShowModal";
 import { EditVenues } from "./components/EditVenues";
 import { ShowsGroup } from "./components/ShowsGroup";
 import { useShows } from "./hooks/useShows";
@@ -25,18 +25,12 @@ import { useShows } from "./hooks/useShows";
 
 const Shows: React.FC = () => {
   const { pastShows, upcomingShows } = useShows();
-  const [addingShow, setAddingShow] = useState(false);
   const { user } = useWhitelistUser();
-
-  const addShow = () => {
-    setAddingShow((state) => !state);
-  };
 
   return (
     <div className="mx-4">
       <Heading>Shows</Heading>
-      {user ? <AddButton clickHandler={addShow} /> : null}
-      {addingShow ? <AddShowForm setAddingShow={setAddingShow} /> : null}
+      {user ? <AddShowModal /> : null}
       <ShowsGroup title="Upcoming Shows" shows={upcomingShows} />
       <ShowsGroup title="Past Shows" shows={pastShows} />
       {user ? <EditVenues /> : null}

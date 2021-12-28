@@ -13,24 +13,11 @@ import { useVenues } from "../hooks/useVenues";
 
 const EditableVenue: React.FC<{ venue: Venue }> = ({ venue }) => {
   const [editing, setEditing] = useState(false);
-  const { deleteVenue, updateVenue, venueNamesLower } = useVenues();
+  const { deleteVenue, updateVenue } = useVenues();
 
   const { handleSubmit, handleBlur, handleChange, values, touched, errors } =
     useFormik({
       initialValues: { name: venue.name, url: venue.url ?? undefined },
-      validate: (values) => {
-        const errors: { name?: string } = {};
-        // TODO: repeated code from AddVenueForm.tsx
-        if (!values.name) {
-          errors.name = "Venue name is required";
-        } else if (
-          values.name &&
-          venueNamesLower.includes(values.name.toLowerCase())
-        ) {
-          errors.name = `Venue "${values.name}" already exists`;
-        }
-        return errors;
-      },
       onSubmit: (values: VenuePatchData) =>
         updateVenue({ id: venue.id, data: values }),
     });
