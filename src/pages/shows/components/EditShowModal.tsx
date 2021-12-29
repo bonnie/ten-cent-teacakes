@@ -90,6 +90,7 @@ export const AddShowModal: React.FC = () => {
       title="Add Show"
       FormFields={EditShowForm}
       formikConfig={formikConfig}
+      buttonType="add"
     />
   );
 };

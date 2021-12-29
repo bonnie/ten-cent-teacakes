@@ -4,6 +4,7 @@
 import { Formik, FormikConfig, FormikProps } from "formik";
 import React from "react";
 import { FiEdit } from "react-icons/fi";
+import { IoMdAdd } from "react-icons/io";
 
 import { Button } from "@/components/lib/Button";
 import { Heading } from "@/components/lib/Heading";
@@ -15,18 +16,21 @@ type EditItemModalProps = {
   title: string;
   FormFields: React.FC<{ props: FormikProps<Values> }>;
   formikConfig: FormikConfig<Values>;
+  buttonType?: "edit" | "add";
 };
 
 export const EditItemModal: React.FC<EditItemModalProps> = ({
   title,
   FormFields,
   formikConfig,
+  buttonType = "edit",
 }) => {
   const [showModal, setShowModal] = React.useState(false);
+  const ButtonIcon = buttonType === "edit" ? FiEdit : IoMdAdd;
   return (
     <>
       <Button
-        contents={<FiEdit size={20} />}
+        contents={<ButtonIcon size={20} />}
         clickHandler={() => setShowModal(true)}
         aria-label={title}
         round
@@ -75,4 +79,8 @@ export const EditItemModal: React.FC<EditItemModalProps> = ({
       ) : null}
     </>
   );
+};
+
+EditItemModal.defaultProps = {
+  buttonType: "edit",
 };
