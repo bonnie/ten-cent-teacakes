@@ -3,8 +3,8 @@
 import { Formik, FormikConfig, FormikProps } from "formik";
 import React from "react";
 import { FiEdit } from "react-icons/fi";
-import { IoMdAdd } from "react-icons/io";
 
+// import { IoMdAdd } from "react-icons/io";
 import { Button } from "@/components/lib/Button";
 
 import {
@@ -27,11 +27,16 @@ export function EditItemModal<Data>({
   buttonType = "edit",
 }: EditItemModalProps<Data>) {
   const [showModal, setShowModal] = React.useState(false);
-  const ButtonIcon = buttonType === "edit" ? FiEdit : IoMdAdd;
+  const butotnContents =
+    buttonType === "edit" ? <FiEdit size={20} /> : "Add new";
   return (
     <>
-      <Button clickHandler={() => setShowModal(true)} aria-label={title} round>
-        <ButtonIcon size={20} />
+      <Button
+        clickHandler={() => setShowModal(true)}
+        aria-label={title}
+        round={buttonType === "edit"}
+      >
+        {butotnContents}
       </Button>
       {showModal ? (
         <ModalContainer title={title}>
