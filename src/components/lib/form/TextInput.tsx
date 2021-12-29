@@ -9,6 +9,7 @@ type TextInputProps = {
   placeholderText: string;
   required?: boolean;
   prefix?: string;
+  type?: string;
 };
 
 export const TextInput: React.FC<TextInputProps> = ({
@@ -17,8 +18,9 @@ export const TextInput: React.FC<TextInputProps> = ({
   placeholderText,
   prefix = undefined,
   required = true,
+  type = "text",
 }) => {
-  const [field] = useField({ name, type: "text" });
+  const [field] = useField({ name });
   return (
     <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
       <div className="grid grid-cols-3 gap-6">
@@ -37,6 +39,7 @@ export const TextInput: React.FC<TextInputProps> = ({
               <input
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 {...field}
+                type={type}
                 id={name}
                 className="focus:ring-aqua-500 focus:border-aqua-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                 placeholder={placeholderText}
@@ -52,4 +55,5 @@ export const TextInput: React.FC<TextInputProps> = ({
 TextInput.defaultProps = {
   prefix: undefined,
   required: true,
+  type: "text",
 };

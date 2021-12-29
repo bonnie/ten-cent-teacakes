@@ -50,6 +50,7 @@ const EditShowForm: React.FC<{
           placeholderText="www.example.com"
           prefix="http://"
           required={false}
+          type="url"
         />
         {props.touched.performDate && props.errors.performDate}
       </form>
