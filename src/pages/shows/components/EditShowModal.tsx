@@ -10,8 +10,8 @@ import { ShowFormData } from "@/lib/shows";
 
 import { useShows } from "../hooks/useShows";
 import { useVenues } from "../hooks/useVenues";
-import { AddVenueForm } from "./EditVenueForm";
 import { EditableShowVenue } from "./ShowVenue";
+// import { AddVenueForm } from "./venues/EditVenueModal";
 
 export const getShowDateFieldValues = (
   performAt: Date,
@@ -50,7 +50,7 @@ const EditShowForm: React.FC<{
         />
         {props.touched.performDate && props.errors.performDate}
       </form>
-      <AddVenueForm visible={showAddVenue} setVisible={setShowAddVenue} />
+      {/* <AddVenueForm visible={showAddVenue} setVisible={setShowAddVenue} /> */}
     </>
   );
 };

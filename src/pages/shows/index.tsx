@@ -8,8 +8,8 @@ import { queryKeys } from "@/lib/react-query/query-keys";
 import { fetchShows } from "@/lib/shows";
 
 import { AddShowModal } from "./components/EditShowModal";
-import { EditVenues } from "./components/EditVenues";
 import { ShowsGroup } from "./components/ShowsGroup";
+import { EditVenues } from "./components/venues/EditVenues";
 import { useShows } from "./hooks/useShows";
 
 // TODO: this is resulting in "Error: connect ECONNREFUSED 127.0.0.1:80"

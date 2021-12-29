@@ -6,7 +6,6 @@ import { FiEdit } from "react-icons/fi";
 import { IoMdAdd } from "react-icons/io";
 
 import { Button } from "@/components/lib/Button";
-import { ShowFormData } from "@/lib/shows";
 
 import {
   ModalCancelButton,
@@ -14,21 +13,19 @@ import {
   ModalFooter,
 } from "./ModalElements";
 
-type Values = ShowFormData;
-
-type EditItemModalProps = {
+type EditItemModalProps<Data> = {
   title: string;
-  FormFields: React.FC<{ props: FormikProps<Values> }>;
-  formikConfig: FormikConfig<Values>;
+  FormFields: React.FC<{ props: FormikProps<Data> }>;
+  formikConfig: FormikConfig<Data>;
   buttonType?: "edit" | "add";
 };
 
-export const EditItemModal: React.FC<EditItemModalProps> = ({
+export function EditItemModal<Data>({
   title,
   FormFields,
   formikConfig,
   buttonType = "edit",
-}) => {
+}: EditItemModalProps<Data>) {
   const [showModal, setShowModal] = React.useState(false);
   const ButtonIcon = buttonType === "edit" ? FiEdit : IoMdAdd;
   return (
@@ -38,12 +35,11 @@ export const EditItemModal: React.FC<EditItemModalProps> = ({
       </Button>
       {showModal ? (
         <ModalContainer title={title}>
-          {/* body */}
           <Formik {...formikConfig}>
             {(props) => (
               <>
                 <FormFields props={props} />
-                {/* footer */}
+                {/* TODO: errors */}
                 <ModalFooter>
                   <ModalCancelButton setShowModal={setShowModal} />
                   <Button
@@ -63,7 +59,7 @@ export const EditItemModal: React.FC<EditItemModalProps> = ({
       ) : null}
     </>
   );
-};
+}
 
 EditItemModal.defaultProps = {
   buttonType: "edit",

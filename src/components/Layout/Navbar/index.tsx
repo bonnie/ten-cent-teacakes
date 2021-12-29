@@ -18,7 +18,9 @@ const LogoutButton: React.FC = () => {
 
   return (
     <a href="/api/auth/logout">
-      <Button contents={<RiLogoutCircleRLine />} />
+      <Button round>
+        <RiLogoutCircleRLine />
+      </Button>
     </a>
   );
 };
