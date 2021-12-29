@@ -4,6 +4,8 @@ import { Venue as VenueType } from ".prisma/client";
 import { useField } from "formik";
 import React, { useEffect } from "react";
 
+import { FieldContainer } from "@/components/lib/form/FieldContainer";
+
 import { useVenues } from "../hooks/useVenues";
 
 export const DisplayShowVenue: React.FC<{
@@ -49,13 +51,20 @@ export const EditableShowVenue: React.FC<{
   };
 
   return (
-    <select {...field} onChange={handleChange} defaultValue={venueId}>
-      {venues.map((venue) => (
-        <option key={venue.id} value={venue.id}>
-          {venue.name}
-        </option>
-      ))}
-      <option value={undefined}>{addNewText}</option>
-    </select>
+    <FieldContainer htmlFor="venueId" label="Venue" required>
+      <select
+        {...field}
+        onChange={handleChange}
+        defaultValue={venueId}
+        id="venueId"
+      >
+        {venues.map((venue) => (
+          <option key={venue.id} value={venue.id}>
+            {venue.name}
+          </option>
+        ))}
+        <option value={undefined}>{addNewText}</option>
+      </select>
+    </FieldContainer>
   );
 };

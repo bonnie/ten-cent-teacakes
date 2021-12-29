@@ -36,17 +36,15 @@ const EditShowForm: React.FC<{
   return (
     <>
       <form onSubmit={props.handleSubmit}>
-        <EditableShowDate
-          dateFieldName="performDate"
-          timeFieldName="performTime"
-        />
+        <TextInput name="performDate" label="Performance date" type="date" />
+        <TextInput name="performTime" label="Performance time" type="time" />
         <EditableShowVenue
           venueId={props.values.venueId}
           setShowAddVenue={setShowAddVenue}
         />
         <TextInput
           name="url"
-          label="Show URL (if different from venue URL)"
+          label="URL for show (if different from venue URL)"
           placeholderText="www.example.com"
           prefix="http://"
           required={false}
