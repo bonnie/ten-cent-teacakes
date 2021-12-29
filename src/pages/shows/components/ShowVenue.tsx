@@ -54,8 +54,8 @@ export const EditableShowVenue: React.FC<{
     <FieldContainer htmlFor="venueId" label="Venue" required>
       <select
         {...field}
+        className="px-4 py-3 rounded w-full"
         onChange={handleChange}
-        defaultValue={venueId}
         id="venueId"
       >
         {venues.map((venue) => (
