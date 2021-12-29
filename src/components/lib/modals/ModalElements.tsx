@@ -20,7 +20,7 @@ export const ModalContainer: React.FC<{ title: string }> = ({
               {title}
             </Heading>
           </div>
-          {children}
+          <div className="mt-5 md:mt-0 md:col-span-2">{children}</div>
         </div>
       </div>
     </div>
@@ -36,10 +36,9 @@ export const ModalFooter: React.FC = ({ children }) => (
 
 export const ModalCancelButton: React.FC<{
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  color?: string;
-}> = ({ setShowModal, color }) => {
+}> = ({ setShowModal }) => {
   const classes = tw([
-    color,
+    "text-black",
     "background-transparent",
     "font-bold",
     "uppercase",
@@ -48,7 +47,7 @@ export const ModalCancelButton: React.FC<{
     "text-sm",
     "outline-none",
     "focus:outline-none",
-    "hover:underline",
+    "hover:text-gray-500",
     "mr-1",
     "mb-1",
     "ease-linear",
@@ -64,8 +63,4 @@ export const ModalCancelButton: React.FC<{
       Cancel
     </button>
   );
-};
-
-ModalCancelButton.defaultProps = {
-  color: "text-red-700",
 };

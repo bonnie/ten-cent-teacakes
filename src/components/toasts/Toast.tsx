@@ -52,7 +52,7 @@ export default function Toast({ status, message, id }: ToastType) {
             </svg>
           </div>
           <div className="ml-3">
-            <p className={tw(`text-sm font-medium text-${color}-800"`)}>
+            <p className={tw(`text-sm font-medium text-${color}-800`)}>
               {message}
             </p>
           </div>

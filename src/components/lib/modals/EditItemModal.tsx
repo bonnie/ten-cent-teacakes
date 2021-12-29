@@ -41,7 +41,7 @@ export const EditItemModal: React.FC<EditItemModalProps> = ({
           {/* body */}
           <Formik {...formikConfig}>
             {(props) => (
-              <div className="mt-5 md:mt-0 md:col-span-2">
+              <>
                 <FormFields props={props} />
                 {/* footer */}
                 <ModalFooter>
@@ -56,7 +56,7 @@ export const EditItemModal: React.FC<EditItemModalProps> = ({
                     Save Changes
                   </Button>
                 </ModalFooter>
-              </div>
+              </>
             )}
           </Formik>
         </ModalContainer>

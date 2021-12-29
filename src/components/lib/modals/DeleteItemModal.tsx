@@ -35,9 +35,9 @@ export const DeleteItemModal: React.FC<DeleteItemModalProps> = ({
       </Button>
       {showModal ? (
         <ModalContainer title={title}>
-          {description}
+          <div className="m-5">{description}</div>
           <ModalFooter>
-            <ModalCancelButton setShowModal={setShowModal} color="text-black" />
+            <ModalCancelButton setShowModal={setShowModal} />
             <Button
               clickHandler={() => {
                 handleDelete();
