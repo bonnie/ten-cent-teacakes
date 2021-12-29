@@ -6,6 +6,7 @@ import {
   AiOutlineWarning,
 } from "react-icons/ai";
 import { MdOutlineSmsFailed } from "react-icons/md";
+import { tw } from "twind";
 
 import { useToastDispatchContext } from "./ToastContext";
 import { Toast as ToastType, ToastStatus } from "./types";
@@ -28,12 +29,16 @@ const getToastDetailsByStatus = (status: ToastStatus) => {
 export default function Toast({ status, message, id }: ToastType) {
   const dispatch = useToastDispatchContext();
   const { color, Icon } = getToastDetailsByStatus(status);
-  // TODO: color var in string literal doesn't work in tailwind 3
+  const classes = tw([
+    "rounded-r-md",
+    `bg(${color}-50)`,
+    `border(${color}-800 solid l-4)`,
+    "p-4",
+    "m-3",
+  ]);
   return (
     <>
-      <div
-        className={`rounded-r-md bg-${color}-50 border-l-${color}-800 border-l-solid border-l-4 p-4 m-3`}
-      >
+      <div className={classes}>
         <div className="flex">
           <div className="flex-shrink-0">
             <svg

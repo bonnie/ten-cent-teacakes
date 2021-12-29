@@ -1,4 +1,5 @@
 import React from "react";
+import { tw } from "twind";
 
 type HeadingProps = {
   textSize?: string;
@@ -12,7 +13,7 @@ export const Heading: React.FC<React.PropsWithChildren<HeadingProps>> = ({
   align,
   margin,
 }) => {
-  const classes = `font-heading text-${textSize} m-${margin} text-${align}`;
+  const classes = tw`font-heading text-${textSize} m-${margin} text-${align}`;
   return <h1 className={classes}>{children}</h1>;
 };
 
