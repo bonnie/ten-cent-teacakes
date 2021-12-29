@@ -2,7 +2,6 @@ import React from "react";
 
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { ShowWithVenue } from "@/lib/shows";
-import { addVenue } from "@/lib/venues";
 
 import { EditShowModal } from "./EditShowModal";
 import { ShowDate } from "./ShowDate";

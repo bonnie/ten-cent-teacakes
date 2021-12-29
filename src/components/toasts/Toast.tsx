@@ -28,6 +28,7 @@ const getToastDetailsByStatus = (status: ToastStatus) => {
 export default function Toast({ status, message, id }: ToastType) {
   const dispatch = useToastDispatchContext();
   const { color, Icon } = getToastDetailsByStatus(status);
+  // TODO: color var in string literal doesn't work in tailwind 3
   return (
     <>
       <div

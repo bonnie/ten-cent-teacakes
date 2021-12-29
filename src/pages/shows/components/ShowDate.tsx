@@ -3,7 +3,7 @@ import { useField, useFormikContext } from "formik";
 import React from "react";
 
 export const formattedPerformAt = (performAt: Date): string =>
-  dayjs(performAt).format("YYYY MMM D HH:MM");
+  dayjs(performAt).format("YYYY MMM D HH:mm");
 
 export const ShowDate: React.FC<{ performAt: Date }> = ({ performAt }) => (
   <span>{formattedPerformAt(performAt)}</span>

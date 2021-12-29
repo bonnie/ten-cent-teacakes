@@ -18,12 +18,11 @@ export const getShowDateFieldValues = (
   performAt: Date,
 ): { performDate: string; performTime: string } => ({
   performDate: dayjs(performAt).format("YYYY-MM-DD"),
-  performTime: dayjs(performAt).format("HH:MM"),
+  performTime: dayjs(performAt).format("HH:mm"),
 });
 
 export const getShowDateTimeFromForm = (values: ShowFormData): Date => {
   const timeZone = "America/Los_Angeles";
-
   return dayjs
     .tz(`${values.performDate} ${values.performTime}`, timeZone)
     .toDate();
