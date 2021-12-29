@@ -1,5 +1,4 @@
 // adapted from https://adamrichardson.dev/blog/custom-tailwind-toast-component
-// TODO: https://tailwindui.com/components/application-ui/feedback/alerts
 
 import {
   AiOutlineCheckCircle,
@@ -32,7 +31,7 @@ export default function Toast({ status, message, id }: ToastType) {
   return (
     <>
       <div
-        className={`rounded-md bg-${color}-50 border-${color}-800 border-solid border-4 p-4 m-3`}
+        className={`rounded-r-md bg-${color}-50 border-l-${color}-800 border-l-solid border-l-4 p-4 m-3`}
       >
         <div className="flex">
           <div className="flex-shrink-0">
