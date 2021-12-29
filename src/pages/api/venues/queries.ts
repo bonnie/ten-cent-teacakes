@@ -10,7 +10,9 @@ export const getVenueById = (id: number) =>
   prisma.venue.findUnique({ where: { id } });
 
 export const addVenue = async (data: VenuePutData) => {
-  await prisma.venue.create({ data });
+  await prisma.venue.create({
+    data: { name: data.name, url: data.url ?? undefined },
+  });
   return prisma.venue.findUnique({ where: { name: data.name } });
 };
 

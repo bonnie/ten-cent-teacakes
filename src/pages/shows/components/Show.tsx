@@ -17,7 +17,7 @@ export const Show: React.FC<{ show: ShowWithVenue }> = ({ show }) => {
       <ShowDate performAt={show.performAt} />
       <DisplayShowVenue
         venue={show.venue}
-        rawUrl={show.url ?? show.venue.url}
+        rawUrl={show.url || show.venue.url}
       />
     </div>
   );

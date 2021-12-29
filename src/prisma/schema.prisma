@@ -13,7 +13,7 @@ generator client {
 model Show {
   id        Int       @id @default(autoincrement())
   performAt DateTime
-  url       String?   @db.VarChar(255) @unique
+  url       String?   @db.VarChar(255)
   venue     Venue     @relation(fields: [venueId], references: [id])
   venueId   Int
   photos    Photo[]
@@ -22,7 +22,7 @@ model Show {
 model Venue {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar(255) @unique
-  url       String?  @db.VarChar(255) @unique
+  url       String?  @db.VarChar(255)
   shows     Show[]
 }
 

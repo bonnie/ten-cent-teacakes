@@ -19,7 +19,7 @@ const getShowById = (id: number) => prisma.show.findUnique({ where: { id } });
 export const addShow = ({ performAt, venueId, url }: ShowPutData) => {
   const data: Prisma.ShowCreateInput = {
     performAt,
-    url,
+    url: url ?? undefined,
     venue: { connect: { id: Number(venueId) } },
   };
   return prisma.show.create({ data });
@@ -35,7 +35,7 @@ export const patchShow = async ({ data, id }: ShowPatchArgs) => {
   const updatedData: Prisma.ShowUpdateInput = {
     performAt: data.performAt,
     venue: { connect: { id: Number(data.venueId) } },
-    url: data.url,
+    url: data.url ?? undefined,
   };
   await prisma.show.update({ data: updatedData, where: { id } });
 };
