@@ -1,7 +1,6 @@
 import React, { MouseEventHandler } from "react";
 
 export type ButtonProps = {
-  contents: string | React.ReactElement;
   clickHandler?: MouseEventHandler<HTMLButtonElement>;
   additionalClasses?: Array<string>;
   type?: "button" | "submit";
@@ -10,7 +9,7 @@ export type ButtonProps = {
 };
 
 export const Button: React.FC<ButtonProps> = ({
-  contents,
+  children,
   clickHandler,
   additionalClasses = [],
   type = "button",
@@ -47,7 +46,7 @@ export const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       className={classes.join(" ")}
     >
-      <span>{contents}</span>
+      {children}
     </button>
   );
 };

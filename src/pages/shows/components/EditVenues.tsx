@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 
 import { Button } from "@/components/lib/Button";
-import { EditButtons } from "@/components/lib/EditButtons";
+// import { EditButtons } from "@/components/lib/EditButtons";
 import { Heading } from "@/components/lib/Heading";
 import { VenuePatchData } from "@/lib/venues";
 
@@ -29,11 +29,11 @@ const EditableVenue: React.FC<{ venue: Venue }> = ({ venue }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <EditButtons
+      {/* <EditButtons
         editing={editing}
         setEditing={setEditing}
         handleDelete={handleDelete}
-      />
+      /> */}
       {editing ? (
         <input
           type="text"
@@ -67,10 +67,9 @@ export const EditVenues: React.FC = () => {
 
   return (
     <>
-      <Button
-        contents={editing ? "Hide Venues" : "Edit Venues"}
-        clickHandler={() => updateEditing((editing) => !editing)}
-      />
+      <Button clickHandler={() => updateEditing((editing) => !editing)}>
+        {editing ? "Hide Venues" : "Edit Venues"}
+      </Button>
       {!editing ? null : (
         <>
           <Heading textSize="4xl" align="left" margin={0}>

@@ -11,7 +11,7 @@ type AddButtonProps = {
 
 export const AddButton: React.FC<AddButtonProps> = ({ clickHandler }) => (
   <Button
-    contents={<MdAddCircleOutline size="2em" />}
+    // contents={<MdAddCircleOutline size="2em" />}
     clickHandler={clickHandler}
     additionalClasses={["mb-2"]}
   />

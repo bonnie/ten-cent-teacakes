@@ -52,7 +52,7 @@ export default function Toast({ status, message, id }: ToastType) {
             </svg>
           </div>
           <div className="ml-3">
-            <p className={`text-sm font-medium text-${color}-800"`}>
+            <p className={tw(`text-sm font-medium text-${color}-800"`)}>
               {message}
             </p>
           </div>
@@ -63,7 +63,9 @@ export default function Toast({ status, message, id }: ToastType) {
                 onClick={() => {
                   dispatch({ type: "DELETE_TOAST", id });
                 }}
-                className={`inline-flex bg-${color}-50 rounded-md p-1.5 text-${color}-500 hover:bg-${color}-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-${color}-50 focus:ring-${color}-600`}
+                className={tw(
+                  `inline-flex bg-${color}-50 rounded-md p-1.5 text-${color}-500 hover:bg-${color}-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-${color}-50 focus:ring-${color}-600`,
+                )}
               >
                 <span className="sr-only">Dismiss</span>
 

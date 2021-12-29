@@ -4,8 +4,8 @@ import dayjs from "dayjs";
 import { FormikProps } from "formik";
 import React, { useState } from "react";
 
-import { EditItemModal } from "@/components/lib/EditItemModal";
 import { TextInput } from "@/components/lib/form/TextInput";
+import { EditItemModal } from "@/components/lib/modals/EditItemModal";
 import { ShowFormData } from "@/lib/shows";
 
 import { useShows } from "../hooks/useShows";
