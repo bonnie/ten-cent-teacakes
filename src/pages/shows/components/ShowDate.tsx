@@ -9,25 +9,25 @@ export const ShowDate: React.FC<{ performAt: Date }> = ({ performAt }) => (
   <span>{formattedPerformAt(performAt)}</span>
 );
 
-export const EditableShowDate: React.FC<{
-  dateFieldName: string;
-  timeFieldName: string;
-}> = ({ dateFieldName, timeFieldName }) => (
-  <>
-    <FormikField fieldName={dateFieldName} fieldType="date" />
-    <FormikField fieldName={timeFieldName} fieldType="time" />
-  </>
-);
+// export const EditableShowDate: React.FC<{
+//   dateFieldName: string;
+//   timeFieldName: string;
+// }> = ({ dateFieldName, timeFieldName }) => (
+//   <>
+//     <FormikField fieldName={dateFieldName} fieldType="date" />
+//     <FormikField fieldName={timeFieldName} fieldType="time" />
+//   </>
+// );
 
-const FormikField: React.FC<{ fieldName: string; fieldType: "date" | "time" }> =
-  ({ fieldName, fieldType }) => {
-    const [field] = useField({ name: fieldName });
-    return (
-      <input
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...field}
-        name={fieldName}
-        type={fieldType}
-      />
-    );
-  };
+// const FormikField: React.FC<{ fieldName: string; fieldType: "date" | "time" }> =
+//   ({ fieldName, fieldType }) => {
+//     const [field] = useField({ name: fieldName });
+//     return (
+//       <input
+//         // eslint-disable-next-line react/jsx-props-no-spreading
+//         {...field}
+//         name={fieldName}
+//         type={fieldType}
+//       />
+//     );
+//   };

@@ -6,6 +6,7 @@ export type ButtonProps = {
   additionalClasses?: Array<string>;
   type?: "button" | "submit";
   disabled?: boolean;
+  round?: boolean;
 };
 
 export const Button: React.FC<ButtonProps> = ({
@@ -14,6 +15,7 @@ export const Button: React.FC<ButtonProps> = ({
   additionalClasses = [],
   type = "button",
   disabled = false,
+  round = false,
 }) => {
   const classes = [
     "bg-aqua-500",
@@ -22,9 +24,9 @@ export const Button: React.FC<ButtonProps> = ({
     "font-bold",
     "uppercase",
     "text-sm",
-    "px-6",
-    "py-3",
-    "rounded",
+    round ? "px-2" : "px-6",
+    round ? "py-2" : "py-3",
+    round ? "rounded-full" : "rounded",
     "shadow",
     "hover:shadow-lg",
     "outline-none",

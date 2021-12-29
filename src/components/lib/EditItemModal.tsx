@@ -3,6 +3,7 @@
 
 import { Formik, FormikConfig, FormikProps } from "formik";
 import React from "react";
+import { FiEdit } from "react-icons/fi";
 
 import { Button } from "@/components/lib/Button";
 import { Heading } from "@/components/lib/Heading";
@@ -24,9 +25,12 @@ export const EditItemModal: React.FC<EditItemModalProps> = ({
   const [showModal, setShowModal] = React.useState(false);
   return (
     <>
-      <Button contents={title} clickHandler={() => setShowModal(true)}>
-        {title}
-      </Button>
+      <Button
+        contents={<FiEdit size={20} />}
+        clickHandler={() => setShowModal(true)}
+        aria-label={title}
+        round
+      />
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none text-lg">
