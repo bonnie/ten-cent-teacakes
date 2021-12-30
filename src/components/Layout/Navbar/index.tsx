@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import { tw } from "twind";
 
 import { Button } from "@/components/lib/Button";
 
@@ -31,6 +32,18 @@ export const Navbar: React.FC = () => {
   const handleClick = () => {
     setActive(!active);
   };
+
+  const hamburgerClasses = tw([
+    "inline-flex",
+    "p-3",
+    "hover:bg-aqua-600",
+    "lg:hidden",
+    "text-white",
+    "ml-auto",
+    "hover:text-white",
+    "outline-none",
+  ]);
+
   return (
     <div>
       <nav className="flex items-center flex-wrap bg-aqua-900 p-3 text-aqua-100 font-heading font-normal">
@@ -50,7 +63,7 @@ export const Navbar: React.FC = () => {
         </Link>
         <button
           type="button"
-          className="inline-flex p-3 hover:bg-green-600 lg:hidden text-white ml-auto hover:text-white outline-none"
+          className={hamburgerClasses}
           onClick={handleClick}
         >
           <svg
