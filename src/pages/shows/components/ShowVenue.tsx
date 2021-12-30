@@ -25,7 +25,9 @@ export const DisplayShowVenue: React.FC<{
       target="_blank"
       rel="noreferrer"
     >
-      {venue.name}
+      <span className="text-xl font-bold text-aqua-700 hover:text-aqua-500">
+        {venue.name}
+      </span>
     </a>
   );
 };
