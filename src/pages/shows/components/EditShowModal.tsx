@@ -2,7 +2,7 @@ import { Show } from "@prisma/client";
 
 import dayjs from "dayjs";
 import { FormikProps } from "formik";
-import React, { useState } from "react";
+import React from "react";
 
 import { TextInput } from "@/components/lib/form/TextInput";
 import { EditItemModal } from "@/components/lib/modals/EditItemModal";
@@ -29,31 +29,25 @@ export const getShowDateTimeFromForm = (values: ShowFormData): Date => {
 
 const EditShowForm: React.FC<{
   props: FormikProps<ShowFormData>;
-}> = ({ props }) => {
-  const [showAddVenue, setShowAddVenue] = useState(false);
-  return (
-    <>
-      <form onSubmit={props.handleSubmit}>
-        <TextInput name="performDate" label="Performance date" type="date" />
-        <TextInput name="performTime" label="Performance time" type="time" />
-        <EditableShowVenue
-          venueId={props.values.venueId}
-          setShowAddVenue={setShowAddVenue}
-        />
-        <TextInput
-          name="url"
-          label="URL for show (if different from venue URL)"
-          placeholderText="www.example.com"
-          prefix="http://"
-          required={false}
-          type="url"
-        />
-        {props.touched.performDate && props.errors.performDate}
-      </form>
-      {/* <AddVenueForm visible={showAddVenue} setVisible={setShowAddVenue} /> */}
-    </>
-  );
-};
+}> = ({ props }) => (
+  <>
+    <form onSubmit={props.handleSubmit}>
+      <TextInput name="performDate" label="Performance date" type="date" />
+      <TextInput name="performTime" label="Performance time" type="time" />
+      {/* TODO update selected show when new show is added */}
+      <EditableShowVenue />
+      <TextInput
+        name="url"
+        label="URL for show (if different from venue URL)"
+        placeholderText="www.example.com"
+        prefix="http://"
+        required={false}
+        type="url"
+      />
+      {props.touched.performDate && props.errors.performDate}
+    </form>
+  </>
+);
 
 const validate = (values: ShowFormData) => {
   const errors: { performDate?: string } = {};

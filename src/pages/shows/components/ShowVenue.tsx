@@ -2,11 +2,12 @@
 import { Venue as VenueType } from ".prisma/client";
 
 import { useField } from "formik";
-import React, { useEffect } from "react";
+import React from "react";
 
 import { FieldContainer } from "@/components/lib/form/FieldContainer";
 
 import { useVenues } from "../hooks/useVenues";
+import { AddVenueModal } from "./venues/EditVenueModal";
 
 export const DisplayShowVenue: React.FC<{
   venue: VenueType;
@@ -29,42 +30,26 @@ export const DisplayShowVenue: React.FC<{
   );
 };
 
-export const EditableShowVenue: React.FC<{
-  venueId: number | undefined;
-  setShowAddVenue: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ venueId, setShowAddVenue }) => {
+export const EditableShowVenue: React.FC = () => {
   const { venues } = useVenues();
-  useEffect(() => {
-    setShowAddVenue(venues.length === 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-  const addNewText = "Add new...";
   const [field] = useField({
     name: "venueId",
     type: "select",
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    field.onChange(event);
-    setShowAddVenue(event.target.value === addNewText);
-  };
-
   return (
     <FieldContainer htmlFor="venueId" label="Venue" required>
-      <select
-        {...field}
-        className="px-4 py-3 rounded w-full"
-        onChange={handleChange}
-        id="venueId"
-      >
+      <select {...field} className="px-4 py-3 rounded w-full" id="venueId">
         {venues.map((venue) => (
           <option key={venue.id} value={venue.id}>
             {venue.name}
           </option>
         ))}
-        <option value={undefined}>{addNewText}</option>
       </select>
+      <div className="mt-2">
+        <AddVenueModal />
+      </div>
     </FieldContainer>
   );
 };
