@@ -16,17 +16,21 @@ export const Show: React.FC<{ show: ShowWithVenue }> = ({ show }) => {
 
   return (
     <div className={showClasses}>
-      {user ? (
-        <>
-          <EditShowModal show={show} />
-          <DeleteShowModal show={show} />
-        </>
-      ) : null}
-      <ShowDate performAt={show.performAt} />
-      <DisplayShowVenue
-        venue={show.venue}
-        rawUrl={show.url || show.venue.url}
-      />
+      <div className={tw(["w-1/2", "sm:w-1/2", "w-full"])}>
+        <ShowDate performAt={show.performAt} />
+      </div>
+      <div className={tw(["order-first", "sm:ml-5", "sm:order-none"])}>
+        {user ? (
+          <span>
+            <EditShowModal show={show} />
+            <DeleteShowModal show={show} />
+          </span>
+        ) : null}
+        <DisplayShowVenue
+          venue={show.venue}
+          rawUrl={show.url || show.venue.url}
+        />
+      </div>
     </div>
   );
 };

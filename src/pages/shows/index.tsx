@@ -29,7 +29,11 @@ const Shows: React.FC = () => {
   return (
     <div className="mx-4">
       <Heading>Shows</Heading>
-      {user ? <AddShowModal /> : null}
+      {user ? (
+        <div className="text-center">
+          <AddShowModal />
+        </div>
+      ) : null}
       <ShowsGroup
         title="Upcoming Shows"
         shows={upcomingShows}

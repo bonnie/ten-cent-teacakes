@@ -19,7 +19,6 @@ export const DisplayShowVenue: React.FC<{
   return (
     <a
       href={url}
-      className="order-first sm:ml-5 sm:order-none"
       aria-label={venue.name}
       title={venue.name}
       color="primary"
