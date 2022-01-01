@@ -12,14 +12,7 @@ import { DisplayShowVenue } from "./ShowVenue";
 export const Show: React.FC<{ show: ShowWithVenue }> = ({ show }) => {
   const { user } = useWhitelistUser();
 
-  const showClasses = tw([
-    "flex",
-    "sm:flex-row",
-    "xs:flex-col",
-    "ml-5",
-    "my-5",
-    "gap-5",
-  ]);
+  const showClasses = tw(["flex", "sm:flex-row", "flex-col", "ml-5", "my-5"]);
 
   return (
     <div className={showClasses}>
