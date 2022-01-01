@@ -13,9 +13,9 @@ export const Show: React.FC<{ show: ShowWithVenue }> = ({ show }) => {
   const { user } = useWhitelistUser();
 
   const showClasses = tw([
-    "grid",
-    "lg:grid-cols-6",
-    "xs:grid-cols-2",
+    "flex",
+    "sm:flex-row",
+    "xs:flex-col",
     "ml-5",
     "my-5",
     "gap-5",
