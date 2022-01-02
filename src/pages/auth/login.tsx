@@ -2,8 +2,8 @@
 
 import { useUser } from "@auth0/nextjs-auth0";
 
-import { Button } from "@/components/Button";
-import { Heading } from "@/components/Heading";
+import { Button } from "@/components/lib/Button";
+import { Heading } from "@/components/lib/Heading";
 import { useToast } from "@/components/toasts/useToast";
 
 const Login = () => {
@@ -19,7 +19,7 @@ const Login = () => {
         <Heading>Welcome!</Heading>
         <p className="text-xl">You are logged in as {user.name}</p>
         <a href="/api/auth/logout">
-          <Button contents="Log out" />
+          <Button>Log out</Button>
         </a>
       </div>
     );
@@ -28,9 +28,9 @@ const Login = () => {
   return (
     <div className="text-center">
       <Heading>Log in</Heading>
-      <p>Note: this button will take you to an Auth0 login screen.</p>
+      <p>Note: this button may take you to an Auth0 login screen.</p>
       <a href="/api/auth/login">
-        <Button contents="Log in" />
+        <Button>Log in</Button>
       </a>
     </div>
   );

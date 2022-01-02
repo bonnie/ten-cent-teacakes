@@ -15,7 +15,7 @@ export const useHandleError = () => {
     React.useState<string>("");
   const dispatch = useToastDispatchContext();
 
-  const handleError = (error: unknown) => {
+  const handleQueryError = (error: unknown) => {
     const message = getErrorMessage(error);
     // remove previous error toast to prevent duplicates
     if (currentErrorToastId)
@@ -24,5 +24,9 @@ export const useHandleError = () => {
     setCurrentErrorToastId(id);
   };
 
-  return { handleError };
+  const handleMutateError = (error: unknown, action: string) => {
+    showToast("error", getErrorMessage(error));
+  };
+
+  return { handleQueryError, handleMutateError };
 };

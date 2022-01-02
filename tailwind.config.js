@@ -1,5 +1,7 @@
+// TODO: shift to twind: https://twind.dev/
 // const colors = require("tailwindcss/colors");
 const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
 
 module.exports = {
   purge: [
@@ -29,6 +31,13 @@ module.exports = {
         medium: "rgb(200, 154, 81)",
         dark: "rgb(19, 14, 6)",
       },
+      black: colors.black,
+      white: colors.white,
+      gray: colors.gray,
+      green: colors.green,
+      red: colors.red,
+      yellow: colors.yellow,
+      blue: colors.blue,
     },
     extend: {
       fontFamily: {
@@ -40,5 +49,6 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  // eslint-disable-next-line global-require
+  plugins: [require("@tailwindcss/forms")],
 };

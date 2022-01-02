@@ -17,7 +17,7 @@ export default async function handle(
         res.json(shows);
         break;
       case "PUT":
-        res.status(201).json(await addShow(body));
+        res.status(201).json(await addShow(body.body));
         break;
       default:
         res.setHeader("Allow", ["GET", "PUT"]);

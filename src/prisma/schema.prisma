@@ -13,6 +13,7 @@ generator client {
 model Show {
   id        Int       @id @default(autoincrement())
   performAt DateTime
+  url       String?   @db.VarChar(255)
   venue     Venue     @relation(fields: [venueId], references: [id])
   venueId   Int
   photos    Photo[]
@@ -28,7 +29,7 @@ model Venue {
 model Photo {
   id            Int      @id @default(autoincrement())
   show          Show     @relation(fields: [showId], references: [id])
-  showId       Int
+  showId        Int
   imagePath     String   @db.VarChar(255)
   photographer  String   @db.VarChar(255)
   createdAt     DateTime @default(now())

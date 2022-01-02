@@ -1,5 +1,5 @@
-import { axiosInstance } from "@/lib/api/axiosInstance";
 import { WhitelistResponse } from "@/lib/auth/types";
+import { axiosInstance } from "@/lib/axios/axiosInstance";
 
 export const validateUser = async (userEmail: string) => {
   const { data } = await axiosInstance.get<WhitelistResponse>(

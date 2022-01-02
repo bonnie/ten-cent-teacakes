@@ -54,7 +54,7 @@
     "comma-dangle": ["error", "always-multiline"],
     "object-curly-spacing": 1,
     "array-bracket-spacing": 1,
-    "no-unused-vars": 1,
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "/?$" }],
     "prettier/prettier": [
       "warn",
       {

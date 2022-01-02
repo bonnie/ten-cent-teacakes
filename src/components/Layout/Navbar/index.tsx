@@ -5,8 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import { tw } from "twind";
 
-import { Button } from "@/components/Button";
+import { Button } from "@/components/lib/Button";
 
 import { NavLink } from "./NavLink";
 import { SocialLinks } from "./SocialLinks";
@@ -18,7 +19,9 @@ const LogoutButton: React.FC = () => {
 
   return (
     <a href="/api/auth/logout">
-      <Button contents={<RiLogoutCircleRLine />} />
+      <Button round>
+        <RiLogoutCircleRLine />
+      </Button>
     </a>
   );
 };
@@ -29,13 +32,36 @@ export const Navbar: React.FC = () => {
   const handleClick = () => {
     setActive(!active);
   };
+
+  const hamburgerClasses = tw([
+    "inline-flex",
+    "p-3",
+    "hover:bg-aqua-600",
+    "lg:hidden",
+    "text-white",
+    "ml-auto",
+    "hover:text-white",
+    "outline-none",
+  ]);
+
   return (
     <div>
-      <nav className="flex items-center flex-wrap bg-aqua-900 p-3 text-aqua-100 font-heading font-normal">
+      <nav
+        className={tw([
+          "flex",
+          "items-center",
+          "flex-wrap",
+          "bg-aqua-900",
+          "p-3",
+          "text-aqua-100",
+          "font-heading",
+          "font-normal",
+        ])}
+      >
         <Link href="/">
           <button
             type="button"
-            className="inline-flex items-center p-0.5 mr-4 "
+            className={tw(["inline-flex", "items-center", "p-0.5", "mr-4"])}
           >
             <Image
               src="/logo/tencent-tag.svg"
@@ -48,7 +74,7 @@ export const Navbar: React.FC = () => {
         </Link>
         <button
           type="button"
-          className="inline-flex p-3 hover:bg-green-600 lg:hidden text-white ml-auto hover:text-white outline-none"
+          className={hamburgerClasses}
           onClick={handleClick}
         >
           <svg
@@ -67,16 +93,45 @@ export const Navbar: React.FC = () => {
           </svg>
         </button>
         <div
-          className={`${
-            active ? "" : "hidden"
-          }   w-full lg:inline-flex lg:flex-grow lg:w-auto`}
+          className={tw([
+            active ? null : "hidden",
+            "w-full",
+            "lg:inline-flex",
+            "lg:flex-grow",
+            "lg:w-auto",
+            "lg:items-center",
+          ])}
         >
-          <div className="lg:inline-flex lg:flex-row lg:w-auto w-full lg:items-center items-start  flex flex-col lg:h-auto">
+          <div
+            className={tw([
+              "lg:inline-flex",
+              "lg:flex-row",
+              "lg:w-auto",
+              "w-full",
+              "lg:items-center",
+              "items-start",
+              "flex",
+              "flex-col",
+              "lg:h-auto",
+            ])}
+          >
             <NavLink href="/shows" pageName="shows" />
             <NavLink href="/photos" pageName="photos" />
             <NavLink href="/about" pageName="about" />
           </div>
-          <div className="flex items-center lg:inline-flex lg:flex-row lg:w-full lg:justify-end items-start flex flex-col">
+          <div
+            className={tw([
+              "flex",
+              "items-center",
+              "lg:inline-flex",
+              "lg:flex-row",
+              "lg:w-full",
+              "lg:justify-end",
+              "items-start",
+              "flex",
+              "flex-col",
+            ])}
+          >
             <SocialLinks />
           </div>
         </div>

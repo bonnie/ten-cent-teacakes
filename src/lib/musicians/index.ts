@@ -1,17 +1,15 @@
-import { Musician, Show } from ".prisma/client";
+import { Musician } from ".prisma/client";
 
-import { axiosInstance } from "./axiosInstance";
-import { routes } from "./types";
+import { axiosInstance } from "../axios/axiosInstance";
+import { routes } from "../axios/constants";
 
-export const fetchShows = async (): Promise<Array<Show>> => {
-  const { data } = await axiosInstance.get(`/api/${routes.shows}`);
-  return data;
-};
-
+/* * types * */
 export type InstrumentName = { name: string };
 export type MusicianWithInstruments = Musician & {
   instruments: Array<InstrumentName>;
 };
+
+/* * methods * */
 export const fetchMusiciansWithInstruments = async (): Promise<
   Array<MusicianWithInstruments>
 > => {

@@ -49,7 +49,7 @@ const createMusicians = async () => {
     {
       firstName: "Bonnie",
       lastName: "Schulkin",
-      bio: "Bonnie's musical past includes an elementary school chorus solo in \"76 Trombones\" (and it's pretty much downhill from there). Bass is her ideal instrument: it's heavy on theory and light on actual number of notes to be played.",
+      bio: "Bonnie's musical past includes an elementary school chorus solo in \"76 Trombones\" and a slightly less glamorous stint in the Fly Right Sisters. Bass is her ideal instrument: it's heavy on theory and light on actual number of notes to be played.",
       instruments: {
         connect: [{ name: "bass" }, { name: "kazoo" }, { name: "vocals" }],
       },

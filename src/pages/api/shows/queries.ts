@@ -2,63 +2,44 @@
 import { Prisma } from ".prisma/client";
 
 import prisma from "@/lib/prisma";
+import { ShowPatchArgs, ShowPutData } from "@/lib/shows";
 
-type VenueData = {
-  name: string;
-  url?: string;
-};
-
-type NewOrExistingVenue = {
-  venueId?: number;
-  venueData?: VenueData;
-};
-
-type ShowPutData = { performAt: Date } & NewOrExistingVenue;
-
-type ShowPatchData = {
-  body: ShowPutData;
-  id: number;
-};
-
-const generateVenueData = ({ venueId, venueData }: NewOrExistingVenue) =>
-  // connect to venue if id was provided; otherwise create a new one
-  venueId ? { connect: { id: venueId } } : { create: venueData };
+// const generateVenueData = ({ venueId, venueData }: NewOrExistingVenue) =>
+//   // connect to venue if id was provided; otherwise create a new one
+//   venueId ? { connect: { id: venueId } } : { create: venueData };
 
 export const getShows = () =>
   prisma.show.findMany({
     orderBy: { performAt: "desc" },
+    include: { venue: true },
   });
+
 const getShowById = (id: number) => prisma.show.findUnique({ where: { id } });
 
-export const addShow = ({ performAt, venueId, venueData }: ShowPutData) => {
-  if (!venueId && !venueData) {
-    throw new Error("Either venueId or venueData must be provided");
-  }
-
-  const venue = generateVenueData({ venueId, venueData });
-  const data: Prisma.ShowCreateInput = { performAt, venue };
-
+export const addShow = ({ performAt, venueId, url }: ShowPutData) => {
+  const data: Prisma.ShowCreateInput = {
+    performAt,
+    url: url ?? undefined,
+    venue: { connect: { id: Number(venueId) } },
+  };
   return prisma.show.create({ data });
 };
 
-export const patchShow = async ({ body, id }: ShowPatchData) => {
+export const patchShow = async ({ data, id }: ShowPatchArgs) => {
   const showData = getShowById(id);
   if (!showData) {
     throw new Error(`Bad show id: ${id}`);
   }
 
-  // get the venueId and venueData from the body
-  const { venueId, venueData } = body;
-  delete body.venueId;
-  delete body.venueData;
-
   // add venue in proper format to updatedData
-  const updatedData: Prisma.ShowUpdateInput = { ...body };
-  updatedData.venue = generateVenueData({ venueId, venueData });
-
-  prisma.show.update({ data: updatedData, where: { id } });
+  const updatedData: Prisma.ShowUpdateInput = {
+    performAt: data.performAt,
+    venue: { connect: { id: Number(data.venueId) } },
+    url: data.url ?? undefined,
+  };
+  await prisma.show.update({ data: updatedData, where: { id } });
 };
 
 export const deleteShow = async (id: number) => {
-  prisma.show.delete({ where: { id } });
+  await prisma.show.delete({ where: { id } });
 };
