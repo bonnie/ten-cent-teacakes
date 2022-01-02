@@ -34,6 +34,7 @@ export const ShowsGroup: React.FC<ShowsProps> = ({
             To keep informed about new shows,{" "}
             <a
               className="text-aqua-700 hover:text-aqua-500 font-bold"
+              // TODO: fix this to be an actual link
               href="/subscribe"
             >
               join our mailing list!
