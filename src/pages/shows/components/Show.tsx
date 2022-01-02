@@ -16,7 +16,7 @@ export const Show: React.FC<{ show: ShowWithVenue }> = ({ show }) => {
 
   return (
     <div className={showClasses}>
-      <div className={tw(["w-1/2", "sm:w-1/2", "w-full"])}>
+      <div className={tw(["sm:w-1/2", "w-full"])}>
         <ShowDate performAt={show.performAt} />
       </div>
       <div className={tw(["order-first", "sm:ml-5", "sm:order-none"])}>

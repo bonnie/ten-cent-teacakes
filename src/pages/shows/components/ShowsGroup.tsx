@@ -28,7 +28,18 @@ export const ShowsGroup: React.FC<ShowsProps> = ({
         </Heading>
       ) : null}
       {shows.length === 0 ? (
-        <p>No {title.toLowerCase()} just now; check back soon!</p>
+        <div className="text-center">
+          <p>No {title.toLowerCase()} just now</p>
+          <p>
+            To keep informed about new shows,{" "}
+            <a
+              className="text-aqua-700 hover:text-aqua-500 font-bold"
+              href="/subscribe"
+            >
+              join our mailing list!
+            </a>
+          </p>
+        </div>
       ) : (
         shows.map((show) => <Show key={show.id} show={show} />)
       )}
