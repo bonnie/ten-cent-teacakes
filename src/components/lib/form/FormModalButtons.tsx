@@ -23,7 +23,7 @@ export const FormModalButtons: React.FC<FormModalButtonsProps> = ({
     </button>
     <Button
       type="submit"
-      clickHandler={() => {
+      handleClick={() => {
         handleSubmit();
         closeModal();
       }}

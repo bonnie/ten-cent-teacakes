@@ -57,6 +57,7 @@ type UseShowsReturnValue = {
   addShow: UseMutateFunction<ShowResponse, unknown, ShowPutData, unknown>;
   deleteShow: UseMutateFunction<void, unknown, number, unknown>;
   updateShow: UseMutateFunction<ShowResponse, unknown, ShowPatchArgs, unknown>;
+  showCountPerVenue: Record<number, number>;
 };
 
 export const useShows = (): UseShowsReturnValue => {
@@ -108,10 +109,20 @@ export const useShows = (): UseShowsReturnValue => {
     onError: (error) => handleMutateError(error, "update show"),
   });
 
+  const showCountPerVenue: Record<number, number> = {};
+  data.forEach((show) => {
+    if (!showCountPerVenue[show.venueId]) {
+      showCountPerVenue[show.venueId] = 1;
+    } else {
+      showCountPerVenue[show.venueId] += 1;
+    }
+  });
+
   return {
     ...shows,
     addShow: addShowMutate,
     updateShow,
     deleteShow: deleteShowMutate,
+    showCountPerVenue,
   };
 };

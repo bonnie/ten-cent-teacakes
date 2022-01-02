@@ -32,7 +32,7 @@ export function EditItemModal<Data>({
   return (
     <>
       <Button
-        clickHandler={() => setShowModal(true)}
+        handleClick={() => setShowModal(true)}
         aria-label={title}
         round={buttonType === "edit"}
       >
@@ -49,7 +49,7 @@ export function EditItemModal<Data>({
                   <ModalCancelButton setShowModal={setShowModal} />
                   <Button
                     type="submit"
-                    clickHandler={() => {
+                    handleClick={() => {
                       props.submitForm();
                       setShowModal(false);
                     }}

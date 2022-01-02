@@ -6,13 +6,13 @@ import { MdAddCircleOutline } from "react-icons/md";
 import { Button } from "./Button";
 
 type AddButtonProps = {
-  clickHandler: MouseEventHandler<HTMLButtonElement>;
+  handleClick: MouseEventHandler<HTMLButtonElement>;
 };
 
-export const AddButton: React.FC<AddButtonProps> = ({ clickHandler }) => (
+export const AddButton: React.FC<AddButtonProps> = ({ handleClick }) => (
   <Button
     // contents={<MdAddCircleOutline size="2em" />}
-    clickHandler={clickHandler}
+    handleClick={handleClick}
     additionalClasses={["mb-2"]}
   />
 );

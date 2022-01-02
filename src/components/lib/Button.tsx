@@ -1,7 +1,8 @@
 import React, { MouseEventHandler } from "react";
+import { tw } from "twind";
 
 export type ButtonProps = {
-  clickHandler?: MouseEventHandler<HTMLButtonElement>;
+  handleClick?: MouseEventHandler<HTMLButtonElement>;
   additionalClasses?: Array<string>;
   type?: "button" | "submit";
   disabled?: boolean;
@@ -10,14 +11,14 @@ export type ButtonProps = {
 
 export const Button: React.FC<ButtonProps> = ({
   children,
-  clickHandler,
+  handleClick,
   additionalClasses = [],
   type = "button",
   disabled = false,
   round = false,
 }) => {
-  const classes = [
-    "bg-aqua-500",
+  const classes = tw([
+    disabled ? "bg-aqua-300" : "bg-aqua-500",
     "text-white",
     "active:bg-aqua-600",
     "font-bold",
@@ -27,24 +28,24 @@ export const Button: React.FC<ButtonProps> = ({
     round ? "py-2" : "py-3",
     round ? "rounded-full" : "rounded",
     "shadow",
-    "hover:shadow-lg",
+    disabled ? null : "hover:shadow-lg",
     "outline-none",
-    "focus:outline-none",
+    disabled ? null : "focus:outline-none",
     "mr-1",
     "mb-1",
     "ease-linear",
     "transition-all",
     "duration-150",
     ...additionalClasses,
-  ];
+  ]);
 
   return (
     <button
       // eslint-disable-next-line react/button-has-type
       type={type}
-      onClick={clickHandler}
+      onClick={handleClick}
       disabled={disabled}
-      className={classes.join(" ")}
+      className={classes}
     >
       {children}
     </button>

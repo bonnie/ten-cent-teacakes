@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 import { Button } from "@/components/lib/Button";
+import { Popover } from "@/components/lib/Popover";
 
 import {
   ModalCancelButton,
@@ -23,23 +24,26 @@ export const DeleteItemModal: React.FC<DeleteItemModalProps> = ({
   disabled,
 }) => {
   const [showModal, setShowModal] = useState(false);
+  const button = (
+    <Button
+      handleClick={() => setShowModal(true)}
+      aria-label={title}
+      round
+      disabled={disabled}
+    >
+      <RiDeleteBinLine size={20} />
+    </Button>
+  );
   return (
     <>
-      <Button
-        clickHandler={() => setShowModal(true)}
-        aria-label={title}
-        round
-        disabled={disabled}
-      >
-        <RiDeleteBinLine size={20} />
-      </Button>
+      {disabled ? <Popover message={title}>{button}</Popover> : button}
       {showModal ? (
         <ModalContainer title={title}>
           <div className="m-5">{description}</div>
           <ModalFooter>
             <ModalCancelButton setShowModal={setShowModal} />
             <Button
-              clickHandler={() => {
+              handleClick={() => {
                 handleDelete();
                 setShowModal(false);
               }}

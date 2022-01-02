@@ -6,16 +6,25 @@ import { DeleteItemModal } from "@/components/lib/modals/DeleteItemModal";
 
 import { useVenues } from "../../hooks/useVenues";
 
-export const DeleteVenueModal: React.FC<{ venue: Venue }> = ({ venue }) => {
+export const DeleteVenueModal: React.FC<{
+  venue: Venue;
+  disabled?: boolean;
+  title?: string;
+}> = ({ venue, disabled, title = "Delete Venue" }) => {
   const { deleteVenue } = useVenues();
   const description = `Delete venue "${venue.name}"?`;
 
-  // TODO: disable if any shows associated with this venue
   return (
     <DeleteItemModal
-      title="Delete Venue"
+      title={title}
       description={description}
       handleDelete={() => deleteVenue(venue.id)}
+      disabled={disabled}
     />
   );
+};
+
+DeleteVenueModal.defaultProps = {
+  disabled: false,
+  title: "Delete Venue",
 };
