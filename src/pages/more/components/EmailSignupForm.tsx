@@ -27,7 +27,6 @@ export const EmailSignupForm: React.FC = () => (
         <div className="flex flex-row items-center" id="mc_embed_signup_scroll">
           <input
             type="email"
-            value=""
             name="EMAIL"
             className="email"
             id="mce-EMAIL"
@@ -46,7 +45,7 @@ export const EmailSignupForm: React.FC = () => (
             />
           </div>
           <div className="ml-2">
-            <Button>Subscribe</Button>
+            <Button type="submit">Subscribe</Button>
           </div>
         </div>
       </form>
