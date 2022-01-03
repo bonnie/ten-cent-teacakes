@@ -28,14 +28,14 @@ export const ShowsGroup: React.FC<ShowsProps> = ({
         </Heading>
       ) : null}
       {shows.length === 0 ? (
-        <div className="text-center">
+        <div className="text-center text-xl">
           <p>No {title.toLowerCase()} just now</p>
           <p>
             To keep informed about new shows,{" "}
             <a
               className="text-aqua-700 hover:text-aqua-500 font-bold"
               // TODO: fix this to be an actual link
-              href="/subscribe"
+              href="/more"
             >
               join our mailing list!
             </a>

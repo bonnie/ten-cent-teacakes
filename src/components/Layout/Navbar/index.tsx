@@ -117,7 +117,8 @@ export const Navbar: React.FC = () => {
           >
             <NavLink href="/shows" pageName="shows" />
             <NavLink href="/photos" pageName="photos" />
-            <NavLink href="/about" pageName="about" />
+            <NavLink href="/band" pageName="band" />
+            <NavLink href="/more" pageName="more" />
           </div>
           <div
             className={tw([
