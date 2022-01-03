@@ -21,7 +21,7 @@ export default function Home() {
     if (user && user.email) validateUser(user.email);
   }, [user]);
   return (
-    <div className="flex flex-col justify-start items-center w-full h-full pl-30 pt-4 min-h-full">
+    <div className="flex flex-col justify-start items-center w-full h-full pl-30 min-h-full">
       <Head>
         <title>Ten-Cent Teacakes String Band</title>
       </Head>

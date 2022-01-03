@@ -27,7 +27,7 @@ const Shows: React.FC = () => {
   const { user } = useWhitelistUser();
 
   return (
-    <div className="mx-4">
+    <>
       <Heading>Shows</Heading>
       {user ? (
         <div className="text-center">
@@ -43,7 +43,7 @@ const Shows: React.FC = () => {
         <ShowsGroup title="Past Shows" shows={pastShows} />
       </div>
       {user ? <EditVenues /> : null}
-    </div>
+    </>
   );
 };
 
