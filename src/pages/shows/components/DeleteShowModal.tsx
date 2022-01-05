@@ -1,7 +1,7 @@
 import React from "react";
 
 import { DeleteItemModal } from "@/components/lib/modals/DeleteItemModal";
-import { ShowWithVenue } from "@/lib/shows";
+import { ShowWithVenue } from "@/lib/shows/types";
 
 import { useShows } from "../hooks/useShows";
 

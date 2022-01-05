@@ -28,10 +28,10 @@ model Venue {
 
 model Photo {
   id            Int      @id @default(autoincrement())
-  show          Show     @relation(fields: [showId], references: [id])
-  showId        Int
+  show          Show?    @relation(fields: [showId], references: [id])
+  showId        Int?
   imagePath     String   @db.VarChar(255)
-  photographer  String   @db.VarChar(255)
+  photographer  String?  @db.VarChar(255)
   createdAt     DateTime @default(now())
 }
 

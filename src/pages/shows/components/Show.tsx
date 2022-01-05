@@ -2,7 +2,7 @@ import React from "react";
 import { tw } from "twind";
 
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
-import { ShowWithVenue } from "@/lib/shows";
+import { ShowWithVenue } from "@/lib/shows/types";
 
 import { DeleteShowModal } from "./DeleteShowModal";
 import { EditShowModal } from "./EditShowModal";

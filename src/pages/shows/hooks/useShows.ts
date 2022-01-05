@@ -1,6 +1,5 @@
-import { AxiosResponse } from "axios";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   UseMutateFunction,
   useMutation,
@@ -16,11 +15,9 @@ import {
   deleteShow,
   fetchShows,
   patchShow,
-  ShowPatchArgs,
-  ShowPutData,
   ShowResponse,
-  ShowWithVenue,
 } from "@/lib/shows";
+import { ShowPatchArgs, ShowPutData, ShowWithVenue } from "@/lib/shows/types";
 
 type SortedShows = {
   upcomingShows: Array<ShowWithVenue>;

@@ -1,0 +1,37 @@
+import { Photo } from ".prisma/client";
+
+import { AxiosResponse } from "axios";
+
+import { axiosInstance } from "../axios/axiosInstance";
+import { routes } from "../axios/constants";
+import { PhotoPatchArgs, PhotoPatchData, PhotoPutData } from "./types";
+
+export type PhotoResponse = { photo: Photo };
+
+/* * methods * */
+export const fetchPhotos = async (): Promise<Array<Photo>> => {
+  const { data } = await axiosInstance.get(`/api/${routes.photos}`);
+  return data;
+};
+
+export const addPhoto = async (data: PhotoPutData): Promise<PhotoResponse> => {
+  const { data: photo } = await axiosInstance.put<
+    { body: PhotoPutData },
+    AxiosResponse<Photo>
+  >(`/api/${routes.photos}`, { body: data });
+  return { photo };
+};
+
+export const patchPhoto = async ({
+  id,
+  data,
+}: PhotoPatchArgs): Promise<PhotoResponse> => {
+  const { data: photo } = await axiosInstance.patch<
+    { body: PhotoPatchData },
+    AxiosResponse<Photo>
+  >(`/api/${routes.photos}/${id}`, { body: data });
+  return { photo };
+};
+
+export const deletePhoto = async (id: number): Promise<void> =>
+  axiosInstance.delete(`/api/${routes.photos}/${id}`);
