@@ -1,1 +1,1 @@
-export const uploadDestination = "/public";
+export const uploadDestination = "public/uploads";

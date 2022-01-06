@@ -1,12 +1,12 @@
 export type PhotoFormData = {
   showId?: number;
-  file?: File;
+  photoFile?: File;
   photographer?: string;
 };
 
 export type PhotoPutData = {
   showId?: number;
-  file: File;
+  photoFile: File;
   photographer?: string;
 };
 

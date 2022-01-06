@@ -33,9 +33,9 @@ export const AddPhotoForm: React.FC<{
 );
 
 const photoFormValidation = (values: PhotoFormData) => {
-  const errors: { file?: string } = {};
-  if (!values.file) {
-    errors.file = "File is required";
+  const errors: { photoFile?: string } = {};
+  if (!values.photoFile) {
+    errors.photoFile = "File is required";
   }
   return errors;
 };
@@ -46,13 +46,16 @@ export const AddPhotoModal: React.FC = () => {
   const initialValues = {
     photographer: "",
     showId: undefined,
-    file: undefined,
+    photoFile: undefined,
   };
   const onSubmit = (values: PhotoFormData) => {
-    if (values.file)
+    console.log("submitting", values);
+    console.log("data type", typeof values.photoFile);
+
+    if (values.photoFile)
       addPhoto({
         showId: values.showId,
-        file: values.file,
+        photoFile: values.photoFile,
         photographer: values.photographer,
       });
   };

@@ -15,10 +15,18 @@ export const fetchPhotos = async (): Promise<Array<Photo>> => {
 };
 
 export const addPhoto = async (data: PhotoPutData): Promise<PhotoResponse> => {
+  console.log("sending to server!", data);
+  console.log("data type", typeof data.photoFile);
+  const formData = new FormData();
+  formData.set("photoFile", data.photoFile);
+  if (data.showId) formData.set("showId", data.showId.toString());
+  if (data.photographer) formData.set("photographer", data.photographer);
   const { data: photo } = await axiosInstance.put<
-    { body: PhotoPutData },
+    FormData,
     AxiosResponse<Photo>
-  >(`/api/${routes.photos}`, { body: data });
+  >(`/api/${routes.photos}`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
   return { photo };
 };
 
