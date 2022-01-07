@@ -1,3 +1,4 @@
+// TODO: loading spinner with useIsMutating
 import { Photo } from "@prisma/client";
 
 import {

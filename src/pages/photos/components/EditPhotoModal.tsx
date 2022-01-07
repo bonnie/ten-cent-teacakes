@@ -15,7 +15,7 @@ import { usePhotos } from "../hooks/usePhotos";
 const editFields = (
   <>
     <EditableShow required={false} />
-    <TextInput name="name" label="Phototographer" required={false} />
+    <TextInput name="photographer" label="Phototographer" required={false} />
   </>
 );
 

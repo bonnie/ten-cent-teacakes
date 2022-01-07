@@ -2,7 +2,7 @@
 import { Prisma } from ".prisma/client";
 
 import prisma from "@/lib/prisma";
-import { ShowPatchArgs, ShowPutData } from "@/lib/shows";
+import { ShowPatchArgs, ShowPutData } from "@/lib/shows/types";
 
 // const generateVenueData = ({ venueId, venueData }: NewOrExistingVenue) =>
 //   // connect to venue if id was provided; otherwise create a new one

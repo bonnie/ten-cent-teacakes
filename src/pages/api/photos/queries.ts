@@ -18,7 +18,7 @@ export const addPhoto = ({ imagePath, showId, photographer }: PhotoPutData) => {
   const data: Prisma.PhotoCreateInput = {
     imagePath,
     photographer,
-    show: { connect: { id: showId } },
+    show: { connect: { id: Number(showId) } },
   };
 
   return prisma.photo.create({ data });

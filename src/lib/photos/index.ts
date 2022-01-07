@@ -15,8 +15,6 @@ export const fetchPhotos = async (): Promise<Array<Photo>> => {
 };
 
 export const addPhoto = async (data: PhotoPutData): Promise<PhotoResponse> => {
-  console.log("sending to server!", data);
-  console.log("data type", typeof data.photoFile);
   const formData = new FormData();
   formData.set("photoFile", data.photoFile);
   if (data.showId) formData.set("showId", data.showId.toString());
