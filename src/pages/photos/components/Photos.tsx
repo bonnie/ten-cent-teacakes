@@ -18,17 +18,23 @@ const Photo: React.FC<{ photo: PhotoWithShowAndVenue; photoDate: Date }> = ({
   return (
     <div className={tw(["m-5", "flex", "flex-col", "items-center"])}>
       <img
-        className={tw(["max-w-48 max-h-48 border-solid border-4 border-black"])}
+        className={tw([
+          "max-w-48",
+          "max-h-48",
+          "border-solid",
+          "border-4",
+          "border-black",
+        ])}
         src={photo.imagePath}
         alt="Ten-cent Teacakes"
       />
       <p className="text-center text-md">
-        {dayjs(photoDate).format("MMM DD YYYY")}
+        {dayjs(photoDate).format("MMM DD, YYYY")}
         {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
       </p>
-      {photo.photographer ? (
-        <p className="text-sm">taken by {photo.photographer}</p>
-      ) : null}
+      <p className="text-sm">
+        {photo.photographer ? `taken by ${photo.photographer}` : <br />}
+      </p>
       {user ? (
         <div>
           <EditPhotoModal photo={photo} />
@@ -43,7 +49,7 @@ export const Photos: React.FC = () => {
   const { photos } = usePhotos();
 
   return (
-    <div className="flex flex-wrap justify-center items-center">
+    <div className="flex flex-wrap justify-center items-baseline">
       {photos.map((photo) => (
         <Photo key={photo.id} photo={photo} photoDate={getPhotoDate(photo)} />
       ))}
