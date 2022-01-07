@@ -22,10 +22,13 @@ const Photo: React.FC<{ photo: PhotoWithShowAndVenue; photoDate: Date }> = ({
         src={photo.imagePath}
         alt="Ten-cent Teacakes"
       />
-      <p className="text-center text-sm">
+      <p className="text-center text-md">
         {dayjs(photoDate).format("MMM DD YYYY")}
         {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
       </p>
+      {photo.photographer ? (
+        <p className="text-sm">taken by {photo.photographer}</p>
+      ) : null}
       {user ? (
         <div>
           <EditPhotoModal photo={photo} />
