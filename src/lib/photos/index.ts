@@ -4,7 +4,7 @@ import { AxiosResponse } from "axios";
 
 import { axiosInstance } from "../axios/axiosInstance";
 import { routes } from "../axios/constants";
-import { PhotoPatchArgs, PhotoPatchData, PhotoPutData } from "./types";
+import { PhotoFormData, PhotoPatchArgs, PhotoPatchData } from "./types";
 
 export type PhotoResponse = { photo: Photo };
 
@@ -14,8 +14,9 @@ export const fetchPhotos = async (): Promise<Array<Photo>> => {
   return data;
 };
 
-export const addPhoto = async (data: PhotoPutData): Promise<PhotoResponse> => {
+export const addPhoto = async (data: PhotoFormData): Promise<PhotoResponse> => {
   const formData = new FormData();
+  if (!data.photoFile) throw new Error("Can't create; no photo file");
   formData.set("photoFile", data.photoFile);
   if (data.showId) formData.set("showId", data.showId.toString());
   if (data.photographer) formData.set("photographer", data.photographer);

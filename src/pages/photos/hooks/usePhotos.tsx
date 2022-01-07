@@ -1,6 +1,3 @@
-// TODO: loading spinner with useIsMutating
-import { Photo } from "@prisma/client";
-
 import {
   UseMutateFunction,
   useMutation,
@@ -16,13 +13,17 @@ import {
   patchPhoto,
   PhotoResponse,
 } from "@/lib/photos";
-import { PhotoPatchArgs, PhotoPutData } from "@/lib/photos/types";
+import {
+  PhotoFormData,
+  PhotoPatchArgs,
+  PhotoWithShowAndVenue,
+} from "@/lib/photos/types";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { useHandleError } from "@/lib/react-query/useHandleError";
 
 type UsePhotosReturnValue = {
-  photos: Array<Photo>;
-  addPhoto: UseMutateFunction<PhotoResponse, unknown, PhotoPutData, unknown>;
+  photos: Array<PhotoWithShowAndVenue>;
+  addPhoto: UseMutateFunction<PhotoResponse, unknown, PhotoFormData, unknown>;
   deletePhoto: UseMutateFunction<void, unknown, number, unknown>;
   updatePhoto: UseMutateFunction<
     PhotoResponse,
@@ -35,7 +36,7 @@ type UsePhotosReturnValue = {
 export const usePhotos = (): UsePhotosReturnValue => {
   const { showToast } = useToast();
   const { handleQueryError, handleMutateError } = useHandleError();
-  const { data: photos = [] } = useQuery<Array<Photo>>(
+  const { data: photos = [] } = useQuery<Array<PhotoWithShowAndVenue>>(
     queryKeys.photos,
     fetchPhotos,
     { onError: handleQueryError },

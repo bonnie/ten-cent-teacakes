@@ -1,3 +1,5 @@
+import { Photo, Venue } from "@prisma/client";
+
 export type PhotoFormData = {
   showId?: number;
   photoFile?: File;
@@ -6,7 +8,7 @@ export type PhotoFormData = {
 
 export type PhotoPutData = {
   showId?: number;
-  photoFile: File;
+  imagePath: string;
   photographer?: string;
 };
 
@@ -18,4 +20,8 @@ export type PhotoPatchData = {
 export type PhotoPatchArgs = {
   id: number;
   data: PhotoPatchData;
+};
+
+export type PhotoWithShowAndVenue = Photo & {
+  showVenue?: Venue;
 };
