@@ -13,7 +13,13 @@ export const PhotoUpload: React.FC<{ name: string }> = ({ name }) => {
       <input
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...field}
-        onChange={(event) => setValue(event.currentTarget.files[0])}
+        onChange={(event) =>
+          setValue(
+            event.currentTarget.files
+              ? event.currentTarget.files[0]
+              : undefined,
+          )
+        }
         value={undefined}
         className={tw([
           "form-control",
