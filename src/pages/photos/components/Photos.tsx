@@ -5,7 +5,9 @@ import React from "react";
 import { usePhotos } from "../hooks/usePhotos";
 
 const Photo: React.FC<{ photo: PhotoType }> = ({ photo }) => (
-  <div>{photo.imagePath}</div>
+  <div>
+    <img src={photo.imagePath} alt="Ten-cent Teacakes" />
+  </div>
 );
 
 export const Photos: React.FC = () => {

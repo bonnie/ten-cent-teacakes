@@ -16,7 +16,8 @@ export const getPhotosSortDescending = () =>
 
 export const addPhoto = ({ imagePath, showId, photographer }: PhotoPutData) => {
   const photoData: Prisma.PhotoCreateInput = {
-    imagePath,
+    // remove public directory at the beginning, for link path
+    imagePath: imagePath.replace(/^public\//, ""),
     photographer,
   };
   if (showId) photoData.show = { connect: { id: Number(showId) } };
