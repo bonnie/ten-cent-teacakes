@@ -1,13 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Photo } from "@prisma/client";
-
 import { FormikProps } from "formik";
 import React from "react";
 
 import { PhotoUpload } from "@/components/lib/form/PhotoUpload";
 import { TextInput } from "@/components/lib/form/TextInput";
 import { EditItemModal } from "@/components/lib/modals/EditItemModal";
-import { PhotoFormData, PhotoPatchData } from "@/lib/photos/types";
+import {
+  PhotoFormData,
+  PhotoPatchData,
+  PhotoWithShowAndVenue,
+} from "@/lib/photos/types";
 import { EditableShow } from "@/pages/shows/components/EditableShow";
 
 import { usePhotos } from "../hooks/usePhotos";
@@ -73,17 +75,19 @@ export const AddPhotoModal: React.FC = () => {
   );
 };
 
-export const EditPhotoModal: React.FC<{ Photo: Photo }> = ({ Photo }) => {
+export const EditPhotoModal: React.FC<{ photo: PhotoWithShowAndVenue }> = ({
+  photo,
+}) => {
   const { updatePhoto } = usePhotos();
 
   const initialValues: PhotoPatchData = {
-    photographer: Photo.photographer ?? undefined,
-    showId: Photo.showId ?? undefined,
+    photographer: photo.photographer ?? undefined,
+    showId: photo.showId ?? undefined,
   };
 
   const onSubmit = (values: PhotoPatchData) => {
     updatePhoto({
-      id: Photo.id,
+      id: photo.id,
       data: values,
     });
   };

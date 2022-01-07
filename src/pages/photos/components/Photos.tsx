@@ -2,27 +2,39 @@ import dayjs from "dayjs";
 import React from "react";
 import { tw } from "twind";
 
+import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { getPhotoDate } from "@/lib/photos";
 import { PhotoWithShowAndVenue } from "@/lib/photos/types";
 
 import { usePhotos } from "../hooks/usePhotos";
+import { DeletePhotoModal } from "./DeletePhotoModal";
+import { EditPhotoModal } from "./EditPhotoModal";
 
 const Photo: React.FC<{ photo: PhotoWithShowAndVenue; photoDate: Date }> = ({
   photo,
   photoDate,
-}) => (
-  <div className={tw(["m-5", "flex", "flex-col", "items-center"])}>
-    <img
-      className={tw(["max-w-48 max-h-48 border-solid border-4 border-black"])}
-      src={photo.imagePath}
-      alt="Ten-cent Teacakes"
-    />
-    <p className="text-center text-sm">
-      {dayjs(photoDate).format("MMM DD YYYY")}
-      {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
-    </p>
-  </div>
-);
+}) => {
+  const { user } = useWhitelistUser();
+  return (
+    <div className={tw(["m-5", "flex", "flex-col", "items-center"])}>
+      <img
+        className={tw(["max-w-48 max-h-48 border-solid border-4 border-black"])}
+        src={photo.imagePath}
+        alt="Ten-cent Teacakes"
+      />
+      <p className="text-center text-sm">
+        {dayjs(photoDate).format("MMM DD YYYY")}
+        {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
+      </p>
+      {user ? (
+        <div>
+          <EditPhotoModal photo={photo} />
+          <DeletePhotoModal photo={photo} />
+        </div>
+      ) : null}
+    </div>
+  );
+};
 
 export const Photos: React.FC = () => {
   const { photos } = usePhotos();
