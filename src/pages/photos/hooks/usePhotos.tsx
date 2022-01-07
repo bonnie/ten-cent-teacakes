@@ -10,6 +10,7 @@ import {
   addPhoto,
   deletePhoto,
   fetchPhotos,
+  getPhotoDate,
   patchPhoto,
   PhotoResponse,
 } from "@/lib/photos";
@@ -39,7 +40,11 @@ export const usePhotos = (): UsePhotosReturnValue => {
   const { data: photos = [] } = useQuery<Array<PhotoWithShowAndVenue>>(
     queryKeys.photos,
     fetchPhotos,
-    { onError: handleQueryError },
+    {
+      onError: handleQueryError,
+      select: (photos) =>
+        photos.sort((a, b) => (getPhotoDate(a) > getPhotoDate(b) ? -1 : 1)),
+    },
   );
 
   const queryClient = useQueryClient();

@@ -1,4 +1,4 @@
-import { Photo, Venue } from "@prisma/client";
+import { Photo, Show, Venue } from "@prisma/client";
 
 export type PhotoFormData = {
   showId?: number;
@@ -23,5 +23,6 @@ export type PhotoPatchArgs = {
 };
 
 export type PhotoWithShowAndVenue = Photo & {
+  show: Show;
   showVenue?: Venue;
 };

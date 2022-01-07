@@ -4,12 +4,17 @@ import { AxiosResponse } from "axios";
 
 import { axiosInstance } from "../axios/axiosInstance";
 import { routes } from "../axios/constants";
-import { PhotoFormData, PhotoPatchArgs, PhotoPatchData } from "./types";
+import {
+  PhotoFormData,
+  PhotoPatchArgs,
+  PhotoPatchData,
+  PhotoWithShowAndVenue,
+} from "./types";
 
 export type PhotoResponse = { photo: Photo };
 
 /* * methods * */
-export const fetchPhotos = async (): Promise<Array<Photo>> => {
+export const fetchPhotos = async (): Promise<Array<PhotoWithShowAndVenue>> => {
   const { data } = await axiosInstance.get(`/api/${routes.photos}`);
   return data;
 };
@@ -42,3 +47,10 @@ export const patchPhoto = async ({
 
 export const deletePhoto = async (id: number): Promise<void> =>
   axiosInstance.delete(`/api/${routes.photos}/${id}`);
+
+export const getPhotoDate = (photo: PhotoWithShowAndVenue): Date => {
+  if (photo.show) {
+    return new Date(photo.show.performAt);
+  }
+  return photo.createdAt;
+};
