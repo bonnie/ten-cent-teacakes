@@ -15,13 +15,13 @@ export const getPhotosSortDescending = () =>
   });
 
 export const addPhoto = ({ imagePath, showId, photographer }: PhotoPutData) => {
-  const data: Prisma.PhotoCreateInput = {
+  const photoData: Prisma.PhotoCreateInput = {
     imagePath,
     photographer,
-    show: { connect: { id: Number(showId) } },
   };
+  if (showId) photoData.show = { connect: { id: Number(showId) } };
 
-  return prisma.photo.create({ data });
+  return prisma.photo.create({ data: photoData });
 };
 
 export const getPhotoById = (id: number) =>
