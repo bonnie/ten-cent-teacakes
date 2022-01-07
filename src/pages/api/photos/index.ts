@@ -1,26 +1,21 @@
 // upload code adapted from
-// formidable: https://stackoverflow.com/a/61326274
-//
-// using middleware:
-// multer: https://betterprogramming.pub/upload-files-to-next-js-with-api-routes-839ce9f28430
-// and multiparty: https://flaviocopes.com/nextjs-upload-files/
+// https://betterprogramming.pub/upload-files-to-next-js-with-api-routes-839ce9f28430
 
-import fs from "fs";
 import multer from "multer";
 import type { NextApiRequest, NextApiResponse } from "next";
 import nextConnect from "next-connect";
 import path from "path";
 
 import { uploadDestination } from "@/lib/api/constants";
-import { processApiError } from "@/lib/api/utils";
+import { processApiError, uniquifyFilename } from "@/lib/api/utils";
 
 // import middleware from "@/middleware";
 import { addPhoto, getPhotosSortDescending } from "./queries";
 
 const upload = multer({
   storage: multer.diskStorage({
-    destination: "./public/uploads/photos",
-    filename: (req, file, cb) => cb(null, file.originalname), // TODO: uniquify
+    destination: path.join(uploadDestination, "photos"),
+    filename: (req, file, cb) => cb(null, uniquifyFilename(file.originalname)),
   }),
 });
 

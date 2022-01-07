@@ -49,9 +49,6 @@ export const AddPhotoModal: React.FC = () => {
     photoFile: undefined,
   };
   const onSubmit = (values: PhotoFormData) => {
-    console.log("submitting", values);
-    console.log("data type", typeof values.photoFile);
-
     if (values.photoFile)
       addPhoto({
         showId: values.showId,

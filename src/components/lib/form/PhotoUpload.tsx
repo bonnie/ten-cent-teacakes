@@ -5,6 +5,7 @@ import { tw } from "twind";
 import { FieldContainer } from "@/components/lib/form/FieldContainer";
 
 export const PhotoUpload: React.FC<{ name: string }> = ({ name }) => {
+  // eslint-disable-next-line no-unused-vars
   const [field, _, helpers] = useField({ name, type: "file" });
   const { setValue } = helpers;
 
