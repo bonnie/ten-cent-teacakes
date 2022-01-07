@@ -42,5 +42,5 @@ export const getPhotoById = (id: number) =>
   prisma.photo.findUnique({ where: { id } });
 
 export const deletePhoto = async (id: number) => {
-  prisma.photo.delete({ where: { id } });
+  await prisma.photo.delete({ where: { id } });
 };
