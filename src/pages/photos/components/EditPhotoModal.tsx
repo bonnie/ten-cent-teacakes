@@ -94,7 +94,7 @@ export const EditPhotoModal: React.FC<{ photo: PhotoWithShowAndVenue }> = ({
 
   const formikConfig = {
     initialValues,
-    validate: photoFormValidation,
+    validate: () => {},
     onSubmit,
   };
 

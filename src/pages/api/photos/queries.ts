@@ -1,12 +1,16 @@
 /* eslint-disable no-param-reassign */
 import { Prisma } from ".prisma/client";
 
-import { PhotoPutData, PhotoWithShowAndVenue } from "@/lib/photos/types";
+import {
+  PhotoPatchArgs,
+  PhotoPutData,
+  PhotoWithShowAndVenue,
+} from "@/lib/photos/types";
 import prisma from "@/lib/prisma";
 
 import { getVenueById } from "../venues/queries";
 
-export const getPhotosSortDescending = async () => {
+export const getPhotos = async () => {
   const photos = await prisma.photo.findMany({
     orderBy: { createdAt: "desc" },
     include: { show: true },
@@ -36,6 +40,14 @@ export const addPhoto = ({ imagePath, showId, photographer }: PhotoPutData) => {
   if (showId) photoData.show = { connect: { id: Number(showId) } };
 
   return prisma.photo.create({ data: photoData });
+};
+
+export const patchPhoto = async ({ data, id }: PhotoPatchArgs) => {
+  const photoData = getPhotoById(id);
+  if (!photoData) {
+    throw new Error(`Bad photo id: ${id}`);
+  }
+  await prisma.photo.update({ data, where: { id } });
 };
 
 export const getPhotoById = (id: number) =>

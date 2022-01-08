@@ -10,7 +10,7 @@ import { uploadDestination } from "@/lib/api/constants";
 import { processApiError, uniquifyFilename } from "@/lib/api/utils";
 
 // import middleware from "@/middleware";
-import { addPhoto, getPhotosSortDescending } from "./queries";
+import { addPhoto, getPhotos } from "./queries";
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -31,7 +31,7 @@ const handler = nextConnect({
 handler.use(upload.single("photoFile"));
 
 handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
-  res.json(await getPhotosSortDescending());
+  res.json(await getPhotos());
 });
 
 handler.put(async (req: NextApiRequest, res: NextApiResponse) => {

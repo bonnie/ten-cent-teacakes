@@ -39,9 +39,9 @@ export const patchPhoto = async ({
   data,
 }: PhotoPatchArgs): Promise<PhotoResponse> => {
   const { data: photo } = await axiosInstance.patch<
-    { body: PhotoPatchData },
+    { data: PhotoPatchData },
     AxiosResponse<Photo>
-  >(`/api/${routes.photos}/${id}`, { body: data });
+  >(`/api/${routes.photos}/${id}`, { data });
   return { photo };
 };
 
