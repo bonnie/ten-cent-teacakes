@@ -47,7 +47,15 @@ export const patchPhoto = async ({ data, id }: PhotoPatchArgs) => {
   if (!photoData) {
     throw new Error(`Bad photo id: ${id}`);
   }
-  await prisma.photo.update({ data, where: { id } });
+  const patchData = {
+    photographer: data.photographer,
+    show:
+      data.showId || data.showId === 0
+        ? { connect: { id: Number(data.showId) } }
+        : undefined,
+  };
+
+  await prisma.photo.update({ data: patchData, where: { id } });
 };
 
 export const getPhotoById = (id: number) =>
