@@ -52,5 +52,8 @@ export const getPhotoDate = (photo: PhotoWithShowAndVenue): Date => {
   if (photo.show) {
     return new Date(photo.show.performAt);
   }
+  if (photo.takenAt) {
+    return photo.takenAt;
+  }
   return photo.createdAt;
 };

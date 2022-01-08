@@ -3,6 +3,7 @@ import { Prisma } from ".prisma/client";
 
 import {
   PhotoPatchArgs,
+  PhotoPatchData,
   PhotoPutData,
   PhotoWithShowAndVenue,
 } from "@/lib/photos/types";
@@ -31,14 +32,34 @@ export const getPhotos = async () => {
   return photosWithVenue;
 };
 
-export const addPhoto = ({ imagePath, showId, photographer }: PhotoPutData) => {
+const transformData = (data: PhotoPatchData) => ({
+  photographer: data.photographer,
+  takenAt: data.takenAt ? new Date(data.takenAt) : undefined,
+  description: data.description,
+  show:
+    data.showId || data.showId === 0
+      ? { connect: { id: Number(data.showId) } }
+      : undefined,
+});
+
+export const addPhoto = ({
+  imagePath,
+  showId,
+  photographer,
+  takenAt,
+  description,
+}: PhotoPutData) => {
+  const metadata = transformData({
+    showId,
+    photographer,
+    takenAt,
+    description,
+  });
   const photoData: Prisma.PhotoCreateInput = {
     // remove public directory at the beginning, for link path
     imagePath: imagePath.replace(/^public\//, ""),
-    photographer,
+    ...metadata,
   };
-  if (showId) photoData.show = { connect: { id: Number(showId) } };
-
   return prisma.photo.create({ data: photoData });
 };
 
@@ -47,13 +68,7 @@ export const patchPhoto = async ({ data, id }: PhotoPatchArgs) => {
   if (!photoData) {
     throw new Error(`Bad photo id: ${id}`);
   }
-  const patchData = {
-    photographer: data.photographer,
-    show:
-      data.showId || data.showId === 0
-        ? { connect: { id: Number(data.showId) } }
-        : undefined,
-  };
+  const patchData = transformData(data);
 
   await prisma.photo.update({ data: patchData, where: { id } });
 };

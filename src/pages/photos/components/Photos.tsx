@@ -26,7 +26,7 @@ const Photo: React.FC<{ photo: PhotoWithShowAndVenue; photoDate: Date }> = ({
           "border-black",
         ])}
         src={photo.imagePath}
-        alt="Ten-cent Teacakes"
+        alt={photo.description ?? "Ten-cent Teacakes"}
       />
       <p className="text-center text-md">
         {dayjs(photoDate).format("MMM DD, YYYY")}

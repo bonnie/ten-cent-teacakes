@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import dayjs from "dayjs";
 import { FormikProps } from "formik";
 import React from "react";
 
@@ -18,6 +19,8 @@ const editFields = (
   <>
     <EditableShow required={false} />
     <TextInput name="photographer" label="Phototographer" required={false} />
+    <TextInput name="description" label="Description" required={false} />
+    <TextInput name="takenAt" label="Photo date" type="date" required={false} />
   </>
 );
 
@@ -29,8 +32,8 @@ export const AddPhotoForm: React.FC<{
   props: FormikProps<PhotoFormData>;
 }> = ({ props }) => (
   <form onSubmit={props.handleSubmit}>
-    {editFields}
     <PhotoUpload name="photoFile" />
+    {editFields}
   </form>
 );
 
@@ -56,6 +59,7 @@ export const AddPhotoModal: React.FC = () => {
         showId: values.showId,
         photoFile: values.photoFile,
         photographer: values.photographer,
+        description: values.description,
       });
   };
 
@@ -83,6 +87,8 @@ export const EditPhotoModal: React.FC<{ photo: PhotoWithShowAndVenue }> = ({
   const initialValues: PhotoPatchData = {
     photographer: photo.photographer ?? undefined,
     showId: photo.showId ?? undefined,
+    description: photo.description ?? undefined,
+    takenAt: dayjs(photo.takenAt).format("YYYY-MM-DD"),
   };
 
   const onSubmit = (values: PhotoPatchData) => {

@@ -4,17 +4,23 @@ export type PhotoFormData = {
   showId?: number;
   photoFile?: File;
   photographer?: string;
+  description?: string;
+  takenAt?: Date;
 };
 
 export type PhotoPutData = {
   showId?: number;
   imagePath: string;
   photographer?: string;
+  description?: string;
+  takenAt?: Date;
 };
 
 export type PhotoPatchData = {
   showId?: number;
   photographer?: string;
+  description?: string;
+  takenAt?: Date;
 };
 
 export type PhotoPatchArgs = {
@@ -25,4 +31,5 @@ export type PhotoPatchArgs = {
 export type PhotoWithShowAndVenue = Photo & {
   show: Show;
   showVenue?: Venue;
+  takenAt?: Date;
 };
