@@ -29,7 +29,7 @@ export type PhotoPatchArgs = {
 };
 
 export type PhotoWithShowAndVenue = Photo & {
-  show: Show;
-  showVenue?: Venue;
-  takenAt?: Date;
+  show?: Show | null;
+  showVenue?: Venue | null;
+  takenAt?: Date | null;
 };

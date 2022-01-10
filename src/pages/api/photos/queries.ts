@@ -73,8 +73,24 @@ export const patchPhoto = async ({ data, id }: PhotoPatchArgs) => {
   await prisma.photo.update({ data: patchData, where: { id } });
 };
 
-export const getPhotoById = (id: number) =>
-  prisma.photo.findUnique({ where: { id } });
+export const getPhotoById = async (
+  id: number,
+): Promise<PhotoWithShowAndVenue> => {
+  const photo = await prisma.photo.findUnique({
+    where: { id },
+    include: { show: true },
+  });
+  if (!photo?.id) throw new Error("No photo found");
+  const photoWithVenue: PhotoWithShowAndVenue = {
+    ...photo,
+    showVenue: undefined,
+  };
+  if (photo?.show) {
+    const showVenue = await getVenueById(photo.show.venueId);
+    photoWithVenue.showVenue = showVenue ?? undefined;
+  }
+  return photoWithVenue;
+};
 
 export const deletePhoto = async (id: number) => {
   await prisma.photo.delete({ where: { id } });

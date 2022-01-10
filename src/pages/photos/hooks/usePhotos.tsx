@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   UseMutateFunction,
   useMutation,
@@ -22,6 +23,12 @@ import {
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { useHandleError } from "@/lib/react-query/useHandleError";
 
+export type NextAndPrev = {
+  next: number | null;
+  prev: number | null;
+};
+export type NextAndPrevObject = Record<number, NextAndPrev>;
+
 type UsePhotosReturnValue = {
   photos: Array<PhotoWithShowAndVenue>;
   addPhoto: UseMutateFunction<PhotoResponse, unknown, PhotoFormData, unknown>;
@@ -32,9 +39,12 @@ type UsePhotosReturnValue = {
     PhotoPatchArgs,
     unknown
   >;
+  nextAndPrevIndexes: NextAndPrevObject;
 };
 
 export const usePhotos = (): UsePhotosReturnValue => {
+  const [nextAndPrevIndexes, setNextAndPrevIndexes] =
+    useState<NextAndPrevObject>({});
   const { showToast } = useToast();
   const { handleQueryError, handleMutateError } = useHandleError();
   const { data: photos = [] } = useQuery<Array<PhotoWithShowAndVenue>>(
@@ -44,6 +54,16 @@ export const usePhotos = (): UsePhotosReturnValue => {
       onError: handleQueryError,
       select: (photos) =>
         photos.sort((a, b) => (getPhotoDate(a) > getPhotoDate(b) ? -1 : 1)),
+      onSuccess: (data) => {
+        const tempNextAndPrev: NextAndPrevObject = {};
+        data.forEach((photo, index) => {
+          tempNextAndPrev[photo.id] = {
+            next: data[index + 1] ? data[index + 1].id : null,
+            prev: data[index - 1] ? data[index - 1].id : null,
+          };
+        });
+        setNextAndPrevIndexes(tempNextAndPrev);
+      },
     },
   );
 
@@ -84,5 +104,6 @@ export const usePhotos = (): UsePhotosReturnValue => {
     addPhoto: addPhotoMutate,
     updatePhoto,
     deletePhoto: deletePhotoMutate,
+    nextAndPrevIndexes,
   };
 };

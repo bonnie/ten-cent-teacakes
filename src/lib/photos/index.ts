@@ -19,6 +19,14 @@ export const fetchPhotos = async (): Promise<Array<PhotoWithShowAndVenue>> => {
   return data;
 };
 
+export const fetchPhoto = async (
+  photoId: number,
+): Promise<PhotoWithShowAndVenue> => {
+  if (Number.isNaN(photoId)) throw Error("bad photo ID");
+  const { data } = await axiosInstance.get(`/api/${routes.photos}/${photoId}`);
+  return data;
+};
+
 export const addPhoto = async (data: PhotoFormData): Promise<PhotoResponse> => {
   const formData = new FormData();
   if (!data.photoFile) throw new Error("Can't create; no photo file");

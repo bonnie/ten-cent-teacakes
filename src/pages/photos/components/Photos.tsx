@@ -1,4 +1,6 @@
 import dayjs from "dayjs";
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { tw } from "twind";
 
@@ -10,24 +12,34 @@ import { usePhotos } from "../hooks/usePhotos";
 import { DeletePhotoModal } from "./DeletePhotoModal";
 import { EditPhotoModal } from "./EditPhotoModal";
 
-const Photo: React.FC<{ photo: PhotoWithShowAndVenue; photoDate: Date }> = ({
+const PhotoThumbnail: React.FC<{
+  photo: PhotoWithShowAndVenue;
+  photoDate: Date;
+  // nextId: number;
+  // prevId: number;
+}> = ({
   photo,
   photoDate,
+  // nextId, prevId
 }) => {
   const { user } = useWhitelistUser();
   return (
     <div className={tw(["m-5", "flex", "flex-col", "items-center"])}>
-      <img
-        className={tw([
-          "max-w-48",
-          "max-h-48",
-          "border-solid",
-          "border-4",
-          "border-black",
-        ])}
-        src={photo.imagePath}
-        alt={photo.description ?? "Ten-cent Teacakes"}
-      />
+      <Link href={`/photos/${photo.id}`}>
+        <img
+          className={tw([
+            "max-w-48",
+            "max-h-48",
+            "border-solid",
+            "border-4",
+            "border-black",
+            "object-contain",
+            "hover:border-aqua-600",
+          ])}
+          src={`/${photo.imagePath}`}
+          alt={photo.description ?? "Ten-cent Teacakes"}
+        />
+      </Link>
       <p className="text-center text-md">
         {dayjs(photoDate).format("MMM DD, YYYY")}
         {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
@@ -50,8 +62,14 @@ export const Photos: React.FC = () => {
 
   return (
     <div className="flex flex-wrap justify-center items-baseline">
-      {photos.map((photo) => (
-        <Photo key={photo.id} photo={photo} photoDate={getPhotoDate(photo)} />
+      {photos.map((photo, index, arr) => (
+        <PhotoThumbnail
+          key={photo.id}
+          photo={photo}
+          photoDate={getPhotoDate(photo)}
+          // nextId={arr[index + 1] ? arr[index + 1].id : null}
+          // prevId={arr[index - 1] ? arr[index - 1].id : null}
+        />
       ))}
     </div>
   );
