@@ -39,45 +39,69 @@ const Photo = () => {
   const contents = photo ? (
     <div
       style={{ height: "80vh" }} /* TODO: standardize */
-      className={tw(["flex", "flex-col", "items-center", "w-100", "mx-0"])}
+      className={tw([
+        "grid",
+        "grid-cols-1",
+        "grid-rows-6",
+        "lg:grid-rows-8",
+        "place-items-center",
+        "w-100",
+        "mx-0",
+      ])}
     >
-      <div className={tw(["grid", "grid-cols-8", "w-full", "basis-1/4"])}>
+      <div className={tw(["grid", "grid-cols-8", "w-full"])}>
         <button
           type="button"
-          className={tw(["hover:text-aqua-600", "place-self-center"])}
+          className={tw([
+            "hover:text-aqua-600",
+            "place-self-center",
+            /* "focus:ring-0",  // TODO: get rid of ring
+            "focus:ring-transparent",
+            "focus:outline-border-0",
+            "focus:border-0", */
+          ])}
         >
           {prevIndex ? (
             <Link href={`/photos/${prevIndex}`}>
-              <FaArrowLeft size={40} />
+              <FaArrowLeft size={25} />
             </Link>
           ) : null}
         </button>
         <div className="col-span-6">
-          <Heading>
+          <Heading textSize="5xl">
             {dayjs(photoDate).format("MMM DD, YYYY")}
             {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
           </Heading>
         </div>
         <button
           type="button"
-          className={tw(["hover:text-aqua-600", "place-self-center"])}
+          className={tw([
+            "hover:text-aqua-600",
+            "place-self-center",
+            "focus:ring-0",
+          ])}
         >
           {nextIndex ? (
             <Link href={`/photos/${nextIndex}`}>
-              <FaArrowRight size={40} />
+              <FaArrowRight size={25} />
             </Link>
           ) : null}
         </button>
       </div>
-      <div style={{ maxHeight: "75vh" }} className={tw(["mt-5"])}>
+      <div className={tw(["row-span-5", "lg:row-span-7", "h-full"])}>
         <img
-          style={{ maxHeight: "70vh" }}
-          className={tw(["border-black", "border-solid", "border-8", "w-auto"])}
+          className={tw([
+            "border-black",
+            "border-solid",
+            "border-8",
+            "max-h-full",
+            "w-auto",
+          ])}
           src={`/${photo.imagePath}`}
           alt={photo.description ?? "Ten-Cent Teacakes"}
         />
         {photo.photographer ? (
-          <p className="text-lg">Photo by {photo.photographer}</p>
+          <p className="text-lg text-center">Photo by {photo.photographer}</p>
         ) : null}
       </div>
     </div>
