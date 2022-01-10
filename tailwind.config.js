@@ -1,4 +1,10 @@
-// TODO: shift to twind: https://twind.dev/
+// TODO:
+// warn - The `purge`/`content` options have changed in Tailwind CSS v3.0.
+// warn - Update your configuration file to eliminate this warning.
+
+// warn - The `darkMode` option in your Tailwind CSS configuration is set to `false`, which now behaves the same as `media`.
+// warn - Change `darkMode` to `media` or remove it entirely.
+
 // const colors = require("tailwindcss/colors");
 const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");

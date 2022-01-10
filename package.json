@@ -6,7 +6,8 @@
     "build": "next build",
     "start": "next start",
     "test": "jest --watch",
-    "test:ci": "jest --ci"
+    "test:ci": "jest --ci",
+    "prisma:migrate": "npx prisma migrate dev --name init --schema src/prisma/schema.prisma"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.6.1",
@@ -16,7 +17,9 @@
     "dayjs": "^1.10.7",
     "fast-json-patch": "^3.1.0",
     "formik": "^2.2.9",
+    "multer": "^1.4.4",
     "next": "^12.0.7",
+    "next-connect": "^0.11.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
@@ -27,6 +30,7 @@
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "12.0.0",
     "@testing-library/user-event": "13.2.1",
+    "@types/multer": "^1.4.7",
     "@types/node": "^16.10.1",
     "@types/react": "17.0.24",
     "@typescript-eslint/eslint-plugin": "^4.32.0",

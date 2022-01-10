@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const processApiError = (error: unknown) => {
   let status: number;
   let message: string | undefined;
@@ -16,4 +18,15 @@ export const processApiError = (error: unknown) => {
     status = 500;
   }
   return { status, message };
+};
+
+export const uniquifyFilename = (filename: string): string => {
+  let fileBasename = filename;
+  let fileExtension = "";
+
+  const filenameTokens = filename.match(/(.*)\.([^.]*)/);
+  if (filenameTokens) {
+    [, fileBasename, fileExtension] = filenameTokens;
+  }
+  return `${fileBasename}-${dayjs().unix()}.${fileExtension}`;
 };

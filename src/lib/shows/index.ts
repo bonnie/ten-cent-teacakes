@@ -1,4 +1,4 @@
-import { Show, Venue } from ".prisma/client";
+import { Show } from ".prisma/client";
 
 import { AxiosResponse } from "axios";
 import dayjs from "dayjs";
@@ -7,35 +7,19 @@ import utc from "dayjs/plugin/utc";
 
 import { axiosInstance } from "../axios/axiosInstance";
 import { routes } from "../axios/constants";
+import {
+  ShowPatchArgs,
+  ShowPatchData,
+  ShowPutData,
+  ShowWithVenue,
+} from "./types";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 /* * types * */
-export type ShowWithVenue = Show & {
-  venue: Venue;
-};
 
 export type ShowResponse = { show: Show };
-
-export type ShowFormData = {
-  venueId: number | undefined;
-  performDate: string;
-  performTime: string;
-  url?: string;
-};
-
-export type ShowPutData = { performAt: Date; venueId?: number; url?: string };
-
-export type ShowPatchData = {
-  performAt?: Date;
-  venueId?: number;
-  url?: string;
-};
-export type ShowPatchArgs = {
-  id: number;
-  data: ShowPatchData;
-};
 
 /* * methods * */
 export const fetchShows = async (): Promise<Array<ShowWithVenue>> => {

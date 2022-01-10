@@ -54,7 +54,7 @@ export function EditItemModal<Data>({
                       setShowModal(false);
                     }}
                   >
-                    Save Changes
+                    Save
                   </Button>
                 </ModalFooter>
               </>
