@@ -13,14 +13,14 @@ export type PhotoPutData = {
   imagePath: string;
   photographer?: string;
   description?: string;
-  takenAt?: Date;
+  takenAt?: string;
 };
 
 export type PhotoPatchData = {
   showId?: number;
   photographer?: string;
   description?: string;
-  takenAt?: Date;
+  takenAt?: string;
 };
 
 export type PhotoPatchArgs = {
