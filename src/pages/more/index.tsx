@@ -8,15 +8,13 @@ import { Heading } from "@/components/lib/Heading";
 
 import { EmailSignupForm } from "./components/EmailSignupForm";
 
-const keyword = [
-  "font-bold",
-  "text-aqua-700",
-  "flex",
-  "items-center",
-  "mr-1.5",
+const keywordClasses = ["font-bold", "text-aqua-700"];
+const placementClasses = ["flex", "items-center", "mr-1.5"];
+export const keywordLinkClasses = [
+  ...keywordClasses,
+  "hover:text-aqua-500",
+  "hover:cursor-pointer",
 ];
-const keywordClasses = tw(keyword);
-const keywordLinkClasses = tw([...keyword, "hover:text-aqua-500"]);
 
 const MoreElement: React.FC<{
   keyword: string;
@@ -27,7 +25,7 @@ const MoreElement: React.FC<{
   const iconStyled = <Icon className="inline mr-2" />;
   const keywordStyled = href ? (
     <a
-      className={keywordLinkClasses}
+      className={tw([...placementClasses, ...keywordLinkClasses])}
       target="_blank"
       href={href}
       rel="noreferrer"
@@ -35,7 +33,7 @@ const MoreElement: React.FC<{
       {iconStyled} {keyword}
     </a>
   ) : (
-    <span className={keywordClasses}>
+    <span className={tw([...keywordClasses, ...placementClasses])}>
       {iconStyled} {keyword}
     </span>
   );

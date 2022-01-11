@@ -4,11 +4,26 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
+import { tw } from "twind";
 
 import { validateUser } from "@/lib/auth/utils";
+import { keywordLinkClasses } from "@/pages/more";
+// TODO: Add photo "carousel" to front page
+// import Photo from "@/pages/photos/[id]";
+// import { usePhotos } from "@/pages/photos/hooks/usePhotos";
 import { ShowsGroup } from "@/pages/shows/components/ShowsGroup";
 import { useShows } from "@/pages/shows/hooks/useShows";
+
+const section = tw([
+  "mt-10",
+  "w-full",
+  "pt-4",
+  "bg-gradient-to-b",
+  "from-aqua-200",
+  "to-aqua-100",
+]);
 
 export default function Home() {
   const tenCentLogoAltText =
@@ -21,27 +36,34 @@ export default function Home() {
     if (user && user.email) validateUser(user.email);
   }, [user]);
   return (
-    <div className="flex flex-col justify-start items-center w-full h-full pl-30 min-h-full">
+    <div className="flex flex-col justify-start items-center w-full h-100 -mt-2">
       <Head>
         <title>Ten-Cent Teacakes String Band</title>
       </Head>
-      <Image
-        src="/logo/logo-shadow.png"
-        width={725}
-        height={358}
-        alt={tenCentLogoAltText}
-        placeholder="blur"
-        blurDataURL="/logo/logo-shadow-blur.png"
-      />
+      <div className="width-725 height-358">
+        <Image
+          src="/logo/logo-shadow.png"
+          width={725}
+          height={358}
+          alt={tenCentLogoAltText}
+          placeholder="blur"
+          blurDataURL="/logo/logo-shadow-blur.png"
+        />
+      </div>
       <p className="font-body text-2xl">
         Eclectic string band music and cheap baked goods
       </p>
       {upcomingShows.length > 0 ? (
-        <div className="mt-10 w-full">
+        <div className={section}>
           <ShowsGroup
             title="Upcoming Shows"
             shows={upcomingShows.slice(0, 3)}
           />
+          <Link href="/shows">
+            <p className={tw([...keywordLinkClasses, "text-center"])}>
+              More shows
+            </p>
+          </Link>
         </div>
       ) : null}
     </div>

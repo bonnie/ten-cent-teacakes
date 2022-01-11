@@ -62,7 +62,13 @@ export const Navbar: React.FC = () => {
       <Link href="/">
         <button
           type="button"
-          className={tw(["inline-flex", "items-center", "p-0.5", "mr-4"])}
+          className={tw([
+            "inline-flex",
+            "items-center",
+            "p-0.5",
+            "mr-4",
+            "focus:outline-none",
+          ])}
         >
           <Image
             src="/logo/tencent-tag.svg"
