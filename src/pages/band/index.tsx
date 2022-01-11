@@ -6,7 +6,7 @@ import { Musicians } from "./components/Musicians";
 
 const About: React.FC = () => (
   <div className="w-full">
-    <Heading>About Ten-Cent Teacakes</Heading>
+    <Heading>The Band</Heading>
     <Musicians />
   </div>
 );

@@ -1,15 +1,14 @@
-import { useUser } from "@auth0/nextjs-auth0";
 import React from "react";
-import { dehydrate, QueryClient, useQuery } from "react-query";
+import { dehydrate, QueryClient } from "react-query";
 
-import {
-  fetchMusiciansWithInstruments,
-  MusicianWithInstruments,
-} from "@/lib/musicians";
+import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
+import { fetchMusiciansWithInstruments } from "@/lib/musicians";
 import { queryKeys } from "@/lib/react-query/query-keys";
 
+import { useMusicians } from "../hooks/useMusicians";
 import { MusicianCard } from "./MusicianCard";
 
+// TODO: put in separate file
 export async function getStaticProps() {
   const queryClient = new QueryClient();
 
@@ -26,15 +25,12 @@ export async function getStaticProps() {
 }
 
 export const Musicians: React.FC = () => {
-  const { data: musicians = [] } = useQuery<MusicianWithInstruments[]>(
-    queryKeys.musicians,
-    fetchMusiciansWithInstruments,
-  );
-  const { user } = useUser();
+  const { musicians } = useMusicians();
+  const { user } = useWhitelistUser();
 
   return (
     <div>
-      <div className="flex flex-wrap justify-center items-stretch gap-5 mx-5">
+      <div className="flex flex-wrap justify-center items-stretch mx-5">
         {musicians.map((musician) => (
           <MusicianCard key={musician.id} data={musician} />
         ))}
