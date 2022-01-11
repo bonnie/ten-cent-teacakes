@@ -3,12 +3,17 @@ import Link from "next/link";
 import React from "react";
 import { tw } from "twind";
 
-type NavLinkProps = { href: string; pageName: string };
+type NavLinkProps = { href: string; pageName: string; setInactive: () => void };
 
-export const NavLink: React.FC<NavLinkProps> = ({ href, pageName }) => (
+export const NavLink: React.FC<NavLinkProps> = ({
+  href,
+  pageName,
+  setInactive,
+}) => (
   <Link href={href}>
     <button
       type="button"
+      onClick={setInactive}
       className={tw([
         "lg:inline-flex",
         "lg:w-auto",

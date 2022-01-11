@@ -114,10 +114,26 @@ export const Navbar: React.FC = () => {
             "lg:h-auto",
           ])}
         >
-          <NavLink href="/shows" pageName="shows" />
-          <NavLink href="/photos" pageName="photos" />
-          <NavLink href="/band" pageName="band" />
-          <NavLink href="/more" pageName="more" />
+          <NavLink
+            href="/shows"
+            pageName="shows"
+            setInactive={() => setActive(false)}
+          />
+          <NavLink
+            href="/photos"
+            pageName="photos"
+            setInactive={() => setActive(false)}
+          />
+          <NavLink
+            href="/band"
+            pageName="band"
+            setInactive={() => setActive(false)}
+          />
+          <NavLink
+            href="/more"
+            pageName="more"
+            setInactive={() => setActive(false)}
+          />
         </div>
         <div
           className={tw([
