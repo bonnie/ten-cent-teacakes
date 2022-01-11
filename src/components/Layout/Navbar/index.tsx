@@ -45,101 +45,99 @@ export const Navbar: React.FC = () => {
   ]);
 
   return (
-    <div>
-      <nav
-        className={tw([
-          "flex",
-          "items-center",
-          "flex-wrap",
-          "bg-aqua-900",
-          "p-3",
-          "text-aqua-100",
-          "font-heading",
-          "font-normal",
-        ])}
-      >
-        <Link href="/">
-          <button
-            type="button"
-            className={tw(["inline-flex", "items-center", "p-0.5", "mr-4"])}
-          >
-            <Image
-              src="/logo/tencent-tag.svg"
-              alt="tag reading '10 cents'"
-              height={50}
-              width={50}
-            />
-            <span className="p-2 text-3xl">Ten-Cent Teacakes</span>
-          </button>
-        </Link>
+    <nav
+      className={tw([
+        "flex",
+        "items-center",
+        "flex-wrap",
+        "lg:flex-nowrap",
+        "lg:max-h-100",
+        "bg-aqua-900",
+        "p-3",
+        "text-aqua-100",
+        "font-heading",
+        "font-normal",
+      ])}
+    >
+      <Link href="/">
         <button
           type="button"
-          className={hamburgerClasses}
-          onClick={handleClick}
+          className={tw(["inline-flex", "items-center", "p-0.5", "mr-4"])}
         >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
+          <Image
+            src="/logo/tencent-tag.svg"
+            alt="tag reading '10 cents'"
+            height={50}
+            width={50}
+          />
+          <span className={tw(["p-2", "text-3xl", "w-60"])}>
+            Ten-Cent Teacakes
+          </span>
         </button>
+      </Link>
+      <button type="button" className={hamburgerClasses} onClick={handleClick}>
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+      <div
+        className={tw([
+          active ? null : "hidden",
+          "w-full",
+          "lg:inline-flex",
+          "lg:flex-grow",
+          "lg:w-auto",
+          "lg:items-center",
+        ])}
+      >
         <div
           className={tw([
-            active ? null : "hidden",
-            "w-full",
             "lg:inline-flex",
-            "lg:flex-grow",
+            "lg:flex-row",
             "lg:w-auto",
+            "w-full",
             "lg:items-center",
+            "items-start",
+            "flex",
+            "flex-col",
+            "lg:h-auto",
           ])}
         >
-          <div
-            className={tw([
-              "lg:inline-flex",
-              "lg:flex-row",
-              "lg:w-auto",
-              "w-full",
-              "lg:items-center",
-              "items-start",
-              "flex",
-              "flex-col",
-              "lg:h-auto",
-            ])}
-          >
-            <NavLink href="/shows" pageName="shows" />
-            <NavLink href="/photos" pageName="photos" />
-            <NavLink href="/band" pageName="band" />
-            <NavLink href="/more" pageName="more" />
-          </div>
-          <div
-            className={tw([
-              "flex",
-              "items-center",
-              "lg:inline-flex",
-              "lg:flex-row",
-              "lg:w-full",
-              "lg:justify-end",
-              "items-start",
-              "flex",
-              "flex-col",
-            ])}
-          >
-            <SocialLinks />
-          </div>
+          <NavLink href="/shows" pageName="shows" />
+          <NavLink href="/photos" pageName="photos" />
+          <NavLink href="/band" pageName="band" />
+          <NavLink href="/more" pageName="more" />
         </div>
-        <div className="self-center ml-4">
-          <LogoutButton />
+        <div
+          className={tw([
+            "flex",
+            "items-center",
+            "lg:inline-flex",
+            "lg:flex-row",
+            "lg:w-full",
+            "lg:justify-end",
+            "items-start",
+            "flex",
+            "flex-col",
+          ])}
+        >
+          <SocialLinks />
         </div>
-      </nav>
-    </div>
+      </div>
+      <div className="self-center ml-4">
+        <LogoutButton />
+      </div>
+    </nav>
   );
 };
