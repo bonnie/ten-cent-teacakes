@@ -2,10 +2,10 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import { IconType } from "react-icons";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { tw } from "twind";
 
-import { Button } from "@/components/lib/Button";
 import { Heading } from "@/components/lib/Heading";
 import { useToast } from "@/components/toasts/useToast";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
@@ -17,7 +17,28 @@ import { EditPhotoModal } from "./components/EditPhotoModal";
 import { usePhoto } from "./hooks/usePhoto";
 import { usePhotos } from "./hooks/usePhotos";
 
-const Photo = () => {
+const AdvanceButton: React.FC<{
+  Icon: IconType;
+  linkIndex: number | null | undefined;
+}> = ({ Icon, linkIndex }) => (
+  <button
+    type="button"
+    className={tw([
+      "hover:text-aqua-600",
+      "place-self-center",
+      "focus:outline-none",
+    ])}
+  >
+    {linkIndex ? (
+      <Link href={`/photos/${linkIndex}`}>
+        <Icon size={25} />
+      </Link>
+    ) : null}
+  </button>
+);
+
+const Photo: React.FC = () => {
+  const { user } = useWhitelistUser();
   const router = useRouter();
   const { id } = router.query;
   const photoId = Number(id);
@@ -50,43 +71,20 @@ const Photo = () => {
       ])}
     >
       <div className={tw(["grid", "grid-cols-8", "w-full"])}>
-        <button
-          type="button"
-          className={tw([
-            "hover:text-aqua-600",
-            "place-self-center",
-            /* "focus:ring-0",  // TODO: get rid of ring
-            "focus:ring-transparent",
-            "focus:outline-border-0",
-            "focus:border-0", */
-          ])}
-        >
-          {prevIndex ? (
-            <Link href={`/photos/${prevIndex}`}>
-              <FaArrowLeft size={25} />
-            </Link>
+        <AdvanceButton Icon={FaArrowLeft} linkIndex={prevIndex} />
+        <div className="col-span-6 flex justify-center items-center">
+          {user ? (
+            <div className="mr-5">
+              <EditPhotoModal photo={photo} />
+              <DeletePhotoModal photo={photo} />
+            </div>
           ) : null}
-        </button>
-        <div className="col-span-6">
           <Heading textSize="5xl">
             {dayjs(photoDate).format("MMM DD, YYYY")}
             {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
           </Heading>
         </div>
-        <button
-          type="button"
-          className={tw([
-            "hover:text-aqua-600",
-            "place-self-center",
-            "focus:ring-0",
-          ])}
-        >
-          {nextIndex ? (
-            <Link href={`/photos/${nextIndex}`}>
-              <FaArrowRight size={25} />
-            </Link>
-          ) : null}
-        </button>
+        <AdvanceButton Icon={FaArrowRight} linkIndex={nextIndex} />
       </div>
       <div className={tw(["row-span-5", "lg:row-span-7", "h-full"])}>
         <img
@@ -96,6 +94,7 @@ const Photo = () => {
             "border-8",
             "max-h-full",
             "w-auto",
+            "mx-auto",
           ])}
           src={`/${photo.imagePath}`}
           alt={photo.description ?? "Ten-Cent Teacakes"}

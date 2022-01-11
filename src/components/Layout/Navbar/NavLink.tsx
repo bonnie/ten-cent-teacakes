@@ -27,6 +27,7 @@ export const NavLink: React.FC<NavLinkProps> = ({
         "items-center",
         "justify-center",
         "hover:bg-aqua-700",
+        "focus:outline-none",
       ])}
     >
       <Image

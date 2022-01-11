@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useMemo } from "react";
 import { tw } from "twind";
 
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
@@ -12,16 +12,16 @@ import { usePhotos } from "../hooks/usePhotos";
 import { DeletePhotoModal } from "./DeletePhotoModal";
 import { EditPhotoModal } from "./EditPhotoModal";
 
+export type NextAndPrev = {
+  next: number | null;
+  prev: number | null;
+};
+export type NextAndPrevObject = Record<number, NextAndPrev>;
+
 const PhotoThumbnail: React.FC<{
   photo: PhotoWithShowAndVenue;
   photoDate: Date;
-  // nextId: number;
-  // prevId: number;
-}> = ({
-  photo,
-  photoDate,
-  // nextId, prevId
-}) => {
+}> = ({ photo, photoDate }) => {
   const { user } = useWhitelistUser();
   return (
     <div className={tw(["m-5", "flex", "flex-col", "items-center"])}>
@@ -67,8 +67,6 @@ export const Photos: React.FC = () => {
           key={photo.id}
           photo={photo}
           photoDate={getPhotoDate(photo)}
-          // nextId={arr[index + 1] ? arr[index + 1].id : null}
-          // prevId={arr[index - 1] ? arr[index - 1].id : null}
         />
       ))}
     </div>
