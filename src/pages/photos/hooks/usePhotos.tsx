@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo } from "react";
 import {
   UseMutateFunction,
   useMutation,
@@ -43,8 +43,6 @@ type UsePhotosReturnValue = {
 };
 
 export const usePhotos = (): UsePhotosReturnValue => {
-  const [nextAndPrevIndexes, setNextAndPrevIndexes] =
-    useState<NextAndPrevObject>({});
   const { showToast } = useToast();
   const { handleQueryError, handleMutateError } = useHandleError();
   const { data: photos = [] } = useQuery<Array<PhotoWithShowAndVenue>>(
@@ -54,18 +52,21 @@ export const usePhotos = (): UsePhotosReturnValue => {
       onError: handleQueryError,
       select: (photos) =>
         photos.sort((a, b) => (getPhotoDate(a) > getPhotoDate(b) ? -1 : 1)),
-      onSuccess: (data) => {
-        const tempNextAndPrev: NextAndPrevObject = {};
-        data.forEach((photo, index) => {
-          tempNextAndPrev[photo.id] = {
-            next: data[index + 1] ? data[index + 1].id : null,
-            prev: data[index - 1] ? data[index - 1].id : null,
-          };
-        });
-        setNextAndPrevIndexes(tempNextAndPrev);
-      },
     },
   );
+
+  // got inconsistent results in Firefox vs. Chrome calculating this using
+  // onSuccess in useQuery; one used sorted data, the other didn't.
+  const nextAndPrevIndexes = useMemo(() => {
+    const tempNextAndPrev: NextAndPrevObject = [];
+    photos.forEach((photo, index) => {
+      tempNextAndPrev[photo.id] = {
+        next: photos[index + 1] ? photos[index + 1].id : null,
+        prev: photos[index - 1] ? photos[index - 1].id : null,
+      };
+    });
+    return tempNextAndPrev;
+  }, [photos]);
 
   const queryClient = useQueryClient();
   const invalidatePhotos = () =>

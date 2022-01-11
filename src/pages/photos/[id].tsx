@@ -5,7 +5,6 @@ import React from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { tw } from "twind";
 
-import { Button } from "@/components/lib/Button";
 import { Heading } from "@/components/lib/Heading";
 import { useToast } from "@/components/toasts/useToast";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
@@ -18,6 +17,7 @@ import { usePhoto } from "./hooks/usePhoto";
 import { usePhotos } from "./hooks/usePhotos";
 
 const Photo = () => {
+  const { user } = useWhitelistUser();
   const router = useRouter();
   const { id } = router.query;
   const photoId = Number(id);
@@ -67,7 +67,13 @@ const Photo = () => {
             </Link>
           ) : null}
         </button>
-        <div className="col-span-6">
+        <div className="col-span-6 flex justify-center items-center">
+          {user ? (
+            <div className="mr-5">
+              <EditPhotoModal photo={photo} />
+              <DeletePhotoModal photo={photo} />
+            </div>
+          ) : null}
           <Heading textSize="5xl">
             {dayjs(photoDate).format("MMM DD, YYYY")}
             {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
@@ -96,6 +102,7 @@ const Photo = () => {
             "border-8",
             "max-h-full",
             "w-auto",
+            "mx-auto",
           ])}
           src={`/${photo.imagePath}`}
           alt={photo.description ?? "Ten-Cent Teacakes"}

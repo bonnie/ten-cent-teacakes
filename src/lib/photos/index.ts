@@ -22,7 +22,8 @@ export const fetchPhotos = async (): Promise<Array<PhotoWithShowAndVenue>> => {
 export const fetchPhoto = async (
   photoId: number,
 ): Promise<PhotoWithShowAndVenue> => {
-  if (Number.isNaN(photoId)) throw Error("bad photo ID");
+  if (Number.isNaN(photoId))
+    throw Error(`Could not get number from photoId ${photoId}`);
   const { data } = await axiosInstance.get(`/api/${routes.photos}/${photoId}`);
   return data;
 };

@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useMemo } from "react";
 import { tw } from "twind";
 
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
@@ -11,6 +11,12 @@ import { PhotoWithShowAndVenue } from "@/lib/photos/types";
 import { usePhotos } from "../hooks/usePhotos";
 import { DeletePhotoModal } from "./DeletePhotoModal";
 import { EditPhotoModal } from "./EditPhotoModal";
+
+export type NextAndPrev = {
+  next: number | null;
+  prev: number | null;
+};
+export type NextAndPrevObject = Record<number, NextAndPrev>;
 
 const PhotoThumbnail: React.FC<{
   photo: PhotoWithShowAndVenue;
@@ -59,6 +65,19 @@ const PhotoThumbnail: React.FC<{
 
 export const Photos: React.FC = () => {
   const { photos } = usePhotos();
+
+  // got inconsistent results in Firefox vs. Chrome calculating this using
+  // onSuccess in useQuery; one used sorted data, the other didn't.
+  // const nextAndPrevIndexes = useMemo(() => {
+  //   const tempNextAndPrev: NextAndPrevObject = [];
+  //   photos.forEach((photo, index) => {
+  //     tempNextAndPrev[photo.id] = {
+  //       next: photos[index + 1] ? photos[index + 1].id : null,
+  //       prev: photos[index - 1] ? photos[index - 1].id : null,
+  //     };
+  //   });
+  //   return tempNextAndPrev;
+  // }, [photos]);
 
   return (
     <div className="flex flex-wrap justify-center items-baseline">
