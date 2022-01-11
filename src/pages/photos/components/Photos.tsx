@@ -21,13 +21,7 @@ export type NextAndPrevObject = Record<number, NextAndPrev>;
 const PhotoThumbnail: React.FC<{
   photo: PhotoWithShowAndVenue;
   photoDate: Date;
-  // nextId: number;
-  // prevId: number;
-}> = ({
-  photo,
-  photoDate,
-  // nextId, prevId
-}) => {
+}> = ({ photo, photoDate }) => {
   const { user } = useWhitelistUser();
   return (
     <div className={tw(["m-5", "flex", "flex-col", "items-center"])}>
@@ -66,19 +60,6 @@ const PhotoThumbnail: React.FC<{
 export const Photos: React.FC = () => {
   const { photos } = usePhotos();
 
-  // got inconsistent results in Firefox vs. Chrome calculating this using
-  // onSuccess in useQuery; one used sorted data, the other didn't.
-  // const nextAndPrevIndexes = useMemo(() => {
-  //   const tempNextAndPrev: NextAndPrevObject = [];
-  //   photos.forEach((photo, index) => {
-  //     tempNextAndPrev[photo.id] = {
-  //       next: photos[index + 1] ? photos[index + 1].id : null,
-  //       prev: photos[index - 1] ? photos[index - 1].id : null,
-  //     };
-  //   });
-  //   return tempNextAndPrev;
-  // }, [photos]);
-
   return (
     <div className="flex flex-wrap justify-center items-baseline">
       {photos.map((photo, index, arr) => (
@@ -86,8 +67,6 @@ export const Photos: React.FC = () => {
           key={photo.id}
           photo={photo}
           photoDate={getPhotoDate(photo)}
-          // nextId={arr[index + 1] ? arr[index + 1].id : null}
-          // prevId={arr[index - 1] ? arr[index - 1].id : null}
         />
       ))}
     </div>
