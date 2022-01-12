@@ -9,7 +9,6 @@ import path from "path";
 import { uploadDestination } from "@/lib/api/constants";
 import { processApiError, uniquifyFilename } from "@/lib/api/utils";
 
-// import middleware from "@/middleware";
 import { addPhoto, getPhotos } from "./queries";
 
 const upload = multer({

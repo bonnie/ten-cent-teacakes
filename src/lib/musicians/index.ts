@@ -1,13 +1,15 @@
-import { Musician } from ".prisma/client";
+import { Musician } from "@prisma/client";
+
+import { AxiosResponse } from "axios";
 
 import { axiosInstance } from "../axios/axiosInstance";
 import { routes } from "../axios/constants";
-
-/* * types * */
-export type InstrumentName = { name: string };
-export type MusicianWithInstruments = Musician & {
-  instruments: Array<InstrumentName>;
-};
+import {
+  MusicianFormData,
+  MusicianPatchArgs,
+  MusicianResponse,
+  MusicianWithInstruments,
+} from "./types";
 
 /* * methods * */
 export const fetchMusiciansWithInstruments = async (): Promise<
@@ -16,3 +18,47 @@ export const fetchMusiciansWithInstruments = async (): Promise<
   const { data } = await axiosInstance.get(`/api/${routes.musicians}`);
   return data;
 };
+
+const createFormData = (rawData: MusicianFormData): FormData => {
+  const formData = new FormData();
+  if (rawData.imageFile) formData.set("imageFile", rawData.imageFile);
+  if (rawData.firstName) formData.set("firstName", rawData.firstName);
+  if (rawData.lastName) formData.set("lastName", rawData.lastName);
+  if (rawData.bio) formData.set("bio", rawData.bio);
+  if (rawData.instrumentIds)
+    formData.set("instrumentIds", JSON.stringify(rawData.instrumentIds));
+
+  return formData;
+};
+
+export const addMusician = async (
+  data: MusicianFormData,
+): Promise<MusicianResponse> => {
+  const formData = createFormData(data);
+  const { data: musician } = await axiosInstance.put<
+    FormData,
+    AxiosResponse<Musician>
+  >(`/api/${routes.photos}`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+
+  return { musician };
+};
+
+export const patchMusician = async ({
+  id,
+  data,
+}: MusicianPatchArgs): Promise<MusicianResponse> => {
+  const formData = createFormData(data);
+
+  const { data: musician } = await axiosInstance.patch<
+    FormData,
+    AxiosResponse<Musician>
+  >(`/api/${routes.photos}/${id}`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return { musician };
+};
+
+export const deleteMusician = async (id: number): Promise<void> =>
+  axiosInstance.delete(`/api/${routes.musicians}/${id}`);

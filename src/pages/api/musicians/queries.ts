@@ -1,42 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { Prisma } from ".prisma/client";
 
+import { MusicianPutData } from "@/lib/musicians/types";
 import prisma from "@/lib/prisma";
-
-type InstrumentData = {
-  name: string;
-};
-
-type NewOrExistingInstrument = {
-  instrumentId?: number;
-  instrumentData?: InstrumentData;
-};
-
-type MusicianPutData = {
-  firstName: string;
-  lastName: string;
-  bio: string;
-  imagePath: string;
-  instruments: Array<NewOrExistingInstrument>;
-};
-
-const generateInstrumentData = (
-  instruments: Array<NewOrExistingInstrument>,
-) => {
-  // connect to instrument if id was provided; otherwise create a new one
-  const connectInstruments = instruments
-    .filter((instrument) => instrument.instrumentId)
-    .map((instrument) => ({ id: instrument.instrumentId }));
-  const createInstruments = instruments
-    .filter((instrument) => instrument.instrumentData)
-    .map((instrument) => {
-      // filter should take care of this; simply satisfying typescript
-      if (!instrument.instrumentData)
-        throw new Error("trying to create instrument without data");
-      return instrument.instrumentData;
-    });
-  return { create: createInstruments, connect: connectInstruments };
-};
 
 export const getMusiciansSortAscending = async () => {
   const musicians = await prisma.musician.findMany({
@@ -49,15 +15,19 @@ export const getMusiciansSortAscending = async () => {
 };
 
 export const addMusician = (rawData: MusicianPutData) => {
-  const { firstName, lastName, bio, imagePath, instruments } = rawData;
-  const instrumentsData = generateInstrumentData(instruments);
+  const { firstName, lastName, bio, imagePath, instrumentIds } = rawData;
+  if (!firstName || !lastName || !bio || !imagePath || !instrumentIds) {
+    throw new Error(`Not enough data to add Musician: ${rawData}`);
+  }
 
   const data: Prisma.MusicianCreateInput = {
     firstName,
     lastName,
     bio,
     imagePath,
-    instruments: instrumentsData,
+    instruments: {
+      connect: instrumentIds.map((id) => ({ id })),
+    },
   };
 
   return prisma.musician.create({ data });

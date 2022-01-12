@@ -1,29 +1,60 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+// upload code adapted from
+// https://betterprogramming.pub/upload-files-to-next-js-with-api-routes-839ce9f28430
 
-import { processApiError } from "@/lib/api/utils";
+import multer from "multer";
+import type { NextApiRequest, NextApiResponse } from "next";
+import nextConnect from "next-connect";
+import path from "path";
+
+import { uploadDestination } from "@/lib/api/constants";
+import { processApiError, uniquifyFilename } from "@/lib/api/utils";
 
 import { addMusician, getMusiciansSortAscending } from "./queries";
 
-export default async function handle(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
-  const { body, method } = req;
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: path.join(uploadDestination, "musicians"),
+    filename: (req, file, cb) => cb(null, uniquifyFilename(file.originalname)),
+  }),
+});
 
-  try {
-    switch (method) {
-      case "GET":
-        res.json(await getMusiciansSortAscending());
-        break;
-      case "PUT":
-        res.status(201).json(await addMusician(body));
-        break;
-      default:
-        res.setHeader("Allow", ["GET", "PUT"]);
-        res.status(405).end(`Method ${method} Not Allowed`);
-    }
-  } catch (error) {
+const handler = nextConnect({
+  onError(error, req: NextApiRequest, res: NextApiResponse) {
     const { status, message } = processApiError(error);
     res.status(status).json({ message });
+  },
+  onNoMatch(req: NextApiRequest, res: NextApiResponse) {
+    res.status(405).end(`Method ${req.method} Not Allowed`);
+  },
+});
+handler.use(upload.single("imageFile"));
+
+handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
+  res.json(await getMusiciansSortAscending());
+});
+
+handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
+  const imagePath = req.file?.path;
+  const { firstName, lastName, bio, instrumentIds } = req.body;
+  if (imagePath) {
+    const musician = await addMusician({
+      imagePath,
+      firstName,
+      lastName,
+      bio,
+      instrumentIds: JSON.parse(instrumentIds),
+    });
+    res.status(200).json({ musician });
+  } else {
+    res.status(400).json({ message: "no file received" });
   }
-}
+});
+
+// disable default bodyParser
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+export default handler;
