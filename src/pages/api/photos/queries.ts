@@ -8,6 +8,7 @@ import {
   PhotoWithShowAndVenue,
 } from "@/lib/photos/types";
 import prisma from "@/lib/prisma";
+import { removePublicDir } from "@/lib/queries";
 
 import { getVenueById } from "../venues/queries";
 
@@ -57,7 +58,8 @@ export const addPhoto = ({
   });
   const photoData: Prisma.PhotoCreateInput = {
     // remove public directory at the beginning, for link path
-    imagePath: imagePath.replace(/^public\//, ""),
+    // but leave the forward slash after so the path starts with `/`
+    imagePath: removePublicDir(imagePath),
     ...metadata,
   };
   return prisma.photo.create({ data: photoData });

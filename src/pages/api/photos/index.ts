@@ -7,6 +7,7 @@ import nextConnect from "next-connect";
 import path from "path";
 
 import { uploadDestination } from "@/lib/api/constants";
+import { NextApiRequestWithFile } from "@/lib/api/types";
 import { processApiError, uniquifyFilename } from "@/lib/api/utils";
 
 import { addPhoto, getPhotos } from "./queries";
@@ -33,7 +34,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
   res.json(await getPhotos());
 });
 
-handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
+handler.put(async (req: NextApiRequestWithFile, res: NextApiResponse) => {
   const photoPath = req.file?.path;
   if (photoPath) {
     const photo = await addPhoto({

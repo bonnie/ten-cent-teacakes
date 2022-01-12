@@ -4,4 +4,5 @@ export enum routes {
   musicians = "musicians",
   photos = "photos",
   venues = "venues",
+  instruments = "instruments",
 }

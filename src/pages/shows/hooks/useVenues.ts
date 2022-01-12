@@ -11,15 +11,12 @@ import {
 import { useToast } from "@/components/toasts/useToast";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { useHandleError } from "@/lib/react-query/useHandleError";
+import { addVenue, deleteVenue, fetchVenues, patchVenue } from "@/lib/venues";
 import {
-  addVenue,
-  deleteVenue,
-  fetchVenues,
-  patchVenue,
   VenuePatchArgs,
   VenuePutData,
   VenueResponse,
-} from "@/lib/venues";
+} from "@/lib/venues/types";
 
 type UseVenuesReturnValue = {
   venues: Array<Venue>;
@@ -67,7 +64,7 @@ export const useVenues = (): UseVenuesReturnValue => {
     {
       onSuccess: () => {
         invalidateVenues();
-        showToast("success", `You have deleted the venue`);
+        showToast("success", "You have deleted the venue");
       },
       onError: (error) => handleMutateError(error, "delete venue"),
     },

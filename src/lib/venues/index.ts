@@ -4,21 +4,12 @@ import { AxiosResponse } from "axios";
 
 import { axiosInstance } from "../axios/axiosInstance";
 import { routes } from "../axios/constants";
-
-/* * types * */
-export type VenueResponse = { venue: Venue };
-
-export type VenuePutData = { name: string; url?: string };
-
-export type VenuePatchData = {
-  name: string;
-  url?: string;
-};
-
-export type VenuePatchArgs = {
-  id: number;
-  data: VenuePatchData;
-};
+import {
+  VenuePatchArgs,
+  VenuePatchData,
+  VenuePutData,
+  VenueResponse,
+} from "./types";
 
 /* * methods * */
 export const fetchVenues = async (): Promise<Array<Venue>> => {

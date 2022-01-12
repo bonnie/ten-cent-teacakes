@@ -9,9 +9,7 @@ import { useToast } from "@/components/toasts/useToast";
 import {
   addMusician,
   deleteMusician,
-  fetchMusicians,
   fetchMusiciansWithInstruments,
-  getMusicianDate,
   patchMusician,
 } from "@/lib/musicians";
 import {

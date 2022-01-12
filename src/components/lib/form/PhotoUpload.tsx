@@ -4,13 +4,16 @@ import { tw } from "twind";
 
 import { FieldContainer } from "@/components/lib/form/FieldContainer";
 
-export const PhotoUpload: React.FC<{ name: string }> = ({ name }) => {
+export const PhotoUpload: React.FC<{ name: string; label?: string }> = ({
+  name,
+  label = "Choose a file to upload",
+}) => {
   // eslint-disable-next-line no-unused-vars
   const [field, _, helpers] = useField({ name, type: "file" });
   const { setValue } = helpers;
 
   return (
-    <FieldContainer htmlFor={name} label="Choose a file to upload" required>
+    <FieldContainer htmlFor={name} label={label} required>
       <input
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...field}
@@ -48,4 +51,8 @@ export const PhotoUpload: React.FC<{ name: string }> = ({ name }) => {
       />
     </FieldContainer>
   );
+};
+
+PhotoUpload.defaultProps = {
+  label: "Choose a file to upload",
 };

@@ -1,8 +1,8 @@
-import { Musician } from ".prisma/client";
+import { Instrument, Musician } from ".prisma/client";
 
 export type InstrumentName = { name: string };
 export type MusicianWithInstruments = Musician & {
-  instruments: Array<InstrumentName>;
+  instruments: Array<Instrument>;
 };
 
 export type MusicianResponse = {

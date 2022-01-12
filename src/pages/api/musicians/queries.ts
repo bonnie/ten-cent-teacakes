@@ -3,12 +3,11 @@ import { Prisma } from ".prisma/client";
 
 import { MusicianPutData } from "@/lib/musicians/types";
 import prisma from "@/lib/prisma";
+import { removePublicDir } from "@/lib/queries";
 
 export const getMusiciansSortAscending = async () => {
   const musicians = await prisma.musician.findMany({
-    include: {
-      instruments: { select: { name: true } },
-    },
+    include: { instruments: true },
     orderBy: { lastName: "asc" },
   });
   return musicians;
@@ -24,7 +23,7 @@ export const addMusician = (rawData: MusicianPutData) => {
     firstName,
     lastName,
     bio,
-    imagePath,
+    imagePath: removePublicDir(imagePath),
     instruments: {
       connect: instrumentIds.map((id) => ({ id })),
     },
