@@ -6,6 +6,7 @@ import { fetchMusiciansWithInstruments } from "@/lib/musicians";
 import { queryKeys } from "@/lib/react-query/query-keys";
 
 import { useMusicians } from "../hooks/useMusicians";
+import { AddMusicianModal } from "./EditMusicianModal";
 import { MusicianCard } from "./MusicianCard";
 
 // TODO: put in separate file

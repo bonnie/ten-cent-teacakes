@@ -2,7 +2,11 @@ import Image from "next/image";
 import React from "react";
 import { tw } from "twind";
 
+import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { MusicianWithInstruments } from "@/lib/musicians/types";
+
+import { DeleteMusicianModal } from "./DeleteMusicianModal";
+import { EditMusicianModal } from "./EditMusicianModal";
 
 const cardClasses = tw([
   "sm:min-w-full",
@@ -49,56 +53,64 @@ const Instrument: React.FC<InstrumentProps> = ({ name }) => (
 );
 
 type MusicianProps = { data: MusicianWithInstruments };
-export const MusicianCard: React.FC<MusicianProps> = ({ data }) => (
-  <div className="pt-12 m-4">
-    <div className={cardClasses}>
-      <div>
-        <div
-          className={tw([
-            "rounded-lg",
-            "-mt-12",
-            "position-relative",
-            "h-230",
-            "text-center",
-            "w-full",
-            "px-12",
-          ])}
-        >
-          <Image
+export const MusicianCard: React.FC<MusicianProps> = ({ data }) => {
+  const { user } = useWhitelistUser();
+  return (
+    <div className="pt-12 m-4">
+      <div className={cardClasses}>
+        <div>
+          <div
             className={tw([
               "rounded-lg",
-              "shadow-lg",
-              "p-10",
-              ...imageTransitionClass,
+              "-mt-12",
+              "position-relative",
+              "h-230",
+              "text-center",
+              "w-full",
+              "px-12",
             ])}
-            objectFit="cover"
-            height="250"
-            width="250"
-            src={data.imagePath}
-            alt={data.firstName}
-          />
+          >
+            <Image
+              className={tw([
+                "rounded-lg",
+                "shadow-lg",
+                "p-10",
+                ...imageTransitionClass,
+              ])}
+              objectFit="cover"
+              height="250"
+              width="250"
+              src={data.imagePath}
+              alt={data.firstName}
+            />
+          </div>
+          <p className={tw(["font-heading", "text-4xl", "text-center"])}>
+            {user ? (
+              <span className="mr-1">
+                {EditMusicianModal} {DeleteMusicianModal}
+              </span>
+            ) : null}
+            {data.firstName}
+          </p>
+          <p>{data.bio}</p>
         </div>
-        <p className={tw(["font-heading", "text-4xl", "text-center"])}>
-          {data.firstName}
-        </p>
-        <p>{data.bio}</p>
-      </div>
-      <div
-        className={tw([
-          "flex",
-          "flex-row",
-          "flex-wrap",
-          "w-full",
-          "justify-center",
-          "pt-4",
-        ])}
-      >
-        {data.instruments
-          .sort((a, b) => (a.name > b.name ? 1 : -1))
-          .map((instrument) => (
-            <Instrument key={instrument.name} name={instrument.name} />
-          ))}
+        <div
+          className={tw([
+            "flex",
+            "flex-row",
+            "flex-wrap",
+            "w-full",
+            "justify-center",
+            "pt-4",
+          ])}
+        >
+          {data.instruments
+            .sort((a, b) => (a.name > b.name ? 1 : -1))
+            .map((instrument) => (
+              <Instrument key={instrument.name} name={instrument.name} />
+            ))}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};

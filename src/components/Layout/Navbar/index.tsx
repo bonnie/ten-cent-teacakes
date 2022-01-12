@@ -33,6 +33,7 @@ export const Navbar: React.FC = () => {
     setActive(!active);
   };
 
+  // TODO: dropdown doesn't cover main contents
   const hamburgerClasses = tw([
     "inline-flex",
     "p-3",
@@ -42,10 +43,12 @@ export const Navbar: React.FC = () => {
     "ml-auto",
     "hover:text-white",
     "outline-none",
+    "focus:outline-none",
   ]);
 
   return (
     <nav
+      style={{ zIndex: 100 }}
       className={tw([
         "flex",
         "items-center",

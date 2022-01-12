@@ -15,7 +15,7 @@ export const Layout: React.FC = ({ children }) => (
       "place-content-start",
     ])}
   >
-    <div style={{ maxHeight: "8vh" }} className="w-screen">
+    <div className="w-screen">
       <Navbar />
     </div>
     <div className="row-span-11 mt-4">

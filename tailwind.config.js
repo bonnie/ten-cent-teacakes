@@ -51,6 +51,9 @@ module.exports = {
         body: ["Ubuntu", ...defaultTheme.fontFamily.sans],
       },
     },
+    screens: {
+      "nav-lg": "800px",
+    },
   },
   variants: {
     extend: {},
