@@ -38,7 +38,7 @@ export const addMusician = async (
   const { data: musician } = await axiosInstance.put<
     FormData,
     AxiosResponse<Musician>
-  >(`/api/${routes.photos}`, formData, {
+  >(`/api/${routes.musicians}`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 
@@ -54,7 +54,7 @@ export const patchMusician = async ({
   const { data: musician } = await axiosInstance.patch<
     FormData,
     AxiosResponse<Musician>
-  >(`/api/${routes.photos}/${id}`, formData, {
+  >(`/api/${routes.musicians}/${id}`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
   return { musician };

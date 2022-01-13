@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import dayjs from "dayjs";
 import { FormikProps } from "formik";
 import React from "react";
 
 import { PhotoUpload } from "@/components/lib/form/PhotoUpload";
+import { TextArea } from "@/components/lib/form/TextArea";
 import { TextInput } from "@/components/lib/form/TextInput";
 import { EditItemModal } from "@/components/lib/modals/EditItemModal";
 import {
@@ -13,7 +13,6 @@ import {
 import { EditableInstrumentsList } from "@/pages/band/components/instruments/EditableInstrumentsList";
 
 import { useMusicians } from "../hooks/useMusicians";
-import { Musicians } from "./Musicians";
 
 export const EditMusicianForm: React.FC<{
   props: FormikProps<MusicianFormData>;
@@ -21,7 +20,7 @@ export const EditMusicianForm: React.FC<{
   <form onSubmit={props.handleSubmit}>
     <TextInput name="firstName" label="First name" required />
     <TextInput name="lastName" label="Last name" required />
-    <TextInput name="bio" label="Bio" type="textarea" required />
+    <TextArea name="bio" label="Bio" required />
     <PhotoUpload name="imageFile" label="Select musician image" />
     <EditableInstrumentsList />
   </form>

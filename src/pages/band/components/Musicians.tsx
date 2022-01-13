@@ -27,7 +27,6 @@ export async function getStaticProps() {
 
 export const Musicians: React.FC = () => {
   const { musicians } = useMusicians();
-  const { user } = useWhitelistUser();
 
   return (
     <div>
