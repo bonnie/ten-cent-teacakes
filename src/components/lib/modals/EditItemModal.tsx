@@ -6,6 +6,7 @@ import { FiEdit } from "react-icons/fi";
 
 // import { IoMdAdd } from "react-icons/io";
 import { Button } from "@/components/lib/Button";
+import { useToast } from "@/components/toasts/useToast";
 
 import {
   ModalCancelButton,
@@ -26,6 +27,7 @@ export function EditItemModal<Data>({
   formikConfig,
   buttonType = "edit",
 }: EditItemModalProps<Data>) {
+  const { showToast } = useToast();
   const [showModal, setShowModal] = React.useState(false);
   const buttonContents =
     buttonType === "edit" ? <FiEdit size={20} /> : "Add new";
@@ -49,9 +51,14 @@ export function EditItemModal<Data>({
                   <Button
                     type="submit"
                     disabled={Object.keys(props.errors).length > 0}
-                    handleClick={() => {
-                      props.submitForm();
-                      setShowModal(false);
+                    handleClick={async () => {
+                      const errors = await props.validateForm(props.values);
+                      if (!errors) {
+                        await props.submitForm();
+                        setShowModal(false);
+                      } else {
+                        showToast("error", "Please check form for errors");
+                      }
                     }}
                   >
                     Save
