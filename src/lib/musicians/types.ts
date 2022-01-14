@@ -27,5 +27,5 @@ export type MusicianPutData = {
 
 export type MusicianPatchArgs = {
   id: number;
-  data: MusicianFormData;
+  data: MusicianPutData;
 };

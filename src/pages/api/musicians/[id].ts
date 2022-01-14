@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { processApiError } from "@/lib/api/utils";
 
-import { deleteMusician, getMusicianById } from "./queries";
+import { deleteMusician, getMusicianById, patchMusician } from "./queries";
 
 export default async function handle(
   req: NextApiRequest,
@@ -17,8 +17,12 @@ export default async function handle(
       case "GET":
         res.status(200).json(await getMusicianById(id));
         break;
+      case "PATCH":
+        res.status(201).json(await patchMusician({ data: req.body, id }));
+        break;
       case "DELETE":
-        res.status(204).json(await deleteMusician(id));
+        await deleteMusician(id);
+        res.status(204).end();
         break;
       default:
         res.setHeader("Allow", ["GET", "DELETE"]);

@@ -20,7 +20,12 @@ export const TextArea: React.FC<TextAreaProps> = ({
 }) => {
   const [field] = useField({ name });
   return (
-    <FieldContainer htmlFor={name} required={required} label={label}>
+    <FieldContainer
+      htmlFor={name}
+      required={required}
+      label={label}
+      fieldName={name}
+    >
       <div className="mt-1 flex rounded-md shadow-sm">
         <textarea
           // eslint-disable-next-line react/jsx-props-no-spreading

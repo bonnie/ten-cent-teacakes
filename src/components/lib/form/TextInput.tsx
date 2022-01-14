@@ -24,7 +24,12 @@ export const TextInput: React.FC<TextInputProps> = ({
 }) => {
   const [field] = useField({ name });
   return (
-    <FieldContainer htmlFor={name} required={required} label={label}>
+    <FieldContainer
+      htmlFor={name}
+      required={required}
+      label={label}
+      fieldName={name}
+    >
       <div className="mt-1 flex rounded-md shadow-sm">
         {prefix ? (
           <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500">

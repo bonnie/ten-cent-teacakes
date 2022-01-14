@@ -13,7 +13,7 @@ export const PhotoUpload: React.FC<{ name: string; label?: string }> = ({
   const { setValue } = helpers;
 
   return (
-    <FieldContainer htmlFor={name} label={label} required>
+    <FieldContainer htmlFor={name} label={label} required fieldName={name}>
       <input
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...field}

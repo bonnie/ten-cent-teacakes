@@ -40,7 +40,7 @@ const Musicians: React.FC = () => {
       ) : null}
       <div className="flex flex-wrap justify-center items-stretch mx-5">
         {musicians.map((musician) => (
-          <MusicianCard key={musician.id} data={musician} />
+          <MusicianCard key={musician.id} musician={musician} />
         ))}
       </div>
     </div>

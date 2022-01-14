@@ -52,8 +52,8 @@ const Instrument: React.FC<InstrumentProps> = ({ name }) => (
   </div>
 );
 
-type MusicianProps = { data: MusicianWithInstruments };
-export const MusicianCard: React.FC<MusicianProps> = ({ data }) => {
+type MusicianProps = { musician: MusicianWithInstruments };
+export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
   const { user } = useWhitelistUser();
   return (
     <div className="pt-12 m-4">
@@ -80,19 +80,21 @@ export const MusicianCard: React.FC<MusicianProps> = ({ data }) => {
               objectFit="cover"
               height="250"
               width="250"
-              src={data.imagePath}
-              alt={data.firstName}
+              src={musician.imagePath}
+              alt={musician.firstName}
             />
           </div>
-          <p className={tw(["font-heading", "text-4xl", "text-center"])}>
+
+          <div className={tw(["text-4xl", "text-center"])}>
             {user ? (
               <span className="mr-1">
-                {EditMusicianModal} {DeleteMusicianModal}
+                <EditMusicianModal musician={musician} />
+                <DeleteMusicianModal musician={musician} />
               </span>
-            ) : null}
-            {data.firstName}
-          </p>
-          <p>{data.bio}</p>
+            ) : null}{" "}
+            <p className="font-heading inline-block">{musician.firstName}</p>
+          </div>
+          <p>{musician.bio}</p>
         </div>
         <div
           className={tw([
@@ -104,7 +106,7 @@ export const MusicianCard: React.FC<MusicianProps> = ({ data }) => {
             "pt-4",
           ])}
         >
-          {data.instruments
+          {musician.instruments
             .sort((a, b) => (a.name > b.name ? 1 : -1))
             .map((instrument) => (
               <Instrument key={instrument.name} name={instrument.name} />

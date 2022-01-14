@@ -18,7 +18,8 @@ export default async function handle(
         res.status(201).json(await patchInstrument({ body, id }));
         break;
       case "DELETE":
-        res.status(204).json(await deleteInstrument(id));
+        await deleteInstrument(id);
+        res.status(204).end();
         break;
       default:
         res.setHeader("Allow", ["PATCH", "DELETE"]);

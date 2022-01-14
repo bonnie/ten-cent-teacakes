@@ -27,7 +27,7 @@ export function EditItemModal<Data>({
   buttonType = "edit",
 }: EditItemModalProps<Data>) {
   const [showModal, setShowModal] = React.useState(false);
-  const butotnContents =
+  const buttonContents =
     buttonType === "edit" ? <FiEdit size={20} /> : "Add new";
   return (
     <>
@@ -36,7 +36,7 @@ export function EditItemModal<Data>({
         aria-label={title}
         round={buttonType === "edit"}
       >
-        {butotnContents}
+        {buttonContents}
       </Button>
       {showModal ? (
         <ModalContainer title={title}>
@@ -44,11 +44,11 @@ export function EditItemModal<Data>({
             {(props) => (
               <>
                 <FormFields props={props} />
-                {/* TODO: errors */}
                 <ModalFooter>
                   <ModalCancelButton setShowModal={setShowModal} />
                   <Button
                     type="submit"
+                    disabled={Object.keys(props.errors).length > 0}
                     handleClick={() => {
                       props.submitForm();
                       setShowModal(false);
