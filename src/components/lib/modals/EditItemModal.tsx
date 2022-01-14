@@ -53,11 +53,12 @@ export function EditItemModal<Data>({
                     disabled={Object.keys(props.errors).length > 0}
                     handleClick={async () => {
                       const errors = await props.validateForm(props.values);
-                      if (!errors) {
+                      if (Object.keys(errors).length === 0) {
                         await props.submitForm();
                         setShowModal(false);
                       } else {
-                        showToast("error", "Please check form for errors");
+                        const errorString = Object.values(errors).join("; ");
+                        showToast("error", errorString);
                       }
                     }}
                   >

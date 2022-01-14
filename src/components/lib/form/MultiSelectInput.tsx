@@ -1,12 +1,14 @@
-import { useField } from "formik";
+// adapted from https://stackoverflow.com/a/57655147
+import { FieldArray, useField } from "formik";
 import React from "react";
 import { tw } from "twind";
 
 import { FieldContainer } from "@/components/lib/form/FieldContainer";
 
+type Option = { value: string | number; label: string };
 type MultiSelectProps = {
   name: string;
-  options: Array<{ value: string | number; display: string }>;
+  options: Array<Option>;
   label: string;
   required: boolean;
 };
@@ -17,7 +19,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
   label,
   required,
 }) => {
-  const field = useField({ name });
+  const [field] = useField({ name, type: "file" });
   return (
     <FieldContainer
       htmlFor={name}
@@ -25,19 +27,40 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
       required={required}
       fieldName={name}
     >
-      <select
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...field}
-        className={tw(["px-4", "py-3", "rounded", "w-full"])}
-        id={name}
-        multiple
-      >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.display}
-          </option>
-        ))}
-      </select>
+      <FieldArray
+        name={name}
+        render={(arrayHelpers) => (
+          <div>
+            {options.map((option) => (
+              <label key={option.value}>
+                <input
+                  name="tags"
+                  type="checkbox"
+                  value={option.value}
+                  checked={field.value.includes(option.value)}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      arrayHelpers.push(option.value);
+                    } else {
+                      const idx = field.value.indexOf(option.value);
+                      arrayHelpers.remove(idx);
+                    }
+                  }}
+                />
+                <span>{option.label}</span>
+              </label>
+            ))}
+          </div>
+        )}
+      />
+      {/* <div role="group" id={name}>
+      {options.map((option) => (
+        <label key={option.value}>
+          <Field type="checkbox" name={name} value={option.value} />
+          {option.label}
+        </label>
+      ))}
+    </div> */}
     </FieldContainer>
   );
 };

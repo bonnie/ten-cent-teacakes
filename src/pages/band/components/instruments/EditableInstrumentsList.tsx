@@ -10,11 +10,11 @@ export const EditableInstrumentsList: React.FC = () => {
   const { instruments } = useInstruments();
   const instrumentOptions = instruments.map((instrument) => ({
     value: instrument.id,
-    display: instrument.name,
+    label: instrument.name,
   }));
   return (
     <MultiSelect
-      name="instrumentId"
+      name="instrumentIds"
       required
       label="Select instruments"
       options={instrumentOptions}

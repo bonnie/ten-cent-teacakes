@@ -14,15 +14,34 @@ import { EditableInstrumentsList } from "@/pages/band/components/instruments/Edi
 
 import { useMusicians } from "../hooks/useMusicians";
 
-export const EditMusicianForm: React.FC<{
-  props: FormikProps<MusicianFormData>;
-}> = ({ props }) => (
-  <form onSubmit={props.handleSubmit}>
+const commonFormFields = (
+  <>
     <TextInput name="firstName" label="First name" required />
     <TextInput name="lastName" label="Last name" required />
     <TextArea name="bio" label="Bio" required />
-    <PhotoUpload name="imageFile" label="Select musician image" />
     <EditableInstrumentsList />
+  </>
+);
+
+const AddMusicianForm: React.FC<{
+  props: FormikProps<MusicianFormData>;
+}> = ({ props }) => (
+  <form onSubmit={props.handleSubmit}>
+    {commonFormFields}
+    <PhotoUpload name="imageFile" label="Select musician image" required />
+  </form>
+);
+
+const EditMusicianForm: React.FC<{
+  props: FormikProps<MusicianFormData>;
+}> = ({ props }) => (
+  <form onSubmit={props.handleSubmit}>
+    {commonFormFields}
+    <PhotoUpload
+      name="imageFile"
+      label="Select new musician image"
+      required={false}
+    />
   </form>
 );
 
@@ -33,19 +52,25 @@ type MusicianFormErrors = {
   bio?: string;
 };
 
-const musicianFormValidation = (values: MusicianFormData) => {
+const commonFormValidation = (values: MusicianFormData) => {
   const errors: MusicianFormErrors = {};
+
   if (!values.firstName) {
     errors.firstName = "First name is required";
   }
   if (!values.lastName) {
     errors.lastName = "Last name is required";
   }
-  if (!values.imageFile) {
-    errors.imageFile = "Photo is required";
-  }
   if (!values.bio) {
     errors.bio = "Bio is required";
+  }
+  return errors;
+};
+
+const addMusicianFormValidation = (values: MusicianFormData) => {
+  const errors = commonFormValidation(values);
+  if (!values.imageFile) {
+    errors.imageFile = "Photo is required";
   }
   return errors;
 };
@@ -66,14 +91,14 @@ export const AddMusicianModal: React.FC = () => {
 
   const formikConfig = {
     initialValues,
-    validate: musicianFormValidation,
+    validate: addMusicianFormValidation,
     onSubmit,
   };
 
   return (
     <EditItemModal
       title="Add Musician"
-      FormFields={EditMusicianForm}
+      FormFields={AddMusicianForm}
       formikConfig={formikConfig}
       buttonType="add"
     />
@@ -102,7 +127,7 @@ export const EditMusicianModal: React.FC<{
 
   const formikConfig = {
     initialValues,
-    validate: musicianFormValidation,
+    validate: commonFormValidation,
     onSubmit,
   };
 
