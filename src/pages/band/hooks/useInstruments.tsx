@@ -27,7 +27,6 @@ type UseInstrumentsReturnValue = {
   instruments: Array<Instrument>;
   instrumentFormValidation: (values: InstrumentPutData) => {
     name?: string;
-    url?: string;
   };
   addInstrument: UseMutateFunction<
     InstrumentResponse,

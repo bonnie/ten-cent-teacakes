@@ -11,5 +11,5 @@ export type InstrumentPatchData = {
 
 export type InstrumentPatchArgs = {
   id: number;
-  data: InstrumentPatchData;
+  data: InstrumentPutData;
 };

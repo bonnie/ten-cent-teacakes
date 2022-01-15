@@ -46,6 +46,7 @@ const Instrument: React.FC<InstrumentProps> = ({ name }) => (
       "py-1",
       "px-2",
       "mx-1",
+      "mt-3",
     ])}
   >
     {name}
@@ -103,7 +104,7 @@ export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
             "flex-wrap",
             "w-full",
             "justify-center",
-            "pt-4",
+            "pt-1",
           ])}
         >
           {musician.instruments
