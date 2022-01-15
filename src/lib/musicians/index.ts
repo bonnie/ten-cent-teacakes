@@ -50,7 +50,6 @@ export const patchMusician = async ({
   data,
 }: MusicianPatchArgs): Promise<MusicianResponse> => {
   const formData = createFormData(data);
-  console.log("patching musician with", data);
 
   const { data: musician } = await axiosInstance.patch<
     FormData,
@@ -58,7 +57,7 @@ export const patchMusician = async ({
   >(`/api/${routes.musicians}/${id}`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
-  console.log("got return value", musician);
+
   return { musician };
 };
 

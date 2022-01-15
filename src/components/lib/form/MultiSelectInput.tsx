@@ -30,10 +30,23 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
       <FieldArray
         name={name}
         render={(arrayHelpers) => (
-          <div>
+          <div
+            className={tw([
+              "grid",
+              "grid-cols-3",
+              "place-items-start",
+              "place-content-between",
+            ])}
+          >
             {options.map((option) => (
-              <label key={option.value}>
+              <label className={tw(["ml-3"])} key={option.value}>
                 <input
+                  className={tw([
+                    "focus:outline-none",
+                    "focus:ring-0",
+                    "checked:bg-aqua-600",
+                    "text-aqua-600",
+                  ])}
                   name="tags"
                   type="checkbox"
                   value={option.value}
@@ -47,7 +60,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
                     }
                   }}
                 />
-                <span>{option.label}</span>
+                <span className={tw(["ml-1"])}>{option.label}</span>
               </label>
             ))}
           </div>
