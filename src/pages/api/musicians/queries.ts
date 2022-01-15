@@ -77,5 +77,5 @@ export const patchMusician = async ({ data, id }: MusicianPatchArgs) => {
     instrumentIds: instrumentIds ?? existingInstrumentIds,
   });
 
-  await prisma.photo.update({ data: patchData, where: { id } });
+  await prisma.musician.update({ data: patchData, where: { id } });
 };

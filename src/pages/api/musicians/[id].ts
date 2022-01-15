@@ -1,35 +1,50 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { processApiError } from "@/lib/api/utils";
+import { NextApiRequestWithFile } from "@/lib/api/types";
+import { createUploadHandler } from "@/lib/api/uploadHandler";
 
 import { deleteMusician, getMusicianById, patchMusician } from "./queries";
 
-export default async function handle(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
-  const { method, query } = req;
-  const { id: idString } = query;
-  const id = Number(idString);
+const handler = createUploadHandler({
+  uploadDestinationDir: "musicians",
+  uploadFieldName: "imageFile",
+});
 
-  try {
-    switch (method) {
-      case "GET":
-        res.status(200).json(await getMusicianById(id));
-        break;
-      case "PATCH":
-        res.status(201).json(await patchMusician({ data: req.body, id }));
-        break;
-      case "DELETE":
-        await deleteMusician(id);
-        res.status(204).end();
-        break;
-      default:
-        res.setHeader("Allow", ["GET", "DELETE"]);
-        res.status(405).end(`Method ${method} Not Allowed`);
-    }
-  } catch (error) {
-    const { status, message } = processApiError(error);
-    res.status(status).json({ message });
-  }
-}
+const getIdFromRequest = (req: NextApiRequest) => {
+  const { id: idString } = req.query;
+  return Number(idString);
+};
+
+handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
+  const id = getIdFromRequest(req);
+  return res.status(200).json(await getMusicianById(id));
+});
+
+handler.patch(async (req: NextApiRequestWithFile, res: NextApiResponse) => {
+  const id = getIdFromRequest(req);
+  const imagePath = req.file?.path;
+  const { firstName, lastName, bio, instrumentIds } = req.body;
+  const data = {
+    firstName,
+    lastName,
+    bio,
+    imagePath,
+    instrumentIds: JSON.parse(instrumentIds),
+  };
+  return res.status(201).json(await patchMusician({ data, id }));
+});
+
+handler.delete(async (req: NextApiRequest, res: NextApiResponse) => {
+  const id = getIdFromRequest(req);
+  await deleteMusician(id);
+  return res.status(204).end();
+});
+
+// disable default bodyParser
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+export default handler;
