@@ -69,6 +69,24 @@ export const patchMusician = async ({ data, id }: MusicianPatchArgs) => {
   const existingInstrumentIds: Array<number> = musicianData.instruments
     ? musicianData.instruments.map((i) => i.id)
     : [];
+
+  // need to explicitly disconnect any removed instruments
+  // Two queries is inefficient, but code is a mess if I try to unify it with
+  // create (due to types), and this should be an uncommon action
+  const removedIds = existingInstrumentIds.filter(
+    (id) => !instrumentIds?.includes(id),
+  );
+  if (removedIds.length > 0) {
+    await prisma.musician.update({
+      data: {
+        instruments: {
+          disconnect: removedIds.map((id) => ({ id })),
+        },
+      },
+      where: { id },
+    });
+  }
+
   const patchData = transformData({
     firstName: firstName ?? musicianData.firstName,
     lastName: lastName ?? musicianData.lastName,
@@ -77,5 +95,5 @@ export const patchMusician = async ({ data, id }: MusicianPatchArgs) => {
     instrumentIds: instrumentIds ?? existingInstrumentIds,
   });
 
-  await prisma.musician.update({ data: patchData, where: { id } });
+  return prisma.musician.update({ data: patchData, where: { id } });
 };
