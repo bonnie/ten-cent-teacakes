@@ -36,7 +36,11 @@ export const DeleteItemModal: React.FC<DeleteItemModalProps> = ({
   );
   return (
     <>
-      {disabled ? <Popover message={title}>{button}</Popover> : button}
+      {disabled ? (
+        <Popover message={disabled ? description : title}>{button}</Popover>
+      ) : (
+        button
+      )}
       {showModal ? (
         <ModalContainer title={title}>
           <div className="m-5">{description}</div>

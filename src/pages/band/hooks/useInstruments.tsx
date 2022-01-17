@@ -1,5 +1,3 @@
-import { Instrument } from "@prisma/client";
-
 import { useMemo } from "react";
 import {
   UseMutateFunction,
@@ -19,12 +17,13 @@ import {
   InstrumentPatchArgs,
   InstrumentPutData,
   InstrumentResponse,
+  InstrumentWithMusicianCount,
 } from "@/lib/instruments/types";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { useHandleError } from "@/lib/react-query/useHandleError";
 
 type UseInstrumentsReturnValue = {
-  instruments: Array<Instrument>;
+  instruments: Array<InstrumentWithMusicianCount>;
   instrumentFormValidation: (values: InstrumentPutData) => {
     name?: string;
   };
@@ -51,13 +50,11 @@ export const useInstruments = (): UseInstrumentsReturnValue => {
   const invalidateInstruments = () =>
     queryClient.invalidateQueries([queryKeys.instruments]);
 
-  const { data: instruments = [] } = useQuery<Array<Instrument>>(
-    queryKeys.instruments,
-    fetchInstruments,
-    {
-      onError: handleQueryError,
-    },
-  );
+  const { data: instruments = [] } = useQuery<
+    Array<InstrumentWithMusicianCount>
+  >(queryKeys.instruments, fetchInstruments, {
+    onError: handleQueryError,
+  });
 
   const { mutate: addInstrumentMutate } = useMutation(
     queryKeys.instruments,

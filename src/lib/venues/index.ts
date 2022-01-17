@@ -30,7 +30,7 @@ export const patchVenue = async ({
   data,
 }: VenuePatchArgs): Promise<VenueResponse> => {
   const { data: venue } = await axiosInstance.patch<
-    { body: VenuePatchData },
+    { body: VenuePutData },
     AxiosResponse<Venue>
   >(`/api/${routes.venues}/${id}`, { body: data });
   return { venue };

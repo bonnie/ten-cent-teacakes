@@ -11,5 +11,5 @@ export type VenuePatchData = {
 
 export type VenuePatchArgs = {
   id: number;
-  data: VenuePatchData;
+  data: VenuePutData;
 };

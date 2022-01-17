@@ -7,6 +7,7 @@ import { fetchMusiciansWithInstruments } from "@/lib/musicians";
 import { queryKeys } from "@/lib/react-query/query-keys";
 
 import { AddMusicianModal } from "./components/EditMusicianModal";
+import { EditInstruments } from "./components/instruments/EditInstruments";
 import { MusicianCard } from "./components/MusicianCard";
 import { useMusicians } from "./hooks/useMusicians";
 
@@ -43,6 +44,7 @@ const Musicians: React.FC = () => {
           <MusicianCard key={musician.id} musician={musician} />
         ))}
       </div>
+      {user ? <EditInstruments /> : null}
     </div>
   );
 };

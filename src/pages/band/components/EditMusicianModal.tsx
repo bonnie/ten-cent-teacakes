@@ -10,7 +10,7 @@ import {
   MusicianFormData,
   MusicianWithInstruments,
 } from "@/lib/musicians/types";
-import { EditableInstrumentsList } from "@/pages/band/components/instruments/EditableInstrumentsList";
+import { InstrumentMultiSelect } from "@/pages/band/components/instruments/InstrumentMultiSelect";
 
 import { useMusicians } from "../hooks/useMusicians";
 
@@ -19,7 +19,7 @@ const commonFormFields = (
     <TextInput name="firstName" label="First name" required />
     <TextInput name="lastName" label="Last name" required />
     <TextArea name="bio" label="Bio" required />
-    <EditableInstrumentsList />
+    <InstrumentMultiSelect />
   </>
 );
 

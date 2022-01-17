@@ -1,13 +1,28 @@
 import {
   InstrumentPatchData,
   InstrumentPutData,
+  InstrumentWithMusicianCount,
 } from "@/lib/instruments/types";
 import prisma from "@/lib/prisma";
 
-export const getInstruments = () =>
-  prisma.instrument.findMany({
+export const getInstruments = async (): Promise<
+  Array<InstrumentWithMusicianCount>
+> => {
+  const instruments = await prisma.instrument.findMany({
     orderBy: { name: "asc" },
+    include: {
+      _count: {
+        select: { musicians: true },
+      },
+    },
   });
+  return instruments.map((i) => ({
+    id: i.id,
+    name: i.name,
+    // eslint-disable-next-line no-underscore-dangle
+    musicianCount: i._count?.musicians ?? 0,
+  }));
+};
 
 export const getInstrumentById = (id: number) =>
   prisma.instrument.findUnique({ where: { id } });

@@ -9,10 +9,13 @@ import {
   InstrumentPatchData,
   InstrumentPutData,
   InstrumentResponse,
+  InstrumentWithMusicianCount,
 } from "./types";
 
 /* * methods * */
-export const fetchInstruments = async (): Promise<Array<Instrument>> => {
+export const fetchInstruments = async (): Promise<
+  Array<InstrumentWithMusicianCount>
+> => {
   const { data } = await axiosInstance.get(`/api/${routes.instruments}`);
   return data;
 };

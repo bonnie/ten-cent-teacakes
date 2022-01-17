@@ -13,3 +13,7 @@ export type InstrumentPatchArgs = {
   id: number;
   data: InstrumentPutData;
 };
+
+export type InstrumentWithMusicianCount = Instrument & {
+  musicianCount: number;
+};
