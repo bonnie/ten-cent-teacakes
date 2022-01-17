@@ -21,7 +21,8 @@ export default async function handle(
         res.status(201).json(await patchPhoto({ data: body.data, id }));
         break;
       case "DELETE":
-        res.status(204).json(await deletePhoto(id));
+        await deletePhoto(id);
+        res.status(204).end();
         break;
       default:
         res.setHeader("Allow", ["GET", "DELETE"]);

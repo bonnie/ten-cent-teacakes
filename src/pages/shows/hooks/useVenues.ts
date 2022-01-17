@@ -11,15 +11,12 @@ import {
 import { useToast } from "@/components/toasts/useToast";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { useHandleError } from "@/lib/react-query/useHandleError";
+import { addVenue, deleteVenue, fetchVenues, patchVenue } from "@/lib/venues";
 import {
-  addVenue,
-  deleteVenue,
-  fetchVenues,
-  patchVenue,
   VenuePatchArgs,
   VenuePutData,
   VenueResponse,
-} from "@/lib/venues";
+} from "@/lib/venues/types";
 
 type UseVenuesReturnValue = {
   venues: Array<Venue>;
@@ -67,7 +64,7 @@ export const useVenues = (): UseVenuesReturnValue => {
     {
       onSuccess: () => {
         invalidateVenues();
-        showToast("success", `You have deleted the venue`);
+        showToast("success", "You have deleted the venue");
       },
       onError: (error) => handleMutateError(error, "delete venue"),
     },
@@ -76,6 +73,8 @@ export const useVenues = (): UseVenuesReturnValue => {
   const { mutate: updateVenue } = useMutation(queryKeys.venues, patchVenue, {
     onSuccess: (data) => {
       invalidateVenues();
+      // update shows too, since venue data may have changed
+      queryClient.invalidateQueries([queryKeys.shows]);
       showToast("success", `You have updated the venue "${data.venue.name}"`);
     },
     onError: (error) => handleMutateError(error, "update venue"),

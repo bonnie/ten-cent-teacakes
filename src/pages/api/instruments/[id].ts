@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { processApiError } from "@/lib/api/utils";
 
-import { deleteShow, patchShow } from "./queries";
+import { deleteInstrument, patchInstrument } from "./queries";
 
 export default async function handle(
   req: NextApiRequest,
@@ -15,10 +15,10 @@ export default async function handle(
   try {
     switch (method) {
       case "PATCH":
-        res.status(201).json(await patchShow({ data: body.body, id }));
+        res.status(201).json(await patchInstrument({ data: body.body, id }));
         break;
       case "DELETE":
-        await deleteShow(id);
+        await deleteInstrument(id);
         res.status(204).end();
         break;
       default:

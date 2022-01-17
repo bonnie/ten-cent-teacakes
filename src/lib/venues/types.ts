@@ -5,11 +5,11 @@ export type VenueResponse = { venue: Venue };
 export type VenuePutData = { name: string; url?: string };
 
 export type VenuePatchData = {
-  body: VenuePutData;
+  data: VenuePutData;
   id: number;
 };
 
 export type VenuePatchArgs = {
   id: number;
-  data: VenuePatchData;
+  data: VenuePutData;
 };

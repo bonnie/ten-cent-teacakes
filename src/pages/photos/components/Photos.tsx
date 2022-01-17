@@ -12,12 +12,6 @@ import { usePhotos } from "../hooks/usePhotos";
 import { DeletePhotoModal } from "./DeletePhotoModal";
 import { EditPhotoModal } from "./EditPhotoModal";
 
-export type NextAndPrev = {
-  next: number | null;
-  prev: number | null;
-};
-export type NextAndPrevObject = Record<number, NextAndPrev>;
-
 const PhotoThumbnail: React.FC<{
   photo: PhotoWithShowAndVenue;
   photoDate: Date;
@@ -36,7 +30,7 @@ const PhotoThumbnail: React.FC<{
             "object-contain",
             "hover:border-aqua-600",
           ])}
-          src={`/${photo.imagePath}`}
+          src={photo.imagePath}
           alt={photo.description ?? "Ten-cent Teacakes"}
         />
       </Link>

@@ -96,7 +96,7 @@ const Photo: React.FC = () => {
             "w-auto",
             "mx-auto",
           ])}
-          src={`/${photo.imagePath}`}
+          src={photo.imagePath}
           alt={photo.description ?? "Ten-Cent Teacakes"}
         />
         {photo.photographer ? (

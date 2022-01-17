@@ -5,22 +5,18 @@ import React from "react";
 
 import { FieldContainer } from "./FieldContainer";
 
-type TextInputProps = {
+type TextAreaProps = {
   name: string;
   label: string;
   placeholderText?: string;
-  required?: boolean;
-  prefix?: string;
-  type?: string;
+  required: boolean;
 };
 
-export const TextInput: React.FC<TextInputProps> = ({
+export const TextArea: React.FC<TextAreaProps> = ({
   name,
   label,
   placeholderText = undefined,
-  prefix = undefined,
-  required = true,
-  type = "text",
+  required,
 }) => {
   const [field] = useField({ name });
   return (
@@ -31,15 +27,9 @@ export const TextInput: React.FC<TextInputProps> = ({
       fieldName={name}
     >
       <div className="mt-1 flex rounded-md shadow-sm">
-        {prefix ? (
-          <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500">
-            {prefix}
-          </span>
-        ) : null}
-        <input
+        <textarea
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...field}
-          type={type}
           id={name}
           className="focus:ring-aqua-500 focus:border-aqua-500 flex-1 block w-full rounded-none rounded-r-md border-gray-300"
           placeholder={placeholderText}
@@ -49,9 +39,6 @@ export const TextInput: React.FC<TextInputProps> = ({
   );
 };
 
-TextInput.defaultProps = {
-  prefix: undefined,
-  required: true,
-  type: "text",
+TextArea.defaultProps = {
   placeholderText: undefined,
 };

@@ -3,4 +3,5 @@ export const queryKeys = {
   photos: "photos",
   musicians: "musicians",
   venues: "venues",
+  instruments: "instruments",
 };

@@ -14,7 +14,12 @@ export const EditableShow: React.FC<{ required: boolean }> = ({ required }) => {
   });
 
   return (
-    <FieldContainer htmlFor="showId" label="Show" required={required}>
+    <FieldContainer
+      htmlFor="showId"
+      label="Show"
+      required={required}
+      fieldName="showId"
+    >
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <select {...field} className="px-4 py-3 rounded w-full" id="showId">
         <option value={undefined}> </option>

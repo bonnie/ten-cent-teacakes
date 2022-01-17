@@ -1,29 +1,41 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { processApiError } from "@/lib/api/utils";
+import { NextApiRequestWithFile } from "@/lib/api/types";
+import { createUploadHandler } from "@/lib/api/uploadHandler";
 
 import { addMusician, getMusiciansSortAscending } from "./queries";
 
-export default async function handle(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
-  const { body, method } = req;
+const handler = createUploadHandler({
+  uploadDestinationDir: "musicians",
+  uploadFieldName: "imageFile",
+});
 
-  try {
-    switch (method) {
-      case "GET":
-        res.json(await getMusiciansSortAscending());
-        break;
-      case "PUT":
-        res.status(201).json(await addMusician(body));
-        break;
-      default:
-        res.setHeader("Allow", ["GET", "PUT"]);
-        res.status(405).end(`Method ${method} Not Allowed`);
-    }
-  } catch (error) {
-    const { status, message } = processApiError(error);
-    res.status(status).json({ message });
+handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
+  res.json(await getMusiciansSortAscending());
+});
+
+handler.put(async (req: NextApiRequestWithFile, res: NextApiResponse) => {
+  const imagePath = req.file?.path;
+  const { firstName, lastName, bio, instrumentIds } = req.body;
+  if (imagePath) {
+    const musician = await addMusician({
+      imagePath,
+      firstName,
+      lastName,
+      bio,
+      instrumentIds: JSON.parse(instrumentIds),
+    });
+    res.status(200).json({ musician });
+  } else {
+    res.status(400).json({ message: "no file received" });
   }
-}
+});
+
+// disable default bodyParser
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+export default handler;

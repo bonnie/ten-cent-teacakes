@@ -24,6 +24,8 @@ type SortedShows = {
   pastShows: Array<ShowWithVenue>;
 };
 
+type ShowCountPerVenue = Record<number, number>;
+
 const sortShows = (data: Array<ShowWithVenue>): SortedShows => {
   const sortedShows: SortedShows = {
     upcomingShows: [],
@@ -54,10 +56,13 @@ type UseShowsReturnValue = {
   addShow: UseMutateFunction<ShowResponse, unknown, ShowPutData, unknown>;
   deleteShow: UseMutateFunction<void, unknown, number, unknown>;
   updateShow: UseMutateFunction<ShowResponse, unknown, ShowPatchArgs, unknown>;
-  showCountPerVenue: Record<number, number>;
+  showCountPerVenue: ShowCountPerVenue;
 };
 
 export const useShows = (): UseShowsReturnValue => {
+  const [showCountPerVenue, setShowCountPerVenue] = useState<ShowCountPerVenue>(
+    {},
+  );
   const [shows, setShows] = useState<SortedShows>({
     upcomingShows: [],
     pastShows: [],
@@ -70,7 +75,17 @@ export const useShows = (): UseShowsReturnValue => {
     fetchShows,
     {
       onError: handleQueryError,
-      onSuccess: (data) => setShows(sortShows(data)),
+      onSuccess: (data) => {
+        setShows(sortShows(data));
+        // TODO: do this with primsa query instead, a la instruments /musicians
+        data.forEach((show) => {
+          if (!showCountPerVenue[show.venueId]) {
+            showCountPerVenue[show.venueId] = 1;
+          } else {
+            showCountPerVenue[show.venueId] += 1;
+          }
+        });
+      },
     },
   );
 
@@ -104,15 +119,6 @@ export const useShows = (): UseShowsReturnValue => {
       showToast("success", "You have updated the show");
     },
     onError: (error) => handleMutateError(error, "update show"),
-  });
-
-  const showCountPerVenue: Record<number, number> = {};
-  data.forEach((show) => {
-    if (!showCountPerVenue[show.venueId]) {
-      showCountPerVenue[show.venueId] = 1;
-    } else {
-      showCountPerVenue[show.venueId] += 1;
-    }
   });
 
   return {

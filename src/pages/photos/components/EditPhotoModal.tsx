@@ -32,7 +32,7 @@ export const AddPhotoForm: React.FC<{
   props: FormikProps<PhotoFormData>;
 }> = ({ props }) => (
   <form onSubmit={props.handleSubmit}>
-    <PhotoUpload name="photoFile" />
+    <PhotoUpload name="photoFile" required />
     {editFields}
   </form>
 );
