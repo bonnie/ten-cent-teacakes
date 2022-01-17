@@ -7,10 +7,8 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Heading";
-import { useToast } from "@/components/toasts/useToast";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { getPhotoDate } from "@/lib/photos";
-import { PhotoWithShowAndVenue } from "@/lib/photos/types";
 
 import { DeletePhotoModal } from "./components/DeletePhotoModal";
 import { EditPhotoModal } from "./components/EditPhotoModal";

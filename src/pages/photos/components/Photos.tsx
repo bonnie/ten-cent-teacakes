@@ -1,7 +1,8 @@
 import dayjs from "dayjs";
+// TODO: optimize image before loading
 import Image from "next/image";
 import Link from "next/link";
-import React, { useMemo } from "react";
+import React from "react";
 import { tw } from "twind";
 
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
