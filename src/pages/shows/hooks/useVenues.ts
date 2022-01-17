@@ -1,5 +1,3 @@
-import { Venue } from ".prisma/client";
-
 import { useMemo } from "react";
 import {
   UseMutateFunction,
@@ -14,12 +12,14 @@ import { useHandleError } from "@/lib/react-query/useHandleError";
 import { addVenue, deleteVenue, fetchVenues, patchVenue } from "@/lib/venues";
 import {
   VenuePatchArgs,
+  VenuePatchResponse,
   VenuePutData,
   VenueResponse,
+  VenueWithShowCount,
 } from "@/lib/venues/types";
 
 type UseVenuesReturnValue = {
-  venues: Array<Venue>;
+  venues: Array<VenueWithShowCount>;
   venueFormValidation: (values: VenuePutData) => {
     name?: string;
     url?: string;
@@ -27,7 +27,7 @@ type UseVenuesReturnValue = {
   addVenue: UseMutateFunction<VenueResponse, unknown, VenuePutData, unknown>;
   deleteVenue: UseMutateFunction<void, unknown, number, unknown>;
   updateVenue: UseMutateFunction<
-    VenueResponse,
+    VenuePatchResponse,
     unknown,
     VenuePatchArgs,
     unknown
@@ -42,7 +42,7 @@ export const useVenues = (): UseVenuesReturnValue => {
   const invalidateVenues = () =>
     queryClient.invalidateQueries([queryKeys.venues]);
 
-  const { data: venues = [] } = useQuery<Array<Venue>>(
+  const { data: venues = [] } = useQuery<Array<VenueWithShowCount>>(
     queryKeys.venues,
     fetchVenues,
     {

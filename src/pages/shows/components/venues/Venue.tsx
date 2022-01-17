@@ -1,20 +1,12 @@
-import { Venue as VenueType } from "@prisma/client";
-
 import React from "react";
 import { tw } from "twind";
+
+import { VenueWithShowCount } from "@/lib/venues/types";
 
 import { DeleteVenueModal } from "./DeleteVenueModal";
 import { EditVenueModal } from "./EditVenueModal";
 
-export const Venue: React.FC<{ venue: VenueType; showCount: number }> = ({
-  venue,
-  showCount,
-}) => {
-  const disabled = !!showCount;
-  const disabledMessage = `${venue.name} is associated with ${showCount} show${
-    showCount > 1 ? "s" : ""
-  } and can't be deleted`;
-
+export const Venue: React.FC<{ venue: VenueWithShowCount }> = ({ venue }) => {
   const venueLink =
     venue.url && !venue.url?.match(/^https?:\/\//)
       ? `http://${venue.url}`
@@ -48,11 +40,7 @@ export const Venue: React.FC<{ venue: VenueType; showCount: number }> = ({
       </div>
       <div className={tw(["order-first", "sm:mx-5", "sm:order-none"])}>
         <EditVenueModal venue={venue} />
-        <DeleteVenueModal
-          venue={venue}
-          disabled={disabled}
-          title={disabled ? disabledMessage : "Delete Venue"}
-        />
+        <DeleteVenueModal venue={venue} />
       </div>
       {venueLink ? <a href={venueLink}>{venue.url}</a> : venue.url}
     </div>

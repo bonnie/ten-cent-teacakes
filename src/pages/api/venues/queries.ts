@@ -1,10 +1,27 @@
 import prisma from "@/lib/prisma";
-import { VenuePatchData, VenuePutData } from "@/lib/venues/types";
+import {
+  VenuePatchData,
+  VenuePutData,
+  VenueWithShowCount,
+} from "@/lib/venues/types";
 
-export const getVenues = () =>
-  prisma.venue.findMany({
+export const getVenues = async (): Promise<Array<VenueWithShowCount>> => {
+  const venues = await prisma.venue.findMany({
     orderBy: { name: "asc" },
+    include: {
+      _count: {
+        select: { shows: true },
+      },
+    },
   });
+  return venues.map((v) => ({
+    id: v.id,
+    name: v.name,
+    url: v.url,
+    // eslint-disable-next-line no-underscore-dangle
+    showCount: v._count?.shows ?? 0,
+  }));
+};
 
 export const getVenueById = (id: number) =>
   prisma.venue.findUnique({ where: { id } });
