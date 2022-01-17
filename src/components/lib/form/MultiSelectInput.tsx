@@ -38,31 +38,39 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
               "place-content-between",
             ])}
           >
-            {options.map((option) => (
-              <label className={tw(["ml-3"])} key={option.value}>
-                <input
-                  className={tw([
-                    "focus:outline-none",
-                    "focus:ring-0",
-                    "checked:bg-aqua-600",
-                    "text-aqua-600",
-                  ])}
-                  name="tags"
-                  type="checkbox"
-                  value={option.value}
-                  checked={field.value.includes(option.value)}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      arrayHelpers.push(option.value);
-                    } else {
-                      const idx = field.value.indexOf(option.value);
-                      arrayHelpers.remove(idx);
-                    }
-                  }}
-                />
-                <span className={tw(["ml-1"])}>{option.label}</span>
-              </label>
-            ))}
+            {options.map((option) => {
+              const optionId = `option-${option.value}`;
+              return (
+                <label
+                  className={tw(["ml-3"])}
+                  key={option.value}
+                  htmlFor={optionId}
+                >
+                  <input
+                    id={optionId}
+                    className={tw([
+                      "focus:outline-none",
+                      "focus:ring-0",
+                      "checked:bg-aqua-600",
+                      "text-aqua-600",
+                    ])}
+                    name="tags"
+                    type="checkbox"
+                    value={option.value}
+                    checked={field.value.includes(option.value)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        arrayHelpers.push(option.value);
+                      } else {
+                        const idx = field.value.indexOf(option.value);
+                        arrayHelpers.remove(idx);
+                      }
+                    }}
+                  />
+                  <span className={tw(["ml-1"])}>{option.label}</span>
+                </label>
+              );
+            })}
           </div>
         )}
       />
