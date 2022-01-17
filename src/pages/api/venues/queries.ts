@@ -16,13 +16,13 @@ export const addVenue = async (data: VenuePutData) => {
   return prisma.venue.findUnique({ where: { name: data.name } });
 };
 
-export const patchVenue = async ({ body, id }: VenuePatchData) => {
-  const venueData = getVenueById(id);
+export const patchVenue = async ({ data, id }: VenuePatchData) => {
+  const venueData = await getVenueById(id);
   if (!venueData) {
     throw new Error(`Bad venue id: ${id}`);
   }
 
-  await prisma.venue.update({ data: body, where: { id } });
+  await prisma.venue.update({ data, where: { id } });
 };
 
 export const deleteVenue = async (id: number) => {

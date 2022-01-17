@@ -5,13 +5,13 @@ import { DeleteItemModal } from "@/components/lib/modals/DeleteItemModal";
 import { InstrumentWithMusicianCount } from "@/lib/instruments/types";
 
 import { useInstruments } from "../../hooks/useInstruments";
-import { AddInstrumentModal } from "./EditInstrumentModal";
+import { AddInstrumentModal, EditInstrumentModal } from "./EditInstrumentModal";
 
 export const EditInstruments: React.FC = () => {
   const { instruments, deleteInstrument } = useInstruments();
 
   return (
-    <div className="mt-5 border-t-2 border-solid border-gray-300 text-center">
+    <div className="mt-5 border-t-2 border-solid border-gray-300 flex flex-col items-center">
       <Heading>Instruments</Heading>
       <AddInstrumentModal />
       {instruments
@@ -24,7 +24,8 @@ export const EditInstruments: React.FC = () => {
           } and can't be deleted`;
           const disabled = instrument.musicianCount > 0;
           return (
-            <div key={instrument.id}>
+            <div className="w-1/4 text-left" key={instrument.id}>
+              <EditInstrumentModal instrument={instrument} />
               <DeleteItemModal
                 description={
                   disabled

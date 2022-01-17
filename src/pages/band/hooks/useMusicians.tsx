@@ -72,6 +72,8 @@ export const useMusicians = (): UseMusiciansReturnValue => {
     {
       onSuccess: () => {
         invalidateMusicians();
+        // invalidate instruments since musician counts will have changed
+        queryClient.invalidateQueries(queryKeys.instruments);
         showToast("success", "You have deleted the musician");
       },
       onError: (error) => handleMutateError(error, "delete musician"),

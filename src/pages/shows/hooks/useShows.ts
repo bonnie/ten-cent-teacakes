@@ -77,6 +77,7 @@ export const useShows = (): UseShowsReturnValue => {
       onError: handleQueryError,
       onSuccess: (data) => {
         setShows(sortShows(data));
+        // TODO: do this with primsa query instead, a la instruments /musicians
         data.forEach((show) => {
           if (!showCountPerVenue[show.venueId]) {
             showCountPerVenue[show.venueId] = 1;

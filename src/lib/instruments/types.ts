@@ -5,7 +5,7 @@ export type InstrumentResponse = { instrument: Instrument };
 export type InstrumentPutData = { name: string };
 
 export type InstrumentPatchData = {
-  body: InstrumentPutData;
+  data: InstrumentPutData;
   id: number;
 };
 

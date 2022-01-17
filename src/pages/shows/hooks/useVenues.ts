@@ -73,6 +73,8 @@ export const useVenues = (): UseVenuesReturnValue => {
   const { mutate: updateVenue } = useMutation(queryKeys.venues, patchVenue, {
     onSuccess: (data) => {
       invalidateVenues();
+      // update shows too, since venue data may have changed
+      queryClient.invalidateQueries([queryKeys.shows]);
       showToast("success", `You have updated the venue "${data.venue.name}"`);
     },
     onError: (error) => handleMutateError(error, "update venue"),

@@ -34,13 +34,17 @@ export const addInstrument = async (data: InstrumentPutData) => {
   return prisma.instrument.findUnique({ where: { name: data.name } });
 };
 
-export const patchInstrument = async ({ body, id }: InstrumentPatchData) => {
-  const instrumentData = getInstrumentById(id);
+export const patchInstrument = async ({ data, id }: InstrumentPatchData) => {
+  const instrumentData = await getInstrumentById(id);
   if (!instrumentData) {
     throw new Error(`Bad instrument id: ${id}`);
   }
 
-  await prisma.instrument.update({ data: body, where: { id } });
+  const newInstrument = await prisma.instrument.update({
+    data,
+    where: { id },
+  });
+  return newInstrument;
 };
 
 export const deleteInstrument = async (id: number) => {
