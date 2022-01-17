@@ -1,6 +1,7 @@
 import { Venue } from ".prisma/client";
 
-export type VenueResponse = { venue: Venue };
+export type VenueWithShowCount = Venue & { showCount: number };
+export type VenueResponse = { venue: VenueWithShowCount };
 
 export type VenuePutData = { name: string; url?: string };
 
@@ -12,4 +13,8 @@ export type VenuePatchData = {
 export type VenuePatchArgs = {
   id: number;
   data: VenuePutData;
+};
+
+export type VenuePatchResponse = {
+  venue: Venue;
 };
