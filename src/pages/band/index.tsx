@@ -11,7 +11,6 @@ import { EditInstruments } from "./components/instruments/EditInstruments";
 import { MusicianCard } from "./components/MusicianCard";
 import { useMusicians } from "./hooks/useMusicians";
 
-// TODO: put in separate file
 export async function getStaticProps() {
   const queryClient = new QueryClient();
 

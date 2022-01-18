@@ -66,6 +66,7 @@ export default function Home() {
           </Link>
         </div>
       ) : null}
+      {/* TODO: add email signup */}
     </div>
   );
 }

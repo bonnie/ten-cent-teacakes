@@ -4,4 +4,5 @@ export const queryKeys = {
   musicians: "musicians",
   venues: "venues",
   instruments: "instruments",
+  whitelist: "whitelist",
 };
