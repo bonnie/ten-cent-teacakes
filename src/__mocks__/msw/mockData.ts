@@ -2,6 +2,8 @@ import { Venue } from "@prisma/client";
 
 import { ShowWithVenue } from "@/lib/shows/types";
 
+export const mockWhitelist = ["test@test.com"];
+
 export const mockVenues: Array<Venue> = [
   {
     id: 1,

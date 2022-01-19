@@ -24,8 +24,6 @@ export const useWhitelistUser = (): WhitelistUserReturn => {
       return data;
     },
     {
-      staleTime: 3000,
-      cacheTime: 3000,
       onSuccess: (data: WhitelistResponse) => {
         const whitelisted =
           data.whitelist.length === 0 ||

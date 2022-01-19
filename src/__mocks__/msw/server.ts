@@ -1,5 +1,5 @@
 import { setupServer } from "msw/node";
 
-import { showHandlers } from "./handlers";
+import { showHandlers, whitelistHandlers } from "./handlers";
 
-export const server = setupServer(...showHandlers);
+export const server = setupServer(...showHandlers, ...whitelistHandlers);
