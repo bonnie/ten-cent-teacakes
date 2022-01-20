@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { dehydrate, QueryClient } from "react-query";
 
 import { Heading } from "@/components/lib/Heading";
@@ -11,16 +11,16 @@ import { ShowsGroup } from "./components/ShowsGroup";
 import { EditVenues } from "./components/venues/EditVenues";
 import { useShows } from "./hooks/useShows";
 
-// TODO: this is resulting in "Error: connect ECONNREFUSED 127.0.0.1:80"
-// export async function getStaticProps() {
-//   const queryClient = new QueryClient();
-//   await queryClient.prefetchQuery(queryKeys.shows, fetchShows);
-//   return {
-//     props: {
-//       dehydratedState: dehydrate(queryClient),
-//     },
-//   };
-// }
+export async function getStaticProps() {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(queryKeys.shows, fetchShows);
+  // console.log(dehydrate(queryClient));
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+}
 
 const Shows: React.FC = () => {
   const { pastShows, upcomingShows } = useShows();

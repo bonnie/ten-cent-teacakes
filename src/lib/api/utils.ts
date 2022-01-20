@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 
 export const processApiError = (error: unknown) => {
+  // TODO: log error
   let status: number;
   let message: string | undefined;
 
