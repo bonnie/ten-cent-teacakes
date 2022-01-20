@@ -14,6 +14,7 @@ import { useShows } from "./hooks/useShows";
 export async function getStaticProps() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(queryKeys.shows, fetchShows);
+  // console.log(dehydrate(queryClient));
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
