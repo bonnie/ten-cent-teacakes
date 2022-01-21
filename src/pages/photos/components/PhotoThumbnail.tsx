@@ -16,6 +16,7 @@ export const PhotoThumbnail: React.FC<{
   photoDate: Date;
 }> = ({ photo, photoDate }) => {
   const { user } = useWhitelistUser();
+  console.log("from thumbnail", photo.imagePath);
   return (
     <div className={tw(["m-5", "flex", "flex-col", "items-center"])}>
       <Link href={`/photos/${photo.id}`}>

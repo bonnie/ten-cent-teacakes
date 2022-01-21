@@ -3,8 +3,10 @@ import { Venue as VenueType } from ".prisma/client";
 
 import { useField } from "formik";
 import React from "react";
+import { tw } from "twind";
 
 import { FieldContainer } from "@/components/lib/form/FieldContainer";
+import { keywordClasses, keywordLinkClasses } from "@/pages/more";
 
 import { useVenues } from "../hooks/useVenues";
 import { AddVenueModal } from "./venues/EditVenueModal";
@@ -13,7 +15,10 @@ export const DisplayShowVenue: React.FC<{
   venue: VenueType;
   rawUrl: string | null;
 }> = ({ venue, rawUrl }) => {
-  if (!rawUrl) return <span>{venue.name}</span>;
+  if (!rawUrl)
+    return (
+      <span className={tw([...keywordClasses, "text-xl"])}>{venue.name}</span>
+    );
 
   const url = rawUrl.search(/^https?:\/\//) === 0 ? rawUrl : `http://${rawUrl}`;
   return (
@@ -25,7 +30,7 @@ export const DisplayShowVenue: React.FC<{
       target="_blank"
       rel="noreferrer"
     >
-      <span className="text-xl font-bold text-aqua-700 hover:text-aqua-500">
+      <span className={tw([...keywordLinkClasses, "text-xl"])}>
         {venue.name}
       </span>
     </a>

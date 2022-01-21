@@ -14,7 +14,7 @@
 ### Auth0
 
 1. `mv .env_template .env`
-   TODO: update for auth0
+   TODO: update for auth0 / sentry
 
 ## Run Jest Tests
 

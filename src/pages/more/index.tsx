@@ -8,7 +8,7 @@ import { Heading } from "@/components/lib/Heading";
 
 import { EmailSignupForm } from "./components/EmailSignupForm";
 
-const keywordClasses = ["font-bold", "text-aqua-700"];
+export const keywordClasses = ["font-bold", "text-aqua-700"];
 const placementClasses = ["flex", "items-center", "mr-1.5"];
 export const keywordLinkClasses = [
   ...keywordClasses,
@@ -38,7 +38,7 @@ const MoreElement: React.FC<{
     </span>
   );
   return (
-    <p className="flex pt-8">
+    <p className="flex pt-8 text-2xl">
       {keywordStyled} {tagline}
     </p>
   );
@@ -47,13 +47,24 @@ MoreElement.defaultProps = {
   href: undefined,
 };
 
+export const EmailSignupWithLabel: React.FC = () => (
+  <>
+    <MoreElement
+      keyword="Subscribe"
+      tagline="to our mailing list."
+      Icon={MdOutlineMail}
+    />
+    <EmailSignupForm />
+  </>
+);
+
 const More: React.FC = () => (
   <div className="flex flex-col items-center">
     <Heading>More</Heading>
     <p className="font-heading text-center text-4xl text-aqua-700">
       more Teacakes, less than 10¢
     </p>
-    <div className="flex flex-col text-2xl">
+    <div className="flex flex-col">
       <MoreElement
         keyword="Watch"
         tagline="videos on YouTube."
@@ -66,12 +77,7 @@ const More: React.FC = () => (
         href="https://twitter.com/TenCentTeacakes"
         Icon={FiTwitter}
       />
-      <MoreElement
-        keyword="Subscribe"
-        tagline="to the mailing list."
-        Icon={MdOutlineMail}
-      />
-      <EmailSignupForm />
+      <EmailSignupWithLabel />
     </div>
   </div>
 );

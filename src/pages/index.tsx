@@ -1,6 +1,3 @@
-// TODO: fix
-// Firefox can’t establish a connection to the server at http://localhost:3000/_next/webpack-hmr?page=%2Fabout.
-
 import { useUser } from "@auth0/nextjs-auth0";
 import Head from "next/head";
 import Image from "next/image";
@@ -9,21 +6,12 @@ import React from "react";
 import { tw } from "twind";
 
 import { validateUser } from "@/lib/auth/utils";
-import { keywordLinkClasses } from "@/pages/more";
-// TODO: Add photo "carousel" to front page
-// import Photo from "@/pages/photos/[id]";
-// import { usePhotos } from "@/pages/photos/hooks/usePhotos";
+import { EmailSignupWithLabel, keywordLinkClasses } from "@/pages/more";
+import { Photos } from "@/pages/photos/components/Photos";
 import { ShowsGroup } from "@/pages/shows/components/ShowsGroup";
 import { useShows } from "@/pages/shows/hooks/useShows";
 
-const section = tw([
-  "mt-10",
-  "w-full",
-  "pt-4",
-  "bg-gradient-to-b",
-  "from-aqua-200",
-  "to-aqua-100",
-]);
+const section = tw(["mt-10", "w-full", "pt-4", "border-t-8", "border-dotted"]);
 
 export default function Home() {
   const tenCentLogoAltText =
@@ -36,7 +24,7 @@ export default function Home() {
     if (user && user.email) validateUser(user.email);
   }, [user]);
   return (
-    <div className="flex flex-col justify-start items-center w-full h-100 -mt-2">
+    <div className="flex flex-col justify-start items-center w-full h-100 -mt-2 mb-8">
       <Head>
         <title>Ten-Cent Teacakes String Band</title>
       </Head>
@@ -53,6 +41,9 @@ export default function Home() {
       <p className="font-body text-2xl">
         Eclectic string band music and cheap baked goods
       </p>
+      <div className={tw([section, "flex", "flex-col", "items-center"])}>
+        <EmailSignupWithLabel />
+      </div>
       {upcomingShows.length > 0 ? (
         <div className={section}>
           <ShowsGroup
@@ -66,7 +57,14 @@ export default function Home() {
           </Link>
         </div>
       ) : null}
-      {/* TODO: add email signup */}
+      <div className={section}>
+        <Photos count={3} />
+        <Link href="/photos">
+          <p className={tw([...keywordLinkClasses, "text-center"])}>
+            More photos
+          </p>
+        </Link>
+      </div>
     </div>
   );
 }

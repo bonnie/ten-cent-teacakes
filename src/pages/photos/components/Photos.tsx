@@ -17,12 +17,13 @@ export async function getStaticProps() {
   };
 }
 
-export const Photos: React.FC = () => {
+export const Photos: React.FC<{ count?: number }> = ({ count = undefined }) => {
   const { photos } = usePhotos();
+  const photosSlice = count ? photos.slice(0, count) : photos;
 
   return (
     <div className="flex flex-wrap justify-center items-baseline">
-      {photos.map((photo, index, arr) => (
+      {photosSlice.map((photo, index, arr) => (
         <PhotoThumbnail
           key={photo.id}
           photo={photo}
@@ -32,3 +33,5 @@ export const Photos: React.FC = () => {
     </div>
   );
 };
+
+Photos.defaultProps = { count: undefined };
