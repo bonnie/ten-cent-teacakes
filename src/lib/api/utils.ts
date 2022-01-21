@@ -1,14 +1,14 @@
+import * as Sentry from "@sentry/nextjs";
 import dayjs from "dayjs";
 
 export const processApiError = (error: unknown) => {
-  // TODO: log error
+  Sentry.captureException(error);
+
   let status: number;
   let message: string | undefined;
 
   if (error instanceof Error) {
     message = error.message;
-    // TODO: figure out why this doesn't get returned with 500 response
-    console.error(message);
 
     if (error.name === "RecordNotFound") {
       status = 404;
@@ -16,6 +16,7 @@ export const processApiError = (error: unknown) => {
       status = 500;
     }
   } else {
+    message = String(error);
     status = 500;
   }
   return { status, message };

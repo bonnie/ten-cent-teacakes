@@ -1,3 +1,4 @@
+import { withSentry } from "@sentry/nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { NextApiRequestWithFile } from "@/lib/api/types";
@@ -38,4 +39,4 @@ export const config = {
   },
 };
 
-export default handler;
+export default withSentry(handler);

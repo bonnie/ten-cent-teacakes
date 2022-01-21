@@ -41,7 +41,12 @@ export const EditableShowVenue: React.FC = () => {
   });
 
   return (
-    <FieldContainer htmlFor="venueId" label="Venue" required>
+    <FieldContainer
+      htmlFor="venueId"
+      label="Venue"
+      required
+      fieldName="venueId"
+    >
       <select {...field} className="px-4 py-3 rounded w-full" id="venueId">
         {venues.map((venue) => (
           <option key={venue.id} value={venue.id}>

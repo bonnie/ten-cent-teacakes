@@ -1,4 +1,5 @@
 import { UserProfile, useUser } from "@auth0/nextjs-auth0";
+import * as Sentry from "@sentry/browser";
 import { useState } from "react";
 import { useQuery } from "react-query";
 
@@ -28,9 +29,22 @@ export const useWhitelistUser = (): WhitelistUserReturn => {
         const whitelisted =
           data.whitelist.length === 0 ||
           (auth0User?.email && data.whitelist.includes(auth0User?.email));
-        setUser(whitelisted ? user : undefined);
+        setUser(whitelisted ? auth0User : undefined);
         if (auth0User?.email && !whitelisted) {
-          showToast("warning", `${auth0User?.email} not authorized`);
+          Sentry.captureMessage(
+            `unauthorized login: ${auth0User.email}`,
+            Sentry.Severity.Warning,
+          );
+          showToast("warning", `${auth0User.email} not authorized`);
+          Sentry.configureScope((scope) => scope.setUser(null));
+        } else if (auth0User?.email) {
+          Sentry.setUser({ email: auth0User.email });
+          Sentry.captureMessage(
+            `Login: ${auth0User.email}`,
+            Sentry.Severity.Info,
+          );
+        } else {
+          Sentry.configureScope((scope) => scope.setUser(null));
         }
       },
     },
