@@ -15,7 +15,6 @@ export const Venue: React.FC<{ venue: VenueWithShowCount }> = ({ venue }) => {
   const venueClasses = tw([
     "flex",
     "sm:flex-row",
-    // "flex-col",
     "ml-5",
     "my-5",
     "items-center",

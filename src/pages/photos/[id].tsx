@@ -54,6 +54,7 @@ const Photo: React.FC = () => {
   }
 
   const photoDate = photo ? getPhotoDate(photo) : undefined;
+  console.log("from id", photo?.imagePath);
 
   const contents = photo ? (
     <div
