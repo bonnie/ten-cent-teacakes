@@ -1,17 +1,15 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
-import { tw } from "twind";
 
+import { InternalLinkKeyword } from "@/components/lib/Style/InternalLinkKeyword";
+import { Section } from "@/components/lib/Style/Section";
 import { validateUser } from "@/lib/auth/utils";
-import { EmailSignupWithLabel, keywordLinkClasses } from "@/pages/more";
+import { EmailSignupWithLabel } from "@/pages/more";
 import { Photos } from "@/pages/photos/components/Photos";
 import { ShowsGroup } from "@/pages/shows/components/ShowsGroup";
 import { useShows } from "@/pages/shows/hooks/useShows";
-
-const section = tw(["mt-10", "w-full", "pt-4", "border-t-8", "border-dotted"]);
 
 export default function Home() {
   const tenCentLogoAltText =
@@ -41,30 +39,26 @@ export default function Home() {
       <p className="font-body text-2xl">
         Eclectic string band music and cheap baked goods
       </p>
-      <div className={tw([section, "flex", "flex-col", "items-center"])}>
+      <Section className="flex flex-col items-center">
         <EmailSignupWithLabel />
-      </div>
+      </Section>
       {upcomingShows.length > 0 ? (
-        <div className={section}>
+        <Section>
           <ShowsGroup
             title="Upcoming Shows"
             shows={upcomingShows.slice(0, 3)}
           />
-          <Link href="/shows">
-            <p className={tw([...keywordLinkClasses, "text-center"])}>
-              More shows
-            </p>
-          </Link>
-        </div>
+          <div className="text-center">
+            <InternalLinkKeyword href="/shows">More shows</InternalLinkKeyword>
+          </div>
+        </Section>
       ) : null}
-      <div className={section}>
+      <Section>
         <Photos count={3} />
-        <Link href="/photos">
-          <p className={tw([...keywordLinkClasses, "text-center"])}>
-            More photos
-          </p>
-        </Link>
-      </div>
+        <div className="text-center">
+          <InternalLinkKeyword href="/photos">More photos</InternalLinkKeyword>
+        </div>
+      </Section>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Heading } from "@/components/lib/Heading";
+import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 
 import { AddPhotoModal } from "./components/EditPhotoModal";

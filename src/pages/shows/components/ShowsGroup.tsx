@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Heading } from "@/components/lib/Heading";
-import { ShowWithVenue } from "@/lib/shows";
+import { Heading } from "@/components/lib/Style/Heading";
+import { ShowWithVenue } from "@/lib/shows/types";
 
 import { Show } from "./Show";
 

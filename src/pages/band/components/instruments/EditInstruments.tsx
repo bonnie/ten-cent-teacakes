@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Heading } from "@/components/lib/Heading";
+import { Heading } from "@/components/lib/Style/Heading";
+import { Section } from "@/components/lib/Style/Section";
 import { InstrumentWithMusicianCount } from "@/lib/instruments/types";
 
 import { useInstruments } from "../../hooks/useInstruments";
@@ -11,7 +12,7 @@ export const EditInstruments: React.FC = () => {
   const { instruments } = useInstruments();
 
   return (
-    <div className="mt-5 border-t-2 border-solid border-gray-300 flex flex-col items-center">
+    <Section className="flex flex-col items-center">
       <Heading>Instruments</Heading>
       <AddInstrumentModal />
       {instruments
@@ -23,6 +24,6 @@ export const EditInstruments: React.FC = () => {
             <span>{instrument.name}</span>
           </div>
         ))}
-    </div>
+    </Section>
   );
 };

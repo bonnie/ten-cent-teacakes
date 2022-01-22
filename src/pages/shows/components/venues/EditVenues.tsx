@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Heading } from "@/components/lib/Heading";
+import { Heading } from "@/components/lib/Style/Heading";
+import { Section } from "@/components/lib/Style/Section";
 import { VenueWithShowCount } from "@/lib/venues/types";
 import { useVenues } from "@/pages/shows/hooks/useVenues";
 
@@ -11,7 +12,7 @@ export const EditVenues: React.FC = () => {
   const { venues } = useVenues();
 
   return (
-    <div className="mt-5 border-t-2 border-solid border-gray-300 text-center">
+    <Section className="text-center">
       <Heading>Venues</Heading>
       <AddVenueModal />
       {venues
@@ -19,6 +20,6 @@ export const EditVenues: React.FC = () => {
         .map((venue: VenueWithShowCount) => (
           <Venue key={venue.id} venue={venue} />
         ))}
-    </div>
+    </Section>
   );
 };

@@ -13,7 +13,7 @@ export const Heading: React.FC<React.PropsWithChildren<HeadingProps>> = ({
   align,
   margin,
 }) => {
-  const classes = tw`font-heading text-${textSize} m-${margin} text-${align}`;
+  const classes = tw`font-display text-${textSize} m-${margin} text-${align}`;
   return <h1 className={classes}>{children}</h1>;
 };
 

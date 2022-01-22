@@ -13,15 +13,16 @@ export const Layout: React.FC = ({ children }) => (
       "grid",
       "grid-rows-12",
       "place-content-start",
+      "font-body",
     ])}
   >
-    <div className="w-screen">
+    <div className="w-screen z-50">
       <Navbar />
     </div>
     <div className="row-span-11 mt-4">
       <LoadingSpinner />
-      <main className="h-full m-2">{children}</main>
-      {/* TODO: fix this <Footer /> */}
+      <main className="m-2 z-0">{children}</main>
+      <Footer />
     </div>
   </div>
 );

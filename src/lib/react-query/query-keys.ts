@@ -5,4 +5,5 @@ export const queryKeys = {
   venues: "venues",
   instruments: "instruments",
   whitelist: "whitelist",
+  sendEmail: "send-email",
 };
