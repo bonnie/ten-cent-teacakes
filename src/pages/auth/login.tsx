@@ -3,7 +3,7 @@
 import { useUser } from "@auth0/nextjs-auth0";
 
 import { Button } from "@/components/lib/Button";
-import { Heading } from "@/components/lib/Heading";
+import { Heading } from "@/components/lib/Style/Heading";
 import { useToast } from "@/components/toasts/useToast";
 
 const Login = () => {

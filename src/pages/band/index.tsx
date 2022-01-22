@@ -1,7 +1,7 @@
 import React from "react";
 import { dehydrate, QueryClient } from "react-query";
 
-import { Heading } from "@/components/lib/Heading";
+import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { fetchMusiciansWithInstruments } from "@/lib/musicians";
 import { queryKeys } from "@/lib/react-query/query-keys";

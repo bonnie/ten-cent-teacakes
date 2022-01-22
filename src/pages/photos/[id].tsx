@@ -6,7 +6,7 @@ import { IconType } from "react-icons";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { tw } from "twind";
 
-import { Heading } from "@/components/lib/Heading";
+import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { getPhotoDate } from "@/lib/photos";
 

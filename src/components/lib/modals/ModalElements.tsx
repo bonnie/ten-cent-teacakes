@@ -3,7 +3,7 @@
 import React from "react";
 import { tw } from "twind";
 
-import { Heading } from "@/components/lib/Heading";
+import { Heading } from "@/components/lib/Style/Heading";
 
 export const ModalContainer: React.FC<{ title: string }> = ({
   title,

@@ -6,7 +6,8 @@ import React from "react";
 import { tw } from "twind";
 
 import { FieldContainer } from "@/components/lib/form/FieldContainer";
-import { keywordClasses, keywordLinkClasses } from "@/pages/more";
+import { Keyword } from "@/components/lib/Style/Keyword";
+import { LinkKeyword } from "@/components/lib/Style/LinkKeyword";
 
 import { useVenues } from "../hooks/useVenues";
 import { AddVenueModal } from "./venues/EditVenueModal";
@@ -15,25 +16,15 @@ export const DisplayShowVenue: React.FC<{
   venue: VenueType;
   rawUrl: string | null;
 }> = ({ venue, rawUrl }) => {
-  if (!rawUrl)
-    return (
-      <span className={tw([...keywordClasses, "text-xl"])}>{venue.name}</span>
-    );
+  if (!rawUrl) return <Keyword className="text-xl">{venue.name}</Keyword>;
 
   const url = rawUrl.search(/^https?:\/\//) === 0 ? rawUrl : `http://${rawUrl}`;
   return (
-    <a
-      href={url}
-      aria-label={venue.name}
-      title={venue.name}
-      color="primary"
-      target="_blank"
-      rel="noreferrer"
-    >
-      <span className={tw([...keywordLinkClasses, "text-xl"])}>
+    <span aria-label={venue.name} title={venue.name}>
+      <LinkKeyword href={url} className="text-xl">
         {venue.name}
-      </span>
-    </a>
+      </LinkKeyword>
+    </span>
   );
 };
 

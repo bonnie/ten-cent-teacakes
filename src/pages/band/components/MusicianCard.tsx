@@ -16,8 +16,7 @@ const cardClasses = tw([
   "w-full",
   "shadow-2xl",
   "rounded-lg",
-  "pos-relative",
-  "zindex-1",
+  "z-10",
   "flex",
   "flex-col",
   "justify-between",
@@ -64,8 +63,6 @@ export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
             className={tw([
               "rounded-lg",
               "-mt-12",
-              "position-relative",
-              "h-230",
               "text-center",
               "w-full",
               "px-12",
