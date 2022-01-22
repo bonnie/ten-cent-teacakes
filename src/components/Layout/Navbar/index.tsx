@@ -56,7 +56,7 @@ export const Navbar: React.FC = () => {
         "bg-aqua-900",
         "p-3",
         "text-aqua-100",
-        "font-heading",
+        "font-display",
         "font-normal",
       ])}
     >

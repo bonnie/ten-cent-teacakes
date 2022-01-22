@@ -3,7 +3,6 @@ import { Venue as VenueType } from ".prisma/client";
 
 import { useField } from "formik";
 import React from "react";
-import { tw } from "twind";
 
 import { FieldContainer } from "@/components/lib/form/FieldContainer";
 import { Keyword } from "@/components/lib/Style/Keyword";

@@ -2,7 +2,6 @@ import React from "react";
 import { IconType } from "react-icons";
 import { FiTwitter, FiYoutube } from "react-icons/fi";
 import { MdOutlineMail } from "react-icons/md";
-import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { Keyword } from "@/components/lib/Style/Keyword";
@@ -52,7 +51,7 @@ export const EmailSignupWithLabel: React.FC = () => (
 const More: React.FC = () => (
   <div className="flex flex-col items-center">
     <Heading>More</Heading>
-    <p className="font-heading text-center text-4xl text-aqua-700">
+    <p className="font-display text-center text-4xl text-aqua-700">
       more Teacakes, less than 10¢
     </p>
     <div className="flex flex-col">

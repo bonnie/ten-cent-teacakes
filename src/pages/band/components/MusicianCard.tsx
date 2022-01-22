@@ -90,7 +90,7 @@ export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
                 <DeleteMusicianModal musician={musician} />
               </span>
             ) : null}{" "}
-            <p className="font-heading inline-block">{musician.firstName}</p>
+            <p className="font-display inline-block">{musician.firstName}</p>
           </div>
           <p>{musician.bio}</p>
         </div>

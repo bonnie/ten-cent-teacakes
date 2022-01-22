@@ -1,6 +1,5 @@
 const themeColors = require("./src/lib/colors");
 const colors = require("tailwindcss/colors");
-const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   theme: {
@@ -14,12 +13,9 @@ module.exports = {
       yellow: colors.yellow,
       blue: colors.blue,
     },
-  },
-  extends: {
     fontFamily: {
-      heading: "Delfina",
+      display: "Delfina",
       body: "Ubuntu",
-      ...defaultTheme.fontFamily.sans,
     },
   },
 };

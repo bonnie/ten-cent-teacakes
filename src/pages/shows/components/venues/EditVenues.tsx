@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Heading } from "@/components/lib/Heading";
-import { Section } from "@/components/lib/Section";
+import { Heading } from "@/components/lib/Style/Heading";
+import { Section } from "@/components/lib/Style/Section";
 import { VenueWithShowCount } from "@/lib/venues/types";
 import { useVenues } from "@/pages/shows/hooks/useVenues";
 

@@ -1,6 +1,10 @@
 import React from "react";
 
-import { styleComponentDefaultProps, StyleComponentProps } from ".";
+import {
+  mergeClasses,
+  styleComponentDefaultProps,
+  StyleComponentProps,
+} from ".";
 import { Keyword } from "./Keyword";
 
 type LinkKeywordProps = StyleComponentProps & {
@@ -15,7 +19,9 @@ export const LinkKeyword: React.FC<LinkKeywordProps> = ({
   const baseClasses = ["hover:text-aqua-500", "hover:cursor-pointer"];
   return (
     <a target="_blank" href={href} rel="noreferrer">
-      <Keyword className={baseClasses}>{children}</Keyword>
+      <Keyword className={mergeClasses(baseClasses, className)}>
+        {children}
+      </Keyword>
     </a>
   );
 };

@@ -23,7 +23,7 @@ export const NavLink: React.FC<NavLinkProps> = ({
         "py-2",
         "text-aqua-300",
         "rounded-lg",
-        "font-heading",
+        "font-display",
         "items-center",
         "justify-center",
         "hover:bg-aqua-700",

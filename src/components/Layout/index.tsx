@@ -13,6 +13,7 @@ export const Layout: React.FC = ({ children }) => (
       "grid",
       "grid-rows-12",
       "place-content-start",
+      "font-body",
     ])}
   >
     <div className="w-screen z-50">
