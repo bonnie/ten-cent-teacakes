@@ -48,16 +48,16 @@ export default function Home() {
             title="Upcoming Shows"
             shows={upcomingShows.slice(0, 3)}
           />
-          <InternalLinkKeyword href="/shows">
-            <p className="text-center">More shows</p>
-          </InternalLinkKeyword>
+          <div className="text-center">
+            <InternalLinkKeyword href="/shows">More shows</InternalLinkKeyword>
+          </div>
         </Section>
       ) : null}
       <Section>
         <Photos count={3} />
-        <InternalLinkKeyword href="/photos">
-          <p className="text-center">More photos</p>
-        </InternalLinkKeyword>
+        <div className="text-center">
+          <InternalLinkKeyword href="/photos">More photos</InternalLinkKeyword>
+        </div>
       </Section>
     </div>
   );

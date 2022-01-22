@@ -2,10 +2,7 @@ import React from "react";
 
 import { Button } from "@/components/lib/Button";
 
-/* <style type="text/css">
-	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
-</style> */
-
+// TODO: clear form on submit
 export const EmailSignupForm: React.FC = () => (
   <>
     <link
@@ -41,7 +38,6 @@ export const EmailSignupForm: React.FC = () => (
               type="text"
               name="b_2134a0af05eba7f3e00f40ccd_2034d8cd9e"
               tabIndex={-1}
-              value=""
             />
           </div>
           <div className="ml-2">

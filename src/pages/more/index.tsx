@@ -28,9 +28,9 @@ const MoreElement: React.FC<{
     </Keyword>
   );
   return (
-    <p className="flex pt-8 text-2xl">
+    <div className="flex pt-8 text-2xl">
       {keywordStyled} {tagline}
-    </p>
+    </div>
   );
 };
 MoreElement.defaultProps = {

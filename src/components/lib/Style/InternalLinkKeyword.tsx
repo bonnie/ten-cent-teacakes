@@ -1,7 +1,11 @@
 import Link from "next/link";
 import React from "react";
 
-import { styleComponentDefaultProps, StyleComponentProps } from ".";
+import {
+  mergeClasses,
+  styleComponentDefaultProps,
+  StyleComponentProps,
+} from ".";
 import { Keyword } from "./Keyword";
 
 type LinkKeywordProps = StyleComponentProps & {
@@ -15,9 +19,9 @@ export const InternalLinkKeyword: React.FC<LinkKeywordProps> = ({
 }) => {
   const baseClasses = ["hover:text-aqua-500", "hover:cursor-pointer"];
   return (
-    <Link href={href}>
-      <Keyword className={baseClasses}>{children}</Keyword>
-    </Link>
+    <Keyword className={mergeClasses(baseClasses, className)}>
+      <Link href={href}>{children}</Link>
+    </Keyword>
   );
 };
 
