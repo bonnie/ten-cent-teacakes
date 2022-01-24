@@ -18,6 +18,7 @@ const LogoutButton: React.FC = () => {
   if (!user) return <></>;
 
   return (
+    // eslint-disable-next-line @next/next/no-html-link-for-pages
     <a href="/api/auth/logout">
       <Button round>
         <RiLogoutCircleRLine />
@@ -60,7 +61,7 @@ export const Navbar: React.FC = () => {
         "font-normal",
       ])}
     >
-      <Link href="/">
+      <Link href="/" passHref>
         <button
           type="button"
           className={tw([

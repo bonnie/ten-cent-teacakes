@@ -1,6 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
-  "extends": ["airbnb", "prettier"],
+  "extends": ["airbnb", "prettier", "next"],
   "plugins": [
     "testing-library",
     "jest-dom",

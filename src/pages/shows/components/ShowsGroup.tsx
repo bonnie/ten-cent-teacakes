@@ -1,7 +1,7 @@
 import React from "react";
-import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
+import { InternalLinkKeyword } from "@/components/lib/Style/InternalLinkKeyword";
 import { ShowWithVenue } from "@/lib/shows/types";
 
 import { Show } from "./Show";
@@ -33,16 +33,9 @@ export const ShowsGroup: React.FC<ShowsProps> = ({
           <p>No {title.toLowerCase()} just now</p>
           <p>
             To keep informed about new shows,{" "}
-            <a
-              className={tw([
-                "text-aqua-700",
-                "hover:text-aqua-500",
-                "font-bold",
-              ])}
-              href="/more"
-            >
+            <InternalLinkKeyword href="/more">
               join our mailing list!
-            </a>
+            </InternalLinkKeyword>
           </p>
         </div>
       ) : (

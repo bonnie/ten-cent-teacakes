@@ -10,7 +10,7 @@ export const NavLink: React.FC<NavLinkProps> = ({
   pageName,
   setInactive,
 }) => (
-  <Link href={href}>
+  <Link href={href} passHref>
     <button
       type="button"
       onClick={setInactive}

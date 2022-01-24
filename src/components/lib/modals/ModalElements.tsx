@@ -52,7 +52,7 @@ export const ModalContainer: React.FC<{ title: string }> = ({
               "p-5",
               "border-b",
               "border-solid",
-              "border-blueGray-200",
+              "border-aqua-200",
               "rounded-t",
             ])}
           >
@@ -81,7 +81,7 @@ export const ModalFooter: React.FC = ({ children }) => (
       "p-6",
       "border-t",
       "border-solid",
-      "border-blueGray-200",
+      "border-aqua-200",
       "rounded-b",
     ])}
   >

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 // adapted from https://auth0.com/blog/ultimate-guide-nextjs-authentication-auth0/
 
 import { useUser } from "@auth0/nextjs-auth0";

@@ -1,0 +1,40 @@
+# https://hub.docker.com/r/library/node/tags/
+image: node:latest
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == 'main'
+
+stages:
+  - install
+  - test
+  - build
+
+# http://docs.gitlab.com/ee/ci/yaml/README.html#cache
+cache:
+  paths:
+    - node_modules/
+
+install:
+  stage: install
+  script:
+    - npm install
+
+lint:
+  stage: test
+  script:
+    - npm install
+    - npm run lint
+
+test:
+  stage: test
+  script:
+    - npm install
+    - npm run test
+
+build:
+  stage: build
+  script:
+    - npm install
+    - npm run build
