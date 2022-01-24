@@ -11,7 +11,7 @@ import { EditInstruments } from "./components/instruments/EditInstruments";
 import { MusicianCard } from "./components/MusicianCard";
 import { useMusicians } from "./hooks/useMusicians";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery(
