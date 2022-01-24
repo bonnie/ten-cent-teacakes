@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -92,7 +91,7 @@ const Photo: React.FC = () => {
             "border-black",
             "border-solid",
             "border-8",
-            "max-h-full",
+            "h-full",
             "w-auto",
             "mx-auto",
           ])}
