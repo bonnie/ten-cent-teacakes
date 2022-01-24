@@ -7,6 +7,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
+import { InternalLinkKeyword } from "@/components/lib/Style/InternalLinkKeyword";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { getPhotoDate } from "@/lib/photos";
 
@@ -64,7 +65,7 @@ const Photo: React.FC = () => {
         "grid-rows-6",
         "lg:grid-rows-8",
         "place-items-center",
-        "w-100",
+        "w-full",
         "mx-0",
       ])}
     >
@@ -101,6 +102,9 @@ const Photo: React.FC = () => {
           <p className="text-lg text-center">Photo by {photo.photographer}</p>
         ) : null}
       </div>
+      <InternalLinkKeyword href="/photos" className={tw(["mt-3"])}>
+        Back to photos
+      </InternalLinkKeyword>
     </div>
   ) : null;
 

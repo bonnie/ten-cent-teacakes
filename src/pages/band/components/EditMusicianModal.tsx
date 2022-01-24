@@ -19,6 +19,7 @@ const commonFormFields = (
     <TextInput name="firstName" label="First name" required />
     <TextInput name="lastName" label="Last name" required />
     <TextArea name="bio" label="Bio" required />
+    {/* TODO add instrument when new instrument is added (not simple) */}
     <InstrumentMultiSelect />
   </>
 );

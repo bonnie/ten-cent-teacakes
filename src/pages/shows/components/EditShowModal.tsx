@@ -34,7 +34,7 @@ const EditShowForm: React.FC<{
     <form onSubmit={props.handleSubmit}>
       <TextInput name="performDate" label="Performance date" type="date" />
       <TextInput name="performTime" label="Performance time" type="time" />
-      {/* TODO update selected show when new show is added */}
+      {/* TODO update selected show when new show is added (not simple) */}
       <EditableShowVenue />
       <TextInput
         name="url"
