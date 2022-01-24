@@ -1,6 +1,7 @@
 import React from "react";
 import { IconType } from "react-icons";
 import { AiFillTwitterCircle, AiFillYoutube } from "react-icons/ai";
+import { tw } from "twind";
 
 type SocialLinkProps = {
   Icon: IconType;
@@ -9,7 +10,7 @@ type SocialLinkProps = {
 };
 
 const SocialLink: React.FC<SocialLinkProps> = ({ Icon, target, label }) => (
-  <div className="rounded-lg hover:text-aqua-700 min-h-full">
+  <div className={tw(["rounded-lg", "hover:text-aqua-700", "min-h-full"])}>
     <a
       href={target}
       key={label}

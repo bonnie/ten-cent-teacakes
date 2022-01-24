@@ -1,4 +1,5 @@
 import React from "react";
+import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { ShowWithVenue } from "@/lib/shows/types";
@@ -33,7 +34,11 @@ export const ShowsGroup: React.FC<ShowsProps> = ({
           <p>
             To keep informed about new shows,{" "}
             <a
-              className="text-aqua-700 hover:text-aqua-500 font-bold"
+              className={tw([
+                "text-aqua-700",
+                "hover:text-aqua-500",
+                "font-bold",
+              ])}
               href="/more"
             >
               join our mailing list!

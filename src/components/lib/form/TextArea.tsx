@@ -2,6 +2,7 @@
 
 import { useField } from "formik";
 import React from "react";
+import { tw } from "twind";
 
 import { FieldContainer } from "./FieldContainer";
 
@@ -31,7 +32,16 @@ export const TextArea: React.FC<TextAreaProps> = ({
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...field}
           id={name}
-          className="focus:ring-aqua-500 focus:border-aqua-500 flex-1 block w-full rounded-none rounded-r-md border-gray-300"
+          className={tw([
+            "focus:ring-aqua-500",
+            "focus:border-aqua-500",
+            "flex-1",
+            "block",
+            "w-full",
+            "rounded-none",
+            "rounded-r-md",
+            "border-gray-300",
+          ])}
           placeholder={placeholderText}
         />
       </div>

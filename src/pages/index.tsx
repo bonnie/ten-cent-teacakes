@@ -2,6 +2,7 @@ import { useUser } from "@auth0/nextjs-auth0";
 import Head from "next/head";
 import Image from "next/image";
 import React from "react";
+import { tw } from "twind";
 
 import { InternalLinkKeyword } from "@/components/lib/Style/InternalLinkKeyword";
 import { Section } from "@/components/lib/Style/Section";
@@ -36,7 +37,7 @@ export default function Home() {
           blurDataURL="/logo/logo-shadow-blur.png"
         />
       </div>
-      <p className="font-body text-2xl">
+      <p className={tw(["text-2xl"])}>
         Eclectic string band music and cheap baked goods
       </p>
       <Section className="flex flex-col items-center">

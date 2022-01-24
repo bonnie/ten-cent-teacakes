@@ -9,6 +9,7 @@ import Document, {
   Main,
   NextScript,
 } from "next/document";
+import { tw } from "twind";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -33,7 +34,7 @@ class MyDocument extends Document {
           />
           <link href="http://fonts.cdnfonts.com/css/delfina" rel="stylesheet" />
         </Head>
-        <body className="bg-aqua-100">
+        <body className={tw(["bg-aqua-100"])}>
           <Main />
           <NextScript />
         </body>
