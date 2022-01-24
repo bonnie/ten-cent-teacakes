@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import dayjs from "dayjs";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -30,7 +31,9 @@ const AdvanceButton: React.FC<{
   >
     {linkIndex ? (
       <Link href={`/photos/${linkIndex}`}>
-        <Icon size={25} />
+        <a>
+          <Icon size={25} />
+        </a>
       </Link>
     ) : null}
   </button>
@@ -41,7 +44,7 @@ const Photo: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
   const photoId = Number(id);
-  const { photo } = usePhoto({ photoId });
+  const { photo } = usePhoto({ photoId, routerIsReady: router.isReady });
   const { nextAndPrevIndexes } = usePhotos();
 
   if (Number.isNaN(photoId)) {

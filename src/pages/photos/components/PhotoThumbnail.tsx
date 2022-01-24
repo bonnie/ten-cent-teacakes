@@ -1,5 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import dayjs from "dayjs";
-// TODO: optimize image before loading
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -19,20 +19,22 @@ export const PhotoThumbnail: React.FC<{
   return (
     <div className={tw(["m-5", "flex", "flex-col", "items-center"])}>
       <Link href={`/photos/${photo.id}`}>
-        <Image
-          className={tw([
-            "border-solid",
-            "border-4",
-            "border-black",
-            "object-contain",
-            "hover:border-aqua-600",
-            "hover:cursor-pointer",
-          ])}
-          src={photo.imagePath}
-          alt={photo.description ?? "Ten-cent Teacakes"}
-          width={240}
-          height={240}
-        />
+        <a>
+          <Image
+            className={tw([
+              "border-solid",
+              "border-4",
+              "border-black",
+              "object-contain",
+              "hover:border-aqua-600",
+              "hover:cursor-pointer",
+            ])}
+            src={photo.imagePath}
+            alt={photo.description ?? "Ten-cent Teacakes"}
+            width={240}
+            height={240}
+          />
+        </a>
       </Link>
       <p className="text-center text-md">
         {dayjs(photoDate).format("MMM DD, YYYY")}

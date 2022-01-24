@@ -1,8 +1,5 @@
-// TODO:
-// warn - The `purge`/`content` options have changed in Tailwind CSS v3.0.
-// warn - Update your configuration file to eliminate this warning.
 module.exports = {
-  purge: [
+  content: [
     "./src/pages/**/*.{js,ts,jsx,tsx}",
     "./src/components/**/*.{js,ts,jsx,tsx}",
   ],
