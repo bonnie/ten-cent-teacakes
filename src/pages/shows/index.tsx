@@ -11,7 +11,7 @@ import { ShowsGroup } from "./components/ShowsGroup";
 import { EditVenues } from "./components/venues/EditVenues";
 import { useShows } from "./hooks/useShows";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(queryKeys.shows, fetchShows);
   // console.log(dehydrate(queryClient));
