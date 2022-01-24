@@ -2,6 +2,7 @@
 
 import { useField } from "formik";
 import React from "react";
+import { tw } from "twind";
 
 import { FieldContainer } from "./FieldContainer";
 
@@ -32,7 +33,18 @@ export const TextInput: React.FC<TextInputProps> = ({
     >
       <div className="mt-1 flex rounded-md shadow-sm">
         {prefix ? (
-          <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500">
+          <span
+            className={tw([
+              "inline-flex",
+              "items-center",
+              "px-3",
+              "rounded-l-md",
+              "border",
+              "border-r-0",
+              "border-gray-300",
+              "bg-gray-50 text-gray-500",
+            ])}
+          >
             {prefix}
           </span>
         ) : null}
@@ -41,7 +53,16 @@ export const TextInput: React.FC<TextInputProps> = ({
           {...field}
           type={type}
           id={name}
-          className="focus:ring-aqua-500 focus:border-aqua-500 flex-1 block w-full rounded-none rounded-r-md border-gray-300"
+          className={tw([
+            "focus:ring-aqua-500",
+            "focus:border-aqua-500",
+            "flex-1",
+            "block",
+            "w-full",
+            "rounded-none",
+            "rounded-r-md",
+            "border-gray-300",
+          ])}
           placeholder={placeholderText}
         />
       </div>
