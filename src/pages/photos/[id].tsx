@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -85,7 +86,7 @@ const Photo: React.FC = () => {
         </div>
         <AdvanceButton Icon={FaArrowRight} linkIndex={nextIndex} />
       </div>
-      <div className={tw(["row-span-5", "lg:row-span-7", "h-full"])}>
+      <div className={tw(["row-span-5", "lg:row-span-7", "h-full", "mb-3"])}>
         <img
           className={tw([
             "border-black",
@@ -102,7 +103,7 @@ const Photo: React.FC = () => {
           <p className="text-lg text-center">Photo by {photo.photographer}</p>
         ) : null}
       </div>
-      <InternalLinkKeyword href="/photos" className={tw(["mt-3"])}>
+      <InternalLinkKeyword href="/photos" className="mt-5">
         Back to photos
       </InternalLinkKeyword>
     </div>
