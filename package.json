@@ -8,7 +8,8 @@
     "test": "jest --watch",
     "test:ci": "jest --ci",
     "prisma:migrate": "npx prisma migrate dev --name init --schema src/prisma/schema.prisma",
-    "postbuild": "next-on-netlify"
+    "postbuild": "next-on-netlify",
+    "ts-check": "tsc --noEmit"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.6.1",

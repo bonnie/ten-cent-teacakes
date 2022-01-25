@@ -7,7 +7,8 @@ const { withSentryConfig } = require("@sentry/nextjs");
 
 const moduleExports = {
   // https://thedaviddias.dev/blog/how-to-deploy-your-nextjs-app-on-netlify-using-github-actions/#set-nextjs-target-to-serverless
-  target: "serverless",
+  // commented due to https://nextjs.org/docs/messages/deprecated-target-config
+  // target: "serverless",
 };
 
 const sentryWebpackPluginOptions = {
