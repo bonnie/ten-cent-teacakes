@@ -7,7 +7,7 @@
     "start": "next start",
     "test": "jest --watch",
     "test:ci": "jest --ci",
-    "prisma:migrate": "npx prisma migrate dev --name init --schema src/prisma/schema.prisma",
+    "prisma:migrate": "npx prisma migrate dev --name init",
     "postbuild": "next-on-netlify",
     "ts-check": "tsc --noEmit"
   },
@@ -70,6 +70,7 @@
     "typescript-eslint": "^0.0.1-alpha.0"
   },
   "prisma": {
-    "seed": "ts-node --project ./node.tsconfig.json src/prisma/seed.ts"
+    "seed": "ts-node --project ./node.tsconfig.json src/prisma/seed.ts",
+    "schema": "./src/prisma/schema.prisma"
   }
 }
