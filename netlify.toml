@@ -1,0 +1,5 @@
+# https://thedaviddias.dev/blog/how-to-deploy-your-nextjs-app-on-netlify-using-github-actions/#configure-netlify
+[build]
+  command   = ""
+  functions = "out_functions"
+  publish   = "out_publish"

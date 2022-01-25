@@ -9,3 +9,9 @@ node_modules
 public/uploads
 # Sentry
 .sentryclirc
+
+# Local Netlify folder
+.netlify
+
+# Netlify build
+out_*

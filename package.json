@@ -7,13 +7,14 @@
     "start": "next start",
     "test": "jest --watch",
     "test:ci": "jest --ci",
-    "prisma:migrate": "npx prisma migrate dev --name init --schema src/prisma/schema.prisma"
+    "prisma:migrate": "npx prisma migrate dev --name init --schema src/prisma/schema.prisma",
+    "postbuild": "next-on-netlify"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.6.1",
     "@prisma/client": "^3.2.0",
     "@sentry/browser": "^6.16.1",
-    "@sentry/nextjs": "^6.16.1",
+    "@sentry/nextjs": "^6.17.2",
     "@tailwindcss/forms": "^0.4.0",
     "@twind/next": "^1.0.9",
     "axios": "^0.22.0",
@@ -22,7 +23,7 @@
     "formik": "^2.2.9",
     "msw": "^0.36.4",
     "multer": "^1.4.4",
-    "next": "^12.0.7",
+    "next": "^12.0.8",
     "next-connect": "^0.11.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -57,6 +58,7 @@
     "eslint-plugin-testing-library": "^4.12.4",
     "identity-obj-proxy": "3.0.0",
     "jest": "27.0.6",
+    "next-on-netlify": "^3.0.1",
     "postcss": "^8.2.15",
     "prettier": "^2.4.0",
     "prisma": "^3.7.0",
