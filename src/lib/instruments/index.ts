@@ -6,7 +6,6 @@ import { axiosInstance } from "../axios/axiosInstance";
 import { routes } from "../axios/constants";
 import {
   InstrumentPatchArgs,
-  InstrumentPatchData,
   InstrumentPutData,
   InstrumentResponse,
   InstrumentWithMusicianCount,
