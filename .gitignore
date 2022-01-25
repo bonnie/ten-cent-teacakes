@@ -9,3 +9,5 @@ node_modules
 public/uploads
 # Sentry
 .sentryclirc
+
+.vercel
