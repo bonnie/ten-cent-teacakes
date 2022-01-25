@@ -12,7 +12,7 @@ jobs:
   test-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Check out code
         uses: actions/checkout@v2
 
       # Cache node modules and next folder
@@ -30,7 +30,7 @@ jobs:
           node-version: 14.x
 
       # from https://awesome.red-badger.com//ruiramos/nextjs-deployment-on-netify-wth-github-actions
-      - name: Setup deployment
+      - name: Set up deployment
         uses: bobheadxi/deployments@v0.6.0
         id: deployment
         with:
@@ -64,6 +64,7 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         with:
           args: deploy -m 'v${{ steps.package-version.outputs.current-version}} ・ ${{ github.head_ref }}'
 
