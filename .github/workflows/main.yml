@@ -5,7 +5,8 @@ name: Main workflow
 on:
   pull_request:
     branches:
-      - main
+      # - main -- disble for now
+      - none
     types: [opened, synchronize, reopened]
 
 jobs:
