@@ -2,9 +2,6 @@
 
 // import Shows from "..";
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { test } from "@jest/globals";
-
 test("hydrates on load", async () => {
   // render(<Shows />, { renderOptions: { hydrate: true } });
   // find all the show dates; from msw, there are two expected

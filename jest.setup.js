@@ -5,8 +5,10 @@
 // Learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom/extend-expect";
 
-import { server } from "./src/__mocks__/msw/server";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { describe, expect, test } from "@jest/globals";
 
+import { server } from "./src/__mocks__/msw/server";
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
 
