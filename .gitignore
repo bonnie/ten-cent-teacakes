@@ -15,6 +15,7 @@ public/uploads
 
 # Netlify build
 out_*
+out
 
 # ts checks
 tsconfig.tsbuildinfo

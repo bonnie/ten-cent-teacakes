@@ -20,8 +20,10 @@ const moduleExports = {
       module: false,
       crypto: require.resolve("crypto-browserify"),
     };
-
     return config;
+  },
+  images: {
+    disableStaticImages: true,
   },
 };
 
