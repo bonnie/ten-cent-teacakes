@@ -38,8 +38,8 @@ To save time for CI and not bother to commit if lint / ts checks fail.
 
 Since anything pushed / merged to `main` will be live right away, enact these restrictions
 
-1. Make a GitHub branch protection rule for `main` that you can't push directly.
-1. Make a GitHub branch protection rule for `main` that uses CircleCI checks as requirement to merge
+1. Make a GitHub branch protection rule for `main` that you can't push directly ("Require a pull request before merging").
+1. Make a GitHub branch protection rule for `main` that uses CircleCI and Vercel checks as requirement to merge ("Require status checks to pass before merging")
    Reference: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule
 
 ## Run Jest Tests
