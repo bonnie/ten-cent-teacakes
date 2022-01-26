@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  heroku: circleci/heroku@1.2.6
+  heroku: circleci/node@5.0.0
 
 workflows:
   version: 2
@@ -82,7 +82,7 @@ jobs:
             - node_modules
       - run:
           name: tests
-          command: npm run test
+          command: npm run test:ci
 #
 #
 # TODO: get build URL from vercel to use as client for cypress tests
