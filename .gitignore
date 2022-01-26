@@ -7,15 +7,11 @@ node_modules
 .DS_Store
 
 public/uploads
+
 # Sentry
 .sentryclirc
 
-# Local Netlify folder
-.netlify
-
-# Netlify build
-out_*
-out
-
 # ts checks
 tsconfig.tsbuildinfo
+
+.vercel
