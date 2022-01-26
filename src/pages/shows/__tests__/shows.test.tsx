@@ -1,6 +1,7 @@
-// import { render, screen } from "@/test-utils";
+/* eslint-disable no-unused-vars */
+import { render, screen } from "@/test-utils";
 
-// import Shows from "..";
+import Shows from "..";
 
 test("hydrates on load", async () => {
   // render(<Shows />, { renderOptions: { hydrate: true } });
