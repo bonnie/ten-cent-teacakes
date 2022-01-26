@@ -41,7 +41,7 @@ const generateQueryClient = () => new QueryClient({ defaultOptions });
 
 function render(
   ui: React.ReactElement,
-  { testQueryClient, ...renderOptions }: CustomRenderOptions,
+  { testQueryClient, ...renderOptions }: CustomRenderOptions = {},
 ): RenderResult {
   function Wrapper({ children }: { children?: ReactNode }): ReactElement {
     const queryClient = testQueryClient ?? generateQueryClient();
