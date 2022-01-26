@@ -22,6 +22,13 @@ To save time for CI and not bother to commit if lint / ts checks fail.
 1. `mv .env.local_template .env.local`
 1. Populate variables according to comments
 
+### Vercel
+
+1. Run `npx vercel link`
+1. Follow instructions to specify the linked project.
+
+### Circle CI
+
 ## Run Jest Tests
 
 ```bash
