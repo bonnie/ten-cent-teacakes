@@ -24,10 +24,23 @@ To save time for CI and not bother to commit if lint / ts checks fail.
 
 ### Vercel
 
+1. Create a new project in Vercel and link GitHub repo (https://vercel.com/docs/concepts/git#deploying-a-git-repository)
 1. Run `npx vercel link`
 1. Follow instructions to specify the linked project.
 
 ### Circle CI
+
+1. Create `.circle-ci/config.yml` file
+1. Create a new CircleCI project associated with this repository
+1. Enable GitHub checks (https://circleci.com/docs/2.0/enable-checks/)
+
+### `main` branch restrictions
+
+Since anything pushed / merged to `main` will be live right away, enact these restrictions
+
+1. Make a GitHub branch protection rule for `main` that you can't push directly.
+1. Make a GitHub branch protection rule for `main` that uses CircleCI checks as requirement to merge
+   Reference: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule
 
 ## Run Jest Tests
 
