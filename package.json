@@ -1,15 +1,16 @@
 {
   "private": true,
   "scripts": {
-    "dev": "source .env.local && next dev",
-    "lint": "next lint --fix --max-warnings 1",
     "build": "next build",
-    "start": "next start",
-    "test": "jest --watch",
-    "test:ci": "jest --ci",
-    "prisma:migrate:dev": "npx prisma migrate dev --name init",
+    "dev": "source .env.local && next dev",
+    "export": "next export",
+    "lint": "next lint --fix --max-warnings 1",
     "prisma:migrate:deploy": "npx prisma migrate deploy",
+    "prisma:migrate:dev": "npx prisma migrate dev --name init",
     "prisma:seed": "npx prisma db seed",
+    "start": "next start",
+    "test:ci": "jest --ci",
+    "test": "jest --watch",
     "ts-check": "tsc --noEmit"
   },
   "dependencies": {

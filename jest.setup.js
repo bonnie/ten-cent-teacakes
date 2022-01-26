@@ -10,8 +10,6 @@ import { describe, expect, test } from "@jest/globals";
 
 import { server } from "./src/__mocks__/msw/server";
 
-// eslint-disable-next-line no-console
-console.log("************* Running Jest Setup **************");
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
 

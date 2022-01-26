@@ -1,7 +1,8 @@
 # https://awesome.red-badger.com//ruiramos/nextjs-deployment-on-netify-wth-github-actions
+# https://answers.netlify.com/t/deployment-of-nextjs-website-page-not-found/28870
 [build]
-  command = "npm run build"
-  publish = ".next"
+    command = "npm run build && npm run export"
+    publish = "out"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
