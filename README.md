@@ -4,6 +4,12 @@
 
 ## Set up Developer Environment
 
+### Git Pre-commit
+
+To save time for CI and not bother to commit if lint / ts checks fail.
+
+`cp git-pre-commit .git/hooks/`
+
 ### Prisma and SQL db
 
 1. Create a SQL (PostgreSQL, MySQL etc) db for the project

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Redirect output to stderr.
+exec 1>&2
+
+echo "---------> 🧹 Running lint pre-commit check"
+npm run lint || {
+  # exited with nonzero code
+  echo "‼️  Linting failed, not committing ‼️"
+  exit 1
+}
+
+echo "---------> 💅 Running ts pre-commit check"
+npm run ts-check || {
+  # exited with nonzero code
+  echo "‼️  TS checks failed, not committing ‼️"
+  exit 1
+}
+
+echo "✨ no issues found! ✨"
