@@ -1,7 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 // Optional: configure or set up a testing framework before each test.
 // If you delete this file, remove `setupFilesAfterEnv` from `jest.config.js`
-
 // Used for __tests__/testing-library.js
 // Learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom/extend-expect";
@@ -10,6 +9,9 @@ import "@testing-library/jest-dom/extend-expect";
 import { describe, expect, test } from "@jest/globals";
 
 import { server } from "./src/__mocks__/msw/server";
+
+// eslint-disable-next-line no-console
+console.log("************* Running Jest Setup **************");
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
 
