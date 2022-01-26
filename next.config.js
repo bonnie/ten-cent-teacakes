@@ -18,6 +18,7 @@ const moduleExports = {
       constants: false,
       path: false,
       module: false,
+      process: false,
       crypto: require.resolve("crypto-browserify"),
     };
     return config;
