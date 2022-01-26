@@ -4,12 +4,11 @@ import { dehydrate, QueryClient } from "react-query";
 import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { fetchMusiciansWithInstruments } from "@/lib/musicians";
+import { AddMusicianModal } from "@/lib/musicians/components/EditMusicianModal";
+import { EditInstruments } from "@/lib/musicians/components/instruments/EditInstruments";
+import { MusicianCard } from "@/lib/musicians/components/MusicianCard";
+import { useMusicians } from "@/lib/musicians/hooks/useMusicians";
 import { queryKeys } from "@/lib/react-query/query-keys";
-
-import { AddMusicianModal } from "./components/EditMusicianModal";
-import { EditInstruments } from "./components/instruments/EditInstruments";
-import { MusicianCard } from "./components/MusicianCard";
-import { useMusicians } from "./hooks/useMusicians";
 
 export async function getServerSideProps() {
   const queryClient = new QueryClient();

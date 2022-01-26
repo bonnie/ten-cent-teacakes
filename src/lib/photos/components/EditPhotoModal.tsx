@@ -11,7 +11,7 @@ import {
   PhotoPatchData,
   PhotoWithShowAndVenue,
 } from "@/lib/photos/types";
-import { EditableShow } from "@/pages/shows/components/EditableShow";
+import { EditableShow } from "@/lib/shows/components/EditableShow";
 
 import { usePhotos } from "../hooks/usePhotos";
 

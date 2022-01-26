@@ -9,6 +9,27 @@ const moduleExports = {
   // https://thedaviddias.dev/blog/how-to-deploy-your-nextjs-app-on-netlify-using-github-actions/#set-nextjs-target-to-serverless
   // commented due to https://nextjs.org/docs/messages/deprecated-target-config
   // target: "serverless",
+
+  // https://www.npmjs.com/package/next-on-netlify
+  target: "experimental-serverless-trace",
+
+  // from https://stackoverflow.com/a/68098547
+  webpack5: true,
+  webpack: (config) => {
+    // eslint-disable-next-line no-param-reassign
+    config.resolve.fallback = {
+      fs: false,
+      util: false,
+      assert: false,
+      stream: false,
+      constants: false,
+      path: false,
+      module: false,
+      crypto: require.resolve("crypto-browserify"),
+    };
+
+    return config;
+  },
 };
 
 const sentryWebpackPluginOptions = {

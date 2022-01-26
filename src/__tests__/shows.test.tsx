@@ -1,10 +1,8 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { test } from "@jest/globals";
+// import { test } from "@jest/globals";
 import { axe, toHaveNoViolations } from "jest-axe";
 
+import Shows from "@/pages/shows";
 import { render, screen } from "@/test-utils";
-
-import Shows from "..";
 
 expect.extend(toHaveNoViolations);
 

@@ -6,11 +6,11 @@ import { PhotoUpload } from "@/components/lib/form/PhotoUpload";
 import { TextArea } from "@/components/lib/form/TextArea";
 import { TextInput } from "@/components/lib/form/TextInput";
 import { EditItemModal } from "@/components/lib/modals/EditItemModal";
+import { InstrumentMultiSelect } from "@/lib/musicians/components/instruments/InstrumentMultiSelect";
 import {
   MusicianFormData,
   MusicianWithInstruments,
 } from "@/lib/musicians/types";
-import { InstrumentMultiSelect } from "@/pages/band/components/instruments/InstrumentMultiSelect";
 
 import { useMusicians } from "../hooks/useMusicians";
 

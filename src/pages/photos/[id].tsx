@@ -12,11 +12,10 @@ import { Heading } from "@/components/lib/Style/Heading";
 import { InternalLinkKeyword } from "@/components/lib/Style/InternalLinkKeyword";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { getPhotoDate } from "@/lib/photos";
-
-import { DeletePhotoModal } from "./components/DeletePhotoModal";
-import { EditPhotoModal } from "./components/EditPhotoModal";
-import { usePhoto } from "./hooks/usePhoto";
-import { usePhotos } from "./hooks/usePhotos";
+import { DeletePhotoModal } from "@/lib/photos/components/DeletePhotoModal";
+import { EditPhotoModal } from "@/lib/photos/components/EditPhotoModal";
+import { usePhoto } from "@/lib/photos/hooks/usePhoto";
+import { usePhotos } from "@/lib/photos/hooks/usePhotos";
 
 const AdvanceButton: React.FC<{
   Icon: IconType;

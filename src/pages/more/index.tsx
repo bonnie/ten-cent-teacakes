@@ -7,8 +7,7 @@ import { tw } from "twind";
 import { Heading } from "@/components/lib/Style/Heading";
 import { Keyword } from "@/components/lib/Style/Keyword";
 import { LinkKeyword } from "@/components/lib/Style/LinkKeyword";
-
-import { EmailSignupForm } from "./components/EmailSignupForm";
+import { EmailSignupForm } from "@/lib/more/components/EmailSignupForm";
 
 const placementClasses = ["flex", "items-center", "mr-1.5"];
 

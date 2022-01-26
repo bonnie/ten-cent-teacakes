@@ -7,10 +7,10 @@ import { tw } from "twind";
 import { InternalLinkKeyword } from "@/components/lib/Style/InternalLinkKeyword";
 import { Section } from "@/components/lib/Style/Section";
 import { validateUser } from "@/lib/auth/utils";
+import { Photos } from "@/lib/photos/components/Photos";
+import { ShowsGroup } from "@/lib/shows/components/ShowsGroup";
+import { useShows } from "@/lib/shows/hooks/useShows";
 import { EmailSignupWithLabel } from "@/pages/more";
-import { Photos } from "@/pages/photos/components/Photos";
-import { ShowsGroup } from "@/pages/shows/components/ShowsGroup";
-import { useShows } from "@/pages/shows/hooks/useShows";
 
 export default function Home() {
   const tenCentLogoAltText =

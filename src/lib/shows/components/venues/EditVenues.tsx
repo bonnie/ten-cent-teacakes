@@ -2,8 +2,8 @@ import React from "react";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { Section } from "@/components/lib/Style/Section";
+import { useVenues } from "@/lib/shows/hooks/useVenues";
 import { VenueWithShowCount } from "@/lib/venues/types";
-import { useVenues } from "@/pages/shows/hooks/useVenues";
 
 import { AddVenueModal } from "./EditVenueModal";
 import { Venue } from "./Venue";

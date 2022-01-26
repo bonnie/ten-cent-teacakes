@@ -5,11 +5,10 @@ import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { fetchShows } from "@/lib/shows";
-
-import { AddShowModal } from "./components/EditShowModal";
-import { ShowsGroup } from "./components/ShowsGroup";
-import { EditVenues } from "./components/venues/EditVenues";
-import { useShows } from "./hooks/useShows";
+import { AddShowModal } from "@/lib/shows/components/EditShowModal";
+import { ShowsGroup } from "@/lib/shows/components/ShowsGroup";
+import { EditVenues } from "@/lib/shows/components/venues/EditVenues";
+import { useShows } from "@/lib/shows/hooks/useShows";
 
 export async function getServerSideProps() {
   const queryClient = new QueryClient();

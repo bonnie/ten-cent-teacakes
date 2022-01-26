@@ -3,7 +3,7 @@ import { useField } from "formik";
 import React from "react";
 
 import { FieldContainer } from "@/components/lib/form/FieldContainer";
-import { useShows } from "@/pages/shows/hooks/useShows";
+import { useShows } from "@/lib/shows/hooks/useShows";
 
 export const EditableShow: React.FC<{ required: boolean }> = ({ required }) => {
   const { pastShows } = useShows();
