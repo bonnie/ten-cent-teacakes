@@ -30,8 +30,8 @@ To save time for CI and not bother to commit if lint / ts checks fail.
 
 ### Circle CI
 
-1. Create `.circle-ci/config.yml` file
-1. Create a new CircleCI project associated with this repository
+1. Create `.circleci/config.yml` file
+1. Create a new CircleCI project associated with this repository (https://circleci.com/docs/2.0/project-build/#adding-projects)
 1. Enable GitHub checks (https://circleci.com/docs/2.0/enable-checks/)
 
 ### `main` branch restrictions
