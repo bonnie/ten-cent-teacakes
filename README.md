@@ -17,6 +17,17 @@ To save time for CI and not bother to commit if lint / ts checks fail.
 1. Add the URL for your db to `.env`
 1. Run `npx prisma migrate dev --name init --schema src/prisma/schema.prisma` to add the tables from the prisma schema to your db
 
+#### Notes on Prisma and Supabase
+
+Reference: https://supabase.com/docs/guides/integrations/prisma
+
+- production _migration_
+
+  - DATABASE_URL="postgres://postgres:<password>@db.<db id>.supabase.co:5432/postgres"
+
+- production _use_
+  - DATABASE_URL="postgres://postgres:<password>@db.<db id>.supabase.co:6543/postgres?pgbouncer=true"
+
 ### Auth0
 
 1. `mv .env.local_template .env.local`
