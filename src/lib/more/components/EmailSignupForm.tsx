@@ -22,7 +22,7 @@ export const EmailSignupForm: React.FC = () => {
           method="post"
           id="mc-embedded-subscribe-form"
           name="mc-embedded-subscribe-form"
-          className={tw(["validate"])}
+          className="validate"
           target="_blank"
           noValidate
           ref={formEl}
@@ -34,7 +34,7 @@ export const EmailSignupForm: React.FC = () => {
             <input
               type="email"
               name="EMAIL"
-              className={tw(["email"])}
+              className="email"
               id="mce-EMAIL"
               placeholder="email address"
               required

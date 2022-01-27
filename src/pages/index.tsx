@@ -30,7 +30,7 @@ export default function Home() {
         "justify-start",
         "items-center",
         "w-full",
-        "h-100",
+        "h-full",
         "-mt-2",
         "mb-8",
       ])}
@@ -38,7 +38,7 @@ export default function Home() {
       <Head>
         <title>Ten-Cent Teacakes String Band</title>
       </Head>
-      <div className={tw(["width-725", "height-358"])}>
+      <div>
         <Image
           src="/logo/logo-shadow.png"
           width={725}
