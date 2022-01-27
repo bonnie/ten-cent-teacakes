@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import "tailwindcss/tailwind.css";
 import "@/styles/globals.css";
 
 import { UserProvider } from "@auth0/nextjs-auth0";

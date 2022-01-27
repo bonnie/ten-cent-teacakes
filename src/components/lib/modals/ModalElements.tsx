@@ -94,7 +94,7 @@ export const ModalCancelButton: React.FC<{
 }> = ({ setShowModal }) => {
   const classes = tw([
     "text-black",
-    "background-transparent",
+    "bg-transparent",
     "font-bold",
     "uppercase",
     "px-6",

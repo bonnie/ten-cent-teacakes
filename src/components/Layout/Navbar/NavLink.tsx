@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { tw } from "twind";
 
@@ -9,35 +10,43 @@ export const NavLink: React.FC<NavLinkProps> = ({
   href,
   pageName,
   setInactive,
-}) => (
-  <Link href={href} passHref>
-    <button
-      type="button"
-      onClick={setInactive}
-      className={tw([
-        "lg:inline-flex",
-        "lg:w-auto",
-        "w-full",
-        "text-3xl",
-        "px-3",
-        "py-2",
-        "text-aqua-300",
-        "rounded-lg",
-        "font-display",
-        "items-center",
-        "justify-center",
-        "hover:bg-aqua-700",
-        "focus:outline-none",
-      ])}
-    >
-      <Image
-        src={`/nav-banners/${pageName}-light.png`}
-        height={80}
-        width={180}
-        alt={`banner containing the word ${pageName}`}
-        placeholder="blur"
-        blurDataURL={`/nav-banners/${pageName}-light-blur.png`}
-      />
-    </button>
-  </Link>
-);
+}) => {
+  const { route } = useRouter();
+  return (
+    <Link href={href} passHref>
+      <button
+        type="button"
+        onClick={setInactive}
+        className={tw([
+          "md:inline-flex",
+          "md:w-auto",
+          "w-full",
+          "h-full",
+          "text-3xl",
+          "mx-1",
+          "px-3",
+          "text-aqua-300",
+          "rounded-lg",
+          "font-display",
+          "items-center",
+          "justify-center",
+          "hover:bg-aqua-700",
+          `${route === href ? "bg-aqua-700" : null}`,
+          "focus:outline-none",
+          "md:py-3",
+          "lg:py-5",
+        ])}
+      >
+        <Image
+          src={`/nav-banners/${pageName}-light.png`}
+          // TODO: height should increase as page width gets smaller
+          height={100}
+          width={240}
+          alt={`banner containing the word ${pageName}`}
+          placeholder="blur"
+          blurDataURL={`/nav-banners/${pageName}-light-blur.png`}
+        />
+      </button>
+    </Link>
+  );
+};

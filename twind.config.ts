@@ -15,6 +15,7 @@ const config = {
       red: colors.red,
       yellow: colors.yellow,
       blue: colors.blue,
+      transparent: "transparent",
     },
     fontFamily: {
       display: "Delfina",

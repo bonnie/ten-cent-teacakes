@@ -38,7 +38,7 @@ export const Navbar: React.FC = () => {
     "inline-flex",
     "p-3",
     "hover:bg-aqua-600",
-    "lg:hidden",
+    "md:hidden",
     "text-white",
     "ml-auto",
     "hover:text-white",
@@ -52,8 +52,8 @@ export const Navbar: React.FC = () => {
         "flex",
         "items-center",
         "flex-wrap",
-        "lg:flex-nowrap",
-        "lg:max-h-full",
+        "md:flex-nowrap",
+        "md:h-full",
         "bg-aqua-900",
         "p-3",
         "text-aqua-100",
@@ -103,23 +103,24 @@ export const Navbar: React.FC = () => {
         className={tw([
           active ? null : "hidden",
           "w-full",
-          "lg:inline-flex",
-          "lg:flex-grow",
-          "lg:w-auto",
-          "lg:items-center",
+          "md:inline-flex",
+          "md:flex-grow",
+          "md:w-auto",
+          "md:items-center",
         ])}
       >
         <div
           className={tw([
-            "lg:inline-flex",
-            "lg:flex-row",
-            "lg:w-auto",
+            "md:inline-flex",
+            "md:flex-row",
+            "md:flex-grow",
+            "md:w-auto",
             "w-full",
-            "lg:items-center",
+            "md:items-center",
             "items-start",
             "flex",
             "flex-col",
-            "lg:h-auto",
+            "md:h-auto",
           ])}
         >
           <NavLink
@@ -147,10 +148,10 @@ export const Navbar: React.FC = () => {
           className={tw([
             "flex",
             "items-center",
-            "lg:inline-flex",
-            "lg:flex-row",
-            "lg:w-full",
-            "lg:justify-end",
+            "md:inline-flex",
+            "md:flex-row",
+            "md:w-full",
+            "md:justify-end",
             "items-start",
             "flex",
             "flex-col",
