@@ -12,9 +12,12 @@ type WhitelistUser = UserProfile | undefined;
 type WhitelistUserReturn = { user: UserProfile | undefined };
 
 export const useWhitelistUser = (): WhitelistUserReturn => {
-  const { user: auth0User } = useUser();
+  const auth0 = useUser();
   const [user, setUser] = useState<WhitelistUser>();
   const { showToast } = useToast();
+
+  const auth0User = auth0.user;
+  console.log("*******AUTH0", auth0);
 
   useQuery(
     queryKeys.whitelist,
