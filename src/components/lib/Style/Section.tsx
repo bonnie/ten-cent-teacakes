@@ -1,10 +1,7 @@
 import React from "react";
+import { tw } from "twind";
 
-import {
-  StyleComponent,
-  styleComponentDefaultProps,
-  StyleComponentType,
-} from ".";
+import { mergeClasses, StyleComponentType } from ".";
 
 export const Section: StyleComponentType = ({ children, className = "" }) => {
   const baseClasses = [
@@ -15,10 +12,6 @@ export const Section: StyleComponentType = ({ children, className = "" }) => {
     "border-dotted",
   ];
   return (
-    <StyleComponent baseClasses={baseClasses} extraClasses={className}>
-      {children}
-    </StyleComponent>
+    <div className={tw(mergeClasses(baseClasses, className))}>{children}</div>
   );
 };
-
-Section.defaultProps = styleComponentDefaultProps;
