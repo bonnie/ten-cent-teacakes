@@ -1,4 +1,5 @@
 import React from "react";
+import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { Section } from "@/components/lib/Style/Section";
@@ -12,13 +13,13 @@ export const EditInstruments: React.FC = () => {
   const { instruments } = useInstruments();
 
   return (
-    <Section className="flex flex-col items-center">
+    <Section className={tw(["flex", "flex-col", "items-center"])}>
       <Heading>Instruments</Heading>
       <AddInstrumentModal />
       {instruments
         .sort((a, b) => (a.name > b.name ? 1 : -1))
         .map((instrument: InstrumentWithMusicianCount) => (
-          <div className="w-1/4 text-left" key={instrument.id}>
+          <div className={tw(["w-1/4", "text-left"])} key={instrument.id}>
             <EditInstrumentModal instrument={instrument} />
             <DeleteInstrumentModal instrument={instrument} />
             <span>{instrument.name}</span>

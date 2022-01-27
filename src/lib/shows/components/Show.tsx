@@ -21,7 +21,7 @@ export const Show: React.FC<{ show: ShowWithVenue }> = ({ show }) => {
       </div>
       <div className={tw(["order-first", "sm:ml-5", "sm:order-none"])}>
         {user ? (
-          <span className="sm:mr-2">
+          <span className={tw(["sm:mr-2"])}>
             <EditShowModal show={show} />
             <DeleteShowModal show={show} />
           </span>

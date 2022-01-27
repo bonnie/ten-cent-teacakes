@@ -1,4 +1,5 @@
 import React from "react";
+import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { Section } from "@/components/lib/Style/Section";
@@ -12,7 +13,7 @@ export const EditVenues: React.FC = () => {
   const { venues } = useVenues();
 
   return (
-    <Section className="text-center">
+    <Section className={tw(["text-center"])}>
       <Heading>Venues</Heading>
       <AddVenueModal />
       {venues

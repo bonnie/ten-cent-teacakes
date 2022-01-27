@@ -1,4 +1,5 @@
 import React from "react";
+import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
@@ -12,7 +13,7 @@ const PhotosPage: React.FC = () => {
     <>
       <Heading>Photos</Heading>
       {user ? (
-        <div className="text-center">
+        <div className={tw(["text-center"])}>
           <AddPhotoModal />
         </div>
       ) : null}

@@ -12,9 +12,11 @@ export const ShowDate: React.FC<{ performAt: Date }> = ({ performAt }) => (
       "items-baseline",
     ])}
   >
-    <div className="text-lg mr-2 sm:mr-0">
+    <div className={tw(["text-lg", "mr-2", "sm:mr-0"])}>
       {dayjs(performAt).format("MMM D, YYYY")}
     </div>
-    <div className="align-right">{dayjs(performAt).format("h:mm a")}</div>
+    <div className={tw(["align-right"])}>
+      {dayjs(performAt).format("h:mm a")}
+    </div>
   </div>
 );

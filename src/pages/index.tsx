@@ -23,11 +23,22 @@ export default function Home() {
     if (user && user.email) validateUser(user.email);
   }, [user]);
   return (
-    <div className="flex flex-col justify-start items-center w-full h-100 -mt-2 mb-8">
+    <div
+      className={tw([
+        "flex",
+        "flex-col",
+        "justify-start",
+        "items-center",
+        "w-full",
+        "h-100",
+        "-mt-2",
+        "mb-8",
+      ])}
+    >
       <Head>
         <title>Ten-Cent Teacakes String Band</title>
       </Head>
-      <div className="width-725 height-358">
+      <div className={tw(["width-725", "height-358"])}>
         <Image
           src="/logo/logo-shadow.png"
           width={725}
@@ -40,7 +51,7 @@ export default function Home() {
       <p className={tw(["text-2xl"])}>
         Eclectic string band music and cheap baked goods
       </p>
-      <Section className="flex flex-col items-center">
+      <Section className={tw(["flex flex-col items-center"])}>
         <EmailSignupWithLabel />
       </Section>
       {upcomingShows.length > 0 ? (
@@ -49,14 +60,14 @@ export default function Home() {
             title="Upcoming Shows"
             shows={upcomingShows.slice(0, 3)}
           />
-          <div className="text-center">
+          <div className={tw(["text-center"])}>
             <InternalLinkKeyword href="/shows">More shows</InternalLinkKeyword>
           </div>
         </Section>
       ) : null}
       <Section>
         <Photos count={3} />
-        <div className="text-center">
+        <div className={tw(["text-center"])}>
           <InternalLinkKeyword href="/photos">More photos</InternalLinkKeyword>
         </div>
       </Section>

@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useRef } from "react";
+import { tw } from "twind";
 
 import { Button } from "@/components/lib/Button";
 
@@ -21,19 +22,19 @@ export const EmailSignupForm: React.FC = () => {
           method="post"
           id="mc-embedded-subscribe-form"
           name="mc-embedded-subscribe-form"
-          className="validate"
+          className={tw(["validate"])}
           target="_blank"
           noValidate
           ref={formEl}
         >
           <div
-            className="flex flex-row items-center"
+            className={tw(["flex", "flex-row", "items-center"])}
             id="mc_embed_signup_scroll"
           >
             <input
               type="email"
               name="EMAIL"
-              className="email"
+              className={tw(["email"])}
               id="mce-EMAIL"
               placeholder="email address"
               required
@@ -49,7 +50,7 @@ export const EmailSignupForm: React.FC = () => {
                 tabIndex={-1}
               />
             </div>
-            <div className="ml-2">
+            <div className={tw(["ml-2"])}>
               <Button type="submit">Subscribe</Button>
             </div>
           </div>

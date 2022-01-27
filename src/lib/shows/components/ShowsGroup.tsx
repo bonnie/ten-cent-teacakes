@@ -1,4 +1,5 @@
 import React from "react";
+import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { InternalLinkKeyword } from "@/components/lib/Style/InternalLinkKeyword";
@@ -29,7 +30,7 @@ export const ShowsGroup: React.FC<ShowsProps> = ({
         </Heading>
       ) : null}
       {shows.length === 0 ? (
-        <div className="text-center text-xl">
+        <div className={tw(["text-center", "text-xl"])}>
           <p>No {title.toLowerCase()} just now</p>
           <p>
             To keep informed about new shows,{" "}

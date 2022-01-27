@@ -31,7 +31,7 @@ export const TextInput: React.FC<TextInputProps> = ({
       label={label}
       fieldName={name}
     >
-      <div className="mt-1 flex rounded-md shadow-sm">
+      <div className={tw(["mt-1", "flex", "rounded-md", "shadow-sm"])}>
         {prefix ? (
           <span
             className={tw([

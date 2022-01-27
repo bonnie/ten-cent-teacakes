@@ -36,11 +36,11 @@ export const PhotoThumbnail: React.FC<{
           />
         </a>
       </Link>
-      <p className="text-center text-md">
+      <p className={tw(["text-center", "text-md"])}>
         {dayjs(photoDate).format("MMM DD, YYYY")}
         {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
       </p>
-      <p className="text-sm">
+      <p className={tw(["text-sm"])}>
         {photo.photographer ? `taken by ${photo.photographer}` : <br />}
       </p>
       {user ? (

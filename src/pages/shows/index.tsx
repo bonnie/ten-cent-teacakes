@@ -1,5 +1,6 @@
 import React from "react";
 import { dehydrate, QueryClient } from "react-query";
+import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
@@ -29,7 +30,7 @@ const Shows: React.FC = () => {
     <>
       <Heading>Shows</Heading>
       {user ? (
-        <div className="text-center">
+        <div className={tw(["text-center"])}>
           <AddShowModal />
         </div>
       ) : null}
@@ -38,7 +39,7 @@ const Shows: React.FC = () => {
         shows={upcomingShows}
         showTitle={false}
       />
-      <div className="mt-10">
+      <div className={tw(["mt-10"])}>
         <ShowsGroup title="Past Shows" shows={pastShows} />
       </div>
       {user ? <EditVenues /> : null}

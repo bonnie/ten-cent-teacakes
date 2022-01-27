@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { tw } from "twind";
 
 import { Button } from "@/components/lib/Button";
 import { Popover } from "@/components/lib/Popover";
@@ -43,7 +44,7 @@ export const DeleteItemModal: React.FC<DeleteItemModalProps> = ({
       )}
       {showModal ? (
         <ModalContainer title={title}>
-          <div className="m-5">{description}</div>
+          <div className={tw(["m-5"])}>{description}</div>
           <ModalFooter>
             <ModalCancelButton setShowModal={setShowModal} />
             <Button

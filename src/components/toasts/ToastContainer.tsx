@@ -1,4 +1,6 @@
 // adapted from https://adamrichardson.dev/blog/custom-tailwind-toast-component
+import { tw } from "twind";
+
 import Toast from "./Toast";
 import { useToastStateContext } from "./ToastContext";
 
@@ -6,8 +8,8 @@ export function ToastContainer() {
   const { toasts } = useToastStateContext();
 
   return (
-    <div className="absolute bottom-10 w-full z-50">
-      <div className="max-w-xl mx-auto">
+    <div className={tw(["absolute", "bottom-10", "w-full", "z-50"])}>
+      <div className={tw(["max-w-xl", "mx-auto"])}>
         {toasts &&
           toasts.map((toast) => (
             <Toast

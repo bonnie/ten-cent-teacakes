@@ -1,5 +1,6 @@
 import React from "react";
 import { dehydrate, QueryClient } from "react-query";
+import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
@@ -30,14 +31,21 @@ const Musicians: React.FC = () => {
   const { user } = useWhitelistUser();
 
   return (
-    <div className="w-full">
+    <div className={tw(["w-full"])}>
       <Heading>The Band</Heading>
       {user ? (
-        <div className="text-center">
+        <div className={tw(["text-center"])}>
           <AddMusicianModal />
         </div>
       ) : null}
-      <div className="flex flex-wrap justify-center items-stretch mx-5">
+      <div
+        className={tw([
+          "flex",
+          "flex-wrap",
+          "justify-center",
+          "items-stretch mx-5",
+        ])}
+      >
         {musicians.map((musician) => (
           <MusicianCard key={musician.id} musician={musician} />
         ))}

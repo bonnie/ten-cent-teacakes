@@ -74,9 +74,16 @@ const Photo: React.FC = () => {
     >
       <div className={tw(["grid", "grid-cols-8", "w-full"])}>
         <AdvanceButton Icon={FaArrowLeft} linkIndex={prevIndex} />
-        <div className="col-span-6 flex justify-center items-center">
+        <div
+          className={tw([
+            "col-span-6",
+            "flex",
+            "justify-center",
+            "items-center",
+          ])}
+        >
           {user ? (
-            <div className="mr-5">
+            <div className={tw(["mr-5"])}>
               <EditPhotoModal photo={photo} />
               <DeletePhotoModal photo={photo} />
             </div>
@@ -102,10 +109,12 @@ const Photo: React.FC = () => {
           alt={photo.description ?? "Ten-Cent Teacakes"}
         />
         {photo.photographer ? (
-          <p className="text-lg text-center">Photo by {photo.photographer}</p>
+          <p className={tw(["text-lg", "text-center"])}>
+            Photo by {photo.photographer}
+          </p>
         ) : null}
       </div>
-      <InternalLinkKeyword href="/photos" className="mt-5">
+      <InternalLinkKeyword href="/photos" className={tw(["mt-5"])}>
         Back to photos
       </InternalLinkKeyword>
     </div>

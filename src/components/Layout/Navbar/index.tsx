@@ -85,7 +85,7 @@ export const Navbar: React.FC = () => {
       </Link>
       <button type="button" className={hamburgerClasses} onClick={handleClick}>
         <svg
-          className="w-6 h-6"
+          className={tw(["w-6", "h-6"])}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -159,7 +159,7 @@ export const Navbar: React.FC = () => {
           <SocialLinks />
         </div>
       </div>
-      <div className="self-center ml-4">
+      <div className={tw(["self-center", "ml-4"])}>
         <LogoutButton />
       </div>
     </nav>

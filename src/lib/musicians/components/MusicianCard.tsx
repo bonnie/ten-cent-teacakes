@@ -56,7 +56,7 @@ type MusicianProps = { musician: MusicianWithInstruments };
 export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
   const { user } = useWhitelistUser();
   return (
-    <div className="pt-12 m-4">
+    <div className={tw(["pt-12 m-4"])}>
       <div className={cardClasses}>
         <div>
           <div
@@ -85,7 +85,7 @@ export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
 
           <div className={tw(["text-4xl", "text-center"])}>
             {user ? (
-              <span className="mr-1">
+              <span className={tw(["mr-1"])}>
                 <EditMusicianModal musician={musician} />
                 <DeleteMusicianModal musician={musician} />
               </span>

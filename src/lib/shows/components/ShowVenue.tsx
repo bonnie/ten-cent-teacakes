@@ -3,6 +3,7 @@ import { Venue as VenueType } from ".prisma/client";
 
 import { useField } from "formik";
 import React from "react";
+import { tw } from "twind";
 
 import { FieldContainer } from "@/components/lib/form/FieldContainer";
 import { Keyword } from "@/components/lib/Style/Keyword";
@@ -15,12 +16,13 @@ export const DisplayShowVenue: React.FC<{
   venue: VenueType;
   rawUrl: string | null;
 }> = ({ venue, rawUrl }) => {
-  if (!rawUrl) return <Keyword className="text-xl">{venue.name}</Keyword>;
+  if (!rawUrl)
+    return <Keyword className={tw(["text-xl"])}>{venue.name}</Keyword>;
 
   const url = rawUrl.search(/^https?:\/\//) === 0 ? rawUrl : `http://${rawUrl}`;
   return (
     <span aria-label={venue.name} title={venue.name}>
-      <LinkKeyword href={url} className="text-xl">
+      <LinkKeyword href={url} className={tw(["text-xl"])}>
         {venue.name}
       </LinkKeyword>
     </span>
@@ -42,14 +44,18 @@ export const EditableShowVenue: React.FC = () => {
       required
       fieldName="venueId"
     >
-      <select {...field} className="px-4 py-3 rounded w-full" id="venueId">
+      <select
+        {...field}
+        className={tw(["px-4", "py-3", "rounded", "w-full"])}
+        id="venueId"
+      >
         {venues.map((venue) => (
           <option key={venue.id} value={venue.id}>
             {venue.name}
           </option>
         ))}
       </select>
-      <div className="mt-2">
+      <div className={tw(["mt-2"])}>
         <AddVenueModal />
       </div>
     </FieldContainer>
