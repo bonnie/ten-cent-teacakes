@@ -19,6 +19,7 @@
     "@sentry/browser": "^6.16.1",
     "@sentry/nextjs": "^6.17.2",
     "@tailwindcss/forms": "^0.4.0",
+    "@twind/forms": "^0.1.4",
     "@twind/next": "^1.0.9",
     "axios": "^0.22.0",
     "dayjs": "^1.10.7",
