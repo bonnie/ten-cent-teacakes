@@ -28,7 +28,10 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap"
             rel="stylesheet"
           />
-          <link href="http://fonts.cdnfonts.com/css/delfina" rel="stylesheet" />
+          <link
+            href="https://fonts.cdnfonts.com/css/delfina"
+            rel="stylesheet"
+          />
         </Head>
         <body className={tw(["bg-aqua-100"])}>
           <Main />
