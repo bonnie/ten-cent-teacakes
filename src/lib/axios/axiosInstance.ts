@@ -5,9 +5,10 @@ const config: AxiosRequestConfig = {};
 if (process.env.NODE === "production") {
   config.baseURL = "https://tencentteacakes.com/";
 } else {
-  config.baseURL =
-    process?.env?.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000/";
+  config.baseURL = process?.env?.VERCEL_URL || "http://localhost:3000/";
 }
+
+console.log("PROCESS.ENV", process.env);
 
 // for canceling requests to avoid test errors
 export const cancelTokenSource = axios.CancelToken.source();
