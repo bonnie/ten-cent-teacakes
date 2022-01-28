@@ -9,6 +9,7 @@ import {
   PhotoPatchArgs,
   PhotoPatchData,
   PhotoWithShowAndVenue,
+  UploadedPhotoFormData,
 } from "./types";
 
 export type PhotoResponse = { photo: Photo };
@@ -40,6 +41,17 @@ export const addPhoto = async (data: PhotoFormData): Promise<PhotoResponse> => {
   >(`/api/${routes.photos}`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
+  return { photo };
+};
+
+export const addUploadedPhoto = async (
+  data: UploadedPhotoFormData,
+): Promise<PhotoResponse> => {
+  if (!data.photoPath) throw new Error("Can't create; no photo path");
+  const { data: photo } = await axiosInstance.put<
+    UploadedPhotoFormData,
+    AxiosResponse<Photo>
+  >(`/api/${routes.photos}`, data);
   return { photo };
 };
 

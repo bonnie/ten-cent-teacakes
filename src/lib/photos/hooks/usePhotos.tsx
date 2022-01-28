@@ -9,6 +9,7 @@ import {
 import { useToast } from "@/components/toasts/useToast";
 import {
   addPhoto,
+  addUploadedPhoto,
   deletePhoto,
   fetchPhotos,
   getPhotoDate,
@@ -19,6 +20,7 @@ import {
   PhotoFormData,
   PhotoPatchArgs,
   PhotoWithShowAndVenue,
+  UploadedPhotoFormData,
 } from "@/lib/photos/types";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { useHandleError } from "@/lib/react-query/useHandleError";
@@ -32,6 +34,12 @@ export type NextAndPrevObject = Record<number, NextAndPrev>;
 type UsePhotosReturnValue = {
   photos: Array<PhotoWithShowAndVenue>;
   addPhoto: UseMutateFunction<PhotoResponse, unknown, PhotoFormData, unknown>;
+  addUploadedPhoto: UseMutateFunction<
+    PhotoResponse,
+    unknown,
+    UploadedPhotoFormData,
+    unknown
+  >;
   deletePhoto: UseMutateFunction<void, unknown, number, unknown>;
   updatePhoto: UseMutateFunction<
     PhotoResponse,
@@ -80,6 +88,18 @@ export const usePhotos = (): UsePhotosReturnValue => {
     onError: (error) => handleMutateError(error, "add photo"),
   });
 
+  const { mutate: addUploadedPhotoMutate } = useMutation(
+    queryKeys.photos,
+    addUploadedPhoto,
+    {
+      onSuccess: () => {
+        invalidatePhotos();
+        showToast("success", "You have added a photo");
+      },
+      onError: (error) => handleMutateError(error, "add photo"),
+    },
+  );
+
   const { mutate: deletePhotoMutate } = useMutation(
     queryKeys.photos,
     deletePhoto,
@@ -103,6 +123,7 @@ export const usePhotos = (): UsePhotosReturnValue => {
   return {
     photos,
     addPhoto: addPhotoMutate,
+    addUploadedPhoto: addUploadedPhotoMutate,
     updatePhoto,
     deletePhoto: deletePhotoMutate,
     nextAndPrevIndexes,

@@ -1,61 +1,105 @@
+import * as Sentry from "@sentry/nextjs";
 import { useField } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { tw } from "twind";
 
 import { FieldContainer } from "@/components/lib/form/FieldContainer";
+import { uniquifyFilename } from "@/lib/api/utils";
+import { supabase } from "@/lib/supabase";
+import { UPLOADS_BUCKET } from "@/lib/supabase/constants";
 
 export const PhotoUpload: React.FC<{
   name: string;
   label?: string;
   required: boolean;
 }> = ({ name, required, label = "Choose a file to upload" }) => {
-  // eslint-disable-next-line no-unused-vars
-  const [field, _, helpers] = useField({ name, type: "file" });
-  const { setValue } = helpers;
+  const [uploading, setUploading] = useState(false);
+
+  const [photoFile, , photoFileHelpers] = useField({ name, type: "file" });
+  const { setValue: setPhotoFileValue } = photoFileHelpers;
+
+  const [photoPath, , photoPathHelpers] = useField("photoPath");
+  const { setValue: setPhotoPathValue } = photoPathHelpers;
 
   return (
-    <FieldContainer
-      htmlFor={name}
-      label={label}
-      required={required}
-      fieldName={name}
-    >
-      <input
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...field}
-        onChange={(event) =>
-          setValue(
-            event.currentTarget.files
-              ? event.currentTarget.files[0]
-              : undefined,
-          )
-        }
-        value={undefined}
-        className={tw([
-          "form-control",
-          "block",
-          "w-full",
-          "px-3",
-          "py-1.5",
-          "text-base",
-          "font-normal",
-          "text-gray-700",
-          "bg-white bg-clip-padding",
-          "border border-solid border-gray-300",
-          "rounded",
-          "transition",
-          "ease-in-out",
-          "m-0",
-          "focus:text-gray-700",
-          "focus:bg-white",
-          "focus:border-aqua-500",
-          "focus:outline-none",
-        ])}
-        type="file"
-        id={name}
-        name={name}
-      />
-    </FieldContainer>
+    <>
+      <FieldContainer
+        htmlFor={name}
+        label={`${label} Max size: 1 MB`}
+        required={required}
+        fieldName={name}
+      >
+        <input
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...photoFile}
+          onChange={async (event) => {
+            setPhotoFileValue(
+              event.currentTarget.files
+                ? event.currentTarget.files[0]
+                : undefined,
+            );
+            if (event.currentTarget.files) {
+              const photoFile = event.currentTarget.files[0];
+              const uniqueName = uniquifyFilename(photoFile.name);
+
+              setUploading(true);
+              const { data, error } = await supabase.storage
+                .from(UPLOADS_BUCKET)
+                .upload(uniqueName, photoFile);
+              setUploading(false);
+
+              if (error) {
+                setPhotoPathValue(undefined);
+                Sentry.captureException(error);
+                throw error;
+              }
+
+              if (data) {
+                setPhotoPathValue(data.Key);
+              } else {
+                throw new Error("did not receive key from Supabase upload");
+              }
+            }
+          }}
+          value={undefined}
+          className={tw([
+            "form-control",
+            "block",
+            "w-full",
+            "px-3",
+            "py-1.5",
+            "text-base",
+            "font-normal",
+            "text-gray-700",
+            "bg-white",
+            "bg-clip-padding",
+            "border",
+            "border-solid border-gray-300",
+            "rounded",
+            "transition",
+            "ease-in-out",
+            "m-0",
+            "focus:text-gray-700",
+            "focus:bg-white",
+            "focus:border-aqua-500",
+            "focus:outline-none",
+          ])}
+          type="file"
+          id={name}
+          name={name}
+        />
+        {uploading ? <p>Uploading...</p> : null}
+      </FieldContainer>
+      <FieldContainer
+        htmlFor="photoPath"
+        label="uploaded file"
+        required
+        fieldName="photoPath"
+      >
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        {photoPath.value}
+      </FieldContainer>
+    </>
   );
 };
 

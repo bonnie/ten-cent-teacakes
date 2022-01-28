@@ -46,7 +46,7 @@ const photoFormValidation = (values: PhotoFormData) => {
 };
 
 export const AddPhotoModal: React.FC = () => {
-  const { addPhoto } = usePhotos();
+  const { addUploadedPhoto } = usePhotos();
 
   const initialValues = {
     photographer: "",
@@ -55,9 +55,9 @@ export const AddPhotoModal: React.FC = () => {
   };
   const onSubmit = (values: PhotoFormData) => {
     if (values.photoFile)
-      addPhoto({
+      addUploadedPhoto({
         showId: values.showId,
-        photoFile: values.photoFile,
+        photoPath: values.photoPath,
         photographer: values.photographer,
         description: values.description,
       });

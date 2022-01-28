@@ -18,6 +18,7 @@
     "@prisma/client": "^3.3.0",
     "@sentry/browser": "^6.16.1",
     "@sentry/nextjs": "^6.17.2",
+    "@supabase/supabase-js": "^1.29.4",
     "@tailwindcss/forms": "^0.4.0",
     "@twind/forms": "^0.1.4",
     "@twind/next": "^1.0.9",

@@ -31,7 +31,7 @@ export const NavLink: React.FC<NavLinkProps> = ({
           "items-center",
           "justify-center",
           "hover:bg-aqua-700",
-          `${route === href ? "bg-aqua-700" : null}`,
+          `${route === href ? "bg-aqua-700" : ""}`,
           "focus:outline-none",
           "md:py-3",
           "lg:py-5",

@@ -1,6 +1,7 @@
 import { withSentry } from "@sentry/nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+// import {handler} from "@/lib/api/handler";
 import { NextApiRequestWithFile } from "@/lib/api/types";
 import { createUploadHandler } from "@/lib/api/uploadHandler";
 
