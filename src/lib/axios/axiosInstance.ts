@@ -5,7 +5,7 @@ const config: AxiosRequestConfig = {};
 if (process.env.NODE === "production") {
   config.baseURL = "https://tencentteacakes.com/";
 } else {
-  config.baseURL = "http://localhost:3000/";
+  config.baseURL = "/";
 }
 
 // for canceling requests to avoid test errors
