@@ -7,6 +7,7 @@ import { tw } from "twind";
 
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { PhotoWithShowAndVenue } from "@/lib/photos/types";
+import { getSupabaseStorageLink } from "@/lib/supabase/utils";
 
 import { DeletePhotoModal } from "./DeletePhotoModal";
 import { EditPhotoModal } from "./EditPhotoModal";
@@ -16,6 +17,7 @@ export const PhotoThumbnail: React.FC<{
   photoDate: Date;
 }> = ({ photo, photoDate }) => {
   const { user } = useWhitelistUser();
+  const imgSrc = getSupabaseStorageLink(photo.imagePath);
   return (
     <div className={tw(["m-5", "flex", "flex-col", "items-center"])}>
       <Link href={`/photos/${photo.id}`}>
@@ -29,7 +31,7 @@ export const PhotoThumbnail: React.FC<{
               "hover:border-aqua-600",
               "hover:cursor-pointer",
             ])}
-            src={photo.imagePath}
+            src={imgSrc}
             alt={photo.description ?? "Ten-cent Teacakes"}
             width={240}
             height={240}

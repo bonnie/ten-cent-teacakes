@@ -25,6 +25,7 @@ const moduleExports = {
   },
   images: {
     disableStaticImages: true,
+    domains: [process.env.SUPABASE_STORAGE_DOMAIN],
   },
   env: {
     SENTRY_DSN: process.env.SENTRY_DSN,
@@ -38,6 +39,8 @@ const moduleExports = {
     AUTH0_ISSUER_BASE_URL: process.env.AUTH0_ISSUER_BASE_URL,
     SUPABASE_URL: process.env.SUPABASE_URL,
     SUPABASE_KEY: process.env.SUPABASE_KEY,
+    SUPABASE_STORAGE_URL: process.env.SUPABASE_STORAGE_URL,
+    SUPABASE_STORAGE_KEY: process.env.SUPABASE_STORAGE_KEY,
   },
 };
 
