@@ -1,9 +1,15 @@
 import { useField } from "formik";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { tw } from "twind";
 
 import { FieldContainer } from "@/components/lib/form/FieldContainer";
 import { uploadPhotoToSupabase } from "@/lib/supabase/utils";
+
+export const photoUploadFields = {
+  photoPath: "photoPath",
+  photoWidth: "photoWidth",
+  photoHeight: "photoHeight",
+};
 
 export const PhotoUpload: React.FC<{
   name: string;
@@ -17,18 +23,31 @@ export const PhotoUpload: React.FC<{
     type: "file",
   });
   const { setValue: setPhotoFileValue } = photoFileHelpers;
+  const photoRef = useRef<HTMLInputElement | null>(null);
 
-  const [, , photoPathHelpers] = useField("photoPath");
+  const [, , photoPathHelpers] = useField(photoUploadFields.photoPath);
   const { setValue: setPhotoPathValue } = photoPathHelpers;
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    uploadPhotoToSupabase({
-      event,
-      setPhotoFileValue,
-      setPhotoPathValue,
-      setUploading,
-      uploadDirname,
-    });
+  const [, , photoWidthHelpers] = useField(photoUploadFields.photoWidth);
+  const { setValue: setPhotoWidthValue } = photoWidthHelpers;
+
+  const [, , photoHeightHelpers] = useField(photoUploadFields.photoHeight);
+  const { setValue: setPhotoHeightValue } = photoHeightHelpers;
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (photoRef.current) {
+      setPhotoWidthValue(photoRef.current.clientWidth);
+      setPhotoHeightValue(photoRef.current.clientHeight);
+
+      uploadPhotoToSupabase({
+        event,
+        setPhotoFileValue,
+        setPhotoPathValue,
+        setUploading,
+        uploadDirname,
+      });
+    }
+  };
 
   return (
     <FieldContainer
@@ -40,6 +59,7 @@ export const PhotoUpload: React.FC<{
       <input
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...photoFile}
+        ref={photoRef}
         onChange={handleChange}
         value={undefined}
         className={tw([

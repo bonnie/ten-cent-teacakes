@@ -20,6 +20,8 @@ export type UploadedPhotoFormData = {
 export type PhotoPutData = {
   showId?: number;
   imagePath: string;
+  photoWidth: number;
+  photoHeight: number;
   photographer?: string;
   description?: string;
   takenAt?: string;

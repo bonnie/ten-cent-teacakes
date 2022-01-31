@@ -45,6 +45,8 @@ const createMusicians = async () => {
         ],
       },
       imagePath: "/musicians/sarah.jpg",
+      imagePixelWidth: 765,
+      imagePixelHeight: 768,
     },
     {
       firstName: "Bonnie",
@@ -54,6 +56,8 @@ const createMusicians = async () => {
         connect: [{ name: "bass" }, { name: "kazoo" }, { name: "vocals" }],
       },
       imagePath: "/musicians/bonnie.jpg",
+      imagePixelWidth: 262,
+      imagePixelHeight: 262,
     },
     {
       firstName: "Greg",
@@ -63,6 +67,8 @@ const createMusicians = async () => {
         connect: [{ name: "fiddle" }, { name: "vocals" }],
       },
       imagePath: "/musicians/greg.jpg",
+      imagePixelWidth: 888,
+      imagePixelHeight: 884,
     },
   ];
   for (const musician of musicianData) {
