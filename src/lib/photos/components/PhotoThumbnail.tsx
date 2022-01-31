@@ -24,13 +24,13 @@ export const PhotoThumbnail: React.FC<{
       <div
         className={tw([
           "text-aqua-100",
-          "bg-black",
+          "bg-aqua-800",
           "rounded-lg",
           "p-4",
           "hover:border-aqua-600",
           "hover:cursor-pointer",
           "border-solid",
-          "border-4",
+          "border-8",
           "border-black",
         ])}
       >
@@ -41,8 +41,10 @@ export const PhotoThumbnail: React.FC<{
                 className={tw(["object-contain"])}
                 src={imgSrc}
                 alt={photo.description ?? "Ten-cent Teacakes"}
-                width={photo.pixelWidth}
-                height={photo.pixelHeight}
+                width={240}
+                height={240}
+                placeholder="blur"
+                blurDataURL="logo/tencent-tag.svg"
               />
             ) : null}
           </a>

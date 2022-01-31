@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import dayjs from "dayjs";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -104,12 +105,13 @@ const Photo: React.FC = () => {
           "lg:row-span-7",
           "h-full",
           "mb-3",
-          "bg-black",
+          // "bg-black",
           "w-full",
+          "relative",
         ])}
       >
         {imgSrc ? (
-          <img
+          <Image
             className={tw([
               "border-black",
               "border-solid",
@@ -120,6 +122,10 @@ const Photo: React.FC = () => {
             ])}
             src={imgSrc}
             alt={photo.description ?? "Ten-Cent Teacakes"}
+            width={photo.pixelWidth}
+            height={photo.pixelHeight}
+            layout="fill"
+            objectFit="contain"
           />
         ) : null}
         {photo.photographer ? (
