@@ -4,6 +4,8 @@ export type PhotoFormData = {
   showId?: number;
   photoFile?: File;
   photoPath?: string;
+  photoWidth?: number;
+  photoHeight?: number;
   photographer?: string;
   description?: string;
   takenAt?: Date;
@@ -12,6 +14,8 @@ export type PhotoFormData = {
 export type UploadedPhotoFormData = {
   showId?: number;
   photoPath?: string;
+  photoWidth?: number;
+  photoHeight?: number;
   photographer?: string;
   description?: string;
   takenAt?: Date;

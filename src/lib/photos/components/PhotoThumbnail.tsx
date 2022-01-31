@@ -41,8 +41,8 @@ export const PhotoThumbnail: React.FC<{
                 className={tw(["object-contain"])}
                 src={imgSrc}
                 alt={photo.description ?? "Ten-cent Teacakes"}
-                width={240}
-                height={240}
+                width={photo.pixelWidth}
+                height={photo.pixelHeight}
               />
             ) : null}
           </a>
