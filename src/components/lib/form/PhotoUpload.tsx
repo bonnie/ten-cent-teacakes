@@ -1,12 +1,9 @@
-import * as Sentry from "@sentry/nextjs";
 import { useField } from "formik";
 import React, { useState } from "react";
 import { tw } from "twind";
 
 import { FieldContainer } from "@/components/lib/form/FieldContainer";
-import { uniquifyFilename } from "@/lib/api/utils";
-import { supabase } from "@/lib/supabase";
-import { UPLOADS_BUCKET } from "@/lib/supabase/constants";
+import { uploadPhotoToSupabase } from "@/lib/supabase/utils";
 
 export const PhotoUpload: React.FC<{
   name: string;
@@ -24,6 +21,15 @@ export const PhotoUpload: React.FC<{
   const [, , photoPathHelpers] = useField("photoPath");
   const { setValue: setPhotoPathValue } = photoPathHelpers;
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    uploadPhotoToSupabase({
+      event,
+      setPhotoFileValue,
+      setPhotoPathValue,
+      setUploading,
+      uploadDirname,
+    });
+
   return (
     <FieldContainer
       htmlFor={name}
@@ -34,40 +40,7 @@ export const PhotoUpload: React.FC<{
       <input
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...photoFile}
-        onChange={async (event) => {
-          setPhotoFileValue(
-            event.currentTarget.files
-              ? event.currentTarget.files[0]
-              : undefined,
-          );
-          // TODO: make separate buckets for dev / production
-          // TODO: upload musician images to buckets and remove from app
-          if (event.currentTarget.files) {
-            const photoFile = event.currentTarget.files[0];
-            if (photoFile) {
-              const uniqueName = uniquifyFilename(photoFile.name);
-              const photoPath = `${uploadDirname}/${uniqueName}`;
-
-              setUploading(true);
-              const { data, error } = await supabase.storage
-                .from(UPLOADS_BUCKET)
-                .upload(photoPath, photoFile);
-              setUploading(false);
-
-              if (error) {
-                setPhotoPathValue(undefined);
-                Sentry.captureException(error);
-                throw error;
-              }
-
-              if (data) {
-                setPhotoPathValue(photoPath);
-              } else {
-                throw new Error("did not receive key from Supabase upload");
-              }
-            }
-          }
-        }}
+        onChange={handleChange}
         value={undefined}
         className={tw([
           "form-control",
