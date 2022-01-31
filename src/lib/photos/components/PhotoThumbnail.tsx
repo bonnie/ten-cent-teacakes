@@ -2,7 +2,7 @@
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { tw } from "twind";
 
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
@@ -18,6 +18,14 @@ export const PhotoThumbnail: React.FC<{
 }> = ({ photo, photoDate }) => {
   const { user } = useWhitelistUser();
   const { imgSrc } = useSupabasePhoto(photo.imagePath);
+
+  const isMountedRef = useRef(true);
+  useEffect(
+    () => () => {
+      isMountedRef.current = false;
+    },
+    [],
+  );
 
   return (
     <div className={tw(["m-5", "flex", "flex-col", "items-center"])}>
@@ -36,17 +44,13 @@ export const PhotoThumbnail: React.FC<{
       >
         <Link href={`/photos/${photo.id}`}>
           <a>
-            {imgSrc ? (
-              <Image
-                className={tw(["object-contain"])}
-                src={imgSrc}
-                alt={photo.description ?? "Ten-cent Teacakes"}
-                width={240}
-                height={240}
-                placeholder="blur"
-                blurDataURL="logo/tencent-tag.svg"
-              />
-            ) : null}
+            <Image
+              className={tw(["object-contain"])}
+              src={imgSrc ?? "/logo/tencent-tag.svg"}
+              alt={photo.description ?? "Ten-cent Teacakes"}
+              width={240}
+              height={240}
+            />
           </a>
         </Link>
       </div>
@@ -57,7 +61,7 @@ export const PhotoThumbnail: React.FC<{
       <p className={tw(["text-sm"])}>
         {photo.photographer ? `taken by ${photo.photographer}` : <br />}
       </p>
-      {user ? (
+      {isMountedRef.current && user ? (
         <div>
           <EditPhotoModal photo={photo} />
           <DeletePhotoModal photo={photo} />

@@ -4,6 +4,7 @@ import { tw } from "twind";
 
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { MusicianWithInstruments } from "@/lib/musicians/types";
+import { useSupabasePhoto } from "@/lib/supabase/hooks/useSupabasePhoto";
 
 import { DeleteMusicianModal } from "./DeleteMusicianModal";
 import { EditMusicianModal } from "./EditMusicianModal";
@@ -26,15 +27,6 @@ const cardClasses = tw([
   "to-aqua-200",
 ]);
 
-const imageTransitionClass = [
-  "transition",
-  "duration-500",
-  "ease-in-out",
-  "transform",
-  "hover:-translate-y-1",
-  "hover:scale-110",
-];
-
 type InstrumentProps = { name: string };
 const Instrument: React.FC<InstrumentProps> = ({ name }) => (
   <div
@@ -55,6 +47,19 @@ const Instrument: React.FC<InstrumentProps> = ({ name }) => (
 type MusicianProps = { musician: MusicianWithInstruments };
 export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
   const { user } = useWhitelistUser();
+  const { imgSrc } = useSupabasePhoto(musician.imagePath);
+
+  const imageTransitionClass = imgSrc
+    ? tw([
+        "transition",
+        "duration-500",
+        "ease-in-out",
+        "transform",
+        "hover:-translate-y-1",
+        "hover:scale-110",
+      ])
+    : "";
+
   return (
     <div className={tw(["pt-12 m-4"])}>
       <div className={cardClasses}>
@@ -73,12 +78,12 @@ export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
                 "rounded-lg",
                 "shadow-lg",
                 "p-10",
-                ...imageTransitionClass,
+                imageTransitionClass,
               ])}
               objectFit="cover"
               height={250}
               width={250}
-              src={musician.imagePath}
+              src={imgSrc ?? "/logo/tencent-tag.svg"}
               alt={musician.firstName}
             />
           </div>
@@ -106,7 +111,7 @@ export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
             "pt-1",
           ])}
         >
-          {musician.instruments
+          {(musician.instruments ?? [])
             .sort((a, b) => (a.name > b.name ? 1 : -1))
             .map((instrument) => (
               <Instrument key={instrument.name} name={instrument.name} />

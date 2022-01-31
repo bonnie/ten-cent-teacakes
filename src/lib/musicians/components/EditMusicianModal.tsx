@@ -123,7 +123,9 @@ export const EditMusicianModal: React.FC<{
     lastName: musician.lastName,
     bio: musician.bio,
     imageFile: undefined,
-    instrumentIds: musician.instruments.map((i) => i.id),
+    instrumentIds: musician.instruments
+      ? musician.instruments.map((i) => i.id)
+      : [],
   };
 
   const onSubmit = (values: MusicianFormData) => {

@@ -45,8 +45,23 @@ export const useMusicians = (): UseMusiciansReturnValue => {
 
   const { data: musicians = [] } = useQuery<Array<MusicianWithInstruments>>(
     queryKeys.musicians,
-    fetchMusiciansWithInstruments,
+    ({ signal }) => fetchMusiciansWithInstruments(signal),
     {
+      // onSuccess: (data) => {
+      //   if (data[0] && data[0].showId) {
+      // window.location.reload();
+      // onlineManager.setOnline(false);
+      // onlineManager.setOnline(true);
+      // queryClient.clear();
+      // setInterval(() => {
+      //   console.log("INVALIDATING MUSICIANS");
+      //   queryClient.invalidateQueries([
+      //     queryKeys.photos,
+      //     queryKeys.musicians,
+      //   ]);
+      // }, 500);
+      //   }
+      // },
       onError: handleQueryError,
     },
   );

@@ -1,5 +1,5 @@
-import React from "react";
-import { dehydrate, QueryClient } from "react-query";
+import React, { useEffect, useRef } from "react";
+import { dehydrate, QueryClient, useQueryClient } from "react-query";
 import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
@@ -10,13 +10,13 @@ import { EditInstruments } from "@/lib/musicians/components/instruments/EditInst
 import { MusicianCard } from "@/lib/musicians/components/MusicianCard";
 import { useMusicians } from "@/lib/musicians/hooks/useMusicians";
 import { queryKeys } from "@/lib/react-query/query-keys";
+import { useWillUnmount } from "@/lib/react-query/useWillUnmount";
 
 export async function getServerSideProps() {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(
-    queryKeys.musicians,
-    fetchMusiciansWithInstruments,
+  await queryClient.prefetchQuery(queryKeys.musicians, ({ signal }) =>
+    fetchMusiciansWithInstruments(signal),
   );
 
   return {
@@ -27,13 +27,29 @@ export async function getServerSideProps() {
 }
 
 const Musicians: React.FC = () => {
+  const queryClient = useQueryClient();
+
+  const isMountedRef = useRef(true);
+  useEffect(
+    () => () => {
+      isMountedRef.current = false;
+    },
+    [],
+  );
+
+  const cancelFetch = () => {
+    // console.log("CANCEL MUSICIAN FETCH");
+    queryClient.cancelQueries(queryKeys.musicians);
+  };
+  useWillUnmount(cancelFetch);
+
   const { musicians } = useMusicians();
   const { user } = useWhitelistUser();
 
   return (
     <div className={tw(["w-full"])}>
       <Heading>The Band</Heading>
-      {user ? (
+      {isMountedRef.current && user ? (
         <div className={tw(["text-center"])}>
           <AddMusicianModal />
         </div>
@@ -46,11 +62,13 @@ const Musicians: React.FC = () => {
           "items-stretch mx-5",
         ])}
       >
-        {musicians.map((musician) => (
-          <MusicianCard key={musician.id} musician={musician} />
-        ))}
+        {isMountedRef.current
+          ? musicians.map((musician) => (
+              <MusicianCard key={musician.id} musician={musician} />
+            ))
+          : null}
       </div>
-      {user ? <EditInstruments /> : null}
+      {isMountedRef.current && user ? <EditInstruments /> : null}
     </div>
   );
 };

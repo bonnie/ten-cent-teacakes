@@ -15,8 +15,10 @@ import {
 export type PhotoResponse = { photo: Photo };
 
 /* * methods * */
-export const fetchPhotos = async (): Promise<Array<PhotoWithShowAndVenue>> => {
-  const { data } = await axiosInstance.get(`/api/${routes.photos}`);
+export const fetchPhotos = async (
+  signal?: AbortSignal,
+): Promise<Array<PhotoWithShowAndVenue>> => {
+  const { data } = await axiosInstance.get(`/api/${routes.photos}`, { signal });
   return data;
 };
 
