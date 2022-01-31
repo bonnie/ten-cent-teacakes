@@ -38,10 +38,8 @@ export const PhotoUpload: React.FC<{
               ? event.currentTarget.files[0]
               : undefined,
           );
-          // TODO: separate into folders for uploads / musicians
           // TODO: make separate buckets for dev / production
           // TODO: upload musician images to buckets and remove from app
-          // TODO: uninstall multer etc. (express types?)
           if (event.currentTarget.files) {
             const photoFile = event.currentTarget.files[0];
             const uniqueName = uniquifyFilename(photoFile.name);
