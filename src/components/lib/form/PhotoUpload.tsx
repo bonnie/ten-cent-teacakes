@@ -15,7 +15,6 @@ export const PhotoUpload: React.FC<{
   uploadDirname: string;
 }> = ({ name, required, label = "Choose a file to upload", uploadDirname }) => {
   const [uploading, setUploading] = useState(false);
-  const [fileTooLarge, setFileTooLarge] = useState(false);
   const [photoFile, , photoFileHelpers] = useField({
     name,
     type: "file",
@@ -46,33 +45,25 @@ export const PhotoUpload: React.FC<{
           if (event.currentTarget.files) {
             const photoFile = event.currentTarget.files[0];
             if (photoFile) {
-              if (photoFile.size > 1000000) {
-                // NOTE: tried to set error in Formik, even used setTouched
-                // but failed to get it to work
-                // Reference: https://github.com/jaredpalmer/formik/issues/1499
-                setFileTooLarge(true);
+              const uniqueName = uniquifyFilename(photoFile.name);
+              const photoPath = `${uploadDirname}/${uniqueName}`;
+
+              setUploading(true);
+              const { data, error } = await supabase.storage
+                .from(UPLOADS_BUCKET)
+                .upload(photoPath, photoFile);
+              setUploading(false);
+
+              if (error) {
+                setPhotoPathValue(undefined);
+                Sentry.captureException(error);
+                throw error;
+              }
+
+              if (data) {
+                setPhotoPathValue(photoPath);
               } else {
-                setFileTooLarge(false);
-                const uniqueName = uniquifyFilename(photoFile.name);
-                const photoPath = `${uploadDirname}/${uniqueName}`;
-
-                setUploading(true);
-                const { data, error } = await supabase.storage
-                  .from(UPLOADS_BUCKET)
-                  .upload(photoPath, photoFile);
-                setUploading(false);
-
-                if (error) {
-                  setPhotoPathValue(undefined);
-                  Sentry.captureException(error);
-                  throw error;
-                }
-
-                if (data) {
-                  setPhotoPathValue(photoPath);
-                } else {
-                  throw new Error("did not receive key from Supabase upload");
-                }
+                throw new Error("did not receive key from Supabase upload");
               }
             }
           }
@@ -104,11 +95,6 @@ export const PhotoUpload: React.FC<{
         id={name}
         name={name}
       />
-      {fileTooLarge ? (
-        <span className={tw(["text-red-600", "font-bold"])}>
-          File size must not exceed 1MB
-        </span>
-      ) : null}
       {uploading ? <p>Uploading...</p> : null}
     </FieldContainer>
   );
