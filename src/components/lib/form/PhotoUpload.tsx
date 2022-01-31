@@ -27,7 +27,7 @@ export const PhotoUpload: React.FC<{
   return (
     <FieldContainer
       htmlFor={name}
-      label={`${label} (Max size: 1 MB)`}
+      label={label}
       required={required}
       fieldName={name}
     >
