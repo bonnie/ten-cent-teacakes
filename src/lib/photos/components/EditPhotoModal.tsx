@@ -53,6 +53,7 @@ export const AddPhotoModal: React.FC = () => {
     photographer: "",
     showId: undefined,
     photoFile: undefined,
+    photoDate: undefined,
   };
   const onSubmit = (values: PhotoFormData) => {
     if (values.photoFile)
@@ -89,7 +90,9 @@ export const EditPhotoModal: React.FC<{ photo: PhotoWithShowAndVenue }> = ({
     photographer: photo.photographer ?? undefined,
     showId: photo.showId ?? undefined,
     description: photo.description ?? undefined,
-    takenAt: dayjs(photo.takenAt).format("YYYY-MM-DD"),
+    takenAt: photo.takenAt
+      ? dayjs(photo.takenAt).format("YYYY-MM-DD")
+      : undefined,
   };
 
   const onSubmit = (values: PhotoPatchData) => {
