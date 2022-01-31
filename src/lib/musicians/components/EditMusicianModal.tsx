@@ -11,6 +11,7 @@ import {
   MusicianFormData,
   MusicianWithInstruments,
 } from "@/lib/musicians/types";
+import { MUSICIANS_DIRNAME } from "@/lib/supabase/constants";
 
 import { useMusicians } from "../hooks/useMusicians";
 
@@ -29,7 +30,12 @@ const AddMusicianForm: React.FC<{
 }> = ({ props }) => (
   <form onSubmit={props.handleSubmit}>
     {commonFormFields}
-    <PhotoUpload name="imageFile" label="Select musician image" required />
+    <PhotoUpload
+      name="imageFile"
+      label="Select musician image"
+      required
+      uploadDirname={MUSICIANS_DIRNAME}
+    />
   </form>
 );
 
@@ -42,6 +48,7 @@ const EditMusicianForm: React.FC<{
       name="imageFile"
       label="Select new musician image"
       required={false}
+      uploadDirname={MUSICIANS_DIRNAME}
     />
   </form>
 );

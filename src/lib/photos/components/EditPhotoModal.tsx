@@ -12,6 +12,7 @@ import {
   PhotoWithShowAndVenue,
 } from "@/lib/photos/types";
 import { EditableShow } from "@/lib/shows/components/EditableShow";
+import { PHOTOS_DIRNAME } from "@/lib/supabase/constants";
 
 import { usePhotos } from "../hooks/usePhotos";
 
@@ -32,7 +33,7 @@ export const AddPhotoForm: React.FC<{
   props: FormikProps<PhotoFormData>;
 }> = ({ props }) => (
   <form onSubmit={props.handleSubmit}>
-    <PhotoUpload name="photoFile" required />
+    <PhotoUpload name="photoFile" required uploadDirname={PHOTOS_DIRNAME} />
     {editFields}
   </form>
 );

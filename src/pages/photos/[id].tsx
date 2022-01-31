@@ -16,6 +16,7 @@ import { DeletePhotoModal } from "@/lib/photos/components/DeletePhotoModal";
 import { EditPhotoModal } from "@/lib/photos/components/EditPhotoModal";
 import { usePhoto } from "@/lib/photos/hooks/usePhoto";
 import { usePhotos } from "@/lib/photos/hooks/usePhotos";
+import { useSupabasePhoto } from "@/lib/supabase/hooks/useSupabasePhoto";
 
 const AdvanceButton: React.FC<{
   Icon: IconType;
@@ -46,6 +47,8 @@ const Photo: React.FC = () => {
   const photoId = Number(id);
   const { photo } = usePhoto({ photoId, routerIsReady: router.isReady });
   const { nextAndPrevIndexes } = usePhotos();
+
+  const { imgSrc } = useSupabasePhoto(photo?.imagePath ?? null);
 
   if (Number.isNaN(photoId)) {
     return <Heading>Photo not found</Heading>;
@@ -95,19 +98,30 @@ const Photo: React.FC = () => {
         </div>
         <AdvanceButton Icon={FaArrowRight} linkIndex={nextIndex} />
       </div>
-      <div className={tw(["row-span-5", "lg:row-span-7", "h-full", "mb-3"])}>
-        <img
-          className={tw([
-            "border-black",
-            "border-solid",
-            "border-8",
-            "h-full",
-            "w-auto",
-            "mx-auto",
-          ])}
-          src={photo.imagePath}
-          alt={photo.description ?? "Ten-Cent Teacakes"}
-        />
+      <div
+        className={tw([
+          "row-span-5",
+          "lg:row-span-7",
+          "h-full",
+          "mb-3",
+          "bg-black",
+          "w-full",
+        ])}
+      >
+        {imgSrc ? (
+          <img
+            className={tw([
+              "border-black",
+              "border-solid",
+              "border-8",
+              "h-full",
+              "w-auto",
+              "mx-auto",
+            ])}
+            src={imgSrc}
+            alt={photo.description ?? "Ten-Cent Teacakes"}
+          />
+        ) : null}
         {photo.photographer ? (
           <p className={tw(["text-lg", "text-center"])}>
             Photo by {photo.photographer}

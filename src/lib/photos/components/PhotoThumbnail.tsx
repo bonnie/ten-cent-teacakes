@@ -7,7 +7,7 @@ import { tw } from "twind";
 
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { PhotoWithShowAndVenue } from "@/lib/photos/types";
-import { getSupabaseStorageLink } from "@/lib/supabase/utils";
+import { useSupabasePhoto } from "@/lib/supabase/hooks/useSupabasePhoto";
 
 import { DeletePhotoModal } from "./DeletePhotoModal";
 import { EditPhotoModal } from "./EditPhotoModal";
@@ -17,27 +17,37 @@ export const PhotoThumbnail: React.FC<{
   photoDate: Date;
 }> = ({ photo, photoDate }) => {
   const { user } = useWhitelistUser();
-  const imgSrc = getSupabaseStorageLink(photo.imagePath);
+  const { imgSrc } = useSupabasePhoto(photo.imagePath);
+
   return (
     <div className={tw(["m-5", "flex", "flex-col", "items-center"])}>
-      <Link href={`/photos/${photo.id}`}>
-        <a>
-          <Image
-            className={tw([
-              "border-solid",
-              "border-4",
-              "border-black",
-              "object-contain",
-              "hover:border-aqua-600",
-              "hover:cursor-pointer",
-            ])}
-            src={imgSrc}
-            alt={photo.description ?? "Ten-cent Teacakes"}
-            width={240}
-            height={240}
-          />
-        </a>
-      </Link>
+      <div
+        className={tw([
+          "text-aqua-100",
+          "bg-black",
+          "rounded-lg",
+          "p-4",
+          "hover:border-aqua-600",
+          "hover:cursor-pointer",
+          "border-solid",
+          "border-4",
+          "border-black",
+        ])}
+      >
+        <Link href={`/photos/${photo.id}`}>
+          <a>
+            {imgSrc ? (
+              <Image
+                className={tw(["object-contain"])}
+                src={imgSrc}
+                alt={photo.description ?? "Ten-cent Teacakes"}
+                width={240}
+                height={240}
+              />
+            ) : null}
+          </a>
+        </Link>
+      </div>
       <p className={tw(["text-center"])}>
         {dayjs(photoDate).format("MMM DD, YYYY")}
         {photo.showVenue ? ` at ${photo.showVenue.name}` : null}

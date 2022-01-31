@@ -30,8 +30,6 @@ const moduleExports = {
   env: {
     SENTRY_DSN: process.env.SENTRY_DSN,
     NODE: process.env.NODE,
-    SESSION_COOKIE_SECRET: process.env.SESSION_COOKIE_SECRET,
-    SESSION_COOKIE_LIFETIME: process.env.SESSION_COOKIE_LIFETIME,
     AUTH0_SECRET: process.env.AUTH0_SECRET,
     AUTH0_BASE_URL: process.env.AUTH0_BASE_URL,
     AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
@@ -39,8 +37,6 @@ const moduleExports = {
     AUTH0_ISSUER_BASE_URL: process.env.AUTH0_ISSUER_BASE_URL,
     SUPABASE_URL: process.env.SUPABASE_URL,
     SUPABASE_KEY: process.env.SUPABASE_KEY,
-    SUPABASE_STORAGE_URL: process.env.SUPABASE_STORAGE_URL,
-    SUPABASE_STORAGE_KEY: process.env.SUPABASE_STORAGE_KEY,
   },
 };
 
