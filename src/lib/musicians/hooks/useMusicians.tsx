@@ -47,21 +47,6 @@ export const useMusicians = (): UseMusiciansReturnValue => {
     queryKeys.musicians,
     ({ signal }) => fetchMusiciansWithInstruments(signal),
     {
-      // onSuccess: (data) => {
-      //   if (data[0] && data[0].showId) {
-      // window.location.reload();
-      // onlineManager.setOnline(false);
-      // onlineManager.setOnline(true);
-      // queryClient.clear();
-      // setInterval(() => {
-      //   console.log("INVALIDATING MUSICIANS");
-      //   queryClient.invalidateQueries([
-      //     queryKeys.photos,
-      //     queryKeys.musicians,
-      //   ]);
-      // }, 500);
-      //   }
-      // },
       onError: handleQueryError,
     },
   );

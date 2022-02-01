@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { dehydrate, QueryClient, useQueryClient } from "react-query";
 import { tw } from "twind";
 
@@ -24,18 +24,10 @@ export async function getServerSideProps() {
 export const Photos: React.FC<{ count?: number }> = ({ count = undefined }) => {
   const queryClient = useQueryClient();
 
-  const isMountedRef = useRef(true);
-  useEffect(
-    () => () => {
-      isMountedRef.current = false;
-    },
-    [],
-  );
-
   const cancelFetch = () => {
     queryClient.cancelQueries(queryKeys.photos);
   };
-  useWillUnmount(cancelFetch);
+  const { isMountedRef } = useWillUnmount(cancelFetch);
 
   const { photos } = usePhotos();
   const photosSlice = count ? photos.slice(0, count) : photos;

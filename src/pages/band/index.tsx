@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { dehydrate, QueryClient, useQueryClient } from "react-query";
 import { tw } from "twind";
 
@@ -29,19 +29,10 @@ export async function getServerSideProps() {
 const Musicians: React.FC = () => {
   const queryClient = useQueryClient();
 
-  const isMountedRef = useRef(true);
-  useEffect(
-    () => () => {
-      isMountedRef.current = false;
-    },
-    [],
-  );
-
   const cancelFetch = () => {
-    // console.log("CANCEL MUSICIAN FETCH");
     queryClient.cancelQueries(queryKeys.musicians);
   };
-  useWillUnmount(cancelFetch);
+  const { isMountedRef } = useWillUnmount(cancelFetch);
 
   const { musicians } = useMusicians();
   const { user } = useWhitelistUser();

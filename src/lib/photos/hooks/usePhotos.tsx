@@ -57,36 +57,6 @@ export const usePhotos = (): UsePhotosReturnValue => {
     queryKeys.photos,
     ({ signal }) => fetchPhotos(signal),
     {
-      // onSuccess: (data) => {
-      //   console.log("PHOTOS DATA", data);
-      //   // TODO: figure out why react query gets confused if you switch
-      //   // back and forth too quickly between "photos" and "band"
-      //   if (data.length > 0 && data[0].bio) {
-      //     // queryClient.fetchQuery(queryKeys.photos, fetchPhotos);
-      //     // queryClient.invalidateQueries(queryKeys.photos);
-      //     // queryClient.invalidateQueries(queryKeys.musicians, {
-      //     //   refetchInactive: true,
-      //     // });
-      //   }
-      // },
-      // onSuccess: (data) => {
-      // console.log("REFRESHING PAGE FOM PHOT");
-      // if (data[0] && data[0].bio) {
-      //   throw Error("shit messed up");
-      // setInterval(() => {
-      //   console.log("INVALIDATING PHOTOS");
-      //   // queryClient.invalidateQueries([
-      //   //   queryKeys.photos,
-      //   //   queryKeys.musicians,
-      //   // ]);
-      // }, 500);
-      // onlineManager.setOnline(false);
-      // onlineManager.setOnline(true);
-      // console.log("CLEARING CLIENT");
-      // queryClient.clear();
-      //     window.location.reload();
-      // }
-      // },
       onError: handleQueryError,
       // TODO: this sort isn't working so well
       // or maybe display isn't working so well?
