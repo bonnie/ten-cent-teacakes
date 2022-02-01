@@ -33,7 +33,6 @@ export const Photos: React.FC<{ count?: number }> = ({ count = undefined }) => {
   );
 
   const cancelFetch = () => {
-    // console.log("CANCEL PHOTOS FETCH");
     queryClient.cancelQueries(queryKeys.photos);
   };
   useWillUnmount(cancelFetch);
