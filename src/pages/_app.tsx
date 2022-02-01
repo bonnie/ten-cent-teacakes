@@ -7,7 +7,6 @@ import withTwindApp from "@twind/next/app";
 import { AppProps } from "next/app";
 import React from "react";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 import { tw } from "twind";
 
 import { Layout } from "@/components/Layout";
@@ -29,7 +28,6 @@ function TenCentTeacake({ Component, pageProps }: AppProps) {
               <Layout>
                 <Component className={tw(["h-full"])} {...pageProps} />
                 <ToastContainer />
-                <ReactQueryDevtools />
               </Layout>
             </Hydrate>
           </QueryClientProvider>
