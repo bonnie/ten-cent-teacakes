@@ -8,7 +8,7 @@ export function ToastContainer() {
   const { toasts } = useToastStateContext();
 
   return (
-    <div className={tw(["absolute", "bottom-10", "w-full", "z-50"])}>
+    <div className={tw(["fixed", "bottom-4", "w-full", "z-50"])}>
       <div className={tw(["max-w-xl", "mx-auto"])}>
         {toasts &&
           toasts.map((toast) => (
