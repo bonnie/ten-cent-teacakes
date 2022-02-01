@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { createHandler, addStandardDelete } from "@/lib/api/handler";
+import { addStandardDelete, createHandler } from "@/lib/api/handler";
 import { getIdNumFromReq } from "@/lib/api/utils";
 
 import { deletePhoto, getPhotoById, patchPhoto } from "./queries";
 
 const handler = createHandler();
-addStandardDelete({ handler, deleteFunc: deletePhoto })
+addStandardDelete({ handler, deleteFunc: deletePhoto });
 
 handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
   const id = getIdNumFromReq(req);
