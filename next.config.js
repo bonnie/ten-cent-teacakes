@@ -25,7 +25,9 @@ const moduleExports = {
   },
   images: {
     disableStaticImages: true,
-    domains: [process.env.SUPABASE_STORAGE_DOMAIN],
+    domains: process.env.SUPABASE_STORAGE_DOMAIN
+      ? [process.env.SUPABASE_STORAGE_DOMAIN]
+      : [],
   },
   env: {
     SENTRY_DSN: process.env.SENTRY_DSN,
