@@ -1,35 +1,21 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { processApiError } from "@/lib/api/utils";
+import { createHandler, addStandardDelete } from "@/lib/api/handler";
+import { getIdNumFromReq } from "@/lib/api/utils";
 
 import { deletePhoto, getPhotoById, patchPhoto } from "./queries";
 
-export default async function handle(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
-  const { body, method, query } = req;
-  const { id: idString } = query;
-  const id = Number(idString);
+const handler = createHandler();
+addStandardDelete({ handler, deleteFunc: deletePhoto })
 
-  try {
-    switch (method) {
-      case "GET":
-        res.status(200).json(await getPhotoById(id));
-        break;
-      case "PATCH":
-        res.status(201).json(await patchPhoto({ data: body.data, id }));
-        break;
-      case "DELETE":
-        await deletePhoto(id);
-        res.status(204).end();
-        break;
-      default:
-        res.setHeader("Allow", ["GET", "DELETE"]);
-        res.status(405).end(`Method ${method} Not Allowed`);
-    }
-  } catch (error) {
-    const { status, message } = processApiError(error);
-    res.status(status).json({ message });
-  }
-}
+handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
+  const id = getIdNumFromReq(req);
+  res.status(200).json(await getPhotoById(id));
+});
+
+handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
+  const id = getIdNumFromReq(req);
+  res.status(201).json(await patchPhoto({ data: req.body.data, id }));
+});
+
+export default handler;

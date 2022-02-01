@@ -55,8 +55,9 @@ export const addMusician = (rawData: MusicianPutData) => {
 export const getMusicianById = (id: number) =>
   prisma.musician.findUnique({ where: { id }, include: { instruments: true } });
 
-export const deleteMusician = (id: number) =>
-  prisma.musician.delete({ where: { id } });
+export const deleteMusician = async (id: number) => {
+  await prisma.musician.delete({ where: { id } });
+};
 
 export const patchMusician = async ({ data, id }: MusicianPatchArgs) => {
   const musicianData = await getMusicianById(id);

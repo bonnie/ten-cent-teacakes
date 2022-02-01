@@ -1,13 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { processApiError } from "@/lib/api/utils";
+import { addStandardDelete, createHandler } from "@/lib/api/handler";
+import { getIdNumFromReq, processApiError } from "@/lib/api/utils";
 
 import { deleteShow, patchShow } from "./queries";
 
-export default async function handle(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
+const handler = createHandler();
+addStandardDelete({ handler, deleteFunc: deleteShow });
+
+handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
+  const id = getIdNumFromReq(req);
+  res.status(201).json(await patchShow({ data: req.body.body, id }));
+});
+
+export async function handle(req: NextApiRequest, res: NextApiResponse) {
   const { body, method, query } = req;
   const { id: idString } = query;
   const id = Number(idString);
@@ -30,3 +36,5 @@ export default async function handle(
     res.status(status).json({ message });
   }
 }
+
+export default handler;

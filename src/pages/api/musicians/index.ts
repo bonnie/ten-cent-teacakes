@@ -1,10 +1,11 @@
 import { withSentry } from "@sentry/nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { handler } from "@/lib/api/handler";
+import { createHandler } from "@/lib/api/handler";
 
 import { addMusician, getMusiciansSortAscending } from "./queries";
 
+const handler = createHandler();
 handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
   res.json(await getMusiciansSortAscending());
 });
