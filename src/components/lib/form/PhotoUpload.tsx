@@ -5,12 +5,6 @@ import { tw } from "twind";
 import { FieldContainer } from "@/components/lib/form/FieldContainer";
 import { uploadPhotoToSupabase } from "@/lib/supabase/utils";
 
-export const photoUploadFields = {
-  photoPath: "photoPath",
-  photoWidth: "photoWidth",
-  photoHeight: "photoHeight",
-};
-
 export const PhotoUpload: React.FC<{
   name: string;
   label?: string;
@@ -25,19 +19,13 @@ export const PhotoUpload: React.FC<{
   const { setValue: setPhotoFileValue } = photoFileHelpers;
   const photoRef = useRef<HTMLInputElement | null>(null);
 
-  const [, , photoPathHelpers] = useField(photoUploadFields.photoPath);
+  const [, , photoPathHelpers] = useField("photoPath");
   const { setValue: setPhotoPathValue } = photoPathHelpers;
-
-  const [, , photoWidthHelpers] = useField(photoUploadFields.photoWidth);
-  const { setValue: setPhotoWidthValue } = photoWidthHelpers;
-
-  const [, , photoHeightHelpers] = useField(photoUploadFields.photoHeight);
-  const { setValue: setPhotoHeightValue } = photoHeightHelpers;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (photoRef.current) {
-      setPhotoWidthValue(photoRef.current.clientWidth);
-      setPhotoHeightValue(photoRef.current.clientHeight);
+      // const imgWidth = photoRef.current.clientWidth;
+      // const imgHeight = photoRef.current.clientHeight;
 
       uploadPhotoToSupabase({
         event,

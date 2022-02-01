@@ -9,31 +9,19 @@ type MusicianEditData = {
   firstName: string;
   lastName: string;
   bio: string;
-  imageWidth: number;
-  imageHeight: number;
   instrumentIds: Array<number>;
 };
 
 const transformData = (
   rawData: MusicianEditData,
 ): Prisma.MusicianCreateInput => {
-  const {
-    firstName,
-    lastName,
-    bio,
-    imagePath,
-    instrumentIds,
-    imageWidth,
-    imageHeight,
-  } = rawData;
+  const { firstName, lastName, bio, imagePath, instrumentIds } = rawData;
 
   return {
     firstName,
     lastName,
     bio,
     imagePath,
-    imagePixelWidth: imageWidth,
-    imagePixelHeight: imageHeight,
     instruments: {
       connect: instrumentIds.map((id) => ({ id })),
     },
@@ -49,24 +37,8 @@ export const getMusiciansSortAscending = async () => {
 };
 
 export const addMusician = (rawData: MusicianPutData) => {
-  const {
-    firstName,
-    lastName,
-    bio,
-    imagePath,
-    instrumentIds,
-    imageWidth,
-    imageHeight,
-  } = rawData;
-  if (
-    !firstName ||
-    !lastName ||
-    !bio ||
-    !imagePath ||
-    !instrumentIds ||
-    !imageWidth ||
-    !imageHeight
-  ) {
+  const { firstName, lastName, bio, imagePath, instrumentIds } = rawData;
+  if (!firstName || !lastName || !bio || !imagePath || !instrumentIds) {
     throw new Error(`Not enough data to add/update Musician: ${rawData}`);
   }
 
@@ -76,8 +48,6 @@ export const addMusician = (rawData: MusicianPutData) => {
     bio,
     imagePath,
     instrumentIds,
-    imageWidth,
-    imageHeight,
   });
   return prisma.musician.create({ data });
 };
@@ -93,15 +63,7 @@ export const patchMusician = async ({ data, id }: MusicianPatchArgs) => {
   if (!musicianData) {
     throw new Error(`Bad musician id: ${id}`);
   }
-  const {
-    firstName,
-    lastName,
-    bio,
-    imagePath,
-    instrumentIds,
-    imageWidth,
-    imageHeight,
-  } = data;
+  const { firstName, lastName, bio, imagePath, instrumentIds } = data;
 
   const existingInstrumentIds: Array<number> = musicianData.instruments
     ? musicianData.instruments.map((i) => i.id)
@@ -130,8 +92,6 @@ export const patchMusician = async ({ data, id }: MusicianPatchArgs) => {
     bio: bio ?? musicianData.bio,
     imagePath: imagePath ?? musicianData.imagePath,
     instrumentIds: instrumentIds ?? existingInstrumentIds,
-    imageWidth: imageWidth ?? musicianData.imagePixelWidth,
-    imageHeight: imageHeight ?? musicianData.imagePixelHeight,
   });
 
   return prisma.musician.update({ data: patchData, where: { id } });

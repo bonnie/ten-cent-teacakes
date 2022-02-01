@@ -31,8 +31,6 @@ model Photo {
   show          Show?      @relation(fields: [showId], references: [id])
   showId        Int?
   imagePath     String     @db.VarChar(255)
-  pixelWidth    Int
-  pixelHeight   Int
   photographer  String?    @db.VarChar(255)
   description   String?    @db.VarChar(255)
   takenAt       DateTime?
@@ -46,8 +44,6 @@ model Musician {
   bio                String
   instruments        Instrument[]
   imagePath          String        @db.VarChar(255)
-  imagePixelWidth    Int
-  imagePixelHeight   Int
 }
 
 model Instrument {

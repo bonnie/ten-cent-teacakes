@@ -105,7 +105,6 @@ const Photo: React.FC = () => {
           "lg:row-span-7",
           "h-full",
           "mb-3",
-          // "bg-black",
           "w-full",
           "relative",
         ])}
@@ -122,8 +121,6 @@ const Photo: React.FC = () => {
             ])}
             src={imgSrc}
             alt={photo.description ?? "Ten-Cent Teacakes"}
-            width={photo.pixelWidth}
-            height={photo.pixelHeight}
             layout="fill"
             objectFit="contain"
           />

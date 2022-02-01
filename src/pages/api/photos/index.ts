@@ -15,8 +15,6 @@ handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
       imagePath: req.body.photoPath,
       showId: req.body.showId,
       photographer: req.body.photographer,
-      photoWidth: req.body.photoWidth,
-      photoHeight: req.body.photoHeight,
     });
     res.status(200).json({ photo });
   } else {

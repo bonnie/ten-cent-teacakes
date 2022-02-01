@@ -54,8 +54,6 @@ export const AddPhotoModal: React.FC = () => {
     showId: undefined,
     photoFile: undefined,
     photoDate: undefined,
-    photoWidth: undefined,
-    photoHeight: undefined,
   };
   const onSubmit = (values: PhotoFormData) => {
     if (values.photoFile)
@@ -64,8 +62,6 @@ export const AddPhotoModal: React.FC = () => {
         photoPath: values.photoPath,
         photographer: values.photographer,
         description: values.description,
-        photoWidth: values.photoWidth,
-        photoHeight: values.photoHeight,
       });
   };
 
