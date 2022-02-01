@@ -54,10 +54,13 @@ npm test
 1. Run `npx vercel link`
 1. Follow instructions to specify the linked project.
 1. Add the following keys to the project environment variables (https://vercel.com/docs/concepts/projects/environment-variables)
-   - `SENTRY_AUTH_TOKEN` (from `.sentryclirc`, all environments)
-   - `DATABASE_URL` (from `.env` different for production vs. preview / development)
-   - `AUTH0_*` (from `.env.local`)
-   - `SENTRY_DSN` (from `.env.local`)
+   - same for all environments
+     - `SENTRY_AUTH_TOKEN` (from `.sentryclirc`)
+     - `SENTRY_DSN` (from `.env.local`)
+   - diffferent for production vs. preview / development
+   - `DATABASE_URL` (from `.env`)
+     - `AUTH0_*` (from `.env.local`)
+     - `SUPABASE_*` (from `.env.local`)
 
 ### Circle CI
 
