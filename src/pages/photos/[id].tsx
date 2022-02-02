@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import dayjs from "dayjs";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -47,10 +46,15 @@ const Photo: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
   const photoId = Number(id);
-  const { photo } = usePhoto({ photoId, routerIsReady: router.isReady });
+  const { photo } = usePhoto({ photoId });
   const { nextAndPrevIndexes } = usePhotos();
 
   const { imgSrc } = useSupabasePhoto(photo?.imagePath ?? null);
+
+  // TODO: this is pretty hack-y, but router.isReady is true even when it still
+  // contains the [id] from the previous route, which leads to the wrong image
+  // showing for half a second or so (without this check)
+  const imageSrcMatches = imgSrc && photo && imgSrc.search(photo.imagePath) > 0;
 
   if (Number.isNaN(photoId)) {
     return <Heading>Photo not found</Heading>;
@@ -109,20 +113,12 @@ const Photo: React.FC = () => {
           "relative",
         ])}
       >
-        {imgSrc ? (
-          <Image
-            className={tw([
-              "border-black",
-              "border-solid",
-              "border-8",
-              "h-full",
-              "w-auto",
-              "mx-auto",
-            ])}
+        {/* TODO: figure out how to use Image for optimization from Supabase */}
+        {imgSrc && imageSrcMatches ? (
+          <img
+            className={tw(["shadow-xl", "h-full", "w-auto", "mx-auto"])}
             src={imgSrc}
             alt={photo.description ?? "Ten-Cent Teacakes"}
-            layout="fill"
-            objectFit="contain"
           />
         ) : (
           <div
