@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { useMemo } from "react";
 import {
   UseMutateFunction,
@@ -50,6 +51,17 @@ type UsePhotosReturnValue = {
   nextAndPrevIndexes: NextAndPrevObject;
 };
 
+const sortPhotos = (photos: Array<PhotoWithShowAndVenue>) =>
+  photos.sort((a, b) => {
+    const photoDateA = dayjs(getPhotoDate(a)).unix();
+    const photoDateB = dayjs(getPhotoDate(b)).unix();
+    if (photoDateA === photoDateB) {
+      // Filename is only important when dates are the same
+      return a.imagePath.localeCompare(b.imagePath);
+    }
+    return photoDateA < photoDateB ? 1 : -1;
+  });
+
 export const usePhotos = (): UsePhotosReturnValue => {
   const { showToast } = useToast();
   const { handleQueryError, handleMutateError } = useHandleError();
@@ -58,13 +70,10 @@ export const usePhotos = (): UsePhotosReturnValue => {
     ({ signal }) => fetchPhotos(signal),
     {
       onError: handleQueryError,
-      select: (photos) =>
-        photos.sort((a, b) => (getPhotoDate(a) > getPhotoDate(b) ? -1 : 1)),
+      select: sortPhotos,
     },
   );
 
-  // got inconsistent results in Firefox vs. Chrome calculating this using
-  // onSuccess in useQuery; one used sorted data, the other didn't.
   const nextAndPrevIndexes = useMemo(() => {
     const tempNextAndPrev: NextAndPrevObject = [];
     photos.forEach((photo, index) => {
