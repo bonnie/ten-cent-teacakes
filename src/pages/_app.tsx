@@ -21,7 +21,7 @@ function TenCentTeacake({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
 
   return (
-    <>
+    <div>
       <Head>
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.tencentteacakes.com" />
@@ -67,7 +67,7 @@ function TenCentTeacake({ Component, pageProps }: AppProps) {
           </UserProvider>
         </ToastProvider>
       </Sentry.ErrorBoundary>{" "}
-    </>
+    </div>
   );
 }
 
