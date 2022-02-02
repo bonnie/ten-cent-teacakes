@@ -72,7 +72,6 @@ const Photo: React.FC = () => {
         "grid-rows-6",
         "lg:grid-rows-8",
         "place-items-center",
-        "w-full",
         "mx-0",
       ])}
     >
