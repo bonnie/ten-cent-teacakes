@@ -2,7 +2,7 @@ import React from "react";
 import { dehydrate, QueryClient, useQueryClient } from "react-query";
 import { tw } from "twind";
 
-import { fetchPhotos, getPhotoDate } from "@/lib/photos";
+import { fetchPhotos } from "@/lib/photos";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { useWillUnmount } from "@/lib/react-query/useWillUnmount";
 
@@ -38,11 +38,7 @@ export const Photos: React.FC<{ count?: number }> = ({ count = undefined }) => {
     >
       {isMountedRef.current
         ? photosSlice.map((photo, index, arr) => (
-            <PhotoThumbnail
-              key={photo.id}
-              photo={photo}
-              photoDate={getPhotoDate(photo)}
-            />
+            <PhotoThumbnail key={photo.id} photo={photo} />
           ))
         : null}
     </div>

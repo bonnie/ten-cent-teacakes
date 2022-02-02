@@ -58,8 +58,6 @@ export const usePhotos = (): UsePhotosReturnValue => {
     ({ signal }) => fetchPhotos(signal),
     {
       onError: handleQueryError,
-      // TODO: this sort isn't working so well
-      // or maybe display isn't working so well?
       select: (photos) =>
         photos.sort((a, b) => (getPhotoDate(a) > getPhotoDate(b) ? -1 : 1)),
     },

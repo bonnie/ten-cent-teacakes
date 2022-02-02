@@ -2,10 +2,11 @@
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { tw } from "twind";
 
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
+import { getPhotoDate } from "@/lib/photos";
 import { PhotoWithShowAndVenue } from "@/lib/photos/types";
 import { useSupabasePhoto } from "@/lib/supabase/hooks/useSupabasePhoto";
 
@@ -14,18 +15,10 @@ import { EditPhotoModal } from "./EditPhotoModal";
 
 export const PhotoThumbnail: React.FC<{
   photo: PhotoWithShowAndVenue;
-  photoDate: Date;
-}> = ({ photo, photoDate }) => {
+}> = ({ photo }) => {
   const { user } = useWhitelistUser();
   const { imgSrc } = useSupabasePhoto(photo.imagePath);
-
-  const isMountedRef = useRef(true);
-  useEffect(
-    () => () => {
-      isMountedRef.current = false;
-    },
-    [],
-  );
+  const photoDate = getPhotoDate(photo);
 
   return (
     <div className={tw(["m-5", "flex", "flex-col", "items-center"])}>
@@ -61,7 +54,7 @@ export const PhotoThumbnail: React.FC<{
       <p className={tw(["text-sm"])}>
         {photo.photographer ? `taken by ${photo.photographer}` : <br />}
       </p>
-      {isMountedRef.current && user ? (
+      {user ? (
         <div>
           <EditPhotoModal photo={photo} />
           <DeletePhotoModal photo={photo} />
