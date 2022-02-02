@@ -25,14 +25,14 @@ export const PhotoThumbnail: React.FC<{
       <div
         className={tw([
           "text-aqua-100",
-          "bg-aqua-800",
+          "bg-aqua-200",
           "rounded-lg",
           "p-4",
           "hover:border-aqua-600",
           "hover:cursor-pointer",
           "border-solid",
           "border-8",
-          "border-black",
+          "border-aqua-200",
         ])}
       >
         <Link href={`/photos/${photo.id}`}>
