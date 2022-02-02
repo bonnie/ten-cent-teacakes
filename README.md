@@ -68,6 +68,22 @@ npm test
 1. Create a new CircleCI project associated with this repository (https://circleci.com/docs/2.0/project-build/#adding-projects)
 1. Enable GitHub checks (https://circleci.com/docs/2.0/enable-checks/)
 
+### Auth0 for Preview Deploys
+
+For each preview deploy git branch, **before** pushing to GitHub:
+
+1. Update `https://manage.auth0.com/dashboard/us/ten-cent-teacakes-dev/applications/<client id>/settings` **-> Application URIs -> Allowed Callback URLs**
+
+   with
+
+   `https://ten-cent-teacakes-git-<branch name>-bonnie.vercel.app/api/auth/callback`
+
+1. Update `https://vercel.com/bonnie/ten-cent-teacakes/settings/environment-variables` **AUTH0_BASE_URL** (for Preview / Development)
+
+   with
+
+   `https://ten-cent-teacakes-git-<branch name>-bonnie.vercel.app/`
+
 ### `main` branch restrictions
 
 Since anything pushed / merged to `main` will be live right away, enact these restrictions
