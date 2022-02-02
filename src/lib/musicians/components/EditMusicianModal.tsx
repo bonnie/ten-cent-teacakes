@@ -25,6 +25,8 @@ const commonFormFields = (
   </>
 );
 
+const squareWarn = "NOTE: Image will be cropped if not square";
+
 const AddMusicianForm: React.FC<{
   props: FormikProps<MusicianFormData>;
 }> = ({ props }) => (
@@ -35,6 +37,7 @@ const AddMusicianForm: React.FC<{
       label="Select musician image"
       required
       uploadDirname={MUSICIANS_DIRNAME}
+      warningText={squareWarn}
     />
   </form>
 );
@@ -49,6 +52,7 @@ const EditMusicianForm: React.FC<{
       label="Select new musician image"
       required={false}
       uploadDirname={MUSICIANS_DIRNAME}
+      warningText={squareWarn}
     />
   </form>
 );
@@ -94,7 +98,13 @@ export const AddMusicianModal: React.FC = () => {
     imageFile: undefined,
   };
   const onSubmit = (values: MusicianFormData) => {
-    addMusician(values);
+    addMusician({
+      firstName: values.firstName,
+      lastName: values.lastName,
+      bio: values.bio,
+      instrumentIds: values.instrumentIds,
+      imagePath: values.photoPath,
+    });
   };
 
   const formikConfig = {
@@ -131,7 +141,13 @@ export const EditMusicianModal: React.FC<{
   const onSubmit = (values: MusicianFormData) => {
     updateMusician({
       id: musician.id,
-      data: values,
+      data: {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        bio: values.bio,
+        imagePath: values.photoPath,
+        instrumentIds: values.instrumentIds,
+      },
     });
   };
 

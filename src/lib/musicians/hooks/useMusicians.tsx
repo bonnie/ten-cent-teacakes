@@ -13,8 +13,8 @@ import {
   patchMusician,
 } from "@/lib/musicians";
 import {
-  MusicianFormData,
   MusicianPatchArgs,
+  MusicianPutData,
   MusicianResponse,
   MusicianWithInstruments,
 } from "@/lib/musicians/types";
@@ -26,7 +26,7 @@ type UseMusiciansReturnValue = {
   addMusician: UseMutateFunction<
     MusicianResponse,
     unknown,
-    MusicianFormData,
+    MusicianPutData,
     unknown
   >;
   deleteMusician: UseMutateFunction<void, unknown, number, unknown>;

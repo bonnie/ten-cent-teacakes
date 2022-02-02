@@ -1,5 +1,6 @@
 import { useField } from "formik";
 import React, { useRef, useState } from "react";
+import { CgSpinner } from "react-icons/cg";
 import { tw } from "twind";
 
 import { FieldContainer } from "@/components/lib/form/FieldContainer";
@@ -10,7 +11,14 @@ export const PhotoUpload: React.FC<{
   label?: string;
   required: boolean;
   uploadDirname: string;
-}> = ({ name, required, label = "Choose a file to upload", uploadDirname }) => {
+  warningText?: string;
+}> = ({
+  name,
+  required,
+  label = "Choose a file to upload",
+  uploadDirname,
+  warningText = undefined,
+}) => {
   const [uploading, setUploading] = useState(false);
   const [photoFile, , photoFileHelpers] = useField({
     name,
@@ -24,6 +32,7 @@ export const PhotoUpload: React.FC<{
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (photoRef.current) {
+      // TODO: confirm musician photo is (roughly) square
       // const imgWidth = photoRef.current.clientWidth;
       // const imgHeight = photoRef.current.clientHeight;
 
@@ -44,6 +53,9 @@ export const PhotoUpload: React.FC<{
       required={required}
       fieldName={name}
     >
+      {warningText ? (
+        <p className={tw(["text-red-500"])}>{warningText}</p>
+      ) : null}
       <input
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...photoFile}
@@ -76,11 +88,21 @@ export const PhotoUpload: React.FC<{
         id={name}
         name={name}
       />
-      {uploading ? <p>Uploading...</p> : null}
+      {uploading ? (
+        <p className={tw(["text-red-500"])}>
+          <CgSpinner
+            className={tw(["animate-spin", "inline-block"])}
+            color="red"
+            size="3em"
+          />
+          Uploading...
+        </p>
+      ) : null}
     </FieldContainer>
   );
 };
 
 PhotoUpload.defaultProps = {
   label: "Choose a file to upload",
+  warningText: undefined,
 };
