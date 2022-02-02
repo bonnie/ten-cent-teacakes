@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import dayjs from "dayjs";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { IconType } from "react-icons";
+import { CgSpinner } from "react-icons/cg";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { tw } from "twind";
 
@@ -46,10 +46,15 @@ const Photo: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
   const photoId = Number(id);
-  const { photo } = usePhoto({ photoId, routerIsReady: router.isReady });
+  const { photo } = usePhoto({ photoId });
   const { nextAndPrevIndexes } = usePhotos();
 
   const { imgSrc } = useSupabasePhoto(photo?.imagePath ?? null);
+
+  // TODO: this is pretty hack-y, but router.isReady is true even when it still
+  // contains the [id] from the previous route, which leads to the wrong image
+  // showing for half a second or so (without this check)
+  const imageSrcMatches = imgSrc && photo && imgSrc.search(photo.imagePath) > 0;
 
   if (Number.isNaN(photoId)) {
     return <Heading>Photo not found</Heading>;
@@ -72,30 +77,29 @@ const Photo: React.FC = () => {
         "grid-rows-6",
         "lg:grid-rows-8",
         "place-items-center",
-        "w-full",
-        "mx-0",
+        "mx-4",
       ])}
     >
       <div className={tw(["grid", "grid-cols-8", "w-full"])}>
         <AdvanceButton Icon={FaArrowLeft} linkIndex={prevIndex} />
-        <div
-          className={tw([
-            "col-span-6",
-            "flex",
-            "justify-center",
-            "items-center",
-          ])}
-        >
-          {user ? (
-            <div className={tw(["mr-5"])}>
-              <EditPhotoModal photo={photo} />
-              <DeletePhotoModal photo={photo} />
-            </div>
+        <div className={tw(["col-span-6"])}>
+          <div className={tw(["flex", "justify-center", "items-center"])}>
+            {user ? (
+              <div className={tw(["mr-5"])}>
+                <EditPhotoModal photo={photo} />
+                <DeletePhotoModal photo={photo} />
+              </div>
+            ) : null}
+            <Heading textSize="5xl">
+              {dayjs(photoDate).format("MMM DD, YYYY")}
+              {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
+            </Heading>
+          </div>
+          {photo.photographer ? (
+            <p className={tw(["text-lg", "text-center"])}>
+              Photo by {photo.photographer}
+            </p>
           ) : null}
-          <Heading textSize="5xl">
-            {dayjs(photoDate).format("MMM DD, YYYY")}
-            {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
-          </Heading>
         </div>
         <AdvanceButton Icon={FaArrowRight} linkIndex={nextIndex} />
       </div>
@@ -109,27 +113,20 @@ const Photo: React.FC = () => {
           "relative",
         ])}
       >
-        {imgSrc ? (
-          <Image
-            className={tw([
-              "border-black",
-              "border-solid",
-              "border-8",
-              "h-full",
-              "w-auto",
-              "mx-auto",
-            ])}
+        {/* TODO: figure out how to use Image for optimization from Supabase */}
+        {imgSrc && imageSrcMatches ? (
+          <img
+            className={tw(["shadow-xl", "h-full", "w-auto", "mx-auto"])}
             src={imgSrc}
             alt={photo.description ?? "Ten-Cent Teacakes"}
-            layout="fill"
-            objectFit="contain"
           />
-        ) : null}
-        {photo.photographer ? (
-          <p className={tw(["text-lg", "text-center"])}>
-            Photo by {photo.photographer}
-          </p>
-        ) : null}
+        ) : (
+          <div
+            className={tw(["flex", "justify-center", "items-center", "h-full"])}
+          >
+            <CgSpinner className={tw(["animate-spin"])} size="6em" />
+          </div>
+        )}
       </div>
       <InternalLinkKeyword href="/photos" className={tw(["mt-5"])}>
         Back to photos

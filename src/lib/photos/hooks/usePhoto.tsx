@@ -7,17 +7,15 @@ import { useHandleError } from "@/lib/react-query/useHandleError";
 
 export const usePhoto = ({
   photoId,
-  routerIsReady,
 }: {
-  photoId: number;
-  routerIsReady: boolean;
+  photoId?: number;
 }): { photo: PhotoWithShowAndVenue | undefined } => {
   const { handleQueryError } = useHandleError();
 
   const { data: photo } = useQuery<PhotoWithShowAndVenue | undefined>(
     [queryKeys.photos, photoId],
     () => {
-      if (routerIsReady) {
+      if (photoId) {
         return fetchPhoto(photoId);
       }
       return undefined;
