@@ -7,10 +7,10 @@ import { tw } from "twind";
 import { InternalLinkKeyword } from "@/components/lib/Style/InternalLinkKeyword";
 import { Section } from "@/components/lib/Style/Section";
 import { validateUser } from "@/lib/auth/utils";
+import { Photos } from "@/lib/photos/components/Photos";
+import { ShowsGroup } from "@/lib/shows/components/ShowsGroup";
+import { useShows } from "@/lib/shows/hooks/useShows";
 import { EmailSignupWithLabel } from "@/pages/more";
-import { Photos } from "@/pages/photos/components/Photos";
-import { ShowsGroup } from "@/pages/shows/components/ShowsGroup";
-import { useShows } from "@/pages/shows/hooks/useShows";
 
 export default function Home() {
   const tenCentLogoAltText =
@@ -23,11 +23,22 @@ export default function Home() {
     if (user && user.email) validateUser(user.email);
   }, [user]);
   return (
-    <div className="flex flex-col justify-start items-center w-full h-100 -mt-2 mb-8">
+    <div
+      className={tw([
+        "flex",
+        "flex-col",
+        "justify-start",
+        "items-center",
+        "w-full",
+        "h-full",
+        "-mt-2",
+        "mb-8",
+      ])}
+    >
       <Head>
         <title>Ten-Cent Teacakes String Band</title>
       </Head>
-      <div className="width-725 height-358">
+      <div>
         <Image
           src="/logo/logo-shadow.png"
           width={725}
@@ -40,7 +51,7 @@ export default function Home() {
       <p className={tw(["text-2xl"])}>
         Eclectic string band music and cheap baked goods
       </p>
-      <Section className="flex flex-col items-center">
+      <Section className={tw(["flex flex-col items-center"])}>
         <EmailSignupWithLabel />
       </Section>
       {upcomingShows.length > 0 ? (
@@ -49,14 +60,14 @@ export default function Home() {
             title="Upcoming Shows"
             shows={upcomingShows.slice(0, 3)}
           />
-          <div className="text-center">
+          <div className={tw(["text-center"])}>
             <InternalLinkKeyword href="/shows">More shows</InternalLinkKeyword>
           </div>
         </Section>
       ) : null}
       <Section>
         <Photos count={3} />
-        <div className="text-center">
+        <div className={tw(["text-center"])}>
           <InternalLinkKeyword href="/photos">More photos</InternalLinkKeyword>
         </div>
       </Section>

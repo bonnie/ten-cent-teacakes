@@ -2,9 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 
 const config: AxiosRequestConfig = {};
 
-if (process.env.NODE === "production") {
-  config.baseURL = "https://tencentteacakes.com/";
-} else {
+if (process.env.NODE_ENV === "test") {
   config.baseURL = "http://localhost:3000/";
 }
 

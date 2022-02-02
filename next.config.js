@@ -6,7 +6,40 @@
 const { withSentryConfig } = require("@sentry/nextjs");
 
 const moduleExports = {
-  // Your existing module.exports
+  // from https://stackoverflow.com/a/68098547
+  webpack5: true,
+  webpack: (config) => {
+    // eslint-disable-next-line no-param-reassign
+    config.resolve.fallback = {
+      fs: false,
+      util: false,
+      assert: false,
+      stream: false,
+      constants: false,
+      path: false,
+      module: false,
+      process: false,
+      crypto: require.resolve("crypto-browserify"),
+    };
+    return config;
+  },
+  images: {
+    disableStaticImages: true,
+    domains: process.env.SUPABASE_STORAGE_DOMAIN
+      ? [process.env.SUPABASE_STORAGE_DOMAIN]
+      : [],
+  },
+  env: {
+    SENTRY_DSN: process.env.SENTRY_DSN,
+    NODE: process.env.NODE,
+    AUTH0_SECRET: process.env.AUTH0_SECRET,
+    AUTH0_BASE_URL: process.env.AUTH0_BASE_URL,
+    AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
+    AUTH0_CLIENT_SECRET: process.env.AUTH0_CLIENT_SECRET,
+    AUTH0_ISSUER_BASE_URL: process.env.AUTH0_ISSUER_BASE_URL,
+    SUPABASE_URL: process.env.SUPABASE_URL,
+    SUPABASE_KEY: process.env.SUPABASE_KEY,
+  },
 };
 
 const sentryWebpackPluginOptions = {
@@ -16,9 +49,9 @@ const sentryWebpackPluginOptions = {
   //   release, url, org, project, authToken, configFile, stripPrefix,
   //   urlPrefix, include, ignore
 
-  silent: true, // Suppresses all logs
-  // For all available options, see:
-  // https://github.com/getsentry/sentry-webpack-plugin#options.
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  include: ".",
+  ignore: ["node_modules", "webpack.config.js"],
 };
 
 // Make sure adding Sentry options is the last code to run before exporting, to

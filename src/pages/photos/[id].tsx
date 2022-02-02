@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import dayjs from "dayjs";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -12,11 +13,11 @@ import { Heading } from "@/components/lib/Style/Heading";
 import { InternalLinkKeyword } from "@/components/lib/Style/InternalLinkKeyword";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { getPhotoDate } from "@/lib/photos";
-
-import { DeletePhotoModal } from "./components/DeletePhotoModal";
-import { EditPhotoModal } from "./components/EditPhotoModal";
-import { usePhoto } from "./hooks/usePhoto";
-import { usePhotos } from "./hooks/usePhotos";
+import { DeletePhotoModal } from "@/lib/photos/components/DeletePhotoModal";
+import { EditPhotoModal } from "@/lib/photos/components/EditPhotoModal";
+import { usePhoto } from "@/lib/photos/hooks/usePhoto";
+import { usePhotos } from "@/lib/photos/hooks/usePhotos";
+import { useSupabasePhoto } from "@/lib/supabase/hooks/useSupabasePhoto";
 
 const AdvanceButton: React.FC<{
   Icon: IconType;
@@ -48,6 +49,8 @@ const Photo: React.FC = () => {
   const { photo } = usePhoto({ photoId, routerIsReady: router.isReady });
   const { nextAndPrevIndexes } = usePhotos();
 
+  const { imgSrc } = useSupabasePhoto(photo?.imagePath ?? null);
+
   if (Number.isNaN(photoId)) {
     return <Heading>Photo not found</Heading>;
   }
@@ -75,9 +78,16 @@ const Photo: React.FC = () => {
     >
       <div className={tw(["grid", "grid-cols-8", "w-full"])}>
         <AdvanceButton Icon={FaArrowLeft} linkIndex={prevIndex} />
-        <div className="col-span-6 flex justify-center items-center">
+        <div
+          className={tw([
+            "col-span-6",
+            "flex",
+            "justify-center",
+            "items-center",
+          ])}
+        >
           {user ? (
-            <div className="mr-5">
+            <div className={tw(["mr-5"])}>
               <EditPhotoModal photo={photo} />
               <DeletePhotoModal photo={photo} />
             </div>
@@ -89,24 +99,39 @@ const Photo: React.FC = () => {
         </div>
         <AdvanceButton Icon={FaArrowRight} linkIndex={nextIndex} />
       </div>
-      <div className={tw(["row-span-5", "lg:row-span-7", "h-full", "mb-3"])}>
-        <img
-          className={tw([
-            "border-black",
-            "border-solid",
-            "border-8",
-            "h-full",
-            "w-auto",
-            "mx-auto",
-          ])}
-          src={photo.imagePath}
-          alt={photo.description ?? "Ten-Cent Teacakes"}
-        />
+      <div
+        className={tw([
+          "row-span-5",
+          "lg:row-span-7",
+          "h-full",
+          "mb-3",
+          "w-full",
+          "relative",
+        ])}
+      >
+        {imgSrc ? (
+          <Image
+            className={tw([
+              "border-black",
+              "border-solid",
+              "border-8",
+              "h-full",
+              "w-auto",
+              "mx-auto",
+            ])}
+            src={imgSrc}
+            alt={photo.description ?? "Ten-Cent Teacakes"}
+            layout="fill"
+            objectFit="contain"
+          />
+        ) : null}
         {photo.photographer ? (
-          <p className="text-lg text-center">Photo by {photo.photographer}</p>
+          <p className={tw(["text-lg", "text-center"])}>
+            Photo by {photo.photographer}
+          </p>
         ) : null}
       </div>
-      <InternalLinkKeyword href="/photos" className="mt-5">
+      <InternalLinkKeyword href="/photos" className={tw(["mt-5"])}>
         Back to photos
       </InternalLinkKeyword>
     </div>

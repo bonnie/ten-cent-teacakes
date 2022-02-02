@@ -3,7 +3,6 @@ import { Prisma } from ".prisma/client";
 
 import { MusicianPatchArgs, MusicianPutData } from "@/lib/musicians/types";
 import prisma from "@/lib/prisma";
-import { removePublicDir } from "@/lib/queries";
 
 type MusicianEditData = {
   imagePath: string;
@@ -22,7 +21,7 @@ const transformData = (
     firstName,
     lastName,
     bio,
-    imagePath: removePublicDir(imagePath),
+    imagePath,
     instruments: {
       connect: instrumentIds.map((id) => ({ id })),
     },
@@ -56,8 +55,9 @@ export const addMusician = (rawData: MusicianPutData) => {
 export const getMusicianById = (id: number) =>
   prisma.musician.findUnique({ where: { id }, include: { instruments: true } });
 
-export const deleteMusician = (id: number) =>
-  prisma.musician.delete({ where: { id } });
+export const deleteMusician = async (id: number) => {
+  await prisma.musician.delete({ where: { id } });
+};
 
 export const patchMusician = async ({ data, id }: MusicianPatchArgs) => {
   const musicianData = await getMusicianById(id);

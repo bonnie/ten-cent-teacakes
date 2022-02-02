@@ -27,7 +27,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
       label={label}
       fieldName={name}
     >
-      <div className="mt-1 flex rounded-md shadow-sm">
+      <div className={tw(["mt-1 flex rounded-md shadow-sm"])}>
         <textarea
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...field}

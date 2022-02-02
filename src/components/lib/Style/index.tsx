@@ -28,5 +28,7 @@ export const StyleComponent: React.FC<{
   baseClasses: Array<string>;
   extraClasses: string | Array<string>;
 }> = ({ children, baseClasses, extraClasses }) => (
-  <div className={tw(mergeClasses(baseClasses, extraClasses))}>{children}</div>
+  <span className={tw(mergeClasses(baseClasses, extraClasses))}>
+    {children}
+  </span>
 );

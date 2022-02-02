@@ -9,7 +9,7 @@ export const Popover: React.FC<{
   const hidePopover = () => setPopoverHidden(true);
 
   const classes = tw([
-    popoverHidden ? "hidden" : null,
+    popoverHidden ? "hidden" : "",
     "px-6",
     "py-2.5",
     "bg-white",

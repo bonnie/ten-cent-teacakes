@@ -6,7 +6,6 @@ import { axiosInstance } from "../axios/axiosInstance";
 import { routes } from "../axios/constants";
 import {
   InstrumentPatchArgs,
-  InstrumentPatchData,
   InstrumentPutData,
   InstrumentResponse,
   InstrumentWithMusicianCount,
@@ -35,7 +34,7 @@ export const patchInstrument = async ({
   data,
 }: InstrumentPatchArgs): Promise<InstrumentResponse> => {
   const { data: instrument } = await axiosInstance.patch<
-    { body: InstrumentPatchData },
+    { body: InstrumentPutData },
     AxiosResponse<Instrument>
   >(`/api/${routes.instruments}/${id}`, { body: data });
   return { instrument };

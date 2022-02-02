@@ -17,12 +17,8 @@ export type MusicianFormData = {
   instrumentIds?: Array<number>;
 };
 
-export type MusicianPutData = {
+export type MusicianPutData = MusicianFormData & {
   imagePath?: string;
-  firstName?: string;
-  lastName?: string;
-  bio?: string;
-  instrumentIds?: Array<number>;
 };
 
 export type MusicianPatchArgs = {

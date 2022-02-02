@@ -1,17 +1,41 @@
 import { useField } from "formik";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { tw } from "twind";
 
 import { FieldContainer } from "@/components/lib/form/FieldContainer";
+import { uploadPhotoToSupabase } from "@/lib/supabase/utils";
 
 export const PhotoUpload: React.FC<{
   name: string;
   label?: string;
   required: boolean;
-}> = ({ name, required, label = "Choose a file to upload" }) => {
-  // eslint-disable-next-line no-unused-vars
-  const [field, _, helpers] = useField({ name, type: "file" });
-  const { setValue } = helpers;
+  uploadDirname: string;
+}> = ({ name, required, label = "Choose a file to upload", uploadDirname }) => {
+  const [uploading, setUploading] = useState(false);
+  const [photoFile, , photoFileHelpers] = useField({
+    name,
+    type: "file",
+  });
+  const { setValue: setPhotoFileValue } = photoFileHelpers;
+  const photoRef = useRef<HTMLInputElement | null>(null);
+
+  const [, , photoPathHelpers] = useField("photoPath");
+  const { setValue: setPhotoPathValue } = photoPathHelpers;
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (photoRef.current) {
+      // const imgWidth = photoRef.current.clientWidth;
+      // const imgHeight = photoRef.current.clientHeight;
+
+      uploadPhotoToSupabase({
+        event,
+        setPhotoFileValue,
+        setPhotoPathValue,
+        setUploading,
+        uploadDirname,
+      });
+    }
+  };
 
   return (
     <FieldContainer
@@ -22,14 +46,9 @@ export const PhotoUpload: React.FC<{
     >
       <input
         // eslint-disable-next-line react/jsx-props-no-spreading
-        {...field}
-        onChange={(event) =>
-          setValue(
-            event.currentTarget.files
-              ? event.currentTarget.files[0]
-              : undefined,
-          )
-        }
+        {...photoFile}
+        ref={photoRef}
+        onChange={handleChange}
         value={undefined}
         className={tw([
           "form-control",
@@ -40,8 +59,10 @@ export const PhotoUpload: React.FC<{
           "text-base",
           "font-normal",
           "text-gray-700",
-          "bg-white bg-clip-padding",
-          "border border-solid border-gray-300",
+          "bg-white",
+          "bg-clip-padding",
+          "border",
+          "border-solid border-gray-300",
           "rounded",
           "transition",
           "ease-in-out",
@@ -55,6 +76,7 @@ export const PhotoUpload: React.FC<{
         id={name}
         name={name}
       />
+      {uploading ? <p>Uploading...</p> : null}
     </FieldContainer>
   );
 };

@@ -2,6 +2,7 @@
 // adapted from https://auth0.com/blog/ultimate-guide-nextjs-authentication-auth0/
 
 import { useUser } from "@auth0/nextjs-auth0";
+import { tw } from "twind";
 
 import { Button } from "@/components/lib/Button";
 import { Heading } from "@/components/lib/Style/Heading";
@@ -16,9 +17,9 @@ const Login = () => {
 
   if (user) {
     return (
-      <div className="text-center">
+      <div className={tw(["text-center"])}>
         <Heading>Welcome!</Heading>
-        <p className="text-xl">You are logged in as {user.name}</p>
+        <p className={tw(["text-xl"])}>You are logged in as {user.name}</p>
         <a href="/api/auth/logout">
           <Button>Log out</Button>
         </a>
@@ -27,7 +28,7 @@ const Login = () => {
   }
 
   return (
-    <div className="text-center">
+    <div className={tw(["text-center"])}>
       <Heading>Log in</Heading>
       <p>Note: this button may take you to an Auth0 login screen.</p>
       <a href="/api/auth/login">

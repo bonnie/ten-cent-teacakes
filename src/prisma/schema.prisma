@@ -38,12 +38,12 @@ model Photo {
 }
 
 model Musician {
-  id           Int           @id @default(autoincrement())
-  firstName    String        @db.VarChar(255)
-  lastName     String        @db.VarChar(255)
-  bio          String
-  instruments  Instrument[]
-  imagePath    String        @db.VarChar(255)
+  id                 Int           @id @default(autoincrement())
+  firstName          String        @db.VarChar(255)
+  lastName           String        @db.VarChar(255)
+  bio                String
+  instruments        Instrument[]
+  imagePath          String        @db.VarChar(255)
 }
 
 model Instrument {

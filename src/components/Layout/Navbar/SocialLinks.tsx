@@ -26,7 +26,7 @@ const SocialLink: React.FC<SocialLinkProps> = ({ Icon, target, label }) => (
 );
 
 export const SocialLinks = () => (
-  <div className="flex space-x-2">
+  <div className={tw(["flex", "space-x-2"])}>
     <SocialLink
       Icon={AiFillTwitterCircle}
       label="Twitter"

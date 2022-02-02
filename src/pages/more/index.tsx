@@ -7,8 +7,7 @@ import { tw } from "twind";
 import { Heading } from "@/components/lib/Style/Heading";
 import { Keyword } from "@/components/lib/Style/Keyword";
 import { LinkKeyword } from "@/components/lib/Style/LinkKeyword";
-
-import { EmailSignupForm } from "./components/EmailSignupForm";
+import { EmailSignupForm } from "@/lib/more/components/EmailSignupForm";
 
 const placementClasses = ["flex", "items-center", "mr-1.5"];
 
@@ -18,7 +17,7 @@ const MoreElement: React.FC<{
   href?: string;
   Icon: IconType;
 }> = ({ keyword, tagline, href = null, Icon }) => {
-  const iconStyled = <Icon className="inline mr-2" />;
+  const iconStyled = <Icon className={tw(["inline", "mr-2"])} />;
   const keywordStyled = href ? (
     <LinkKeyword className={placementClasses} href={href}>
       {iconStyled} {keyword}
@@ -29,7 +28,7 @@ const MoreElement: React.FC<{
     </Keyword>
   );
   return (
-    <div className="flex pt-8 text-2xl">
+    <div className={tw(["flex", "pt-8", "text-2xl"])}>
       {keywordStyled} {tagline}
     </div>
   );
@@ -50,7 +49,7 @@ export const EmailSignupWithLabel: React.FC = () => (
 );
 
 const More: React.FC = () => (
-  <div className="flex flex-col items-center">
+  <div className={tw(["flex", "flex-col", "items-center"])}>
     <Heading>More</Heading>
     <p
       className={tw([
@@ -62,7 +61,7 @@ const More: React.FC = () => (
     >
       more Teacakes, less than 10¢
     </p>
-    <div className="flex flex-col">
+    <div className={tw(["flex", "flex-col"])}>
       <MoreElement
         keyword="Watch"
         tagline="videos on YouTube."

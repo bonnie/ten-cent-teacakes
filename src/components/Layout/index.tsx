@@ -16,12 +16,12 @@ export const Layout: React.FC = ({ children }) => (
       "font-body",
     ])}
   >
-    <div className="w-screen z-50">
+    <div className={tw(["w-screen", "z-50"])}>
       <Navbar />
     </div>
-    <div className="row-span-11 mt-4">
+    <div className={tw(["row-span-11", "mt-4"])}>
       <LoadingSpinner />
-      <main className="m-2 z-0">{children}</main>
+      <main className={tw(["m-2", "z-0"])}>{children}</main>
       <Footer />
     </div>
   </div>

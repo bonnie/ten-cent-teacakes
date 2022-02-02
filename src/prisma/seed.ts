@@ -44,7 +44,7 @@ const createMusicians = async () => {
           { name: "vocals" },
         ],
       },
-      imagePath: "/musicians/sarah.jpg",
+      imagePath: "musicians/sarah.jpg",
     },
     {
       firstName: "Bonnie",
@@ -53,7 +53,7 @@ const createMusicians = async () => {
       instruments: {
         connect: [{ name: "bass" }, { name: "kazoo" }, { name: "vocals" }],
       },
-      imagePath: "/musicians/bonnie.jpg",
+      imagePath: "musicians/bonnie.jpg",
     },
     {
       firstName: "Greg",
@@ -62,7 +62,7 @@ const createMusicians = async () => {
       instruments: {
         connect: [{ name: "fiddle" }, { name: "vocals" }],
       },
-      imagePath: "/musicians/greg.jpg",
+      imagePath: "musicians/greg.jpg",
     },
   ];
   for (const musician of musicianData) {

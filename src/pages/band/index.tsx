@@ -1,22 +1,22 @@
 import React from "react";
-import { dehydrate, QueryClient } from "react-query";
+import { dehydrate, QueryClient, useQueryClient } from "react-query";
+import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { fetchMusiciansWithInstruments } from "@/lib/musicians";
+import { AddMusicianModal } from "@/lib/musicians/components/EditMusicianModal";
+import { EditInstruments } from "@/lib/musicians/components/instruments/EditInstruments";
+import { MusicianCard } from "@/lib/musicians/components/MusicianCard";
+import { useMusicians } from "@/lib/musicians/hooks/useMusicians";
 import { queryKeys } from "@/lib/react-query/query-keys";
-
-import { AddMusicianModal } from "./components/EditMusicianModal";
-import { EditInstruments } from "./components/instruments/EditInstruments";
-import { MusicianCard } from "./components/MusicianCard";
-import { useMusicians } from "./hooks/useMusicians";
+import { useWillUnmount } from "@/lib/react-query/useWillUnmount";
 
 export async function getServerSideProps() {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(
-    queryKeys.musicians,
-    fetchMusiciansWithInstruments,
+  await queryClient.prefetchQuery(queryKeys.musicians, ({ signal }) =>
+    fetchMusiciansWithInstruments(signal),
   );
 
   return {
@@ -27,23 +27,39 @@ export async function getServerSideProps() {
 }
 
 const Musicians: React.FC = () => {
+  const queryClient = useQueryClient();
+
+  const cancelFetch = () => {
+    queryClient.cancelQueries(queryKeys.musicians);
+  };
+  const { isMountedRef } = useWillUnmount(cancelFetch);
+
   const { musicians } = useMusicians();
   const { user } = useWhitelistUser();
 
   return (
-    <div className="w-full">
+    <div className={tw(["w-full"])}>
       <Heading>The Band</Heading>
-      {user ? (
-        <div className="text-center">
+      {isMountedRef.current && user ? (
+        <div className={tw(["text-center"])}>
           <AddMusicianModal />
         </div>
       ) : null}
-      <div className="flex flex-wrap justify-center items-stretch mx-5">
-        {musicians.map((musician) => (
-          <MusicianCard key={musician.id} musician={musician} />
-        ))}
+      <div
+        className={tw([
+          "flex",
+          "flex-wrap",
+          "justify-center",
+          "items-stretch mx-5",
+        ])}
+      >
+        {isMountedRef.current
+          ? musicians.map((musician) => (
+              <MusicianCard key={musician.id} musician={musician} />
+            ))
+          : null}
       </div>
-      {user ? <EditInstruments /> : null}
+      {isMountedRef.current && user ? <EditInstruments /> : null}
     </div>
   );
 };

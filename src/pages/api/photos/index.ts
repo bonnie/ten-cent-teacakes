@@ -1,25 +1,19 @@
 import { withSentry } from "@sentry/nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { NextApiRequestWithFile } from "@/lib/api/types";
-import { createUploadHandler } from "@/lib/api/uploadHandler";
+import { createHandler } from "@/lib/api/handler";
 
 import { addPhoto, getPhotos } from "./queries";
 
-const handler = createUploadHandler({
-  uploadDestinationDir: "photos",
-  uploadFieldName: "photoFile",
-});
-
+const handler = createHandler();
 handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
   res.json(await getPhotos());
 });
 
-handler.put(async (req: NextApiRequestWithFile, res: NextApiResponse) => {
-  const photoPath = req.file?.path;
-  if (photoPath) {
+handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
+  if (req.body.photoPath) {
     const photo = await addPhoto({
-      imagePath: photoPath,
+      imagePath: req.body.photoPath,
       showId: req.body.showId,
       photographer: req.body.photographer,
     });
@@ -28,12 +22,5 @@ handler.put(async (req: NextApiRequestWithFile, res: NextApiResponse) => {
     res.status(400).json({ message: "no file received" });
   }
 });
-
-// disable default bodyParser
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
 
 export default withSentry(handler);

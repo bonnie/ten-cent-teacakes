@@ -12,10 +12,12 @@ import {
 } from "./types";
 
 /* * methods * */
-export const fetchMusiciansWithInstruments = async (): Promise<
-  Array<MusicianWithInstruments>
-> => {
-  const { data } = await axiosInstance.get(`/api/${routes.musicians}`);
+export const fetchMusiciansWithInstruments = async (
+  signal?: AbortSignal,
+): Promise<Array<MusicianWithInstruments>> => {
+  const { data } = await axiosInstance.get(`/api/${routes.musicians}`, {
+    signal,
+  });
   return data;
 };
 

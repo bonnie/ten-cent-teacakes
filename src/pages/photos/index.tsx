@@ -1,10 +1,10 @@
 import React from "react";
+import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
-
-import { AddPhotoModal } from "./components/EditPhotoModal";
-import { Photos } from "./components/Photos";
+import { AddPhotoModal } from "@/lib/photos/components/EditPhotoModal";
+import { Photos } from "@/lib/photos/components/Photos";
 
 const PhotosPage: React.FC = () => {
   const { user } = useWhitelistUser();
@@ -13,7 +13,7 @@ const PhotosPage: React.FC = () => {
     <>
       <Heading>Photos</Heading>
       {user ? (
-        <div className="text-center">
+        <div className={tw(["text-center"])}>
           <AddPhotoModal />
         </div>
       ) : null}

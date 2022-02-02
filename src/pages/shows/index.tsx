@@ -1,20 +1,19 @@
 import React from "react";
 import { dehydrate, QueryClient } from "react-query";
+import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { fetchShows } from "@/lib/shows";
-
-import { AddShowModal } from "./components/EditShowModal";
-import { ShowsGroup } from "./components/ShowsGroup";
-import { EditVenues } from "./components/venues/EditVenues";
-import { useShows } from "./hooks/useShows";
+import { AddShowModal } from "@/lib/shows/components/EditShowModal";
+import { ShowsGroup } from "@/lib/shows/components/ShowsGroup";
+import { EditVenues } from "@/lib/shows/components/venues/EditVenues";
+import { useShows } from "@/lib/shows/hooks/useShows";
 
 export async function getServerSideProps() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(queryKeys.shows, fetchShows);
-  // console.log(dehydrate(queryClient));
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
@@ -30,7 +29,7 @@ const Shows: React.FC = () => {
     <>
       <Heading>Shows</Heading>
       {user ? (
-        <div className="text-center">
+        <div className={tw(["text-center"])}>
           <AddShowModal />
         </div>
       ) : null}
@@ -39,7 +38,7 @@ const Shows: React.FC = () => {
         shows={upcomingShows}
         showTitle={false}
       />
-      <div className="mt-10">
+      <div className={tw(["mt-10"])}>
         <ShowsGroup title="Past Shows" shows={pastShows} />
       </div>
       {user ? <EditVenues /> : null}

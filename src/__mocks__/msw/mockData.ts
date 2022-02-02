@@ -1,5 +1,7 @@
 import { Venue } from "@prisma/client";
 
+import dayjs from "dayjs";
+
 import { ShowWithVenue } from "@/lib/shows/types";
 
 export const mockWhitelist = ["test@test.com"];
@@ -20,7 +22,7 @@ export const mockVenues: Array<Venue> = [
 export const mockShows: Array<ShowWithVenue> = [
   {
     id: 1,
-    performAt: new Date(),
+    performAt: dayjs("2200-01-01").toDate(),
     venueId: 1,
     url: null,
     venue: mockVenues[0],
@@ -30,6 +32,13 @@ export const mockShows: Array<ShowWithVenue> = [
     performAt: new Date(),
     venueId: 2,
     url: "http://venue.com/show",
+    venue: mockVenues[1],
+  },
+  {
+    id: 3,
+    performAt: dayjs("2021-01-01").toDate(),
+    venueId: 2,
+    url: null,
     venue: mockVenues[1],
   },
 ];

@@ -39,10 +39,10 @@ export default function Toast({ status, message, id }: ToastType) {
   return (
     <>
       <div className={classes}>
-        <div className="flex">
-          <div className="flex-shrink-0">
+        <div className={tw(["flex"])}>
+          <div className={tw(["flex-shrink-0"])}>
             <svg
-              className={`h-5 w-5 text-${color}-400`}
+              className={tw(["h-5", "w-5", `text-${color}-400`])}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
@@ -51,26 +51,36 @@ export default function Toast({ status, message, id }: ToastType) {
               <Icon />
             </svg>
           </div>
-          <div className="ml-3">
-            <p className={tw(`text-sm font-medium text-${color}-800`)}>
+          <div className={tw(["ml-3"])}>
+            <p className={tw(["text-sm", "font-medium", `text-${color}-800`])}>
               {message}
             </p>
           </div>
-          <div className="ml-auto pl-3">
-            <div className="-mx-1.5 -my-1.5">
+          <div className={tw(["ml-auto", "pl-3"])}>
+            <div className={tw(["-mx-1.5", "-my-1.5"])}>
               <button
                 type="button"
                 onClick={() => {
                   dispatch({ type: "DELETE_TOAST", id });
                 }}
-                className={tw(
-                  `inline-flex bg-${color}-50 rounded-md p-1.5 text-${color}-500 hover:bg-${color}-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-${color}-50 focus:ring-${color}-600`,
-                )}
+                className={tw([
+                  "inline-flex",
+                  `bg-${color}-50`,
+                  "rounded-md",
+                  "p-1.5",
+                  `text-${color}-500`,
+                  `hover:bg-${color}-100`,
+                  "focus:outline-none",
+                  "focus:ring-2",
+                  "focus:ring-offset-2",
+                  `focus:ring-offset-${color}-50`,
+                  `focus:ring-${color}-600`,
+                ])}
               >
-                <span className="sr-only">Dismiss</span>
+                <span className={tw(["sr-only"])}>Dismiss</span>
 
                 <svg
-                  className="h-5 w-5"
+                  className={tw(["h-5", "w-5"])}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
