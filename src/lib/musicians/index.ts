@@ -5,7 +5,6 @@ import { AxiosResponse } from "axios";
 import { axiosInstance } from "../axios/axiosInstance";
 import { routes } from "../axios/constants";
 import {
-  MusicianFormData,
   MusicianPatchArgs,
   MusicianPutData,
   MusicianResponse,
@@ -22,28 +21,13 @@ export const fetchMusiciansWithInstruments = async (
   return data;
 };
 
-const createFormData = (rawData: MusicianFormData): FormData => {
-  const formData = new FormData();
-  if (rawData.imageFile) formData.set("imageFile", rawData.imageFile);
-  if (rawData.firstName) formData.set("firstName", rawData.firstName);
-  if (rawData.lastName) formData.set("lastName", rawData.lastName);
-  if (rawData.bio) formData.set("bio", rawData.bio);
-  if (rawData.instrumentIds)
-    formData.set("instrumentIds", JSON.stringify(rawData.instrumentIds));
-
-  return formData;
-};
-
 export const addMusician = async (
-  data: MusicianFormData,
+  data: MusicianPutData,
 ): Promise<MusicianResponse> => {
-  const formData = createFormData(data);
   const { data: musician } = await axiosInstance.put<
-    FormData,
+    { data: MusicianPutData },
     AxiosResponse<Musician>
-  >(`/api/${routes.musicians}`, formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
+  >(`/api/${routes.musicians}`, { data });
 
   return { musician };
 };

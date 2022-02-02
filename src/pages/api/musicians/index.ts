@@ -11,19 +11,8 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
 });
 
 handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
-  const { firstName, lastName, bio, instrumentIds, imagePath } = req.body;
-  if (imagePath) {
-    const musician = await addMusician({
-      imagePath,
-      firstName,
-      lastName,
-      bio,
-      instrumentIds: JSON.parse(instrumentIds),
-    });
-    res.status(200).json({ musician });
-  } else {
-    res.status(400).json({ message: "no file received" });
-  }
+  const musician = await addMusician(req.body.data);
+  res.status(200).json({ musician });
 });
 
 export default withSentry(handler);
