@@ -6,7 +6,6 @@ import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { MusicianWithInstruments } from "@/lib/musicians/types";
 import { useSupabasePhoto } from "@/lib/supabase/hooks/useSupabasePhoto";
 
-import { DeleteMusicianModal } from "./DeleteMusicianModal";
 import { EditMusicianModal } from "./EditMusicianModal";
 
 const cardClasses = tw([
@@ -92,7 +91,6 @@ export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
             {user ? (
               <span className={tw(["mr-1"])}>
                 <EditMusicianModal musician={musician} />
-                <DeleteMusicianModal musician={musician} />
               </span>
             ) : null}{" "}
             <p className={tw(["font-display", "inline-block"])}>
