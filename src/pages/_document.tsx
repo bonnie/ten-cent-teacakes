@@ -32,35 +32,6 @@ class MyDocument extends Document {
             href="https://fonts.cdnfonts.com/css/delfina"
             rel="stylesheet"
           />
-          <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://www.tencentteacakes.com" />
-          <meta property="og:title" content="Ten-Cent Teacakes" />
-          <meta
-            property="og:description"
-            content="Eclectic string band music and cheap baked goods"
-          />
-          <meta
-            property="og:image"
-            content="https://www.tencentteacakes.com/_next/image?url=%2Flogo%2Flogo-shadow.png&w=1920&q=75"
-          />
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:site" content="@TenCentTeacakes" />
-          <meta name="twitter:creator" content="@TenCentTeacakes" />
-          <meta name="twitter:domain" content="tencentteacakes.com" />
-          <meta name="twitter:title" content="Ten-Cent Teacakes" />
-          <meta
-            name="twitter:description"
-            content="Eclectic string band music and cheap baked goods"
-          />
-          <meta
-            name="twitter:image"
-            content="https://www.tencentteacakes.com/_next/image?url=%2Flogo%2Flogo-shadow.png&w=1920&q=75"
-          />
-          <meta
-            name="twitter:image:alt"
-            content="Ten-Cent Teacakes String Band, teacake with 10-cent price tag"
-          />
-          <meta name="twitter:url" content="https://www.tencentteacakes.com" />
         </Head>
         <body className={tw(["bg-aqua-100"])}>
           <Main />
