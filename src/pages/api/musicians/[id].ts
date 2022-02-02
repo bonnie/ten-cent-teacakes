@@ -12,15 +12,9 @@ addStandardDelete({ handler, deleteFunc: deleteMusician });
 
 handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
   const id = getIdNumFromReq(req);
-  const { firstName, lastName, bio, instrumentIds, imagePath } = req.body;
-  const data = {
-    firstName,
-    lastName,
-    bio,
-    imagePath,
-    instrumentIds: JSON.parse(instrumentIds),
-  };
-  return res.status(201).json(await patchMusician({ data, id }));
+  const { data } = req.body;
+  const musician = await patchMusician({ data, id });
+  return res.status(201).json(musician);
 });
 
 export default withSentry(handler);

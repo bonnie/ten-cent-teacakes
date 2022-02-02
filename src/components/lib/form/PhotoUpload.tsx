@@ -24,6 +24,7 @@ export const PhotoUpload: React.FC<{
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (photoRef.current) {
+      // TODO: confirm musician photo is (roughly) square
       // const imgWidth = photoRef.current.clientWidth;
       // const imgHeight = photoRef.current.clientHeight;
 

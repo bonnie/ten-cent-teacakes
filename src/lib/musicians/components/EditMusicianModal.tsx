@@ -131,7 +131,13 @@ export const EditMusicianModal: React.FC<{
   const onSubmit = (values: MusicianFormData) => {
     updateMusician({
       id: musician.id,
-      data: values,
+      data: {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        bio: values.bio,
+        imagePath: values.photoPath,
+        instrumentIds: values.instrumentIds,
+      },
     });
   };
 

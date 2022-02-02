@@ -7,6 +7,7 @@ import { routes } from "../axios/constants";
 import {
   MusicianFormData,
   MusicianPatchArgs,
+  MusicianPutData,
   MusicianResponse,
   MusicianWithInstruments,
 } from "./types";
@@ -51,14 +52,10 @@ export const patchMusician = async ({
   id,
   data,
 }: MusicianPatchArgs): Promise<MusicianResponse> => {
-  const formData = createFormData(data);
-
   const { data: musician } = await axiosInstance.patch<
-    FormData,
+    { data: MusicianPutData },
     AxiosResponse<Musician>
-  >(`/api/${routes.musicians}/${id}`, formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
+  >(`/api/${routes.musicians}/${id}`, { data });
 
   return { musician };
 };

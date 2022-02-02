@@ -9,7 +9,6 @@ import {
 
 import { useToast } from "@/components/toasts/useToast";
 import {
-  addPhoto,
   addUploadedPhoto,
   deletePhoto,
   fetchPhotos,
@@ -18,7 +17,6 @@ import {
   PhotoResponse,
 } from "@/lib/photos";
 import {
-  PhotoFormData,
   PhotoPatchArgs,
   PhotoWithShowAndVenue,
   UploadedPhotoFormData,
@@ -34,7 +32,6 @@ export type NextAndPrevObject = Record<number, NextAndPrev>;
 
 type UsePhotosReturnValue = {
   photos: Array<PhotoWithShowAndVenue>;
-  addPhoto: UseMutateFunction<PhotoResponse, unknown, PhotoFormData, unknown>;
   addUploadedPhoto: UseMutateFunction<
     PhotoResponse,
     unknown,
@@ -89,14 +86,6 @@ export const usePhotos = (): UsePhotosReturnValue => {
   const invalidatePhotos = () =>
     queryClient.invalidateQueries([queryKeys.photos]);
 
-  const { mutate: addPhotoMutate } = useMutation(queryKeys.photos, addPhoto, {
-    onSuccess: () => {
-      invalidatePhotos();
-      showToast("success", "You have added a photo");
-    },
-    onError: (error) => handleMutateError(error, "add photo"),
-  });
-
   const { mutate: addUploadedPhotoMutate } = useMutation(
     queryKeys.photos,
     addUploadedPhoto,
@@ -131,7 +120,6 @@ export const usePhotos = (): UsePhotosReturnValue => {
 
   return {
     photos,
-    addPhoto: addPhotoMutate,
     addUploadedPhoto: addUploadedPhotoMutate,
     updatePhoto,
     deletePhoto: deletePhotoMutate,

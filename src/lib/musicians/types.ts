@@ -15,6 +15,7 @@ export type MusicianFormData = {
   lastName?: string;
   bio?: string;
   instrumentIds?: Array<number>;
+  photoPath?: string;
 };
 
 export type MusicianPutData = MusicianFormData & {
