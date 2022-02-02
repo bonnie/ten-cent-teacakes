@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { IconType } from "react-icons";
+import { CgSpinner } from "react-icons/cg";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { tw } from "twind";
 
@@ -72,29 +73,29 @@ const Photo: React.FC = () => {
         "grid-rows-6",
         "lg:grid-rows-8",
         "place-items-center",
-        "mx-0",
+        "mx-4",
       ])}
     >
       <div className={tw(["grid", "grid-cols-8", "w-full"])}>
         <AdvanceButton Icon={FaArrowLeft} linkIndex={prevIndex} />
-        <div
-          className={tw([
-            "col-span-6",
-            "flex",
-            "justify-center",
-            "items-center",
-          ])}
-        >
-          {user ? (
-            <div className={tw(["mr-5"])}>
-              <EditPhotoModal photo={photo} />
-              <DeletePhotoModal photo={photo} />
-            </div>
+        <div className={tw(["col-span-6"])}>
+          <div className={tw(["flex", "justify-center", "items-center"])}>
+            {user ? (
+              <div className={tw(["mr-5"])}>
+                <EditPhotoModal photo={photo} />
+                <DeletePhotoModal photo={photo} />
+              </div>
+            ) : null}
+            <Heading textSize="5xl">
+              {dayjs(photoDate).format("MMM DD, YYYY")}
+              {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
+            </Heading>
+          </div>
+          {photo.photographer ? (
+            <p className={tw(["text-lg", "text-center"])}>
+              Photo by {photo.photographer}
+            </p>
           ) : null}
-          <Heading textSize="5xl">
-            {dayjs(photoDate).format("MMM DD, YYYY")}
-            {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
-          </Heading>
         </div>
         <AdvanceButton Icon={FaArrowRight} linkIndex={nextIndex} />
       </div>
@@ -123,12 +124,13 @@ const Photo: React.FC = () => {
             layout="fill"
             objectFit="contain"
           />
-        ) : null}
-        {photo.photographer ? (
-          <p className={tw(["text-lg", "text-center"])}>
-            Photo by {photo.photographer}
-          </p>
-        ) : null}
+        ) : (
+          <div
+            className={tw(["flex", "justify-center", "items-center", "h-full"])}
+          >
+            <CgSpinner className={tw(["animate-spin"])} size="6em" />
+          </div>
+        )}
       </div>
       <InternalLinkKeyword href="/photos" className={tw(["mt-5"])}>
         Back to photos
