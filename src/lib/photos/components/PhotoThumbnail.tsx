@@ -28,7 +28,7 @@ export const PhotoThumbnail: React.FC<{
           "bg-aqua-200",
           "rounded-lg",
           "p-4",
-          "hover:border-aqua-600",
+          "hover:border-aqua-300",
           "hover:cursor-pointer",
           "border-solid",
           "border-8",
