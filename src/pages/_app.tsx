@@ -7,18 +7,19 @@ import withTwindApp from "@twind/next/app";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import React from "react";
-import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
+import { Hydrate, QueryClientProvider } from "react-query";
 import { tw } from "twind";
 
 import { Layout } from "@/components/Layout";
 import { ErrorComponent } from "@/components/lib/ErrorComponent";
 import { ToastContainer } from "@/components/toasts/ToastContainer";
 import { ToastProvider } from "@/components/toasts/ToastContext";
+import { createQueryClient } from "@/lib/react-query/query-client";
 
 import twindConfig from "../../twind.config";
 
 function TenCentTeacake({ Component, pageProps }: AppProps) {
-  const [queryClient] = React.useState(() => new QueryClient());
+  const [queryClient] = React.useState(createQueryClient);
 
   return (
     <div>
