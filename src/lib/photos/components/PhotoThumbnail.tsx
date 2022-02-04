@@ -5,6 +5,7 @@ import Link from "next/link";
 import React from "react";
 import { tw } from "twind";
 
+import { getThumbName } from "@/lib/api/utils";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { getPhotoDate } from "@/lib/photos";
 import { PhotoWithShowAndVenue } from "@/lib/photos/types";
@@ -17,7 +18,7 @@ export const PhotoThumbnail: React.FC<{
   photo: PhotoWithShowAndVenue;
 }> = ({ photo }) => {
   const { user } = useWhitelistUser();
-  const { imgSrc } = useSupabasePhoto(photo.imagePath);
+  const { imgSrc } = useSupabasePhoto(getThumbName(photo.imagePath));
   const photoDate = getPhotoDate(photo);
 
   return (

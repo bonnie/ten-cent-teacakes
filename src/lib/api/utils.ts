@@ -23,18 +23,36 @@ export const processApiError = (error: unknown) => {
   return { status, message };
 };
 
-export const uniquifyFilename = (filename: string): string => {
-  let fileBasename = filename;
-  let fileExtension = "";
-
-  const filenameTokens = filename.match(/(.*)\.([^.]*)/);
-  if (filenameTokens) {
-    [, fileBasename, fileExtension] = filenameTokens;
+const getFilenameParts = (
+  filename: string,
+): { fileBasename?: string; fileExtension?: string } => {
+  const tokens = filename.match(/(.*)\.([^.]*)/);
+  if (tokens) {
+    const [, fileBasename, fileExtension] = tokens;
+    return { fileBasename, fileExtension };
   }
-  return `${fileBasename}-${dayjs().unix()}.${fileExtension}`;
+  return { fileBasename: filename, fileExtension: "" };
+};
+
+export const uniquifyFilename = (
+  filename: string,
+): { uniqueFileName: string; uniqueThumbnailFileName: string } => {
+  const { fileBasename, fileExtension } = getFilenameParts(filename);
+  const uniqueFileBasename = `${fileBasename}-${dayjs().unix()}`;
+  const uniqueFileName = `${uniqueFileBasename}.${fileExtension}`;
+
+  return {
+    uniqueFileName,
+    uniqueThumbnailFileName: getThumbName(uniqueFileName),
+  };
 };
 
 export const getIdNumFromReq = (req: NextApiRequest) => {
   const { id: idString } = req.query;
   return Number(idString);
+};
+
+export const getThumbName = (filename: string): string => {
+  const { fileBasename, fileExtension } = getFilenameParts(filename);
+  return `${fileBasename}-thumb.${fileExtension}`;
 };
