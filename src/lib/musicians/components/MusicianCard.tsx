@@ -1,4 +1,4 @@
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { tw } from "twind";
 
@@ -64,7 +64,9 @@ export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
       <div className={cardClasses}>
         <div>
           <div
+            style={{ height: "250px" }}
             className={tw([
+              "relative",
               "rounded-lg",
               "-mt-12",
               "text-center",
@@ -72,16 +74,15 @@ export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
               "px-12",
             ])}
           >
-            <Image
+            <img
+              style={{ height: "250px", width: "250px" }}
               className={tw([
                 "rounded-lg",
                 "shadow-lg",
-                "p-10",
+                // "p-10",
+                "object-cover",
                 imageTransitionClass,
               ])}
-              objectFit="cover"
-              height={250}
-              width={250}
               src={imgSrc ?? "/logo/tencent-tag.svg"}
               alt={musician.firstName}
             />

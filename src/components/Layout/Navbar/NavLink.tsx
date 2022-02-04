@@ -1,4 +1,4 @@
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -37,14 +37,11 @@ export const NavLink: React.FC<NavLinkProps> = ({
           "lg:py-5",
         ])}
       >
-        <Image
+        <img
+          style={{ height: "40px", width: "300px" }}
           src={`/nav-banners/${pageName}-light.png`}
           // TODO: height should increase as page width gets smaller
-          height={100}
-          width={240}
           alt={`banner containing the word ${pageName}`}
-          placeholder="blur"
-          blurDataURL={`/nav-banners/${pageName}-light-blur.png`}
         />
       </button>
     </Link>
