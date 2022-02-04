@@ -53,6 +53,7 @@ const EditMusicianForm: React.FC<{
       required={false}
       uploadDirname={MUSICIANS_DIRNAME}
       warningText={squareWarn}
+      maxDimension={500}
     />
   </form>
 );

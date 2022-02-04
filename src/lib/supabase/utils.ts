@@ -1,51 +1,94 @@
 import * as Sentry from "@sentry/nextjs";
+import imageCompression from "browser-image-compression";
 import React from "react";
 
 import { uniquifyFilename } from "@/lib/api/utils";
 import { supabase } from "@/lib/supabase";
 import { UPLOADS_BUCKET } from "@/lib/supabase/constants";
 
-export async function uploadPhotoToSupabase({
-  event,
-  setPhotoFileValue,
+const uploadPhotoToSupabase = async ({
+  photoPath,
+  photoFile,
   setPhotoPathValue,
-  setUploading,
-  uploadDirname,
+}: {
+  setUploading: React.Dispatch<React.SetStateAction<boolean>>;
+  photoPath: string;
+  photoFile: File;
+  setPhotoPathValue: (value: any, shouldValidate?: boolean | undefined) => void;
+}) => {
+  const { data, error } = await supabase.storage
+    .from(UPLOADS_BUCKET)
+    .upload(photoPath, photoFile);
+
+  if (error) {
+    setPhotoPathValue(undefined);
+    Sentry.captureException(error);
+    throw error;
+  }
+
+  return data;
+};
+
+export async function uploadPhotoAndThumbnailToSupabase({
+  event,
+  setPhotoFileValue, // for form
+  setPhotoPathValue, // for form
+  setUploading, // for spinner
+  uploadDirname, // directory in bucket
+  maxThumbnailDimension,
+  maxDimension, // for "full size" photo
 }: {
   event: React.ChangeEvent<HTMLInputElement>;
   setPhotoFileValue: (value: any, shouldValidate?: boolean | undefined) => void;
   setPhotoPathValue: (value: any, shouldValidate?: boolean | undefined) => void;
   setUploading: React.Dispatch<React.SetStateAction<boolean>>;
   uploadDirname: string;
+  maxThumbnailDimension?: number;
+  maxDimension?: number;
 }) {
   setPhotoFileValue(
     event.currentTarget.files ? event.currentTarget.files[0] : undefined,
   );
-  // TODO: make separate buckets for dev / production
-  // TODO: upload musician images to buckets and remove from app
   if (event.currentTarget.files) {
     const photoFile = event.currentTarget.files[0];
     if (photoFile) {
-      const uniqueName = uniquifyFilename(photoFile.name);
-      const photoPath = `${uploadDirname}/${uniqueName}`;
-
       setUploading(true);
-      const { data, error } = await supabase.storage
-        .from(UPLOADS_BUCKET)
-        .upload(photoPath, photoFile);
-      setUploading(false);
+      const { uniqueFileName, uniqueThumbnailFileName } = uniquifyFilename(
+        photoFile.name,
+      );
 
-      if (error) {
-        setPhotoPathValue(undefined);
-        Sentry.captureException(error);
-        throw error;
+      // thumbnail
+      if (maxThumbnailDimension) {
+        const thumbnailPath = `${uploadDirname}/${uniqueThumbnailFileName}`;
+        const thumbPhotoFile = await imageCompression(photoFile, {
+          maxWidthOrHeight: maxThumbnailDimension,
+        });
+        await uploadPhotoToSupabase({
+          photoPath: thumbnailPath,
+          photoFile: thumbPhotoFile,
+          setUploading,
+          setPhotoPathValue,
+        });
       }
 
+      // large file
+      const photoPath = `${uploadDirname}/${uniqueFileName}`;
+      const largePhotoFile = await imageCompression(photoFile, {
+        maxWidthOrHeight: maxDimension,
+      });
+      const data = await uploadPhotoToSupabase({
+        photoPath,
+        photoFile: largePhotoFile,
+        setUploading,
+        setPhotoPathValue,
+      });
       if (data) {
         setPhotoPathValue(photoPath);
       } else {
         throw new Error("did not receive key from Supabase upload");
       }
+
+      setUploading(false);
     }
   }
 }

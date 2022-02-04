@@ -4,7 +4,7 @@ import { CgSpinner } from "react-icons/cg";
 import { tw } from "twind";
 
 import { FieldContainer } from "@/components/lib/form/FieldContainer";
-import { uploadPhotoToSupabase } from "@/lib/supabase/utils";
+import { uploadPhotoAndThumbnailToSupabase } from "@/lib/supabase/utils";
 
 export const PhotoUpload: React.FC<{
   name: string;
@@ -12,12 +12,16 @@ export const PhotoUpload: React.FC<{
   required: boolean;
   uploadDirname: string;
   warningText?: string;
+  maxThumbnailDimension?: number;
+  maxDimension?: number;
 }> = ({
   name,
   required,
   label = "Choose a file to upload",
   uploadDirname,
   warningText = undefined,
+  maxThumbnailDimension = undefined,
+  maxDimension = undefined,
 }) => {
   const [uploading, setUploading] = useState(false);
   const [photoFile, , photoFileHelpers] = useField({
@@ -36,12 +40,14 @@ export const PhotoUpload: React.FC<{
       // const imgWidth = photoRef.current.clientWidth;
       // const imgHeight = photoRef.current.clientHeight;
 
-      uploadPhotoToSupabase({
+      uploadPhotoAndThumbnailToSupabase({
         event,
         setPhotoFileValue,
         setPhotoPathValue,
         setUploading,
         uploadDirname,
+        maxThumbnailDimension,
+        maxDimension,
       });
     }
   };
@@ -95,7 +101,7 @@ export const PhotoUpload: React.FC<{
             color="red"
             size="3em"
           />
-          Uploading...
+          Compressing and uploading...
         </p>
       ) : null}
     </FieldContainer>
@@ -105,4 +111,6 @@ export const PhotoUpload: React.FC<{
 PhotoUpload.defaultProps = {
   label: "Choose a file to upload",
   warningText: undefined,
+  maxDimension: undefined,
+  maxThumbnailDimension: undefined,
 };
