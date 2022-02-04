@@ -36,7 +36,7 @@ export async function uploadPhotoAndThumbnailToSupabase({
   setUploading, // for spinner
   uploadDirname, // directory in bucket
   maxThumbnailDimension,
-  maxSizeMB, // for "full size" photo
+  maxDimension, // for "full size" photo
 }: {
   event: React.ChangeEvent<HTMLInputElement>;
   setPhotoFileValue: (value: any, shouldValidate?: boolean | undefined) => void;
@@ -44,7 +44,7 @@ export async function uploadPhotoAndThumbnailToSupabase({
   setUploading: React.Dispatch<React.SetStateAction<boolean>>;
   uploadDirname: string;
   maxThumbnailDimension?: number;
-  maxSizeMB?: number;
+  maxDimension?: number;
 }) {
   setPhotoFileValue(
     event.currentTarget.files ? event.currentTarget.files[0] : undefined,
@@ -73,7 +73,9 @@ export async function uploadPhotoAndThumbnailToSupabase({
 
       // large file
       const photoPath = `${uploadDirname}/${uniqueFileName}`;
-      const largePhotoFile = await imageCompression(photoFile, { maxSizeMB });
+      const largePhotoFile = await imageCompression(photoFile, {
+        maxWidthOrHeight: maxDimension,
+      });
       const data = await uploadPhotoToSupabase({
         photoPath,
         photoFile: largePhotoFile,

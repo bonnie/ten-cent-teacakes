@@ -37,8 +37,8 @@ export const AddPhotoForm: React.FC<{
       name="photoFile"
       required
       uploadDirname={PHOTOS_DIRNAME}
-      maxThumbnailDimension={200}
-      maxSizeMB={0.8}
+      maxThumbnailDimension={300}
+      maxDimension={1000}
     />
     {editFields}
   </form>

@@ -13,7 +13,7 @@ export const PhotoUpload: React.FC<{
   uploadDirname: string;
   warningText?: string;
   maxThumbnailDimension?: number;
-  maxSizeMB?: number;
+  maxDimension?: number;
 }> = ({
   name,
   required,
@@ -21,7 +21,7 @@ export const PhotoUpload: React.FC<{
   uploadDirname,
   warningText = undefined,
   maxThumbnailDimension = undefined,
-  maxSizeMB = undefined,
+  maxDimension = undefined,
 }) => {
   const [uploading, setUploading] = useState(false);
   const [photoFile, , photoFileHelpers] = useField({
@@ -47,7 +47,7 @@ export const PhotoUpload: React.FC<{
         setUploading,
         uploadDirname,
         maxThumbnailDimension,
-        maxSizeMB,
+        maxDimension,
       });
     }
   };
@@ -111,6 +111,6 @@ export const PhotoUpload: React.FC<{
 PhotoUpload.defaultProps = {
   label: "Choose a file to upload",
   warningText: undefined,
-  maxSizeMB: undefined,
+  maxDimension: undefined,
   maxThumbnailDimension: undefined,
 };
