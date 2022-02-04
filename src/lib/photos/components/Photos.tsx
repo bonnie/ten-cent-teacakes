@@ -34,7 +34,12 @@ export const Photos: React.FC<{ count?: number }> = ({ count = undefined }) => {
 
   return (
     <div
-      className={tw(["flex", "flex-wrap", "justify-center", "items-baseline"])}
+      className={tw([
+        "flex",
+        "flex-wrap",
+        "align-items-start",
+        "justify-center",
+      ])}
     >
       {isMountedRef.current
         ? photosSlice.map((photo, index, arr) => (

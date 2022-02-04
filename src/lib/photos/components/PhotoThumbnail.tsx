@@ -22,23 +22,15 @@ export const PhotoThumbnail: React.FC<{
 
   return (
     <div
-      className={tw([
-        "m-5",
-        "flex",
-        "flex-col",
-        "items-center",
-        "justify-self-start",
-        "self-start",
-      ])}
+      style={{ width: "240px" }}
+      className={tw(["m-5", "flex", "flex-col", "items-center"])}
     >
       <Link href={`/photos/${photo.id}`} passHref>
         <div
           style={{ height: "240px", width: "240px" }}
           className={tw([
-            "text-aqua-100",
             "bg-aqua-200",
             "rounded-lg",
-            "p-4",
             "hover:border-aqua-300",
             "hover:cursor-pointer",
             "border-solid",
@@ -47,12 +39,11 @@ export const PhotoThumbnail: React.FC<{
             "flex",
             "items-center",
             "justify-items-center",
-            "justify-baseline",
           ])}
         >
           <img
             style={{ maxHeight: "200px", maxWidth: "200px" }}
-            className={tw(["mx-auto", "my-auto", "align-center"])}
+            className={tw(["mx-auto"])}
             src={imgSrc ?? "/logo/tencent-tag.svg"}
             alt={photo.description ?? "Ten-cent Teacakes"}
           />
@@ -67,7 +58,7 @@ export const PhotoThumbnail: React.FC<{
         {photo.photographer ? `taken by ${photo.photographer}` : <br />}
       </p>
       {user ? (
-        <div>
+        <div className={tw(["justify-self-end"])}>
           <EditPhotoModal photo={photo} />
           <DeletePhotoModal photo={photo} />
         </div>
