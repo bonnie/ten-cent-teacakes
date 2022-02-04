@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import { useUser } from "@auth0/nextjs-auth0";
 import Head from "next/head";
-import Image from "next/image";
 import React from "react";
 import { tw } from "twind";
 
@@ -39,14 +39,7 @@ export default function Home() {
         <title>Ten-Cent Teacakes String Band</title>
       </Head>
       <div>
-        <Image
-          src="/logo/logo-shadow.png"
-          width={725}
-          height={358}
-          alt={tenCentLogoAltText}
-          placeholder="blur"
-          blurDataURL="/logo/logo-shadow-blur.png"
-        />
+        <img src="/logo/logo-shadow.png" alt={tenCentLogoAltText} />
       </div>
       <p className={tw(["text-2xl"])}>
         Eclectic string band music and cheap baked goods

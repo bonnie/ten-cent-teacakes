@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 // adapted from
 // https://dev.to/andrewespejo/how-to-design-a-simple-and-beautiful-navbar-using-nextjs-and-tailwindcss-26p1
 import { useUser } from "@auth0/nextjs-auth0";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { RiLogoutCircleRLine } from "react-icons/ri";
@@ -72,7 +72,7 @@ export const Navbar: React.FC = () => {
             "focus:outline-none",
           ])}
         >
-          <Image
+          <img
             src="/logo/tencent-tag.svg"
             alt="tag reading '10 cents'"
             height={50}
