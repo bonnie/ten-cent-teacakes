@@ -77,10 +77,8 @@ export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
             <img
               style={{ height: "250px", width: "250px" }}
               className={tw([
-                "rounded-lg",
-                "shadow-lg",
-                // "p-10",
-                "object-cover",
+                imgSrc ? "rounded-lg" : "",
+                imgSrc ? "shadow-lg" : "",
                 imageTransitionClass,
               ])}
               src={imgSrc ?? "/logo/tencent-tag.svg"}
