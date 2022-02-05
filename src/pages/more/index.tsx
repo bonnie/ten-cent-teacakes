@@ -1,5 +1,6 @@
 import React from "react";
 import { IconType } from "react-icons";
+import { BiChat } from "react-icons/bi";
 import { FiTwitter, FiYoutube } from "react-icons/fi";
 import { MdOutlineMail } from "react-icons/md";
 import { tw } from "twind";
@@ -73,6 +74,11 @@ const More: React.FC = () => (
         tagline="on Twitter."
         href="https://twitter.com/TenCentTeacakes"
         Icon={FiTwitter}
+      />
+      <MoreElement
+        keyword="Contact us"
+        tagline="at info@tencentteacakes.com"
+        Icon={BiChat}
       />
       <EmailSignupWithLabel />
     </div>
