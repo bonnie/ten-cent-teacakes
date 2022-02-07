@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { createHandler } from "@/lib/api/handler";
-
-import { addShow, getShows } from "./queries";
+import { addShow, getShows } from "@/lib/prisma/queries/shows";
 
 const handler = createHandler();
 handler.get(async (req: NextApiRequest, res: NextApiResponse) =>

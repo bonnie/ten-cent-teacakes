@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { processApiError } from "@/lib/api/utils";
-
-import { deleteVenue, patchVenue } from "./queries";
+import { deleteVenue, patchVenue } from "@/lib/prisma/queries/venues";
 
 export default async function handle(
   req: NextApiRequest,

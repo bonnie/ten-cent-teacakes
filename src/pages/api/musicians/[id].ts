@@ -3,8 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { addStandardDelete, createHandler } from "@/lib/api/handler";
 import { getIdNumFromReq } from "@/lib/api/utils";
-
-import { deleteMusician, patchMusician } from "./queries";
+import { deleteMusician, patchMusician } from "@/lib/prisma/queries/musicians";
 
 const handler = createHandler();
 

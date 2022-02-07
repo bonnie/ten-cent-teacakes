@@ -2,8 +2,10 @@ import { withSentry } from "@sentry/nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { createHandler } from "@/lib/api/handler";
-
-import { addMusician, getMusiciansSortAscending } from "./queries";
+import {
+  addMusician,
+  getMusiciansSortAscending,
+} from "@/lib/prisma/queries/musicians";
 
 const handler = createHandler();
 handler.get(async (req: NextApiRequest, res: NextApiResponse) => {

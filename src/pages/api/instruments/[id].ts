@@ -2,8 +2,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { addStandardDelete, createHandler } from "@/lib/api/handler";
 import { getIdNumFromReq } from "@/lib/api/utils";
-
-import { deleteInstrument, patchInstrument } from "./queries";
+import {
+  deleteInstrument,
+  patchInstrument,
+} from "@/lib/prisma/queries/instruments";
 
 const handler = createHandler();
 addStandardDelete({ handler, deleteFunc: deleteInstrument });

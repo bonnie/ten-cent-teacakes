@@ -8,8 +8,7 @@ import {
   PhotoWithShowAndVenue,
 } from "@/lib/photos/types";
 import prisma from "@/lib/prisma";
-
-import { getVenueById } from "../venues/queries";
+import { getVenueById } from "@/lib/prisma/queries/venues";
 
 export const getPhotos = async () => {
   const photos = await prisma.photo.findMany({

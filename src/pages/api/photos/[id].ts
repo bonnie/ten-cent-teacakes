@@ -2,8 +2,11 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { addStandardDelete, createHandler } from "@/lib/api/handler";
 import { getIdNumFromReq } from "@/lib/api/utils";
-
-import { deletePhoto, getPhotoById, patchPhoto } from "./queries";
+import {
+  deletePhoto,
+  getPhotoById,
+  patchPhoto,
+} from "@/lib/prisma/queries/photos";
 
 const handler = createHandler();
 addStandardDelete({ handler, deleteFunc: deletePhoto });
