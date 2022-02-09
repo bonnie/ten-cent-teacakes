@@ -10,18 +10,18 @@ import "@testing-library/jest-dom/extend-expect";
 // eslint-disable-next-line no-unused-vars
 import { describe, expect, test } from "@jest/globals";
 
+import { server } from "./src/__mocks__/msw/server";
+
 jest.mock("@/lib/prisma/queries/venues", () =>
   jest.requireActual("@/lib/prisma/queries/__mocks__/venues")
 );
 
-// import { server } from "./src/__mocks__/msw/server";
-
 // Establish API mocking before all tests.
-// beforeAll(() => server.listen());
+beforeAll(() => server.listen());
 
 // Reset any request handlers that we may add during the tests,
 // so they don't affect other tests.
-// afterEach(() => server.resetHandlers());
+afterEach(() => server.resetHandlers());
 
 // Clean up after the tests are finished.
-// afterAll(() => server.close());
+afterAll(() => server.close());
