@@ -10,7 +10,7 @@
     "prisma:migrate:dev": "npx prisma migrate dev",
     "prisma:seed": "npx prisma db seed",
     "start": "next start",
-    "test:ui-integration": "jest --ci -c ./src/__tests__/ui-integration/jest.config.js",
+    "test:ui": "jest --ci -c ./src/__tests__/ui-integration/jest.config.js",
     "test:api": "jest --ci -c ./src/__tests__/api/jest.config.js",
     "test:db:migrate": "npx prisma migrate reset --force --skip-generate --skip-seed",
     "test": "jest --watch",
