@@ -11,9 +11,9 @@ import dayjs from "dayjs";
 
 const prismaClient = new PrismaClient();
 
-const yesterday = dayjs().subtract(1, "day").toDate();
-const tomorrow = dayjs().add(1, "day").toDate();
-const nextMonth = dayjs().add(1, "month").toDate();
+export const yesterday = dayjs().subtract(1, "day").toDate();
+export const tomorrow = dayjs().add(1, "day").toDate();
+export const nextMonth = dayjs().add(1, "month").toDate();
 
 const deleteAll = async () => {
   await prismaClient.musician.deleteMany({});
