@@ -98,7 +98,7 @@ jobs:
           echo DATABASE_URL=$DATABASE_MIGRATE_URL >> .env.migrate
       - run:
           name: migrate test DB
-          command: npx run test:db:migrate
+          command: npm run test:db:migrate
 
   test-api:
     docker:

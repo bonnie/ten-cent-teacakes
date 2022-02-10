@@ -11,7 +11,7 @@
     "prisma:seed": "npx prisma db seed",
     "prisma:setmigratedb": "export DATABASE_URL=$DATABASE_MIGRATE_URL",
     "start": "next start",
-    "test:ui:integration": "jest --ci",
+    "test:ui:integration": "jest --ci -c ./src/__tests__/ui-integration/jest.config.js",
     "test:api": "jest --ci -c ./src/__tests__/api/jest.config.js",
     "test:db:migrate": "dotenv -e .env.migrate -- npx prisma migrate reset --force --skip-generate --skip-seed",
     "test": "jest --watch",
