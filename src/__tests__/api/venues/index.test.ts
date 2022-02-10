@@ -13,8 +13,8 @@ test("fetches all venues", async () => {
       const res = await fetch({ method: "GET" });
       const json = await res.json();
       expect(json).toEqual([
-        { id: 1, name: "Venue 1", url: null, showCount: 0 },
-        { id: 2, name: "Venue 2", url: "http://venue.com", showCount: 1 },
+        { id: 1, name: "Venue 1", url: "http://venue1.com", showCount: 2 },
+        { id: 2, name: "Venue 2", url: null, showCount: 1 },
       ]);
     },
   });
@@ -26,9 +26,14 @@ test("adds new venue", async () => {
   await testApiHandler({
     handler,
     test: async ({ fetch }) => {
-      const res = await fetch({ method: "PUT" });
-      const status = await res.status();
-      expect(status).toEqual(200);
+      const res = await fetch({
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({ body: venuePutData }),
+      });
+      expect(res.status).toEqual(201);
     },
   });
 
@@ -37,12 +42,15 @@ test("adds new venue", async () => {
   await testApiHandler({
     handler,
     test: async ({ fetch }) => {
-      const res = await fetch({ method: "GET", data: venuePutData });
+      const res = await fetch({
+        method: "GET",
+      });
       const json = await res.json();
-      const newVenue = json.filter(
+      const newVenueArray = json.filter(
         (venue: Venue) => venue.name === "New Venue",
       );
-      expect(newVenue).toHaveLength(1);
+      expect(newVenueArray).toHaveLength(1);
+      expect(newVenueArray[0].showCount).toBe(0);
     },
   });
 });

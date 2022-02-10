@@ -10,8 +10,7 @@ import "@testing-library/jest-dom/extend-expect";
 // eslint-disable-next-line no-unused-vars
 import { describe, expect, test } from "@jest/globals";
 
-import { seedDb } from "@/__tests__/prisma/seed-test-db";
-import prismaClient from "@/__tests__/prisma/test-prisma-client";
+import { resetDB } from '../prisma/reset-db'
 
 // // if mocking db rather than using test db
 // jest.mock("@/lib/prisma/queries/venues", () =>
@@ -19,15 +18,15 @@ import prismaClient from "@/__tests__/prisma/test-prisma-client";
 // );
 
 beforeAll(async () => {
-  // migrate and seed db
-  prismaClient.$migrate();
-  await seedDb(prismaClient);
+  // seed db
+  await resetDB();
 });
 
 afterEach(async () => {
   // reset and seed db
-  await prismaClient.$reset();
-  await seedDb(prismaClient);
+  await resetDB();
 });
 
-afterAll(() => {});
+afterAll(async () => {
+
+});

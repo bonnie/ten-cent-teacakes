@@ -9,10 +9,20 @@ import { PrismaClient } from "@prisma/client";
 
 import dayjs from "dayjs";
 
+const prismaClient = new PrismaClient();
+
 const yesterday = dayjs().subtract(1, "day").toDate();
 const tomorrow = dayjs().add(1, "day").toDate();
+const nextMonth = dayjs().add(1, "month").toDate();
 
-const createVenues = async (prismaClient: PrismaClient) => {
+const deleteAll = async () => {
+  await prismaClient.musician.deleteMany();
+  await prismaClient.instrument.deleteMany();
+  await prismaClient.show.deleteMany();
+  await prismaClient.venue.deleteMany();
+};
+
+const createVenues = async () => {
   const venueData = [
     {
       name: "Venue 1",
@@ -22,37 +32,38 @@ const createVenues = async (prismaClient: PrismaClient) => {
       name: "Venue 2",
     },
   ];
-
-  prismaClient.venue.createMany({ data: venueData });
+  await prismaClient.venue.createMany({ data: venueData });
 };
 
-const createShows = async (prismaClient: PrismaClient) => {
+const createShows = async () => {
   const venue1 = await prismaClient.venue.findUnique({
     where: { name: "Venue 1" },
   });
   const venue2 = await prismaClient.venue.findUnique({
-    where: { name: "Venue 1" },
+    where: { name: "Venue 2" },
   });
   if (!venue1 || !venue2) {
     throw new Error("Could not find venue(s) in seeded db.");
   }
   const showData = [
     {
-      name: "Show 1",
       performAt: yesterday,
       venueId: venue1.id,
     },
     {
-      name: "Show 2",
       performAt: tomorrow,
-      url: `${venue2.url}/show2`,
+      url: `${venue1.url}/show2`,
+      venueId: venue1.id,
+    },
+    {
+      performAt: nextMonth,
       venueId: venue2.id,
     },
   ];
-  prismaClient.show.createMany({ data: showData });
+  await prismaClient.show.createMany({ data: showData });
 };
 
-const createInstruments = async (prismaClient: PrismaClient) => {
+const createInstruments = async () => {
   const instrumentNames = [
     "guitar",
     "baritone ukulele",
@@ -61,12 +72,12 @@ const createInstruments = async (prismaClient: PrismaClient) => {
     "kazoo",
     "fiddle",
   ];
-  prismaClient.instrument.createMany({
+  await prismaClient.instrument.createMany({
     data: instrumentNames.map((name) => ({ name })),
   });
 };
 
-const createMusicians = async (prismaClient: PrismaClient) => {
+const createMusicians = async () => {
   const musicianData = [
     {
       firstName: "Sarah",
@@ -100,18 +111,25 @@ const createMusicians = async (prismaClient: PrismaClient) => {
       imagePath: "musicians/greg.jpg",
     },
   ];
-  prismaClient.musician.createMany({ data: musicianData });
+
+  // createMany doesn't allow the { instruments: { connect } } syntax
+  // await prismaClient.musician.createMany({ data: musicianData });
+  for (const musician of musicianData) {
+    await prismaClient.musician.create({ data: musician });
+  }
 };
 
-export const seedDb = async (prismaClient: PrismaClient) => {
+export const resetDB = async () => {
   try {
-    await createInstruments(prismaClient);
-    await createMusicians(prismaClient);
-    await createVenues(prismaClient);
-    await createShows(prismaClient);
+    await deleteAll();
+    await createInstruments();
+    await createMusicians();
+    await createVenues();
+    await createShows();
   } catch (error) {
     console.error("Failed to seed DB");
-    throw error;
+    console.error(error);
+    process.exit(1);
   } finally {
     await prismaClient.$disconnect();
   }

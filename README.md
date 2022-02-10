@@ -15,17 +15,19 @@ To save time for CI and not bother to commit if lint / ts checks fail.
 1. Create a SQL (PostgreSQL, MySQL etc) db for the project
 1. `mv .env_template .env`
 1. Add the URL for your db to `.env`
-1. Run `npx prisma migrate dev --name init --schema src/prisma/schema.prisma` to add the tables from the prisma schema to your db
+1. (if using supabase) `mv .env.migrate_template .env.migrate`
+1. (if using supabase) Add the migration URL for your db to `.env.migrate` -- see note below
+1. Run `npm run prisma:init` to add the tables from the prisma schema to your db
 
 #### Notes on Prisma and Supabase
 
 Reference: https://supabase.com/docs/guides/integrations/prisma
 
-- production _migration_
+- _migration_ (in `.env.migrate`)
 
   - DATABASE_URL="postgres://postgres:<password>@db.<db id>.supabase.co:5432/postgres"
 
-- production _use_
+- _queries_ (in `.env`)
   - DATABASE_URL="postgres://postgres:<password>@db.<db id>.supabase.co:6543/postgres?pgbouncer=true"
 
 ### Auth0

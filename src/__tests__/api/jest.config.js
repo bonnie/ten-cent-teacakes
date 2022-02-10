@@ -15,7 +15,7 @@ const customJestConfig = {
     // Handle module aliases
     "^@/(.*)$": "<rootDir>/../../$1",
   },
-  setupFilesAfterEnv: ["./jest.setup.js"],
+  setupFilesAfterEnv: ["./jest.setup.ts"],
   testRegex: "(/./.*|(\\.|/)(test))\\.[jt]sx?$",
   // if using TypeScript with a baseUrl set to the root directory then you need the below for alias' to work
   moduleDirectories: ["node_modules", "<rootDir>/"],
