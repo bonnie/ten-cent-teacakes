@@ -9,10 +9,20 @@ workflows:
     jobs:
       - lint
       - ts-check
-      - test:
+      - migrate-testDB:
           requires:
             - ts-check
             - lint
+      - test-api:
+          requires:
+            - ts-check
+            - lint
+            - migrate-testDB
+      - test-ui-integration:
+          requires:
+            - ts-check
+            - lint
+            - migrate-testDB
 
 jobs:
   lint:
@@ -61,7 +71,7 @@ jobs:
           name: ts-check
           command: npm run ts-check
 
-  test:
+  migrate-testDB:
     docker:
       - image: cimg/node:16.3.0
     steps:
@@ -81,8 +91,60 @@ jobs:
           paths:
             - node_modules
       - run:
-          name: tests
-          command: npm run test:ci
+          # for supabase prisma, migrate db url is different from db url
+          # https://supabase.com/docs/guides/integrations/prisma
+          |
+          touch .env.migrate
+          echo DATABASE_URL=$DATABASE_MIGRATE_URL >> .env.migrate
+      - run:
+          name: migrate test DB
+          command: npx run test:db:migrate
+
+  test-api:
+    docker:
+      - image: cimg/node:16.3.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            # Find a cache corresponding to this specific package-lock.json checksum
+            # when this file is changed, this key will fail
+            - v1-npm-deps-{{ checksum "package-lock.json" }}
+            # Find the most recently generated cache used from any branch
+            - v1-npm-deps-
+      - run:
+          name: install dependencies
+          command: npm install
+      - save_cache:
+          key: v1-npm-deps-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: API tests
+          command: npm run test:api
+
+  test-ui-integration:
+    docker:
+      - image: cimg/node:16.3.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            # Find a cache corresponding to this specific package-lock.json checksum
+            # when this file is changed, this key will fail
+            - v1-npm-deps-{{ checksum "package-lock.json" }}
+            # Find the most recently generated cache used from any branch
+            - v1-npm-deps-
+      - run:
+          name: install dependencies
+          command: npm install
+      - save_cache:
+          key: v1-npm-deps-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: UI integration tests
+          command: npm run test:ui:integration
 #
 #
 # TODO: get build URL from vercel to use as client for cypress tests

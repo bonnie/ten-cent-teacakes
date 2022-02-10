@@ -12,9 +12,17 @@ test("fetches all venues", async () => {
     test: async ({ fetch }) => {
       const res = await fetch({ method: "GET" });
       const json = await res.json();
+
+      // ids don't reset after deleteMany, so actual number is not predictable depending
+      // on which tests ran before this one.
       expect(json).toEqual([
-        { id: 1, name: "Venue 1", url: "http://venue1.com", showCount: 2 },
-        { id: 2, name: "Venue 2", url: null, showCount: 1 },
+        {
+          id: json[0].id,
+          name: "Venue 1",
+          url: "http://venue1.com",
+          showCount: 2,
+        },
+        { id: json[1].id, name: "Venue 2", url: null, showCount: 1 },
       ]);
     },
   });
