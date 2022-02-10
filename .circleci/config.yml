@@ -91,12 +91,6 @@ jobs:
           paths:
             - node_modules
       - run:
-          # for supabase prisma, migrate db url is different from db url
-          # https://supabase.com/docs/guides/integrations/prisma
-          |
-          touch .env.migrate
-          echo DATABASE_URL=$DATABASE_MIGRATE_URL >> .env.migrate
-      - run:
           name: migrate test DB
           command: npm run test:db:migrate
 
