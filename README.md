@@ -15,19 +15,18 @@ To save time for CI and not bother to commit if lint / ts checks fail.
 1. Create a SQL (PostgreSQL, MySQL etc) db for the project
 1. `mv .env_template .env`
 1. Add the URL for your db to `.env`
-1. (if using supabase) `mv .env.migrate_template .env.migrate`
-1. (if using supabase) Add the migration URL for your db to `.env.migrate` -- see note below
 1. Run `npm run prisma:init` to add the tables from the prisma schema to your db
 
 #### Notes on Prisma and Supabase
 
 Reference: https://supabase.com/docs/guides/integrations/prisma
+(though migration seems to work fine with the pooled connection in CircleCI 🤷‍♀️)
 
-- _migration_ (in `.env.migrate`)
+- _migration_
 
   - DATABASE_URL="postgres://postgres:<password>@db.<db id>.supabase.co:5432/postgres"
 
-- _queries_ (in `.env`)
+- _queries_
   - DATABASE_URL="postgres://postgres:<password>@db.<db id>.supabase.co:6543/postgres?pgbouncer=true"
 
 ### Auth0
@@ -69,6 +68,7 @@ npm test
 1. Create `.circleci/config.yml` file
 1. Create a new CircleCI project associated with this repository (https://circleci.com/docs/2.0/project-build/#adding-projects)
 1. Enable GitHub checks (https://circleci.com/docs/2.0/enable-checks/)
+1. Add `DATABASE_URL` environment variable (https://circleci.com/docs/2.0/env-vars/)
 
 ### Auth0 for Preview Deploys
 

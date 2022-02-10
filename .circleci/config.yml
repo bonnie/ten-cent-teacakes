@@ -9,16 +9,15 @@ workflows:
     jobs:
       - lint
       - ts-check
+      - test-ui:
+          requires:
+            - ts-check
+            - lint
       - migrate-testDB:
           requires:
             - ts-check
             - lint
       - test-api:
-          requires:
-            - ts-check
-            - lint
-            - migrate-testDB
-      - test-ui-integration:
           requires:
             - ts-check
             - lint
@@ -114,10 +113,10 @@ jobs:
           paths:
             - node_modules
       - run:
-          name: API tests
+          name: API tests (Jest)
           command: npm run test:api
 
-  test-ui-integration:
+  test-ui:
     docker:
       - image: cimg/node:16.3.0
     steps:
@@ -137,8 +136,8 @@ jobs:
           paths:
             - node_modules
       - run:
-          name: UI integration tests
-          command: npm run test:ui:integration
+          name: UI tests (Jest)
+          command: npm run test:ui
 #
 #
 # TODO: get build URL from vercel to use as client for cypress tests
