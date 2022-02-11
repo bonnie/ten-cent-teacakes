@@ -129,7 +129,6 @@ export const resetDB = async () => {
   } catch (error) {
     console.error("Failed to seed DB");
     console.error(error);
-    process.exit(1);
   } finally {
     await prismaClient.$disconnect();
   }
