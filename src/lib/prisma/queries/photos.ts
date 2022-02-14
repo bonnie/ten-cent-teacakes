@@ -55,8 +55,6 @@ export const addPhoto = ({
     description,
   });
   const photoData: Prisma.PhotoCreateInput = {
-    // remove public directory at the beginning, for link path
-    // but leave the forward slash after so the path starts with `/`
     imagePath,
     ...metadata,
   };

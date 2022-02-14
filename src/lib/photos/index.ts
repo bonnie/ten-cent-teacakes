@@ -33,7 +33,7 @@ export const fetchPhoto = async (
 export const addUploadedPhoto = async (
   data: UploadedPhotoFormData,
 ): Promise<PhotoResponse> => {
-  if (!data.photoPath) throw new Error("Can't create; no photo path");
+  if (!data.imagePath) throw new Error("Can't create; no photo path");
   const { data: photo } = await axiosInstance.put<
     UploadedPhotoFormData,
     AxiosResponse<Photo>

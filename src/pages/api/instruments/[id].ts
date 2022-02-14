@@ -14,7 +14,7 @@ handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
   res
     .status(201)
     .json(
-      await patchInstrument({ data: req.body.body, id: getIdNumFromReq(req) }),
+      await patchInstrument({ data: req.body.data, id: getIdNumFromReq(req) }),
     );
 });
 

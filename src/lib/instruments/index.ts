@@ -23,9 +23,9 @@ export const addInstrument = async (
   data: InstrumentPutData,
 ): Promise<InstrumentResponse> => {
   const { data: instrument } = await axiosInstance.put<
-    { body: InstrumentPutData },
+    { data: InstrumentPutData },
     AxiosResponse<Instrument>
-  >(`/api/${routes.instruments}`, { body: data });
+  >(`/api/${routes.instruments}`, { data });
   return { instrument };
 };
 
@@ -34,9 +34,9 @@ export const patchInstrument = async ({
   data,
 }: InstrumentPatchArgs): Promise<InstrumentResponse> => {
   const { data: instrument } = await axiosInstance.patch<
-    { body: InstrumentPutData },
+    { data: InstrumentPutData },
     AxiosResponse<Instrument>
-  >(`/api/${routes.instruments}/${id}`, { body: data });
+  >(`/api/${routes.instruments}/${id}`, { data });
   return { instrument };
 };
 

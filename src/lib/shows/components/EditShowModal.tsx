@@ -50,9 +50,13 @@ const EditShowForm: React.FC<{
 );
 
 const validate = (values: ShowFormData) => {
-  const errors: { performDate?: string } = {};
+  const errors: { performDate?: string; venueId?: string } = {};
   if (!values.performDate) {
     errors.performDate = "Performance date is required";
+  }
+  if (!values.venueId) {
+    errors.venueId =
+      'Venue is required; use "TBD" or "Private Event" if unknown';
   }
   return errors;
 };
@@ -70,12 +74,16 @@ export const AddShowModal: React.FC = () => {
     url: "",
   };
 
-  const onSubmit = (values: ShowFormData) =>
+  const onSubmit = (values: ShowFormData) => {
+    if (!values.venueId) {
+      return;
+    }
     addShow({
       venueId: values.venueId,
       performAt: getShowDateTimeFromForm(values),
       url: values.url ?? "",
     });
+  };
 
   const formikConfig = { initialValues, validate, onSubmit };
 

@@ -9,7 +9,7 @@ addStandardDelete({ handler, deleteFunc: deleteShow });
 
 handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
   const id = getIdNumFromReq(req);
-  res.status(201).json(await patchShow({ data: req.body.body, id }));
+  res.status(201).json(await patchShow({ data: req.body.data, id }));
 });
 
 export async function handle(req: NextApiRequest, res: NextApiResponse) {

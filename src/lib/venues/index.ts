@@ -20,9 +20,9 @@ export const fetchVenues = async (): Promise<Array<VenueWithShowCount>> => {
 
 export const addVenue = async (data: VenuePutData): Promise<VenueResponse> => {
   const { data: venue } = await axiosInstance.put<
-    { body: VenuePutData },
+    { data: VenuePutData },
     AxiosResponse<VenueWithShowCount>
-  >(`/api/${routes.venues}`, { body: data });
+  >(`/api/${routes.venues}`, { data });
   return { venue };
 };
 
@@ -31,9 +31,9 @@ export const patchVenue = async ({
   data,
 }: VenuePatchArgs): Promise<VenuePatchResponse> => {
   const { data: venue } = await axiosInstance.patch<
-    { body: VenuePutData },
+    { data: VenuePutData },
     AxiosResponse<Venue>
-  >(`/api/${routes.venues}/${id}`, { body: data });
+  >(`/api/${routes.venues}/${id}`, { data });
   return { venue };
 };
 

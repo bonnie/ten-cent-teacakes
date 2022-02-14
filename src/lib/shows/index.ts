@@ -29,9 +29,9 @@ export const fetchShows = async (): Promise<Array<ShowWithVenue>> => {
 
 export const addShow = async (data: ShowPutData): Promise<ShowResponse> => {
   const { data: show } = await axiosInstance.put<
-    { body: ShowPutData },
+    { data: ShowPutData },
     AxiosResponse<Show>
-  >(`/api/${routes.shows}`, { body: data });
+  >(`/api/${routes.shows}`, { data });
   return { show };
 };
 
@@ -40,9 +40,9 @@ export const patchShow = async ({
   data,
 }: ShowPatchArgs): Promise<ShowResponse> => {
   const { data: show } = await axiosInstance.patch<
-    { body: ShowPatchData },
+    { data: ShowPatchData },
     AxiosResponse<Show>
-  >(`/api/${routes.shows}/${id}`, { body: data });
+  >(`/api/${routes.shows}/${id}`, { data });
   return { show };
 };
 

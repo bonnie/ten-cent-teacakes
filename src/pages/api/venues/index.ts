@@ -9,7 +9,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) =>
 );
 
 handler.put(async (req: NextApiRequest, res: NextApiResponse) =>
-  res.status(201).json(await addVenue(req.body.body)),
+  res.status(200).json(await addVenue(req.body.data)),
 );
 
 export default handler;

@@ -7,21 +7,21 @@ import { supabase } from "@/lib/supabase";
 import { UPLOADS_BUCKET } from "@/lib/supabase/constants";
 
 const uploadPhotoToSupabase = async ({
-  photoPath,
+  imagePath,
   photoFile,
-  setPhotoPathValue,
+  setimagePathValue,
 }: {
   setUploading: React.Dispatch<React.SetStateAction<boolean>>;
-  photoPath: string;
+  imagePath: string;
   photoFile: File;
-  setPhotoPathValue: (value: any, shouldValidate?: boolean | undefined) => void;
+  setimagePathValue: (value: any, shouldValidate?: boolean | undefined) => void;
 }) => {
   const { data, error } = await supabase.storage
     .from(UPLOADS_BUCKET)
-    .upload(photoPath, photoFile);
+    .upload(imagePath, photoFile);
 
   if (error) {
-    setPhotoPathValue(undefined);
+    setimagePathValue(undefined);
     Sentry.captureException(error);
     throw error;
   }
@@ -32,7 +32,7 @@ const uploadPhotoToSupabase = async ({
 export async function uploadPhotoAndThumbnailToSupabase({
   event,
   setPhotoFileValue, // for form
-  setPhotoPathValue, // for form
+  setimagePathValue, // for form
   setUploading, // for spinner
   uploadDirname, // directory in bucket
   maxThumbnailDimension,
@@ -40,7 +40,7 @@ export async function uploadPhotoAndThumbnailToSupabase({
 }: {
   event: React.ChangeEvent<HTMLInputElement>;
   setPhotoFileValue: (value: any, shouldValidate?: boolean | undefined) => void;
-  setPhotoPathValue: (value: any, shouldValidate?: boolean | undefined) => void;
+  setimagePathValue: (value: any, shouldValidate?: boolean | undefined) => void;
   setUploading: React.Dispatch<React.SetStateAction<boolean>>;
   uploadDirname: string;
   maxThumbnailDimension?: number;
@@ -64,26 +64,26 @@ export async function uploadPhotoAndThumbnailToSupabase({
           maxWidthOrHeight: maxThumbnailDimension,
         });
         await uploadPhotoToSupabase({
-          photoPath: thumbnailPath,
+          imagePath: thumbnailPath,
           photoFile: thumbPhotoFile,
           setUploading,
-          setPhotoPathValue,
+          setimagePathValue,
         });
       }
 
       // large file
-      const photoPath = `${uploadDirname}/${uniqueFileName}`;
+      const imagePath = `${uploadDirname}/${uniqueFileName}`;
       const largePhotoFile = await imageCompression(photoFile, {
         maxWidthOrHeight: maxDimension,
       });
       const data = await uploadPhotoToSupabase({
-        photoPath,
+        imagePath,
         photoFile: largePhotoFile,
         setUploading,
-        setPhotoPathValue,
+        setimagePathValue,
       });
       if (data) {
-        setPhotoPathValue(photoPath);
+        setimagePathValue(imagePath);
       } else {
         throw new Error("did not receive key from Supabase upload");
       }
