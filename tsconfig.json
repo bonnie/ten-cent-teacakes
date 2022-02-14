@@ -24,7 +24,9 @@
     "**/*.ts",
     "**/*.tsx",
     "src/pages/404/index.js",
-    "src/prisma/seed.js"
+    "src/prisma/seed.js",
+    "src/lib/supabase/__mocks__/utils.js",
+    "src/lib/supabase/__mocks__/hooks.js"
   ],
   "exclude": ["node_modules"]
 }

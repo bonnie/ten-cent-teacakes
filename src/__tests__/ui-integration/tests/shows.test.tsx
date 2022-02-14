@@ -18,8 +18,6 @@ test("should have no a11y errors caught by jest-axe", async () => {
 
   // to avoid "not wrapped in act"
   await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
-
   const results = await axe(container);
-
   expect(results).toHaveNoViolations();
 });

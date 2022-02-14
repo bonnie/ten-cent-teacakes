@@ -1,25 +1,20 @@
-import twind from "twind";
+import twind, { strict } from "twind";
 
 const themeColors = require("./src/lib/colors");
-const colors = require("tailwindcss/colors");
 const forms: twind.Plugin = require("@twind/forms");
 
 const config = {
+  mode: strict,
   theme: {
-    colors: {
-      aqua: themeColors.aqua,
-      black: colors.black,
-      white: colors.white,
-      gray: colors.gray,
-      green: colors.green,
-      red: colors.red,
-      yellow: colors.yellow,
-      blue: colors.blue,
-      transparent: "transparent",
-    },
-    fontFamily: {
-      display: "Delfina",
-      body: "Ubuntu",
+    extend: {
+      colors: {
+        aqua: themeColors.aqua,
+        transparent: "transparent",
+      },
+      fontFamily: {
+        display: "Delfina",
+        body: "Ubuntu",
+      },
     },
   },
   plugins: {
