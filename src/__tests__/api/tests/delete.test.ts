@@ -1,10 +1,7 @@
 import dayjs from "dayjs";
 import { testApiHandler } from "next-test-api-route-handler";
 
-import {
-  addInstrument,
-  getInstruments,
-} from "@/lib/prisma/queries/instruments";
+import { addInstrument } from "@/lib/prisma/queries/instruments";
 import { getMusiciansSortAscending } from "@/lib/prisma/queries/musicians";
 import { getPhotos } from "@/lib/prisma/queries/photos";
 import { addShow } from "@/lib/prisma/queries/shows";
