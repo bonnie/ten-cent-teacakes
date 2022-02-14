@@ -3,7 +3,9 @@ import { testApiHandler } from "next-test-api-route-handler";
 import showHandler from "@/pages/api/shows/[id]";
 import venueHandler from "@/pages/api/venues/[id]";
 
-test.each([
+// ------------------------------------------------------------------ //
+// TEST DATA
+const testData = [
   {
     item: "venue",
     handler: venueHandler,
@@ -12,7 +14,11 @@ test.each([
     item: "show",
     handler: showHandler,
   },
-])("test retrieving $item by id", async ({ handler }) => {
+];
+
+// ------------------------------------------------------------------ //
+// TEST FUNCTION
+test.each(testData)("test retrieving $item by id", async ({ handler }) => {
   // // part 1: DELETE request to add new item
   // await testApiHandler({
   //   handler,

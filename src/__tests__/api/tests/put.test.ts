@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { testApiHandler } from "next-test-api-route-handler";
 
 import { getVenues } from "@/lib/prisma/queries/venues";
-import { ShowPutData, ShowWithVenue } from "@/lib/shows/types";
+import { ShowPutData } from "@/lib/shows/types";
 import { VenuePutData, VenueWithShowCount } from "@/lib/venues/types";
 import showHandler from "@/pages/api/shows";
 import venueHandler from "@/pages/api/venues";
@@ -32,8 +32,8 @@ export const generateShowPutData = async (): Promise<ShowPutData> => {
 };
 
 // ------------------------------------------------------------------ //
-
-test.each([
+// TEST DATA
+const testData = [
   {
     item: "venue",
     handler: venueHandler,
@@ -49,7 +49,11 @@ test.each([
     filterFunction: (show: { performAt: string }) =>
       show.performAt === today.toISOString(),
   },
-])(
+];
+
+// ------------------------------------------------------------------ //
+// TEST FUNCTION
+test.each(testData)(
   "adds new $item",
   async ({ handler, generatePutData, filterFunction, extraAssertions }) => {
     // part 1: PUT request to add new item

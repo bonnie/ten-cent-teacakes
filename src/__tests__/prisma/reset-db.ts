@@ -18,6 +18,7 @@ export const nextMonth = dayjs().add(1, "month").toDate();
 const deleteAll = async () => {
   await prismaClient.musician.deleteMany({});
   await prismaClient.instrument.deleteMany({});
+  await prismaClient.photo.deleteMany({});
   await prismaClient.show.deleteMany({});
   await prismaClient.venue.deleteMany({});
 };
@@ -77,6 +78,30 @@ const createInstruments = async () => {
   });
 };
 
+const createPhotos = async () => {
+  const show1 = await prismaClient.show.findFirst();
+  if (!show1) throw new Error("Failed to find any shows for photo relation");
+  const photoData = [
+    {
+      imagePath: "photos/photoA1.jpg",
+      showId: show1.id,
+      photographer: "Jane A Photographer",
+      takenAt: yesterday,
+      description: "This is Photo 1",
+    },
+    {
+      imagePath: "photos/photo2.jpg",
+    },
+    {
+      imagePath: "photos/photoB3.jpg",
+      takenAt: yesterday,
+      description: "this is Photo 3",
+    },
+  ];
+
+  await prismaClient.photo.createMany({ data: photoData });
+};
+
 const createMusicians = async () => {
   const musicianData = [
     {
@@ -126,6 +151,7 @@ export const resetDB = async () => {
     await createMusicians();
     await createVenues();
     await createShows();
+    await createPhotos();
   } catch (error) {
     console.error("Failed to seed DB");
     console.error(error);
