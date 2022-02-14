@@ -65,7 +65,7 @@ export const AddPhotoModal: React.FC = () => {
     if (values.photoFile)
       addUploadedPhoto({
         showId: values.showId,
-        photoPath: values.photoPath,
+        imagePath: values.imagePath,
         photographer: values.photographer,
         description: values.description,
       });

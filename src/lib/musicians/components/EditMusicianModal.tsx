@@ -104,7 +104,7 @@ export const AddMusicianModal: React.FC = () => {
       lastName: values.lastName,
       bio: values.bio,
       instrumentIds: values.instrumentIds,
-      imagePath: values.photoPath,
+      imagePath: values.imagePath,
     });
   };
 
@@ -146,7 +146,7 @@ export const EditMusicianModal: React.FC<{
         firstName: values.firstName,
         lastName: values.lastName,
         bio: values.bio,
-        imagePath: values.photoPath,
+        imagePath: values.imagePath,
         instrumentIds: values.instrumentIds,
       },
     });

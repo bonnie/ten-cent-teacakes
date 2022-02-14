@@ -9,10 +9,19 @@ workflows:
     jobs:
       - lint
       - ts-check
-      - test:
+      - test-ui:
           requires:
             - ts-check
             - lint
+      - migrate-testDB:
+          requires:
+            - ts-check
+            - lint
+      - test-api:
+          requires:
+            - ts-check
+            - lint
+            - migrate-testDB
 
 jobs:
   lint:
@@ -61,7 +70,7 @@ jobs:
           name: ts-check
           command: npm run ts-check
 
-  test:
+  migrate-testDB:
     docker:
       - image: cimg/node:16.3.0
     steps:
@@ -81,8 +90,54 @@ jobs:
           paths:
             - node_modules
       - run:
-          name: tests
-          command: npm run test:ci
+          name: migrate test DB
+          command: npm run test:db:migrate
+
+  test-api:
+    docker:
+      - image: cimg/node:16.3.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            # Find a cache corresponding to this specific package-lock.json checksum
+            # when this file is changed, this key will fail
+            - v1-npm-deps-{{ checksum "package-lock.json" }}
+            # Find the most recently generated cache used from any branch
+            - v1-npm-deps-
+      - run:
+          name: install dependencies
+          command: npm install
+      - save_cache:
+          key: v1-npm-deps-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: API tests (Jest)
+          command: npm run test:api
+
+  test-ui:
+    docker:
+      - image: cimg/node:16.3.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            # Find a cache corresponding to this specific package-lock.json checksum
+            # when this file is changed, this key will fail
+            - v1-npm-deps-{{ checksum "package-lock.json" }}
+            # Find the most recently generated cache used from any branch
+            - v1-npm-deps-
+      - run:
+          name: install dependencies
+          command: npm install
+      - save_cache:
+          key: v1-npm-deps-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: UI tests (Jest)
+          command: npm run test:ui
 #
 #
 # TODO: get build URL from vercel to use as client for cypress tests

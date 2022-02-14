@@ -3,6 +3,7 @@ import { Venue } from "@prisma/client";
 import dayjs from "dayjs";
 
 import { ShowWithVenue } from "@/lib/shows/types";
+import { VenueWithShowCount } from "@/lib/venues/types";
 
 export const mockWhitelist = ["test@test.com"];
 
@@ -18,6 +19,9 @@ export const mockVenues: Array<Venue> = [
     url: "http://venue.com",
   },
 ];
+
+export const mockVenuesWithShowCount: Array<VenueWithShowCount> =
+  mockVenues.map((venue, index) => ({ ...venue, showCount: index }));
 
 export const mockShows: Array<ShowWithVenue> = [
   {

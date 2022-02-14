@@ -11,7 +11,7 @@ export type ShowFormData = {
   url?: string;
 };
 
-export type ShowPutData = { performAt: Date; venueId?: number; url?: string };
+export type ShowPutData = { performAt: Date; venueId: number; url?: string };
 
 export type ShowPatchData = {
   performAt?: Date;

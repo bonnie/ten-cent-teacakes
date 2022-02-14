@@ -10,7 +10,7 @@ import "@testing-library/jest-dom/extend-expect";
 // eslint-disable-next-line no-unused-vars
 import { describe, expect, test } from "@jest/globals";
 
-import { server } from "./src/__mocks__/msw/server";
+import { server } from "../../__mocks__/msw/server";
 
 beforeAll(() => {
   // msw: Establish API mocking before all tests.

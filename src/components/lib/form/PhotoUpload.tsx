@@ -31,8 +31,8 @@ export const PhotoUpload: React.FC<{
   const { setValue: setPhotoFileValue } = photoFileHelpers;
   const photoRef = useRef<HTMLInputElement | null>(null);
 
-  const [, , photoPathHelpers] = useField("photoPath");
-  const { setValue: setPhotoPathValue } = photoPathHelpers;
+  const [, , imagePathHelpers] = useField("imagePath");
+  const { setValue: setimagePathValue } = imagePathHelpers;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (photoRef.current) {
@@ -43,7 +43,7 @@ export const PhotoUpload: React.FC<{
       uploadPhotoAndThumbnailToSupabase({
         event,
         setPhotoFileValue,
-        setPhotoPathValue,
+        setimagePathValue,
         setUploading,
         uploadDirname,
         maxThumbnailDimension,

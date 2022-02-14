@@ -8,8 +8,7 @@ import {
   PhotoWithShowAndVenue,
 } from "@/lib/photos/types";
 import prisma from "@/lib/prisma";
-
-import { getVenueById } from "../venues/queries";
+import { getVenueById } from "@/lib/prisma/queries/venues";
 
 export const getPhotos = async () => {
   const photos = await prisma.photo.findMany({
@@ -56,8 +55,6 @@ export const addPhoto = ({
     description,
   });
   const photoData: Prisma.PhotoCreateInput = {
-    // remove public directory at the beginning, for link path
-    // but leave the forward slash after so the path starts with `/`
     imagePath,
     ...metadata,
   };

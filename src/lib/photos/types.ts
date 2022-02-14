@@ -3,7 +3,7 @@ import { Photo, Show, Venue } from "@prisma/client";
 export type PhotoFormData = {
   showId?: number;
   photoFile?: File;
-  photoPath?: string;
+  imagePath?: string;
   photographer?: string;
   description?: string;
   takenAt?: Date;
@@ -11,7 +11,7 @@ export type PhotoFormData = {
 
 export type UploadedPhotoFormData = {
   showId?: number;
-  photoPath?: string;
+  imagePath?: string;
   photographer?: string;
   description?: string;
   takenAt?: Date;
