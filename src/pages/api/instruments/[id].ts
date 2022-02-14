@@ -12,7 +12,7 @@ addStandardDelete({ handler, deleteFunc: deleteInstrument });
 
 handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
   res
-    .status(201)
+    .status(200)
     .json(
       await patchInstrument({ data: req.body.data, id: getIdNumFromReq(req) }),
     );

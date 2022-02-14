@@ -18,7 +18,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
 
 handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
   const id = getIdNumFromReq(req);
-  res.status(201).json(await patchPhoto({ data: req.body.data, id }));
+  res.status(200).json(await patchPhoto({ data: req.body.data, id }));
 });
 
 export default handler;

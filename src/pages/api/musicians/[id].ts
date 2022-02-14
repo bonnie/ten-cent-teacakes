@@ -13,7 +13,7 @@ handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
   const id = getIdNumFromReq(req);
   const { data } = req.body;
   const musician = await patchMusician({ data, id });
-  return res.status(201).json(musician);
+  return res.status(200).json(musician);
 });
 
 export default withSentry(handler);

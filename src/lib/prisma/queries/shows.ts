@@ -4,10 +4,6 @@ import { Prisma } from ".prisma/client";
 import prisma from "@/lib/prisma";
 import { ShowPatchArgs, ShowPutData } from "@/lib/shows/types";
 
-// const generateVenueData = ({ venueId, venueData }: NewOrExistingVenue) =>
-//   // connect to venue if id was provided; otherwise create a new one
-//   venueId ? { connect: { id: venueId } } : { create: venueData };
-
 export const getShows = () =>
   prisma.show.findMany({
     orderBy: { performAt: "desc" },
@@ -26,7 +22,7 @@ export const addShow = ({ performAt, venueId, url }: ShowPutData) => {
 };
 
 export const patchShow = async ({ data, id }: ShowPatchArgs) => {
-  const showData = getShowById(id);
+  const showData = await getShowById(id);
   if (!showData) {
     throw new Error(`Bad show id: ${id}`);
   }
@@ -34,9 +30,10 @@ export const patchShow = async ({ data, id }: ShowPatchArgs) => {
   // add venue in proper format to updatedData
   const updatedData: Prisma.ShowUpdateInput = {
     performAt: data.performAt,
-    venue: { connect: { id: Number(data.venueId) } },
+    venue: { connect: { id: Number(data.venueId ?? showData.venueId) } },
     url: data.url ?? undefined,
   };
+
   await prisma.show.update({ data: updatedData, where: { id } });
 };
 
