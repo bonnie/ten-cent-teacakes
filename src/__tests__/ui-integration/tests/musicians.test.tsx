@@ -1,18 +1,30 @@
 // import { test } from "@jest/globals";
 import { axe, toHaveNoViolations } from "jest-axe";
 
+import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import Musicians from "@/pages/band";
 import { render, screen } from "@/test-utils";
 
+jest.mock("@/lib/auth/useWhitelistUser");
 expect.extend(toHaveNoViolations);
 
+// for typescript
+const mockedUseWhitelistUser = useWhitelistUser as jest.Mock;
+
 describe("not logged in", () => {
-  // TODO: not actually not logged in
   test("hydrates on load", async () => {
     render(<Musicians />, { renderOptions: { hydrate: true } });
     // find all the Musician images; from msw, there are three expected
     const musicianImages = await screen.findAllByRole("img");
     expect(musicianImages).toHaveLength(3);
+  });
+  test("should not show add buttons", async () => {
+    render(<Musicians />, { renderOptions: { hydrate: true } });
+    const addButtons = screen.queryAllByRole("button", { name: /add/i });
+    expect(addButtons).toHaveLength(0);
+
+    // to avoid "not wrapped in act" error
+    await screen.findAllByRole("img");
   });
 
   test("should have no a11y errors caught by jest-axe", async () => {
@@ -28,13 +40,15 @@ describe("not logged in", () => {
 });
 
 describe("logged in", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     // mocking returned user
-    jest.doMock("@/lib/auth/useWhitelistUser", () => ({
-      __esModule: true,
-      useWhitelistUser: jest
-        .fn()
-        .mockReturnValue({ user: { email: "test@test.com" } }),
+    mockedUseWhitelistUser.mockImplementation(() => ({
+      user: { email: "test@test.com" },
+    }));
+  });
+  afterAll(() => {
+    mockedUseWhitelistUser.mockImplementation(() => ({
+      user: undefined,
     }));
   });
   test("should have no a11y errors caught by jest-axe", async () => {
@@ -49,8 +63,12 @@ describe("logged in", () => {
   });
   test("musician and instrument add buttons", async () => {
     render(<Musicians />, { renderOptions: { hydrate: true } });
-    const addButton = await screen.findAllByRole("button", { name: /add/i });
-    expect(addButton).toHaveLength(2);
+    const addButtons = screen.getAllByRole("button", { name: /add/i });
+    expect(addButtons).toHaveLength(2);
+    addButtons.forEach((button) => expect(button).toBeVisible());
+
+    // to avoid "not wrapped in act" errors
+    await screen.findAllByRole("img");
   });
   test("musicians have edit button but not delete button", async () => {
     render(<Musicians />, { renderOptions: { hydrate: true } });

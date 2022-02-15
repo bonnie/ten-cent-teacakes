@@ -21,12 +21,12 @@ jest.mock("@/lib/supabase/hooks/useSupabasePhoto", () =>
 );
 
 // mocking returned user
-// jest.mock("@/lib/auth/useWhitelistUser", () => ({
-//   __esModule: true,
-//   useWhitelistUser: jest
-//     .fn()
-//     .mockReturnValue({ user: { email: "test@test.com" } }),
-// }));
+jest.mock("@/lib/auth/useWhitelistUser", () => ({
+  __esModule: true,
+  useWhitelistUser: jest
+    .fn()
+    .mockReturnValue({ user: undefined }),
+}));
 
 // swallow twind / tailwindcss warnings
 // TODO: is there a more legit way to suppress these?

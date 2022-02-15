@@ -26,7 +26,8 @@
     "src/pages/404/index.js",
     "src/prisma/seed.js",
     "src/lib/supabase/__mocks__/utils.js",
-    "src/lib/supabase/__mocks__/hooks.js"
+    "src/lib/supabase/__mocks__/hooks.js",
+    "src/lib/auth/__mocks__/useWhitelistUser.js"
   ],
   "exclude": ["node_modules"]
 }

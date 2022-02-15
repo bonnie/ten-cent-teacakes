@@ -46,7 +46,9 @@ export const PhotoThumbnail: React.FC<{
             style={{ maxHeight: "200px", maxWidth: "200px" }}
             className={tw(["mx-auto"])}
             src={imgSrc ?? "/logo/tencent-tag.svg"}
-            alt={photo.description ?? "Ten-cent Teacakes"}
+            alt={
+              imgSrc ? photo.description ?? "Ten-cent Teacakes" : "loading..."
+            }
           />
         </div>
       </Link>

@@ -82,7 +82,7 @@ export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
                 imageTransitionClass,
               ])}
               src={imgSrc ?? "/logo/tencent-tag.svg"}
-              alt={musician.firstName}
+              alt={imgSrc ? musician.firstName : "loading..."}
             />
           </div>
 
