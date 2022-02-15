@@ -23,9 +23,7 @@ jest.mock("@/lib/supabase/hooks/useSupabasePhoto", () =>
 // mocking returned user
 jest.mock("@/lib/auth/useWhitelistUser", () => ({
   __esModule: true,
-  useWhitelistUser: jest
-    .fn()
-    .mockReturnValue({ user: undefined }),
+  useWhitelistUser: jest.fn().mockReturnValue({ user: undefined }),
 }));
 
 // swallow twind / tailwindcss warnings
@@ -34,15 +32,15 @@ jest.mock("@/lib/auth/useWhitelistUser", () => ({
 console.warn = (warning) => {
   if (!warning.match(/\[UNKNOWN_(DIRECTIVE|THEME_VALUE)\]/))
     // eslint-disable-next-line no-console
-    console.log('WARNING:', warning)
-}
+    console.log("WARNING:", warning);
+};
 
 beforeAll(() => {
   // msw: Establish API mocking before all tests.
   server.listen();
 
   // reset mocks
-  jest.resetModules()
+  jest.resetModules();
 });
 
 afterEach(() => {
