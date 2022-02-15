@@ -20,6 +20,14 @@ jest.mock("@/lib/supabase/hooks/useSupabasePhoto", () =>
   jest.requireActual("@/lib/supabase/hooks/__mocks__/useSupabasePhoto")
 );
 
+// mocking returned user
+jest.mock("@/lib/auth/useWhitelistUser", () => ({
+  __esModule: true,
+  useWhitelistUser: jest
+    .fn()
+    .mockReturnValue({ user: { email: "test@test.com" } }),
+}));
+
 // swallow twind / tailwindcss warnings
 // TODO: is there a more legit way to suppress these?
 // eslint-disable-next-line no-console
@@ -32,6 +40,9 @@ console.warn = (warning) => {
 beforeAll(() => {
   // msw: Establish API mocking before all tests.
   server.listen();
+
+  // reset mocks
+  jest.resetModules()
 });
 
 afterEach(() => {

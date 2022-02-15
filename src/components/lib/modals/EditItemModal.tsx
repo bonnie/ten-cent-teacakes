@@ -35,9 +35,8 @@ export function EditItemModal<Data>({
     <>
       <Button
         handleClick={() => setShowModal(true)}
-        aria-label={title}
         round={buttonType === "edit"}
-        label={buttonType}
+        label={title}
       >
         {buttonContents}
       </Button>
