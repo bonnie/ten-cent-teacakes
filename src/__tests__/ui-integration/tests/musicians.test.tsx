@@ -46,4 +46,30 @@ describe("logged in", () => {
     });
     expect(deleteButtons).toHaveLength(0);
   });
+  test("Instruments show up, and have correct buttons", async () => {
+    render(<Musicians />, { renderOptions: { hydrate: true } });
+    const instrumentsTitle = screen.getByRole("heading", {
+      name: /instruments/i,
+    });
+    expect(instrumentsTitle).toBeInTheDocument();
+
+    const editButtons = await screen.findAllByRole("button", {
+      name: /edit instrument/i,
+    });
+    expect(editButtons).toHaveLength(7);
+
+    // no need to await here, since edit buttons have already been displayed
+    const deleteButtons = screen.queryAllByRole("button", {
+      name: /delete instrument/i,
+    });
+    expect(deleteButtons).toHaveLength(7);
+
+    // make sure only the button for the one instrument with
+    // no musicians ("tuba") is enabled
+    expect(
+      deleteButtons.filter(
+        (button) => !button.getAttributeNames().includes("disabled"),
+      ),
+    ).toHaveLength(1);
+  });
 });

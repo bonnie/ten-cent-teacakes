@@ -1,7 +1,8 @@
-import { Instrument, Venue } from "@prisma/client";
+import { Venue } from "@prisma/client";
 
 import dayjs from "dayjs";
 
+import { InstrumentWithMusicianCount } from "@/lib/instruments/types";
 import { MusicianWithInstruments } from "@/lib/musicians/types";
 import { PhotoWithShowAndVenue } from "@/lib/photos/types";
 import { ShowWithVenue } from "@/lib/shows/types";
@@ -54,13 +55,14 @@ export const mockShows: Array<ShowWithVenue> = [
   },
 ];
 
-export const mockInstruments: Array<Instrument> = [
-  { id: 1, name: "guitar" },
-  { id: 2, name: "baritone ukulele" },
-  { id: 3, name: "vocals" },
-  { id: 4, name: "bass" },
-  { id: 5, name: "kazoo" },
-  { id: 6, name: "fiddle" },
+export const mockInstruments: Array<InstrumentWithMusicianCount> = [
+  { id: 1, name: "guitar", musicianCount: 1 },
+  { id: 2, name: "baritone ukulele", musicianCount: 1 },
+  { id: 3, name: "vocals", musicianCount: 3 },
+  { id: 4, name: "bass", musicianCount: 1 },
+  { id: 5, name: "kazoo", musicianCount: 1 },
+  { id: 6, name: "fiddle", musicianCount: 1 },
+  { id: 7, name: "tuba", musicianCount: 0 },
 ];
 
 export const mockMusicians: Array<MusicianWithInstruments> = [
