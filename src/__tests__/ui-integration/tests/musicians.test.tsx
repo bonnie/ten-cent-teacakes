@@ -11,8 +11,8 @@ describe("not logged in", () => {
   test("hydrates on load", async () => {
     render(<Musicians />, { renderOptions: { hydrate: true } });
     // find all the Musician images; from msw, there are three expected
-    const showDates = await screen.findAllByRole("img");
-    expect(showDates).toHaveLength(3);
+    const musicianImages = await screen.findAllByRole("img");
+    expect(musicianImages).toHaveLength(3);
   });
 
   test("should have no a11y errors caught by jest-axe", async () => {
@@ -28,6 +28,25 @@ describe("not logged in", () => {
 });
 
 describe("logged in", () => {
+  beforeEach(() => {
+    // mocking returned user
+    jest.doMock("@/lib/auth/useWhitelistUser", () => ({
+      __esModule: true,
+      useWhitelistUser: jest
+        .fn()
+        .mockReturnValue({ user: { email: "test@test.com" } }),
+    }));
+  });
+  test("should have no a11y errors caught by jest-axe", async () => {
+    const { container } = render(<Musicians />, {
+      renderOptions: { hydrate: true },
+    });
+
+    // to avoid "not wrapped in act"
+    await screen.findAllByRole("img");
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
   test("musician and instrument add buttons", async () => {
     render(<Musicians />, { renderOptions: { hydrate: true } });
     const addButton = await screen.findAllByRole("button", { name: /add/i });
