@@ -39,47 +39,50 @@ describe("not logged in", () => {
     expect(deleteButtons).toHaveLength(0);
   });
 
+  // this is not exactly testing production code, since Link is mocked
+  // in setup.test.js (thanks to
+  // https://github.com/vercel/next.js/issues/20048#issuecomment-813426025)
   test("photos are in correct order, with correct labels", async () => {
     render(<Photos />, { renderOptions: { hydrate: true } });
     const images = await screen.findAllByRole("img");
     const imgSources = images.map((image) => image.getAttribute("src"));
     expect(imgSources).toEqual([
+      "photos/photo2-thumb.jpg",
+      "photos/photo3-thumb.jpg",
       "photos/photo1A-thumb.jpg",
       "photos/photo1B-thumb.jpg",
       "photos/photo1C-thumb.jpg",
-      "photos/photo2-thumb.jpg",
-      "photos/photo3-thumb.jpg",
     ]);
 
-    // according to mockDta, 1 of the images should have a date of yesterday
-    const yesterdayDates = screen.getAllByText(
+    // from mockData
+    const allDates = screen.getAllByText(/\w\w\w \d?\d, \d\d\d\d/);
+    expect(allDates.map((date) => date.textContent)).toEqual([
       dayjs(yesterday).format("MMM DD, YYYY"),
-    );
-    expect(yesterdayDates).toHaveLength(1);
-
-    // 4 should have date of lastMonth
-    const lastMonthDates = screen.getAllByText(
       dayjs(lastMonth).format("MMM DD, YYYY"),
-    );
-    expect(lastMonthDates).toHaveLength(4);
-
-    // 3 should mention venue 1
-    const venue1 = screen.getAllByText("at Venue 1");
-    expect(venue1).toHaveLength(3);
+      "Jan 01, 2021 at Venue 2",
+      "Jan 01, 2021 at Venue 2",
+      "Jan 01, 2021 at Venue 2",
+    ]);
 
     // 3 should mention photographer
-    const photographer = screen.getAllByText("taken by Jane A Photographer");
+    const photographer = screen.getAllByText(/taken by Jane A Photographer/);
     expect(photographer).toHaveLength(3);
   });
 
   // NOTE: need to test this when Link is not mocked
-  // test("photos have link to individual photo page", async () => {
-  //   render(<Photos />, { renderOptions: { hydrate: true } });
-  //   const hrefs = await screen.findAllByRole("link");
+  test("photos have link to individual photo page", async () => {
+    render(<Photos />, { renderOptions: { hydrate: true } });
+    const links = await screen.findAllByRole("link");
 
-  //   // 3 is id of "photos/photo1A-thumb.jpg" in mockData
-  //   expect(hrefs[0]).toHaveAttribute("href", "/photos/3");
-  // });
+    // ids corresponding to the photo order
+    expect(links.map((link) => link.getAttribute("href"))).toEqual([
+      "/photos/1",
+      "/photos/2",
+      "/photos/3",
+      "/photos/5",
+      "/photos/4",
+    ]);
+  });
 
   test("should have no a11y errors caught by jest-axe", async () => {
     const { container } = render(<Photos />, {

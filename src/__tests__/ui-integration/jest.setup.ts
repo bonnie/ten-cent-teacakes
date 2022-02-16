@@ -24,15 +24,7 @@ jest.mock("@/lib/supabase/hooks/useSupabasePhoto", () =>
 
 // issues with Link causing "not wrapped in act" errors
 // https://github.com/vercel/next.js/issues/20048#issuecomment-813426025
-// jest.mock("next/link", () => ({
-//   __esModule: true,
-//   default: ({ children, href }) => (
-//     // eslint-disable-next-line react/jsx-props-no-spreading
-//     <children.type {...children.props} href={href} />
-//   ),
-// }));
 jest.mock("next/link", () => 
-  // console.log("-----------------> DOIN THE MOCK");
    jest.requireActual("@/__mocks__/Link")
 );
 

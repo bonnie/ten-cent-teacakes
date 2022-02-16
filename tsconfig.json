@@ -29,7 +29,7 @@
     "src/lib/supabase/__mocks__/hooks.js",
     "src/lib/auth/__mocks__/useWhitelistUser.js",
     "src/__tests__/ui-integration/jest.setup.js",
-    "src/__tests__/ui-integration/jest.setup.jsx"
+    "src/__tests__/ui-integration/jest.setup.ts"
   ],
   "exclude": ["node_modules"]
 }

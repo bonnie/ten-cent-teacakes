@@ -11,4 +11,5 @@
 //   ),
 // };
 
-export default ({ children, href }) => <span {...children.props} href={href} />;
+// eslint-disable-next-line jsx-a11y/anchor-has-content
+export default ({ children, href }) => <a {...children.props} href={href} />;
