@@ -126,7 +126,7 @@ const generateExpectedPhotos = (json: Array<PhotoWithShowAndVenue>) => [
   },
   {
     id: json[1].id,
-    imagePath: "photos/photoB3.jpg",
+    imagePath: "photos/photo3.jpg",
     createdAt: json[1].createdAt,
     photographer: null,
     show: null,
@@ -136,7 +136,7 @@ const generateExpectedPhotos = (json: Array<PhotoWithShowAndVenue>) => [
   },
   {
     id: json[2].id,
-    imagePath: "photos/photoA1.jpg",
+    imagePath: "photos/photo1A.jpg",
     createdAt: json[2].createdAt,
     photographer: "Jane A Photographer",
     showId: json[2].showId,

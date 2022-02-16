@@ -16,16 +16,16 @@ import { server } from "../../__mocks__/msw/server";
 // can't mock from test files: https://github.com/facebook/jest/issues/335
 // (mocked module must be called directly from file imported by test file)
 jest.mock("@/lib/supabase/utils", () =>
-  jest.requireActual("@/lib/supabase/__mocks__/utils")
+  jest.requireActual("@/__mocks__/modules/supabase/utils")
 );
 jest.mock("@/lib/supabase/hooks/useSupabasePhoto", () =>
-  jest.requireActual("@/lib/supabase/hooks/__mocks__/useSupabasePhoto")
+  jest.requireActual("@/__mocks__/modules/supabase/useSupabasePhoto")
 );
 
 // issues with Link causing "not wrapped in act" errors
 // https://github.com/vercel/next.js/issues/20048#issuecomment-813426025
 jest.mock("next/link", () => 
-   jest.requireActual("@/__mocks__/Link")
+   jest.requireActual("@/__mocks__/modules/next/Link")
 );
 
 // mocking returned user
