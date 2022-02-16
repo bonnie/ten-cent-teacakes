@@ -32,8 +32,8 @@ export const PhotoThumbnail: React.FC<{
           className={tw([
             "bg-aqua-200",
             "rounded-lg",
-            "hover:border-aqua-300",
-            "hover:cursor-pointer",
+            imgSrc ? "hover:border-aqua-300" : "",
+            imgSrc ? "hover:cursor-pointer" : "",
             "border-solid",
             "border-8",
             "border-aqua-200",

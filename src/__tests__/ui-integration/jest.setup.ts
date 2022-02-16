@@ -13,11 +13,27 @@ import { describe, expect, test } from "@jest/globals";
 import { server } from "../../__mocks__/msw/server";
 
 // mock supabase methods
+// can't mock from test files: https://github.com/facebook/jest/issues/335
+// (mocked module must be called directly from file imported by test file)
 jest.mock("@/lib/supabase/utils", () =>
   jest.requireActual("@/lib/supabase/__mocks__/utils")
 );
 jest.mock("@/lib/supabase/hooks/useSupabasePhoto", () =>
   jest.requireActual("@/lib/supabase/hooks/__mocks__/useSupabasePhoto")
+);
+
+// issues with Link causing "not wrapped in act" errors
+// https://github.com/vercel/next.js/issues/20048#issuecomment-813426025
+// jest.mock("next/link", () => ({
+//   __esModule: true,
+//   default: ({ children, href }) => (
+//     // eslint-disable-next-line react/jsx-props-no-spreading
+//     <children.type {...children.props} href={href} />
+//   ),
+// }));
+jest.mock("next/link", () => 
+  // console.log("-----------------> DOIN THE MOCK");
+   jest.requireActual("@/__mocks__/Link")
 );
 
 // mocking returned user

@@ -5,7 +5,6 @@ import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import Musicians from "@/pages/band";
 import { render, screen } from "@/test-utils";
 
-jest.mock("@/lib/auth/useWhitelistUser");
 expect.extend(toHaveNoViolations);
 
 // for typescript
@@ -18,13 +17,23 @@ describe("not logged in", () => {
     const musicianImages = await screen.findAllByRole("img");
     expect(musicianImages).toHaveLength(3);
   });
-  test("should not show add buttons", async () => {
+  test("should not show mutate buttons", async () => {
     render(<Musicians />, { renderOptions: { hydrate: true } });
     const addButtons = screen.queryAllByRole("button", { name: /add/i });
     expect(addButtons).toHaveLength(0);
 
     // to avoid "not wrapped in act" error
     await screen.findAllByRole("img");
+
+    const editButtons = screen.queryAllByRole("button", {
+      name: /edit/i,
+    });
+    expect(editButtons).toHaveLength(0);
+
+    const deleteButtons = screen.queryAllByRole("button", {
+      name: /delete/i,
+    });
+    expect(deleteButtons).toHaveLength(0);
   });
 
   test("should have no a11y errors caught by jest-axe", async () => {
@@ -40,13 +49,13 @@ describe("not logged in", () => {
 });
 
 describe("logged in", () => {
-  beforeAll(() => {
+  beforeEach(() => {
     // mocking returned user
     mockedUseWhitelistUser.mockImplementation(() => ({
       user: { email: "test@test.com" },
     }));
   });
-  afterAll(() => {
+  afterEach(() => {
     mockedUseWhitelistUser.mockImplementation(() => ({
       user: undefined,
     }));
