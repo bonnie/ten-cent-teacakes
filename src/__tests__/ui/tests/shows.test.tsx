@@ -1,6 +1,10 @@
 // import { test } from "@jest/globals";
+import dayjs from "dayjs";
 import { axe, toHaveNoViolations } from "jest-axe";
+import { rest } from "msw";
 
+import { mockOnlyPastShows, yesterday } from "@/__mocks__/mockData";
+import { server } from "@/__mocks__/msw/server";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import Shows from "@/pages/shows";
 import { render, screen } from "@/test-utils";
@@ -27,6 +31,28 @@ describe("not logged in", () => {
     expect(mutateButtons).toHaveLength(0);
   });
 
+  test("link to email list does not display when there are future shows", async () => {
+    render(<Shows />, { renderOptions: { hydrate: true } });
+    await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
+
+    const noFutureShowText = screen.queryByText(/No upcoming shows just now/i);
+    expect(noFutureShowText).not.toBeInTheDocument();
+
+    const emailListText = screen.queryByText(/join our mailing list/i);
+    expect(emailListText).not.toBeInTheDocument();
+  });
+
+  test("shows are correctly sorted", async () => {
+    render(<Shows />, { renderOptions: { hydrate: true } });
+    // find all the show dates; from msw, there are three expected
+    const showDates = await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
+    expect(showDates.map((date) => date.textContent)).toEqual([
+      "Jan 1, 2200",
+      dayjs(yesterday).format("MMM DD, YYYY"),
+      "Jan 1, 2021",
+    ]);
+  });
+
   test("should have no a11y errors caught by jest-axe", async () => {
     const { container } = render(<Shows />, {
       renderOptions: { hydrate: true },
@@ -36,6 +62,36 @@ describe("not logged in", () => {
     await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
     const results = await axe(container);
     expect(results).toHaveNoViolations();
+  });
+});
+
+describe("no future shows", () => {
+  beforeEach(() => {
+    server.resetHandlers(
+      rest.get("http://localhost:3000/api/shows", (req, res, ctx) =>
+        res(ctx.json(mockOnlyPastShows)),
+      ),
+    );
+  });
+  test("no shows message and link to email list displays", async () => {
+    render(<Shows />, { renderOptions: { hydrate: true } });
+    await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
+
+    const noFutureShowText = screen.queryByText(/No upcoming shows just now/i);
+    expect(noFutureShowText).toBeInTheDocument();
+
+    const emailListText = screen.queryByText(/join our mailing list/i);
+    expect(emailListText).toBeInTheDocument();
+  });
+
+  test("past shows still show up", async () => {
+    render(<Shows />, { renderOptions: { hydrate: true } });
+    const showDates = await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
+
+    expect(showDates.map((date) => date.textContent)).toEqual([
+      dayjs(yesterday).format("MMM DD, YYYY"),
+      "Jan 1, 2021",
+    ]);
   });
 });
 

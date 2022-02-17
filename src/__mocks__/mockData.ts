@@ -33,21 +33,10 @@ export const mockVenues: Array<VenueWithShowCount> = [
     showCount: 0,
   },
 ];
-
-export const mockVenuesWithShowCount: Array<VenueWithShowCount> =
-  mockVenues.map((venue, index) => ({ ...venue, showCount: index }));
-
-export const mockShows: Array<ShowWithVenue> = [
-  {
-    id: 1,
-    performAt: dayjs("2200-01-01").toDate(),
-    venueId: 1,
-    url: null,
-    venue: mockVenues[0],
-  },
+export const mockOnlyPastShows: Array<ShowWithVenue> = [
   {
     id: 2,
-    performAt: new Date(),
+    performAt: yesterday,
     venueId: 2,
     url: "http://venue.com/show",
     venue: mockVenues[1],
@@ -59,6 +48,16 @@ export const mockShows: Array<ShowWithVenue> = [
     url: null,
     venue: mockVenues[1],
   },
+];
+export const mockShows: Array<ShowWithVenue> = [
+  {
+    id: 1,
+    performAt: dayjs("2200-01-01").toDate(),
+    venueId: 1,
+    url: null,
+    venue: mockVenues[0],
+  },
+  ...mockOnlyPastShows,
 ];
 
 export const mockInstruments: Array<InstrumentWithMusicianCount> = [
