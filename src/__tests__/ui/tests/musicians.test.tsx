@@ -113,9 +113,7 @@ describe("logged in", () => {
     // make sure only the button for the one instrument with
     // no musicians ("tuba") is enabled
     expect(
-      deleteButtons.filter(
-        (button) => !button.getAttributeNames().includes("disabled"),
-      ),
+      deleteButtons.filter((button) => !button.hasAttribute("disabled")),
     ).toHaveLength(1);
   });
 });
