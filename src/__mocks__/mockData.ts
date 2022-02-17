@@ -1,5 +1,3 @@
-import { Venue } from "@prisma/client";
-
 import dayjs from "dayjs";
 
 import { InstrumentWithMusicianCount } from "@/lib/instruments/types";
