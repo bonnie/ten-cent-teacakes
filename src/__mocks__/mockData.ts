@@ -49,6 +49,7 @@ export const mockOnlyPastShows: Array<ShowWithVenue> = [
     venue: mockVenues[1],
   },
 ];
+
 export const mockShows: Array<ShowWithVenue> = [
   {
     id: 1,
@@ -58,6 +59,31 @@ export const mockShows: Array<ShowWithVenue> = [
     venue: mockVenues[0],
   },
   ...mockOnlyPastShows,
+];
+
+export const mockManyFutureShows = [
+  {
+    id: 1,
+    performAt: dayjs("2200-01-01").toDate(),
+    venueId: 1,
+    url: null,
+    venue: mockVenues[0],
+  },
+  { id: 2, performAt: nextMonth, venueId: 1, url: null, venue: mockVenues[0] },
+  {
+    id: 3,
+    performAt: tomorrow,
+    venueId: 2,
+    url: "http://venue.com/show",
+    venue: mockVenues[1],
+  },
+  {
+    id: 4,
+    performAt: dayjs("2300-01-01").toDate(),
+    venueId: 1,
+    url: null,
+    venue: mockVenues[0],
+  },
 ];
 
 export const mockInstruments: Array<InstrumentWithMusicianCount> = [
