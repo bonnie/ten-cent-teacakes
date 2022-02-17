@@ -25,9 +25,9 @@
     "**/*.tsx",
     "src/pages/404/index.js",
     "src/prisma/seed.js",
-    "src/lib/supabase/__mocks__/utils.js",
+    "src/__mocks__/modules/supabase/utils.js",
     "src/lib/supabase/__mocks__/hooks.js",
-    "src/lib/auth/__mocks__/useWhitelistUser.js",
+    "src/__mocks__/modules/useWhitelistUser.js",
     "src/__tests__/ui/jest.setup.js",
     "src/__tests__/ui/jest.setup.ts"
   ],
