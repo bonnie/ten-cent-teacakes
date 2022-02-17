@@ -25,6 +25,7 @@ afterEach(() => {
 
 test("Add modal appearance / disappearance", async () => {
   render(<Musicians />, { renderOptions: { hydrate: true } });
+  await screen.findAllByRole("img");
 
   // find add buttons
   const addButtons = screen.getAllByRole("button", { name: /add/i });
@@ -73,9 +74,6 @@ test("Add modal appearance / disappearance", async () => {
   const cancelButton = screen.getByRole("button", { name: /cancel/i });
   fireEvent.click(cancelButton);
   expect(modalTitle).not.toBeVisible();
-
-  // to avoid "not wrapped in act" errors
-  await screen.findAllByRole("img");
 });
 
 test("Edit modal appearance / disappearance", async () => {
