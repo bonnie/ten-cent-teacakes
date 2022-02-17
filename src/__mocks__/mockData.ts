@@ -15,16 +15,24 @@ export const nextMonth = dayjs().add(1, "month").toDate();
 
 export const mockWhitelist = ["test@test.com"];
 
-export const mockVenues: Array<Venue> = [
+export const mockVenues: Array<VenueWithShowCount> = [
   {
     id: 1,
     name: "Venue 1",
     url: null,
+    showCount: 2,
   },
   {
     id: 2,
     name: "Venue 2",
     url: "http://venue.com",
+    showCount: 1,
+  },
+  {
+    id: 3,
+    name: "Venue 3",
+    url: "http://venue3.com",
+    showCount: 0,
   },
 ];
 

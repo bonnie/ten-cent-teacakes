@@ -71,6 +71,8 @@ describe("logged in", () => {
   });
   test("musicians have edit button but not delete button", async () => {
     render(<Musicians />, { renderOptions: { hydrate: true } });
+    await screen.findAllByRole("img");
+
     const editButtons = await screen.findAllByRole("button", {
       name: /edit musician/i,
     });
