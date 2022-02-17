@@ -12,4 +12,4 @@
 // };
 
 // eslint-disable-next-line jsx-a11y/anchor-has-content
-export default ({ children, href }) => <a {...children.props} href={href} />;
+export default ({ children, href }) => <a href={href}>{children}</a>;
