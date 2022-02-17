@@ -19,21 +19,11 @@ describe("not logged in", () => {
   });
   test("should not show mutate buttons", async () => {
     render(<Musicians />, { renderOptions: { hydrate: true } });
-    const addButtons = screen.queryAllByRole("button", { name: /add/i });
-    expect(addButtons).toHaveLength(0);
-
-    // to avoid "not wrapped in act" error
     await screen.findAllByRole("img");
-
-    const editButtons = screen.queryAllByRole("button", {
-      name: /edit/i,
+    const mutateButtons = screen.queryAllByRole("button", {
+      name: /add|edit|delete/i,
     });
-    expect(editButtons).toHaveLength(0);
-
-    const deleteButtons = screen.queryAllByRole("button", {
-      name: /delete/i,
-    });
-    expect(deleteButtons).toHaveLength(0);
+    expect(mutateButtons).toHaveLength(0);
   });
 
   test("should have no a11y errors caught by jest-axe", async () => {

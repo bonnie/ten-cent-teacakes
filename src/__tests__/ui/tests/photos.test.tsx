@@ -22,21 +22,11 @@ describe("not logged in", () => {
 
   test("should not show mutate buttons", async () => {
     render(<Photos />, { renderOptions: { hydrate: true } });
-
-    const addButtons = screen.queryAllByRole("button", { name: /add/i });
-    expect(addButtons).toHaveLength(0);
-
     await screen.findAllByRole("img");
-    const editButtons = screen.queryAllByRole("button", {
-      name: /edit photo/i,
+    const mutateButtons = screen.queryAllByRole("button", {
+      name: /add|edit|delete/i,
     });
-    expect(editButtons).toHaveLength(0);
-
-    // delete buttons
-    const deleteButtons = screen.queryAllByRole("button", {
-      name: /delete photo/i,
-    });
-    expect(deleteButtons).toHaveLength(0);
+    expect(mutateButtons).toHaveLength(0);
   });
 
   // this is not exactly testing production code, since Link is mocked
