@@ -19,7 +19,7 @@ export const DeleteInstrumentModal: React.FC<{
         disabled ? disabledMessage : `Delete instrument ${instrument.name}`
       }
       disabled={disabled}
-      title="Delete Instrument"
+      title={`Delete instrument ${instrument.name}`}
       handleDelete={() => deleteInstrument(instrument.id)}
     />
   );

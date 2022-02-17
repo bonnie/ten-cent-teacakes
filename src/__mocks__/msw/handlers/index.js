@@ -1,2 +1,1 @@
-export * from "./shows";
-export * from "./whitelist";
+export * from "./get";

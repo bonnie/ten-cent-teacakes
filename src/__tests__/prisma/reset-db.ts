@@ -83,7 +83,7 @@ const createPhotos = async () => {
   if (!show1) throw new Error("Failed to find any shows for photo relation");
   const photoData = [
     {
-      imagePath: "photos/photoA1.jpg",
+      imagePath: "photos/photo1A.jpg",
       showId: show1.id,
       photographer: "Jane A Photographer",
       takenAt: yesterday,
@@ -93,7 +93,7 @@ const createPhotos = async () => {
       imagePath: "photos/photo2.jpg",
     },
     {
-      imagePath: "photos/photoB3.jpg",
+      imagePath: "photos/photo3.jpg",
       takenAt: yesterday,
       description: "this is Photo 3",
     },

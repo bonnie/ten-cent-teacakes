@@ -7,6 +7,7 @@ export type ButtonProps = {
   type?: "button" | "submit";
   disabled?: boolean;
   round?: boolean;
+  label?: string;
 };
 
 export const Button: React.FC<ButtonProps> = ({
@@ -16,6 +17,7 @@ export const Button: React.FC<ButtonProps> = ({
   type = "button",
   disabled = false,
   round = false,
+  label = undefined,
 }) => {
   const classes = tw([
     disabled ? "bg-aqua-300" : "bg-aqua-500",
@@ -39,6 +41,8 @@ export const Button: React.FC<ButtonProps> = ({
     ...additionalClasses,
   ]);
 
+  const ariaLabel = label ? { "aria-label": label } : {};
+
   return (
     <button
       // eslint-disable-next-line react/button-has-type
@@ -46,6 +50,8 @@ export const Button: React.FC<ButtonProps> = ({
       onClick={handleClick}
       disabled={disabled}
       className={classes}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...ariaLabel}
     >
       {children}
     </button>

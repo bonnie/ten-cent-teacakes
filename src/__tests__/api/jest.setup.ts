@@ -12,11 +12,6 @@ import { describe, expect, test } from "@jest/globals";
 
 import { resetDB } from '../prisma/reset-db'
 
-// // if mocking db rather than using test db
-// jest.mock("@/lib/prisma/queries/venues", () =>
-//   jest.requireActual("@/lib/prisma/queries/__mocks__/venues")
-// );
-
 beforeAll(async () => {
   // seed db
   await resetDB();

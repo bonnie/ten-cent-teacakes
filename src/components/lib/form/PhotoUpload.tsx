@@ -93,6 +93,7 @@ export const PhotoUpload: React.FC<{
         type="file"
         id={name}
         name={name}
+        aria-label="image-upload"
       />
       {uploading ? (
         <p className={tw(["text-red-500"])}>

@@ -32,8 +32,8 @@ export const PhotoThumbnail: React.FC<{
           className={tw([
             "bg-aqua-200",
             "rounded-lg",
-            "hover:border-aqua-300",
-            "hover:cursor-pointer",
+            imgSrc ? "hover:border-aqua-300" : "",
+            imgSrc ? "hover:cursor-pointer" : "",
             "border-solid",
             "border-8",
             "border-aqua-200",
@@ -46,7 +46,9 @@ export const PhotoThumbnail: React.FC<{
             style={{ maxHeight: "200px", maxWidth: "200px" }}
             className={tw(["mx-auto"])}
             src={imgSrc ?? "/logo/tencent-tag.svg"}
-            alt={photo.description ?? "Ten-cent Teacakes"}
+            alt={
+              imgSrc ? photo.description ?? "Ten-cent Teacakes" : "loading..."
+            }
           />
         </div>
       </Link>

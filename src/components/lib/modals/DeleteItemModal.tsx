@@ -28,7 +28,7 @@ export const DeleteItemModal: React.FC<DeleteItemModalProps> = ({
   const button = (
     <Button
       handleClick={() => setShowModal(true)}
-      aria-label={title}
+      label={title}
       round
       disabled={disabled}
     >

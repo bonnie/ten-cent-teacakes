@@ -16,7 +16,7 @@ test("hydrates on load", async () => {
 test("should have no a11y errors caught by jest-axe", async () => {
   const { container } = render(<Shows />, { renderOptions: { hydrate: true } });
 
-  // otherwise, get "not wrapped in act"
+  // to avoid "not wrapped in act"
   await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
 
   const results = await axe(container);
