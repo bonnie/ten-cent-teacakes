@@ -10,7 +10,7 @@ import "@testing-library/jest-dom/extend-expect";
 // eslint-disable-next-line no-unused-vars
 import { describe, expect, test } from "@jest/globals";
 
-import { resetDB } from '../prisma/reset-db'
+import { resetDB } from './prisma/reset-db'
 
 beforeAll(async () => {
   // seed db
