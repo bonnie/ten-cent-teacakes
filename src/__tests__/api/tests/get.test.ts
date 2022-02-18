@@ -11,7 +11,7 @@ import photoHandler from "@/pages/api/photos";
 import showHandler from "@/pages/api/shows";
 import venueHandler from "@/pages/api/venues";
 
-import { nextMonth, tomorrow, yesterday } from "../../prisma/reset-db";
+import { nextMonth, tomorrow, yesterday } from "../prisma/reset-db";
 
 // ------------------------------------------------------------------ //
 // EXPECTED GET DATA
