@@ -53,6 +53,16 @@ describe("not logged in", () => {
     ]);
   });
 
+  test("links to shows are correct", async () => {
+    render(<Shows />, { renderOptions: { hydrate: true } });
+    await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
+    const showLinks = screen.queryAllByRole("link");
+    expect(showLinks.map((link) => link.getAttribute("href"))).toEqual([
+      "http://venue.com/show",
+      "http://venue.com",
+    ]);
+  });
+
   test("should have no a11y errors caught by jest-axe", async () => {
     const { container } = render(<Shows />, {
       renderOptions: { hydrate: true },
