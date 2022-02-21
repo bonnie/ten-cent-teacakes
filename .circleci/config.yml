@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   heroku: circleci/node@5.0.0
-  cypress: cypress-io/cypress@1.29.0
 
 workflows:
   version: 2
@@ -23,13 +22,6 @@ workflows:
             - ts-check
             - lint
             - migrate-testDB
-      # - test/e2e:
-      #     requires:
-      #       - ts-check
-      #       - lint
-      #       - test/ui
-      #       - migrate-testDB
-      #       - test/api
 
 jobs:
   lint:
@@ -146,32 +138,3 @@ jobs:
       - run:
           name: UI tests (Jest)
           command: npm run test:ui
-
-  # test/e2e:
-  #   docker:
-  #     - image: cypress/base:14.16.0
-  #       environment:
-  #         ## this enables colors in the output
-  #         TERM: xterm
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         keys:
-  #           # Find a cache corresponding to this specific package-lock.json checksum
-  #           # when this file is changed, this key will fail
-  #           - v1-npm-deps-{{ checksum "package-lock.json" }}
-  #           # Find the most recently generated cache used from any branch
-  #           - v1-npm-deps-
-  #     - run:
-  #         name: install dependencies
-  #         command: npm install
-  #     - save_cache:
-  #         key: v1-npm-deps-{{ checksum "package-lock.json" }}
-  #         paths:
-  #           - node_modules
-  #     - run:
-  #         name: E2E tests (Cypress)
-  #         command: npm run test:e2e:headless
-#
-# https://glebbahmutov.com/blog//////////skip-cypress-install-on-ci/
-#     skip cypress install when not needed
