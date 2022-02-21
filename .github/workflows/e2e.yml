@@ -28,9 +28,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Notice that we do not install any dependencies in this job
-      # Our Cypress tests do not use any plugins, so we just
-      # need to invoke the global Cypress from the Docker image
+      # need to install @testing-library/cypress as a dependency;
+      # everything else is not needed or included in cypress container
+      - name: install
+        run: |
+          npm install -D @testing-library/cypress
 
       - name: Run tests
         run: |
