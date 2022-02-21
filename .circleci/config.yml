@@ -115,6 +115,7 @@ jobs:
       - run:
           name: API tests (Jest)
           command: npm run test:api
+    parallelism: 4
 
   test-ui:
     docker:
@@ -138,3 +139,4 @@ jobs:
       - run:
           name: UI tests (Jest)
           command: npm run test:ui
+    parallelism: 4
