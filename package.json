@@ -13,7 +13,7 @@
     "start": "next start",
     "test:api": "jest --ci --runInBand -c ./src/__tests__/api/jest.config.js",
     "test:db:migrate": "npx prisma migrate reset --force --skip-generate --skip-seed",
-    "test:ui": "jest --ci -c ./src/__tests__/ui/jest.config.js",
+    "test:ui": "jest --maxWorkers=2 --ci -c ./src/__tests__/ui/jest.config.js",
     "test:e2e:headless": "cypress:headless",
     "ts-check": "tsc --noEmit"
   },
