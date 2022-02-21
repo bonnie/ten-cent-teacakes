@@ -1,0 +1,46 @@
+# reference:
+# https://glebbahmutov.com/blog/skip-cypress-install-on-ci/
+
+name: deploy
+on: deployment_status
+jobs:
+  tests-after-deploy:
+    # Note: This will run regardless of jest test outcome
+    # TODO: make dependent on jest test (circleCI) outcome
+    # Note: can't use CircleCI for this test bc it can't access
+    # deployment status / deployment URL.
+    # Possibly: migrate all tests to GitHub actions
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-20.04
+    # Use a Docker image with Cypress installed globally
+    # https://github.com/cypress-io/github-action#docker-image
+    # https://github.com/cypress-io/cypress-docker-images
+    container: cypress/included:8.3.1
+    steps:
+      # see if there is GITHUB_REF
+      - name: Check GITHUB_REF
+        run: |
+          echo "GITHUB_REF is ${GITHUB_REF}"
+      # to compute the branch name for the deployed commit
+      # need to grab the repo
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # need to install @testing-library/cypress as a dependency;
+      # everything else is not needed or included in cypress container
+      - name: install
+        run: |
+          npm install -D @testing-library/cypress
+
+      - name: Run tests
+        run: |
+          echo "Vercel unique deployment URL is ${{ github.event.deployment_status.target_url }}"
+
+          echo "Deployed commit ${{ github.sha }}"
+          export BRANCH_NAME=$(git show -s --pretty=%D HEAD | tr -s ',' '\n' | sed 's/^ //' | grep -e 'origin/' | head -1 | sed 's/\origin\///g')
+          echo "Deployed branch ${BRANCH_NAME}"
+
+          export CYPRESS_baseUrl=${{ github.event.deployment_status.target_url }}
+          cypress run

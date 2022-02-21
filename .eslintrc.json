@@ -27,13 +27,7 @@
   },
   "rules": {
     "import/no-extraneous-dependencies": [2, { "devDependencies": true }],
-    "testing-library/await-async-query": "error",
-    "testing-library/no-await-sync-query": "error",
     "testing-library/no-debug": "warn",
-    "jest-dom/prefer-checked": "error",
-    "jest-dom/prefer-enabled-disabled": "error",
-    "jest-dom/prefer-required": "error",
-    "jest-dom/prefer-to-have-attribute": "error",
     "react/prop-types": ["off"],
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
     "import/extensions": ["error", "never"],
@@ -72,13 +66,18 @@
     ]
   },
   "overrides": [
-    // Only uses Testing Library lint rules in test files
+    // Only uses Testing Library lint rules in *jest* (not cypress) test files
     {
-      "files": [
-        "**/__tests__/**/*.[jt]s?(x)",
-        "**/?(*.)+(spec|test).[jt]s?(x)"
-      ],
-      "extends": ["plugin:testing-library/react"]
+      "files": ["**/__tests__/?(*.)+(spec|test).[jt]s?(x)"],
+      "extends": ["plugin:testing-library/react"],
+      "rules": {
+        "testing-library/await-async-query": "error",
+        "testing-library/no-await-sync-query": "error",
+        "jest-dom/prefer-checked": "error",
+        "jest-dom/prefer-enabled-disabled": "error",
+        "jest-dom/prefer-required": "error",
+        "jest-dom/prefer-to-have-attribute": "error"
+      }
     }
   ]
 }

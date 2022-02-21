@@ -29,7 +29,8 @@
     "src/lib/supabase/__mocks__/hooks.js",
     "src/__mocks__/modules/useWhitelistUser.js",
     "src/__tests__/ui/jest.setup.js",
-    "src/__tests__/ui/jest.setup.ts"
+    "src/__tests__/ui/jest.setup.ts",
+    "cypress/integration/app.test.js"
   ],
   "exclude": ["node_modules"]
 }
