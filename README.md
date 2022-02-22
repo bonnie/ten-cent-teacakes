@@ -41,10 +41,27 @@ Reference: https://supabase.com/docs/guides/integrations/prisma
 
 ## Tests
 
-### Run Jest Tests
+### Running Tests Locally
+
+#### UI tests (Jest, no database)
 
 ```bash
-npm test
+npm run test:ui
+```
+
+#### API tests (Jest, with test database)
+
+```bash
+npm run test:db:migrate
+npm run test:api
+```
+
+#### E2E tests (Cypress, with test database)
+
+```bash
+npm run test:db:migrate
+npm run dev
+npm run cypress:run
 ```
 
 ## Deployment and CI

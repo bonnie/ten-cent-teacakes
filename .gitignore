@@ -17,3 +17,6 @@ public/uploads
 tsconfig.tsbuildinfo
 
 .vercel
+
+# Cypress videos
+cypress/videos/

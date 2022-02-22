@@ -4,7 +4,7 @@
 name: deploy
 on: deployment_status
 jobs:
-  tests-after-deploy:
+  cypress-e2e:
     # Note: This will run regardless of jest test outcome
     # TODO: make dependent on jest test (circleCI) outcome
     # Note: can't use CircleCI for this test bc it can't access

@@ -3,6 +3,7 @@
   "scripts": {
     "build": "next build",
     "cypress": "export CYPRESS_baseUrl='http://localhost:3000' && cypress open",
+    "cypress:run": "export CYPRESS_baseUrl='http://localhost:3000' && cypress run",
     "dev": "source .env.local && next dev",
     "export": "next export",
     "lint": "next lint --fix --max-warnings 1",
