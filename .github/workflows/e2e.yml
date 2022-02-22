@@ -28,11 +28,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      # need to install @testing-library/cypress as a dependency;
+      # need to install @testing-library/cypress and jsonwebtoken as dependencies;
       # everything else is not needed or included in cypress container
       - name: install
         run: |
-          npm install -D @testing-library/cypress
+          npm install -D @testing-library/cypress jsonwebtoken
 
       - name: Run tests
         run: |
@@ -44,3 +44,8 @@ jobs:
 
           export CYPRESS_baseUrl=${{ github.event.deployment_status.target_url }}
           cypress run
+
+# TODO:
+# 1. add auth0 secrets to github
+# 2. https://docs.github.com/en/actions/security-guides/encrypted-secrets
+# 3. document in README

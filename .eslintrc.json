@@ -78,6 +78,10 @@
         "jest-dom/prefer-required": "error",
         "jest-dom/prefer-to-have-attribute": "error"
       }
+    },
+    {
+      "files": ["cypress/**/?(*.)+(spec|test).[jt]s?(x)", "cypress/support/*"],
+      "extends": ["plugin:cypress/recommended"]
     }
   ]
 }
