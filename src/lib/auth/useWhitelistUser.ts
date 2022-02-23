@@ -16,15 +16,17 @@ export const useWhitelistUser = (): WhitelistUserReturn => {
   const [user, setUser] = useState<WhitelistUser>();
   const { showToast } = useToast();
 
-  // If under test in Cypress, get credentials from "auth0Cypress" localstorage item
-  // source:
-  // https://docs.cypress.io/guides/testing-strategies/auth0-authentication#Adapting-the-front-end
   const [cypressUser, setCypressUser] = useState<UserProfile | undefined>();
   // window / localstorage only accessible from useEffect in Next.js
   useEffect(() => {
     // @ts-ignore
-    if (window.Cypress) {
-      const auth0 = JSON.parse(localStorage.getItem("auth0Cypress")!);
+    if (window.Cypress && process.env.CYPRESS_LOCALSTORAGE_KEY) {
+      // If under test in Cypress, get credentials from localstorage item
+      // adapted from:
+      // https://docs.cypress.io/guides/testing-strategies/auth0-authentication#Adapting-the-front-end
+      const auth0 = JSON.parse(
+        localStorage.getItem(process.env.CYPRESS_LOCALSTORAGE_KEY)!,
+      );
       setCypressUser(auth0.body.decodedToken.user);
     }
   }, []);
@@ -68,4 +70,4 @@ export const useWhitelistUser = (): WhitelistUserReturn => {
   return { user };
 };
 
-// TODO: disable Sentry for tests
+// TODO: disable Sentry in general for tests

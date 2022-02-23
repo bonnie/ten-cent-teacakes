@@ -81,6 +81,9 @@ Cypress.Commands.add("loginByAuth0Api", (username, password) => {
       expiresAt: exp,
     };
 
-    window.localStorage.setItem("auth0Cypress", JSON.stringify(item));
+    window.localStorage.setItem(
+      Cypress.env("cypress_localstorage_key"),
+      JSON.stringify(item),
+    );
   });
 });

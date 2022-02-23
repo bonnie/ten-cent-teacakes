@@ -70,7 +70,15 @@ npm run cypress:run
 
 For Vercel / Cypress, the following variables are needed as GitHub secrets (repo -> settings -> secrets -> actions -> repository secrets):
 
-1. VERCEL_TOKEN (https://vercel.com/account/tokens)
+1. `VERCEL_TOKEN` (https://vercel.com/account/tokens)
+1. `CYPRESS_LOCALSTORAGE_KEY` (For more secure Cypress user. **Must match** the value in .env.local)
+1. `AUTH0_USERNAME` (some email that exists in Auth0 instance)
+1. `AUTH0_PASSWORD` (password for the above email)
+1. `AUTH0_DOMAIN` (example: `xyz.us.auth0.com`)
+1. `AUTH0_CLIENTID` (from Auth0 Application settings)
+1. `AUTH0_CLIENT_SECRET` (from Auth0 Application settings)
+1. `AUTH0_AUDIENCE` (should match the one in tenant -> settings -> API Authorization Settings)
+1. `AUTH0_SCOPE` (value should probably be `"openid profile email"`)
 
 **Note**: Cypress is run as a Github action instead of through CircleCI so that it can depend on branch deploy success, and use the branch deploy url.
 

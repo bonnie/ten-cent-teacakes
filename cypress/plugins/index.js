@@ -9,6 +9,7 @@ export default (on, config) => {
   config.env.auth0_client_id = process.env.AUTH0_CLIENTID;
   config.env.auth0_client_secret = process.env.AUTH0_CLIENT_SECRET;
   config.env.auth0_callback_url = process.env.AUTH0_CALLBACK_URL;
+  config.env.cypress_localstorage_key = process.env.CYPRESS_LOCALSTORAGE_KEY;
 
   return config;
 };
