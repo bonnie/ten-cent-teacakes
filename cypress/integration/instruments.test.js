@@ -18,15 +18,38 @@ describe("Instrument mutations", () => {
     cy.visit("/band");
     cy.findByRole("button", { name: /add instrument/i }).click();
 
+    // make sure the last instrument is before xylophone in the alphabet, so we can
+    // count on xylophone being last
+
     // expect save not to work if there's no instrument name
     cy.findByRole("button", { name: /save/i }).click();
-    cy.findByRole("alert", { name: /instrument name is required/i });
+    cy.findByText(/instrument name is required/i);
 
-    // add instrument name and save
-    cy.findByLabelText("Instrument name").type("xylophone");
+    /// ////////////////////////////////////////////////
+    // 1. add instrument name and save
+    cy.findByLabelText(/Instrument name/i).type("xylophone");
     cy.findByRole("button", { name: /save/i }).click();
 
     // expect instrument name to be on page
     cy.findByText("xylophone");
+
+    /// ////////////////////////////////////////////////
+    // 2. try to add an instrument with the same name
+
+    // expect an error alert
+
+    /// ////////////////////////////////////////////////
+    // 3. edit the instrument
+
+    // expect a success alert
+
+    // check for the edited instrument name
+
+    /// ////////////////////////////////////////////////
+    // 4. delete the instrument
+
+    // expect a success alert
+
+    // make sure instrument name is no longer represented
   });
 });

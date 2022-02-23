@@ -16,7 +16,7 @@ export const DeletePhotoModal: React.FC<{ photo: PhotoWithShowAndVenue }> = ({
   )}?`;
   return (
     <DeleteItemModal
-      title="Delete Photo"
+      title={`Delete Photo ${photo.description || photo.imagePath}`}
       description={description}
       handleDelete={() => deletePhoto(photo.id)}
     />

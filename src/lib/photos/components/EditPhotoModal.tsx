@@ -116,7 +116,7 @@ export const EditPhotoModal: React.FC<{ photo: PhotoWithShowAndVenue }> = ({
 
   return (
     <EditItemModal
-      title="Edit Photo"
+      title={`Edit Photo ${photo.description ?? photo.imagePath}`}
       FormFields={EditPhotoForm}
       formikConfig={formikConfig}
       buttonType="edit"

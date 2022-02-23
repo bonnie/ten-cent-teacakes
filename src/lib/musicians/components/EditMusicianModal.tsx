@@ -160,7 +160,7 @@ export const EditMusicianModal: React.FC<{
 
   return (
     <EditItemModal
-      title="Edit Musician"
+      title={`Edit Musician ${musician.firstName}`}
       FormFields={EditMusicianForm}
       formikConfig={formikConfig}
       buttonType="edit"

@@ -17,7 +17,7 @@ export const DeleteVenueModal: React.FC<{
   return (
     <DeleteItemModal
       disabled={disabled}
-      title="Delete Venue"
+      title={`Delete Venue ${venue.name}`}
       description={disabled ? disabledMessage : `Delete venue ${venue.name}`}
       handleDelete={() => deleteVenue(venue.id)}
     />
