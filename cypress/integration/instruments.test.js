@@ -8,6 +8,11 @@ describe("Instrument mutations", () => {
       Cypress.env("auth0_username"),
       Cypress.env("auth0_password"),
     );
+
+    cy.intercept("/api/auth/whitelist", {
+      statusCode: 200,
+      body: { whitelist: [Cypress.env("auth0_username")] },
+    });
   });
   it("can add, edit and delete instrument", () => {
     cy.visit("/band");
@@ -18,7 +23,7 @@ describe("Instrument mutations", () => {
     cy.findByRole("alert", { name: /instrument name is required/i });
 
     // add instrument name and save
-    cy.findByLabel("Instrument name").type("xylophone");
+    cy.findByLabelText("Instrument name").type("xylophone");
     cy.findByRole("button", { name: /save/i }).click();
 
     // expect instrument name to be on page

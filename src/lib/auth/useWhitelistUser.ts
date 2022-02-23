@@ -1,6 +1,6 @@
 import { UserProfile, useUser } from "@auth0/nextjs-auth0";
 import * as Sentry from "@sentry/browser";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 import { useToast } from "@/components/toasts/useToast";
@@ -16,6 +16,19 @@ export const useWhitelistUser = (): WhitelistUserReturn => {
   const [user, setUser] = useState<WhitelistUser>();
   const { showToast } = useToast();
 
+  // If under test in Cypress, get credentials from "auth0Cypress" localstorage item
+  // source:
+  // https://docs.cypress.io/guides/testing-strategies/auth0-authentication#Adapting-the-front-end
+  const [cypressUser, setCypressUser] = useState<UserProfile | undefined>();
+  // window / localstorage only accessible from useEffect in Next.js
+  useEffect(() => {
+    // @ts-ignore
+    if (window.Cypress) {
+      const auth0 = JSON.parse(localStorage.getItem("auth0Cypress")!);
+      setCypressUser(auth0.body.decodedToken.user);
+    }
+  }, []);
+
   useQuery(
     queryKeys.whitelist,
     async () => {
@@ -26,25 +39,27 @@ export const useWhitelistUser = (): WhitelistUserReturn => {
     },
     {
       onSuccess: (data: WhitelistResponse) => {
+        const workingUser = cypressUser ?? auth0User;
+        const email = workingUser?.email;
         const whitelisted =
           data.whitelist.length === 0 ||
-          (auth0User?.email && data.whitelist.includes(auth0User?.email));
-        setUser(whitelisted ? auth0User : undefined);
-        if (auth0User?.email && !whitelisted) {
-          Sentry.captureMessage(
-            `unauthorized login: ${auth0User.email}`,
-            Sentry.Severity.Warning,
-          );
-          showToast("warning", `${auth0User.email} not authorized`);
-          Sentry.configureScope((scope) => scope.setUser(null));
-        } else if (auth0User?.email) {
-          Sentry.setUser({ email: auth0User.email });
-          Sentry.captureMessage(
-            `Login: ${auth0User.email}`,
-            Sentry.Severity.Info,
-          );
-        } else {
-          Sentry.configureScope((scope) => scope.setUser(null));
+          (email && data.whitelist.includes(email));
+        setUser(whitelisted ? workingUser : undefined);
+        if (!cypressUser) {
+          // don't bother logging during testing!
+          if (email && !whitelisted) {
+            Sentry.captureMessage(
+              `unauthorized login: ${email}`,
+              Sentry.Severity.Warning,
+            );
+            showToast("warning", `${email} not authorized`);
+            Sentry.configureScope((scope) => scope.setUser(null));
+          } else if (email) {
+            Sentry.setUser({ email });
+            Sentry.captureMessage(`Login: ${email}`, Sentry.Severity.Info);
+          } else {
+            Sentry.configureScope((scope) => scope.setUser(null));
+          }
         }
       },
     },
@@ -52,3 +67,5 @@ export const useWhitelistUser = (): WhitelistUserReturn => {
 
   return { user };
 };
+
+// TODO: disable Sentry for tests

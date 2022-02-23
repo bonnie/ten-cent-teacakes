@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable camelcase */
 
 import "@testing-library/cypress/add-commands";
@@ -26,6 +27,26 @@ Cypress.Commands.add("loginByAuth0Api", (username, password) => {
       client_id,
       client_secret,
     },
+    //   }).then(({ body }) => {
+    //     const { access_token, expires_in, id_token } = body;
+    //     const auth0State = {
+    //       nonce: "",
+    //       state: "some-random-state",
+    //     };
+    //     const callbackUrl = `${Cypress.env(
+    //       "auth0_callback_url",
+    //     )}?access_token=${access_token}&scope=openid&id_token=${id_token}&expires_in=${expires_in}&token_type=Bearer&state=${
+    //       auth0State.state
+    //     }`;
+    //     cy.visit(callbackUrl, {
+    //       onBeforeLoad(win) {
+    //         win.document.cookie = `com.auth0.auth.some-random-state=${JSON.stringify(
+    //           auth0State,
+    //         )}`;
+    //       },
+    //     });
+    //   });
+    // });
   }).then(({ body }) => {
     const claims = jwt.decode(body.id_token);
     const {
@@ -61,7 +82,5 @@ Cypress.Commands.add("loginByAuth0Api", (username, password) => {
     };
 
     window.localStorage.setItem("auth0Cypress", JSON.stringify(item));
-
-    cy.visit("/");
   });
 });
