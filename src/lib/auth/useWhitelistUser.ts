@@ -27,7 +27,8 @@ export const useWhitelistUser = (): WhitelistUserReturn => {
       const auth0 = JSON.parse(
         localStorage.getItem(process.env.CYPRESS_LOCALSTORAGE_KEY)!,
       );
-      setCypressUser(auth0.body.decodedToken.user);
+      if (auth0?.body?.decodedToken?.user)
+        setCypressUser(auth0.body.decodedToken.user);
     }
   }, []);
 
