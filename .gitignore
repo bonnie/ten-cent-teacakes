@@ -18,5 +18,6 @@ tsconfig.tsbuildinfo
 
 .vercel
 
-# Cypress videos
+# Cypress videos and screenshots
 cypress/videos/
+cypress/screenshots/
