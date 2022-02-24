@@ -59,6 +59,7 @@ export default function Toast({ status, message, id }: ToastType) {
           <div className={tw(["ml-auto", "pl-3"])}>
             <div className={tw(["-mx-1.5", "-my-1.5"])}>
               <button
+                aria-label="dismiss alert"
                 type="button"
                 onClick={() => {
                   dispatch({ type: "DELETE_TOAST", id });
@@ -77,8 +78,6 @@ export default function Toast({ status, message, id }: ToastType) {
                   `focus:ring-${color}-600`,
                 ])}
               >
-                <span className={tw(["sr-only"])}>Dismiss</span>
-
                 <svg
                   className={tw(["h-5", "w-5"])}
                   xmlns="http://www.w3.org/2000/svg"

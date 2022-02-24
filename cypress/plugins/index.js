@@ -1,6 +1,14 @@
 /* eslint-disable no-param-reassign */
+const { resetDB } = require("../../src/__tests__/api/prisma/reset-db");
 
 export default (on, config) => {
+  on("task", {
+    "db:reset": async () => {
+      await resetDB();
+      return null;
+    },
+  });
+
   config.env.auth0_username = process.env.AUTH0_USERNAME;
   config.env.auth0_password = process.env.AUTH0_PASSWORD;
   config.env.auth0_domain = process.env.AUTH0_DOMAIN;

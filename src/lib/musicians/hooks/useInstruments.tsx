@@ -67,7 +67,7 @@ export const useInstruments = (): UseInstrumentsReturnValue => {
           `You have added the instrument "${data.instrument.name}"`,
         );
       },
-      onError: (error) => handleMutateError(error, "add venue"),
+      onError: (error) => handleMutateError(error, "add instrument"),
     },
   );
 
@@ -79,7 +79,7 @@ export const useInstruments = (): UseInstrumentsReturnValue => {
         invalidateInstruments();
         showToast("success", "You have deleted the instrument");
       },
-      onError: (error) => handleMutateError(error, "delete venue"),
+      onError: (error) => handleMutateError(error, "delete instrument"),
     },
   );
 
@@ -94,7 +94,7 @@ export const useInstruments = (): UseInstrumentsReturnValue => {
           `You have updated the instrument "${data.instrument.name}"`,
         );
       },
-      onError: (error) => handleMutateError(error, "update venue"),
+      onError: (error) => handleMutateError(error, "update instrument"),
     },
   );
 
