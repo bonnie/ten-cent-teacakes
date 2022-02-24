@@ -37,6 +37,14 @@ jobs:
         env:
           CYPRESS_baseUrl: ${{ github.event.deployment_status.target_url }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          CYPRESS_LOCALSTORAGE_KEY: ${{ secrets.CYPRESS_LOCALSTORAGE_KEY }}
+          AUTH0_USERNAME: ${{ secrets.AUTH0_USERNAME }}
+          AUTH0_PASSWORD: ${{ secrets.AUTH0_PASSWORD }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_CLIENTID: ${{ secrets.AUTH0_CLIENTID }}
+          AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+          AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
+          AUTH0_SCOPE: ${{ secrets.AUTH0_SCOPE }}
         run: |
           echo "Vercel unique deployment URL is ${{ github.event.deployment_status.target_url }}"
 
