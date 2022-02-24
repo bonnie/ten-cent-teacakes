@@ -28,9 +28,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      # need to install app in general for db reset commands
+      # cypress is already installed with the container.
+      # need to install a few things for Cypress to work properly with this app
       - name: install
-        run: npm install
+        run: npm install @prisma/client @testing-library/cypress jsonwebtoken dayjs
 
       - name: Run tests
         run: |
