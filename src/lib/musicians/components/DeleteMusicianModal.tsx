@@ -12,7 +12,7 @@ export const DeleteMusicianModal: React.FC<{
   const description = `Delete musician ${musician.firstName} ${musician.lastName}?`;
   return (
     <DeleteItemModal
-      title="Delete Musician"
+      title={`Delete Musician ${musician.firstName}`}
       description={description}
       handleDelete={() => deleteMusician(musician.id)}
     />

@@ -4,7 +4,7 @@
 name: deploy
 on: deployment_status
 jobs:
-  tests-after-deploy:
+  cypress-e2e:
     # Note: This will run regardless of jest test outcome
     # TODO: make dependent on jest test (circleCI) outcome
     # Note: can't use CircleCI for this test bc it can't access
@@ -28,13 +28,23 @@ jobs:
         with:
           fetch-depth: 0
 
-      # need to install @testing-library/cypress as a dependency;
-      # everything else is not needed or included in cypress container
+      # cypress is already installed with the container.
+      # need to install a few things for Cypress to work properly with this app
       - name: install
-        run: |
-          npm install -D @testing-library/cypress
+        run: npm install @prisma/client @testing-library/cypress jsonwebtoken dayjs
 
       - name: Run tests
+        env:
+          CYPRESS_baseUrl: ${{ github.event.deployment_status.target_url }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          CYPRESS_LOCALSTORAGE_KEY: ${{ secrets.CYPRESS_LOCALSTORAGE_KEY }}
+          AUTH0_USERNAME: ${{ secrets.AUTH0_USERNAME }}
+          AUTH0_PASSWORD: ${{ secrets.AUTH0_PASSWORD }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_CLIENTID: ${{ secrets.AUTH0_CLIENTID }}
+          AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+          AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
+          AUTH0_SCOPE: ${{ secrets.AUTH0_SCOPE }}
         run: |
           echo "Vercel unique deployment URL is ${{ github.event.deployment_status.target_url }}"
 
@@ -42,5 +52,4 @@ jobs:
           export BRANCH_NAME=$(git show -s --pretty=%D HEAD | tr -s ',' '\n' | sed 's/^ //' | grep -e 'origin/' | head -1 | sed 's/\origin\///g')
           echo "Deployed branch ${BRANCH_NAME}"
 
-          export CYPRESS_baseUrl=${{ github.event.deployment_status.target_url }}
           cypress run

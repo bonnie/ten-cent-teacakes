@@ -41,13 +41,54 @@ Reference: https://supabase.com/docs/guides/integrations/prisma
 
 ## Tests
 
-### Run Jest Tests
+### Running Tests Locally
+
+#### UI tests (Jest, no database)
 
 ```bash
-npm test
+npm run test:ui
+```
+
+#### API tests (Jest, with test database)
+
+```bash
+npm run test:db:migrate
+npm run test:api
+```
+
+#### E2E tests (Cypress, with test database)
+
+```bash
+npm run test:db:migrate
+npm run dev
+npm run cypress:run
 ```
 
 ## Deployment and CI
+
+### GitHub
+
+For Vercel / Cypress, the following variables are needed as GitHub secrets (repo -> settings -> secrets -> actions -> repository secrets):
+
+1. `VERCEL_TOKEN` (https://vercel.com/account/tokens)
+1. `CYPRESS_LOCALSTORAGE_KEY` (For more secure Cypress user. **Must match** the value in .env.local)
+1. `AUTH0_USERNAME` (some email that exists in Auth0 instance)
+1. `AUTH0_PASSWORD` (password for the above email)
+1. `AUTH0_DOMAIN` (example: `xyz.us.auth0.com`)
+1. `AUTH0_CLIENTID` (from Auth0 Application settings)
+1. `AUTH0_CLIENT_SECRET` (from Auth0 Application settings)
+1. `AUTH0_AUDIENCE` (should match the one in tenant -> settings -> API Authorization Settings)
+1. `AUTH0_SCOPE` (value should probably be `"openid profile email"`)
+
+**Note**: Cypress is run as a Github action instead of through CircleCI so that it can depend on branch deploy success, and use the branch deploy url.
+
+#### `main` branch restrictions
+
+Since anything pushed / merged to `main` will be live right away, enact these restrictions
+
+1. Make a GitHub branch protection rule for `main` that you can't push directly ("Require a pull request before merging").
+1. Make a GitHub branch protection rule for `main` that uses CircleCI and Vercel checks as requirement to merge ("Require status checks to pass before merging")
+   Reference: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule
 
 ### Vercel
 
@@ -59,9 +100,11 @@ npm test
      - `SENTRY_AUTH_TOKEN` (from `.sentryclirc`)
      - `SENTRY_DSN` (from `.env.local`)
    - diffferent for production vs. preview / development
-   - `DATABASE_URL` (from `.env`)
+     - `DATABASE_URL` (from `.env`)
      - `AUTH0_*` (from `.env.local`)
      - `SUPABASE_*` (from `.env.local`)
+   - only needed for dev / preview environments
+     - `CYPRESS_LOCALSTORAGE_KEY` (**Must match** value in GitHub and .env.local )
 
 ### Circle CI
 
@@ -69,6 +112,7 @@ npm test
 1. Create a new CircleCI project associated with this repository (https://circleci.com/docs/2.0/project-build/#adding-projects)
 1. Enable GitHub checks (https://circleci.com/docs/2.0/enable-checks/)
 1. Add `DATABASE_URL` environment variable (https://circleci.com/docs/2.0/env-vars/)
+1. Add `CYPRESS_INSTALL_BINARY` environment variable, set to 0 (https://docs.cypress.io/guides/getting-started/installing-cypress#Environment-variables)
 
 ### Auth0 for Preview Deploys
 
@@ -85,11 +129,3 @@ For each preview deploy git branch, **before** pushing to GitHub:
    with
 
    `https://ten-cent-teacakes-git-<branch name>-bonnie.vercel.app/`
-
-### `main` branch restrictions
-
-Since anything pushed / merged to `main` will be live right away, enact these restrictions
-
-1. Make a GitHub branch protection rule for `main` that you can't push directly ("Require a pull request before merging").
-1. Make a GitHub branch protection rule for `main` that uses CircleCI and Vercel checks as requirement to merge ("Require status checks to pass before merging")
-   Reference: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule

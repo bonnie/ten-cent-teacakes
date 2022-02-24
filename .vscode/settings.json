@@ -11,9 +11,6 @@
     "typescriptreact"
   ],
   "[json, javascript, javascriptreact, typescript, typescriptreact]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
-    },
     "editor.tabSize": 2
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -26,12 +23,12 @@
   "workbench.activityBar.visible": true,
   "editor.minimap.enabled": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "terminal.integrated.automationShell.osx": "",
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter-notebook"
   },
   "javascript.updateImportsOnFileMove.enabled": "always",
   "eslint.alwaysShowStatus": true,
   "security.workspace.trust.untrustedFiles": "open",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "prettier.trailingComma": "all"
 }

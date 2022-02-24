@@ -12,7 +12,7 @@ export const DeleteShowModal: React.FC<{ show: ShowWithVenue }> = ({
   const description = `Delete show at ${show.venue.name}?`;
   return (
     <DeleteItemModal
-      title="Delete Show"
+      title={`Delete Show at ${show.venue.name} on ${show.performAt}`}
       description={description}
       handleDelete={() => deleteShow(show.id)}
     />

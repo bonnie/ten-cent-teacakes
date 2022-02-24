@@ -39,6 +39,7 @@ const moduleExports = {
     AUTH0_ISSUER_BASE_URL: process.env.AUTH0_ISSUER_BASE_URL,
     SUPABASE_URL: process.env.SUPABASE_URL,
     SUPABASE_KEY: process.env.SUPABASE_KEY,
+    CYPRESS_LOCALSTORAGE_KEY: process.env.CYPRESS_LOCALSTORAGE_KEY,
   },
 };
 

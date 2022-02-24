@@ -1,12 +1,10 @@
-import { Show } from "@prisma/client";
-
 import dayjs from "dayjs";
 import { FormikProps } from "formik";
 import React from "react";
 
 import { TextInput } from "@/components/lib/form/TextInput";
 import { EditItemModal } from "@/components/lib/modals/EditItemModal";
-import { ShowFormData } from "@/lib/shows/types";
+import { ShowFormData, ShowWithVenue } from "@/lib/shows/types";
 
 import { useShows } from "../hooks/useShows";
 import { useVenues } from "../hooks/useVenues";
@@ -97,7 +95,7 @@ export const AddShowModal: React.FC = () => {
   );
 };
 
-export const EditShowModal: React.FC<{ show: Show }> = ({ show }) => {
+export const EditShowModal: React.FC<{ show: ShowWithVenue }> = ({ show }) => {
   const { updateShow } = useShows();
 
   const { performDate, performTime } = getShowDateFieldValues(show.performAt);
@@ -123,7 +121,7 @@ export const EditShowModal: React.FC<{ show: Show }> = ({ show }) => {
 
   return (
     <EditItemModal
-      title="Edit Show"
+      title={`Edit Show at ${show.venue.name} on ${show.performAt}`}
       FormFields={EditShowForm}
       formikConfig={formikConfig}
     />

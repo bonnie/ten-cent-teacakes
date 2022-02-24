@@ -66,7 +66,7 @@ export const EditInstrumentModal: React.FC<{ instrument: Instrument }> = ({
 
   return (
     <EditItemModal
-      title="Edit Instrument"
+      title={`Edit Instrument ${instrument.name}`}
       FormFields={EditInstrumentForm}
       formikConfig={formikConfig}
       buttonType="edit"
