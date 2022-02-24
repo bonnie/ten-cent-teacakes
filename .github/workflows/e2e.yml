@@ -28,11 +28,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      # need to install @testing-library/cypress and jsonwebtoken as dependencies;
-      # everything else is not needed or included in cypress container
+      # need to install app in general for db reset commands
       - name: install
-        run: |
-          npm install -D @testing-library/cypress jsonwebtoken
+        run: npm install
 
       - name: Run tests
         run: |
@@ -44,8 +42,3 @@ jobs:
 
           export CYPRESS_baseUrl=${{ github.event.deployment_status.target_url }}
           cypress run
-
-# TODO:
-# 1. add auth0 secrets to github
-# 2. https://docs.github.com/en/actions/security-guides/encrypted-secrets
-# 3. document in README
