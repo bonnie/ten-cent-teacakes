@@ -100,9 +100,11 @@ Since anything pushed / merged to `main` will be live right away, enact these re
      - `SENTRY_AUTH_TOKEN` (from `.sentryclirc`)
      - `SENTRY_DSN` (from `.env.local`)
    - diffferent for production vs. preview / development
-   - `DATABASE_URL` (from `.env`)
+     - `DATABASE_URL` (from `.env`)
      - `AUTH0_*` (from `.env.local`)
      - `SUPABASE_*` (from `.env.local`)
+   - only needed for dev / preview environments
+     - `CYPRESS_LOCALSTORAGE_KEY` (**Must match** value in GitHub and .env.local )
 
 ### Circle CI
 
