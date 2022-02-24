@@ -34,6 +34,9 @@ jobs:
         run: npm install @prisma/client @testing-library/cypress jsonwebtoken dayjs
 
       - name: Run tests
+        env:
+          CYPRESS_baseUrl: ${{ github.event.deployment_status.target_url }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           echo "Vercel unique deployment URL is ${{ github.event.deployment_status.target_url }}"
 
@@ -41,5 +44,4 @@ jobs:
           export BRANCH_NAME=$(git show -s --pretty=%D HEAD | tr -s ',' '\n' | sed 's/^ //' | grep -e 'origin/' | head -1 | sed 's/\origin\///g')
           echo "Deployed branch ${BRANCH_NAME}"
 
-          export CYPRESS_baseUrl=${{ github.event.deployment_status.target_url }}
           cypress run
