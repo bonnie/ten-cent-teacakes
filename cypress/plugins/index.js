@@ -3,10 +3,7 @@ const { resetDB } = require("../../src/__tests__/api/prisma/reset-db");
 
 export default (on, config) => {
   on("task", {
-    "db:reset": async () => {
-      await resetDB();
-      return null;
-    },
+    "db:reset": () => resetDB().then(() => null),
   });
 
   config.env.auth0_username = process.env.AUTH0_USERNAME;

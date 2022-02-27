@@ -68,8 +68,9 @@ describe("Instrument mutations", () => {
     /// ////////////////////////////////////////////////
     // 4. edit the instrument
     cy.get("@editXylophoneButton").click();
-    cy.findByLabelText(/Instrument name/i).clear();
-    cy.findByLabelText(/Instrument name/i).type("sousaphone");
+    cy.findByLabelText(/Instrument name/i)
+      .clear()
+      .type("sousaphone");
     cy.findByRole("button", { name: /save/i }).click();
 
     // expect a success message
