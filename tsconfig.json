@@ -19,20 +19,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "src/pages/404/index.js",
-    "src/prisma/seed.js",
-    "src/__mocks__/modules/supabase/utils.js",
-    "src/lib/supabase/__mocks__/hooks.js",
-    "src/__mocks__/modules/useWhitelistUser.js",
-    "src/__tests__/ui/jest.setup.js",
-    "src/__tests__/ui/jest.setup.ts",
-    "cypress/integration/app.test.js",
-    "cypress/support/commands.js",
-    "cypress/support/commands.js"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
