@@ -12,7 +12,7 @@ import { useMusicians } from "@/lib/musicians/hooks/useMusicians";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { useWillUnmount } from "@/lib/react-query/useWillUnmount";
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery(queryKeys.musicians, ({ signal }) =>
