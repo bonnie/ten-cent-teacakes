@@ -54,7 +54,7 @@ export const PhotoThumbnail: React.FC<{
       </Link>
 
       <p className={tw(["text-center"])}>
-        {dayjs(photoDate).format("MMM DD, YYYY")}
+        {dayjs(photoDate).format("MMM D, YYYY")}
         {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
       </p>
       <p className={tw(["text-sm"])}>

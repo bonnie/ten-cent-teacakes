@@ -91,7 +91,7 @@ const Photo: React.FC = () => {
               </div>
             ) : null}
             <Heading textSize="5xl">
-              {dayjs(photoDate).format("MMM DD, YYYY")}
+              {dayjs(photoDate).format("MMM D, YYYY")}
               {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
             </Heading>
           </div>

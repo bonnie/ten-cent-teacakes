@@ -48,7 +48,7 @@ describe("not logged in", () => {
     const showDates = await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
     expect(showDates.map((date) => date.textContent)).toEqual([
       "Jan 1, 2200",
-      dayjs(yesterday).format("MMM DD, YYYY"),
+      dayjs(yesterday).format("MMM D, YYYY"),
       "Jan 1, 2021",
     ]);
   });
@@ -99,7 +99,7 @@ describe("no future shows", () => {
     const showDates = await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
 
     expect(showDates.map((date) => date.textContent)).toEqual([
-      dayjs(yesterday).format("MMM DD, YYYY"),
+      dayjs(yesterday).format("MMM D, YYYY"),
       "Jan 1, 2021",
     ]);
   });

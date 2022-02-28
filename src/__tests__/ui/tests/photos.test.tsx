@@ -47,11 +47,11 @@ describe("not logged in", () => {
     // from mockData
     const allDates = screen.getAllByText(/\w\w\w \d?\d, \d\d\d\d/);
     expect(allDates.map((date) => date.textContent)).toEqual([
-      dayjs(yesterday).format("MMM DD, YYYY"),
-      dayjs(lastMonth).format("MMM DD, YYYY"),
-      "Jan 01, 2021 at Venue 2",
-      "Jan 01, 2021 at Venue 2",
-      "Jan 01, 2021 at Venue 2",
+      dayjs(yesterday).format("MMM D, YYYY"),
+      dayjs(lastMonth).format("MMM D, YYYY"),
+      "Jan 1, 2021 at Venue 2",
+      "Jan 1, 2021 at Venue 2",
+      "Jan 1, 2021 at Venue 2",
     ]);
 
     // 3 should mention photographer
