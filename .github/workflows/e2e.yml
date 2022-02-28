@@ -53,4 +53,4 @@ jobs:
           export BRANCH_NAME=$(git show -s --pretty=%D HEAD | tr -s ',' '\n' | sed 's/^ //' | grep -e 'origin/' | head -1 | sed 's/\origin\///g')
           echo "Deployed branch ${BRANCH_NAME}"
 
-          cypress run
+          cypress run --browser chrome
