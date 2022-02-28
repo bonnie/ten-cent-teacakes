@@ -19,7 +19,7 @@ export const getShowDateFieldValues = (
 });
 
 export const getShowDateTimeFromForm = (values: ShowFormData): Date => {
-  const timeZone = "America/Los_Angeles";
+  const { timeZone } = Intl.DateTimeFormat().resolvedOptions();
   return dayjs
     .tz(`${values.performDate} ${values.performTime}`, timeZone)
     .toDate();
