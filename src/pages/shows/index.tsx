@@ -1,25 +1,14 @@
 import React from "react";
-import { dehydrate, QueryClient } from "react-query";
 import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
-import { queryKeys } from "@/lib/react-query/query-keys";
-import { fetchShows } from "@/lib/shows";
 import { AddShowModal } from "@/lib/shows/components/EditShowModal";
 import { ShowsGroup } from "@/lib/shows/components/ShowsGroup";
 import { EditVenues } from "@/lib/shows/components/venues/EditVenues";
 import { useShows } from "@/lib/shows/hooks/useShows";
 
-export async function getServerSideProps() {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(queryKeys.shows, fetchShows);
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+// don't pre-fetch shows here; won't help with SEO and makes page load slow
 
 const Shows: React.FC = () => {
   const { pastShows, upcomingShows } = useShows();
