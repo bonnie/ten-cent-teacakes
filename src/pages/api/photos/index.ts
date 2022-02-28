@@ -12,11 +12,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
 handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
   const { data } = req.body;
   if (data.imagePath) {
-    const photo = await addPhoto({
-      imagePath: data.imagePath,
-      showId: data.showId,
-      photographer: data.photographer,
-    });
+    const photo = await addPhoto(data);
     res.status(200).json({ photo });
   } else {
     res.status(400).json({ message: "no file received" });

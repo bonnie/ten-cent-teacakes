@@ -48,9 +48,10 @@ it("can add, edit and delete photo with minimal data", () => {
   cy.findByRole("button", { name: /dismiss alert/i }).click();
 
   // expect thumbnail image src
+  // TODO: flaky (why??)
   cy.get("main")
     .find("img")
-    .first() // will be the first image based on database data
+    .first() // will be the first image based on database data (don't love this way of identifying; seems fragile)
     .invoke("attr", "src")
     .should("match", /avalanche-of-cheese-\d+-thumb.jpg/);
 
@@ -104,56 +105,92 @@ it("can add, edit and delete photo with minimal data", () => {
   cy.findByAltText("avalanche, made of cheese").should("not.exist");
 });
 
-// it("can add and edit photo with maximal data", () => {
-//   logInAndResetDb();
+it("can add and edit photo with maximal data", () => {
+  logInAndResetDb();
 
-//   /// ////////////////////////////////////////////////
-//   // 1. add photo with all data and save
-//   cy.findByRole("button", { name: /add show/i })
-//     .as("addShowButton")
-//     .click();
+  /// ////////////////////////////////////////////////
+  // 1. add photo with all data and save
+  cy.findByRole("button", { name: /add photo/i })
+    .as("addPhotoButton")
+    .click();
 
-//   cy.findByLabelText(/performance date/i).type("2020-02-29");
-//   cy.findByLabelText(/performance time/i).type("10:00");
-//   cy.findByLabelText("Venue *").select("Venue 2");
-//   cy.findByLabelText(/url for show/i).type("rickroll.com");
+  cy.findByLabelText(/Choose a file to upload/i).selectFile(
+    "cypress/files/avalanche-of-cheese.jpg",
+  );
+  // message about upload should appear, then disappear
+  cy.findByText(/compressing and uploading/i).should("exist");
+  cy.findByText(/compressing and uploading/i).should("not.exist");
 
-//   cy.findByRole("button", { name: /save show/i }).click();
+  cy.findByLabelText(/show/i).select(1); // select the first (and only) show
+  cy.findByLabelText(/photographer/i).type("Jane Q. Photographer");
+  cy.findByLabelText(/description/i).type("a cheesy avalanche");
+  cy.findByLabelText(/photo date/i).type("2200-01-01");
 
-//   // expect success message
-//   cy.contains(/you have added a show/i);
-//   cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.findByRole("button", { name: /save photo/i }).click();
 
-//   // expect show link to be entered URL
-//   // easier with Cypress syntax than Cypress Testing Library
-//   cy.get('a[href="http://rickroll.com"]').should("have.length", 1);
+  // expect success message
+  cy.contains(/you have added a photo/i);
+  cy.findByRole("button", { name: /dismiss alert/i }).click();
 
-//   // expect show edit button to be on page
-//   cy.findByRole("button", {
-//     name: /edit show at venue 2 on Feb 29, 2020, 10:00/i,
-//   }).as("editNewShowButton");
+  // expect photographer text
+  cy.findByText("taken by Jane Q. Photographer").should("exist");
 
-//   /// ////////////////////////////////////////////////
-//   // 2. edit the photo data
-//   cy.get("@editNewShowButton").click();
-//   cy.findByLabelText(/URL/i).clear().type("icanhazcheeseburger.com");
+  // expect two photos to be labeled for show yesterday at Venue 1
+  const showRegExp = new RegExp(
+    `${dayjs().subtract(1, "day").format("MMM D, YYYY")} at Venue 1`,
+    "i",
+  );
+  cy.findAllByText(showRegExp).should("have.length", 2);
 
-//   // save show
-//   cy.findByRole("button", { name: /save show/i }).click();
+  // expect thumbnail image src
+  cy.findByAltText("a cheesy avalanche")
+    .as("maxThumbImg")
+    .invoke("attr", "src")
+    .should("include", "thumb");
 
-//   // expect a success message
-//   cy.findByText(/you have updated the show/i).should("exist");
-//   cy.findByRole("button", { name: /dismiss alert/i }).click();
+  /// ////////////////////////////////////////////////
+  // 2. view data on individual photo page
+  cy.get("@maxThumbImg").click();
 
-//   // old URL link and edit button should not exist
-//   cy.get('a[href="http://rickroll.com"]').should("not.exist");
-//   cy.findByRole("button", {
-//     name: /edit show at venue 2 on Feb 29, 2020, 10:00/i,
-//   }).should("not.exist");
+  // check for the description and photographer display
+  cy.findByText("a cheesy avalanche").should("be.visible");
+  cy.findByText("Photo by Jane Q. Photographer").should("be.visible");
 
-//   // check for new URL link and edit button
-//   cy.get('a[href="http://icanhazcheeseburger.com"]').should("have.length", 1);
-//   cy.findByRole("button", {
-//     name: /edit show at new venue on Feb 29, 2020, 10:00/i,
-//   });
-// });
+  // check that large image is loaded
+  cy.get("main")
+    .find("img")
+    .invoke("attr", "src")
+    .should("match", /avalanche-of-cheese-\d+.jpg/);
+
+  // go back to photos
+  cy.findByText(/back to photos/i).click();
+
+  /// ////////////////////////////////////////////////
+  // 3. edit the photo data
+  cy.findByRole("button", {
+    name: /edit photo a cheesy avalanche/i,
+  }).click();
+  cy.findByLabelText(/photographer/i)
+    .clear()
+    .type("Jane F. Photographer");
+  cy.findByLabelText(/description/i)
+    .clear()
+    .type("an avalanche, cheese-like");
+  cy.findByLabelText(/photo date/i)
+    .clear()
+    .type("2400-01-01");
+
+  cy.findByRole("button", { name: /save photo/i }).click();
+
+  // expect success message
+  cy.contains(/you have updated the photo/i);
+  cy.findByRole("button", { name: /dismiss alert/i }).click();
+
+  // expect photographer text
+  cy.findByText("taken by Jane F. Photographer").should("exist");
+
+  // expect new description
+  cy.findByAltText("an avalanche, cheese-like")
+    .as("editedThumbImage")
+    .should("exist");
+});

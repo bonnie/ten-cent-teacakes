@@ -80,7 +80,16 @@ const Photo: React.FC = () => {
         "mx-4",
       ])}
     >
-      <div className={tw(["grid", "grid-cols-8", "w-full"])}>
+      <div
+        className={tw([
+          "grid",
+          "grid-cols-8",
+          "w-full",
+          photo.description && photo.showVenue
+            ? "lg:row-span-2"
+            : "lg:row-span-1",
+        ])}
+      >
         <AdvanceButton Icon={FaArrowLeft} linkIndex={prevIndex} />
         <div className={tw(["col-span-6"])}>
           <div className={tw(["flex", "justify-center", "items-center"])}>
@@ -108,8 +117,11 @@ const Photo: React.FC = () => {
       </div>
       <div
         className={tw([
-          "row-span-5",
-          "lg:row-span-7",
+          "row-span-3",
+          "md:row-span-5",
+          photo.description && photo.showVenue
+            ? "lg:row-span-6"
+            : "lg:row-span-7",
           "h-full",
           "mb-3",
           "w-full",
