@@ -42,7 +42,6 @@ const EditShowForm: React.FC<{
         required={false}
         type="url"
       />
-      {props.touched.performDate && props.errors.performDate}
     </form>
   </>
 );
@@ -88,6 +87,7 @@ export const AddShowModal: React.FC = () => {
   return (
     <EditItemModal
       title="Add Show"
+      itemName="show"
       FormFields={EditShowForm}
       formikConfig={formikConfig}
       buttonType="add"
@@ -121,7 +121,10 @@ export const EditShowModal: React.FC<{ show: ShowWithVenue }> = ({ show }) => {
 
   return (
     <EditItemModal
-      title={`Edit Show at ${show.venue.name} on ${show.performAt}`}
+      title={`Edit Show at ${show.venue.name} on ${dayjs(show.performAt).format(
+        "MMM D, YYYY, hh:mm a",
+      )}`}
+      itemName="show"
       FormFields={EditShowForm}
       formikConfig={formikConfig}
     />

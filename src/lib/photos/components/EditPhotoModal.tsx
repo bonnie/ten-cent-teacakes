@@ -80,6 +80,7 @@ export const AddPhotoModal: React.FC = () => {
   return (
     <EditItemModal
       title="Add Photo"
+      itemName="photo"
       FormFields={AddPhotoForm}
       formikConfig={formikConfig}
       buttonType="add"
@@ -117,6 +118,7 @@ export const EditPhotoModal: React.FC<{ photo: PhotoWithShowAndVenue }> = ({
   return (
     <EditItemModal
       title={`Edit Photo ${photo.description ?? photo.imagePath}`}
+      itemName="photo"
       FormFields={EditPhotoForm}
       formikConfig={formikConfig}
       buttonType="edit"
