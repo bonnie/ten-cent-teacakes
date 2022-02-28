@@ -90,10 +90,13 @@ const Photo: React.FC = () => {
                 <DeletePhotoModal photo={photo} />
               </div>
             ) : null}
-            <Heading textSize="5xl">
-              {dayjs(photoDate).format("MMM D, YYYY")}
-              {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
-            </Heading>
+            <div className={tw(["flex", "flex-col", "items-center"])}>
+              <Heading textSize="5xl">
+                {dayjs(photoDate).format("MMM D, YYYY")}
+                {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
+              </Heading>
+              {photo.description ? <p>{photo.description}</p> : null}
+            </div>
           </div>
           {photo.photographer ? (
             <p className={tw(["text-lg", "text-center"])}>
