@@ -130,24 +130,12 @@ it("can add and edit show with maximal data", () => {
   }).as("editNewShowButton");
 
   /// ////////////////////////////////////////////////
-  // 2. edit the show URL and create a new venue
+  // 2. edit the show URL and venue
   cy.get("@editNewShowButton").click();
   cy.findByLabelText(/URL/i).clear().type("icanhazcheeseburger.com");
 
-  // find add venue button within modal form (not the one on the page in the background)
-  cy.get("form")
-    .findByRole("button", { name: /add venue/i })
-    .click();
-  cy.findByLabelText(/venue name/i).type("New Venue");
-  cy.get("form")
-    .findByRole("button", { name: /save venue/i })
-    .click();
-  // expect a success message
-  cy.findByText(/you have added the venue "new venue"/i).should("exist");
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
-
-  // select new venue
-  cy.findByLabelText("Venue *").select("New Venue");
+  // select different venue
+  cy.findByLabelText("Venue *").select("Venue 1");
 
   // save show
   cy.findByRole("button", { name: /save show/i }).click();
@@ -165,6 +153,6 @@ it("can add and edit show with maximal data", () => {
   // check for new URL link and edit button
   cy.get('a[href="http://icanhazcheeseburger.com"]').should("have.length", 1);
   cy.findByRole("button", {
-    name: /edit show at new venue on Feb 29, 2020, 10:00/i,
+    name: /edit show at venue 1 on Feb 29, 2020, 10:00/i,
   });
 });

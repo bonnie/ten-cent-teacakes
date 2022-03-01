@@ -88,25 +88,9 @@ it("can add, edit and delete musician", () => {
     .clear()
     .type("I am an unstoppable landslide of cheddar.");
 
-  // remove the vocals, and create a new instrument
+  // remove the vocals, and add bass
   cy.findByRole("checkbox", { name: "vocals" }).click();
-
-  // find add instrument button within modal form (not the one on the page in the background)
-  cy.get("form")
-    .findByRole("button", { name: /add instrument/i })
-    .click();
-  cy.findByLabelText(/instrument name/i).type("accordian");
-  cy.findByRole("button", { name: /save instrument/i }).click();
-
-  // expect a success message
-  // TODO: this sometimes (often!) fails, I think because of "form within form"
-  // (a patch request gets sent for the musician and another toast -- "musician updated" appears)
-  // (but then why not show / venue ...?)
-  cy.findByText(/you have added the instrument "accordian"/i).should("exist");
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
-
-  // click the accordian to add to the musician
-  cy.findByRole("checkbox", { name: "accordian" }).click();
+  cy.findByRole("checkbox", { name: "bass" }).click();
 
   // update the image
   cy.findByLabelText(/select new musician image/i).selectFile(
@@ -131,7 +115,7 @@ it("can add, edit and delete musician", () => {
   }).within(() => {
     cy.findByText("vocals").should("not.exist");
     cy.findByText("kazoo").should("exist");
-    cy.findByText("accordian").should("exist");
+    cy.findByText("bass").should("exist");
     cy.get("img.ease-in-out")
       .invoke("attr", "src")
       .should("include", "gustopher");

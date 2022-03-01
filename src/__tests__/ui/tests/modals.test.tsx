@@ -62,10 +62,6 @@ test("Add modal appearance / disappearance", async () => {
   const instrumentCheckboxes = await screen.findAllByRole("checkbox");
   expect(instrumentCheckboxes).toHaveLength(7);
 
-  // instrument add button (there will be 2, one in modal, one on page)
-  const instrumentAddButton = screen.getAllByLabelText("Add Instrument");
-  expect(instrumentAddButton).toHaveLength(2);
-
   // file upload
   const fileInput = screen.getByLabelText(/image-upload/);
   expect(fileInput).toHaveAttribute("type", "file");
@@ -116,10 +112,6 @@ test("Edit modal appearance / disappearance", async () => {
   expect(
     instrumentCheckboxes.filter((checkbox) => checkbox.hasAttribute("checked")),
   ).toHaveLength(3);
-
-  // instrument add button (there will be 2, one in modal, one on page)
-  const instrumentAddButton = screen.getAllByLabelText("Add Instrument");
-  expect(instrumentAddButton).toHaveLength(2);
 
   // file upload
   const fileInput = screen.getByLabelText(/image-upload/);
