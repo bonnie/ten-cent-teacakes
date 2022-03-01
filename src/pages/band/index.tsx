@@ -1,5 +1,5 @@
 import React from "react";
-import { dehydrate, QueryClient, useQueryClient } from "react-query";
+import { dehydrate, QueryClient } from "react-query";
 import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
@@ -10,7 +10,6 @@ import { EditInstruments } from "@/lib/musicians/components/instruments/EditInst
 import { MusicianCard } from "@/lib/musicians/components/MusicianCard";
 import { useMusicians } from "@/lib/musicians/hooks/useMusicians";
 import { queryKeys } from "@/lib/react-query/query-keys";
-import { useWillUnmount } from "@/lib/react-query/useWillUnmount";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -27,25 +26,18 @@ export async function getStaticProps() {
 }
 
 const Musicians: React.FC = () => {
-  const queryClient = useQueryClient();
-
-  const cancelFetch = () => {
-    queryClient.cancelQueries(queryKeys.musicians);
-  };
-  const { isMountedRef } = useWillUnmount(cancelFetch);
-
   const { musicians } = useMusicians();
   const { user } = useWhitelistUser();
 
   return (
     <div className={tw(["w-full"])}>
       <Heading>The Band</Heading>
-      {isMountedRef.current && user ? (
+      {user ? (
         <div className={tw(["text-center"])}>
           <AddMusicianModal />
         </div>
       ) : null}
-      <div
+      <ul
         className={tw([
           "flex",
           "flex-wrap",
@@ -53,13 +45,11 @@ const Musicians: React.FC = () => {
           "items-stretch mx-5",
         ])}
       >
-        {isMountedRef.current
-          ? musicians.map((musician) => (
-              <MusicianCard key={musician.id} musician={musician} />
-            ))
-          : null}
-      </div>
-      {isMountedRef.current && user ? <EditInstruments /> : null}
+        {musicians.map((musician) => (
+          <MusicianCard key={musician.id} musician={musician} />
+        ))}
+      </ul>
+      {user ? <EditInstruments /> : null}
     </div>
   );
 };

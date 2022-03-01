@@ -32,7 +32,7 @@ jobs:
       # need to install a few things for Cypress to work properly with this app
       # need specific version of cypress too.
       - name: install
-        run: npm install @prisma/client @testing-library/cypress jsonwebtoken dayjs
+        run: npm install @prisma/client @testing-library/cypress jsonwebtoken dayjs cypress-fail-on-console-error
 
       - name: Run tests
         env:

@@ -28,7 +28,8 @@ const cardClasses = tw([
 
 type InstrumentProps = { name: string };
 const Instrument: React.FC<InstrumentProps> = ({ name }) => (
-  <div
+  <li
+    aria-label={name}
     className={tw([
       "rounded-full",
       "bg-aqua-700",
@@ -40,7 +41,7 @@ const Instrument: React.FC<InstrumentProps> = ({ name }) => (
     ])}
   >
     {name}
-  </div>
+  </li>
 );
 
 type MusicianProps = { musician: MusicianWithInstruments };
@@ -60,7 +61,10 @@ export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
     : "";
 
   return (
-    <div className={tw(["pt-12 m-4"])}>
+    <li
+      className={tw(["pt-12", "m-4", "list-none"])}
+      aria-label={`Information about band member ${musician.firstName}`}
+    >
       <div className={cardClasses}>
         <div>
           <div
@@ -98,7 +102,7 @@ export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
           </div>
           <p>{musician.bio}</p>
         </div>
-        <div
+        <ul
           className={tw([
             "flex",
             "flex-row",
@@ -113,8 +117,8 @@ export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
             .map((instrument) => (
               <Instrument key={instrument.name} name={instrument.name} />
             ))}
-        </div>
+        </ul>
       </div>
-    </div>
+    </li>
   );
 };
