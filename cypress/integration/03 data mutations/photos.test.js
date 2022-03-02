@@ -18,10 +18,11 @@ it("can add, edit and delete photo with minimal data", () => {
   cy.findByLabelText(/Choose a file to upload/i).selectFile(
     "cypress/files/avalanche-of-cheese.jpg",
   );
-  // message about upload should appear, then disappear
+  // message about upload should appear, then disappear (sometimes takes longer to disappear)
   cy.findByText(/compressing and uploading/i).should("exist");
-  cy.findByText(/compressing and uploading/i).should("not.exist");
-
+  cy.findByText(/compressing and uploading/i, { timeout: 8000 }).should(
+    "not.exist",
+  );
   cy.findByRole("button", { name: /save/i }).click();
 
   // expect success message
@@ -94,9 +95,11 @@ it("can add and edit photo with maximal data", () => {
   cy.findByLabelText(/Choose a file to upload/i).selectFile(
     "cypress/files/avalanche-of-cheese.jpg",
   );
-  // message about upload should appear, then disappear
+  // message about upload should appear, then disappear (sometimes takes longer to disappear)
   cy.findByText(/compressing and uploading/i).should("exist");
-  cy.findByText(/compressing and uploading/i).should("not.exist");
+  cy.findByText(/compressing and uploading/i, { timeout: 8000 }).should(
+    "not.exist",
+  );
 
   cy.findByLabelText(/show/i).select(1); // select the first (and only) show
   cy.findByLabelText(/photographer/i).type("Jane Q. Photographer");

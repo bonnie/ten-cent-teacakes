@@ -31,9 +31,11 @@ it("can add and edit musician", () => {
     "cypress/files/avalanche-of-cheese.jpg",
   );
 
-  // message about upload should appear, then disappear
+  // message about upload should appear, then disappear (sometimes takes longer to disappear)
   cy.findByText(/compressing and uploading/i).should("exist");
-  cy.findByText(/compressing and uploading/i).should("not.exist");
+  cy.findByText(/compressing and uploading/i, { timeout: 8000 }).should(
+    "not.exist",
+  );
 
   cy.findByRole("button", { name: /save/i }).click();
 
@@ -78,9 +80,11 @@ it("can add and edit musician", () => {
     "cypress/files/gustopher.jpg",
   );
 
-  // message about upload should appear, then disappear
+  // message about upload should appear, then disappear (sometimes takes longer to disappear)
   cy.findByText(/compressing and uploading/i).should("exist");
-  cy.findByText(/compressing and uploading/i).should("not.exist");
+  cy.findByText(/compressing and uploading/i, { timeout: 8000 }).should(
+    "not.exist",
+  );
 
   // save and expect success message
   cy.findByRole("button", { name: /save/i }).click();
