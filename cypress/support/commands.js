@@ -71,3 +71,26 @@ Cypress.Commands.add("loginByAuth0Api", (username, password) => {
     );
   });
 });
+
+Cypress.Commands.add("logInAndResetDb", (route) => {
+  // authenticate, adapted from
+  // https://docs.cypress.io/guides/testing-strategies/auth0-authentication#Custom-Command-for-Auth0-Authentication
+  cy.loginByAuth0Api(
+    Cypress.env("auth0_username"),
+    Cypress.env("auth0_password"),
+  );
+
+  // define whitelist
+  cy.intercept("/api/auth/whitelist", {
+    statusCode: 200,
+    body: { whitelist: [Cypress.env("auth0_username")] },
+  });
+
+  // reset the db, and load the page after
+  // This seems to be the best way to make sure the db is reset before page is visited
+  cy.task("db:reset").then(() => {
+    // don't visit current page to avoid (intermittent) issue with waiting for page to load
+    // https://github.com/cypress-io/cypress/issues/1311#issuecomment-393896371
+    if (cy.location("pathname") !== route) cy.visit(route);
+  });
+});

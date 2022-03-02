@@ -1,24 +1,5 @@
-const logInAndResetDb = () => {
-  // authenticate, adapted from
-  // https://docs.cypress.io/guides/testing-strategies/auth0-authentication#Custom-Command-for-Auth0-Authentication
-  cy.loginByAuth0Api(
-    Cypress.env("auth0_username"),
-    Cypress.env("auth0_password"),
-  );
-
-  // define whitelist
-  cy.intercept("/api/auth/whitelist", {
-    statusCode: 200,
-    body: { whitelist: [Cypress.env("auth0_username")] },
-  });
-
-  // reset the db, and load the page after
-  // This seems to be the best way to make sure the db is reset before page is visited
-  cy.task("db:reset").visit("/shows");
-};
-
 it("can add, edit and delete venue without URL", () => {
-  logInAndResetDb();
+  cy.logInAndResetDb("/shows");
 
   /// ////////////////////////////////////////////////
   // 1. expect save not to work if there's no venue name
@@ -102,7 +83,7 @@ it("can add, edit and delete venue without URL", () => {
 });
 
 it("can add and edit venue with URL", () => {
-  logInAndResetDb();
+  cy.logInAndResetDb("/shows");
 
   /// ////////////////////////////////////////////////
   // 1. add venue with url and save
@@ -148,7 +129,7 @@ it("can add and edit venue with URL", () => {
 });
 
 it("updates show display with updated venue name", () => {
-  logInAndResetDb();
+  cy.logInAndResetDb("/shows");
 
   // edit venue associated with a show in the pre-populated db
   cy.findByRole("button", { name: /edit venue venue 2/i }).click();

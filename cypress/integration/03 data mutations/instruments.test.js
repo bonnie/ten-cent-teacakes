@@ -1,24 +1,5 @@
-const logInAndResetDb = () => {
-  // authenticate, adapted from
-  // https://docs.cypress.io/guides/testing-strategies/auth0-authentication#Custom-Command-for-Auth0-Authentication
-  cy.loginByAuth0Api(
-    Cypress.env("auth0_username"),
-    Cypress.env("auth0_password"),
-  );
-
-  // define whitelist
-  cy.intercept("/api/auth/whitelist", {
-    statusCode: 200,
-    body: { whitelist: [Cypress.env("auth0_username")] },
-  });
-
-  // reset the db, and load the page after
-  // This seems to be the best way to make sure the db is reset before page is visited
-  cy.task("db:reset").visit("/band");
-};
-
 it("can add, edit and delete instrument", () => {
-  logInAndResetDb();
+  cy.logInAndResetDb("/band");
   /// ////////////////////////////////////////////////
   // 1. expect save not to work if there's no instrument name
   cy.findByRole("button", { name: /add instrument/i })
@@ -101,7 +82,7 @@ it("can add, edit and delete instrument", () => {
 });
 
 it("updates musician display with updated instrument name", () => {
-  logInAndResetDb();
+  cy.logInAndResetDb("/band");
 
   // edit venue associated with a show in the pre-populated db
   cy.findByRole("button", { name: /edit instrument baritone/i }).click();

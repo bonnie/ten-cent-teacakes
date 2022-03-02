@@ -1,26 +1,7 @@
 const dayjs = require("dayjs");
 
-const logInAndResetDb = () => {
-  // authenticate, adapted from
-  // https://docs.cypress.io/guides/testing-strategies/auth0-authentication#Custom-Command-for-Auth0-Authentication
-  cy.loginByAuth0Api(
-    Cypress.env("auth0_username"),
-    Cypress.env("auth0_password"),
-  );
-
-  // define whitelist
-  cy.intercept("/api/auth/whitelist", {
-    statusCode: 200,
-    body: { whitelist: [Cypress.env("auth0_username")] },
-  });
-
-  // reset the db, and load the page after
-  // This seems to be the best way to make sure the db is reset before page is visited
-  cy.task("db:reset").visit("/photos");
-};
-
 it("can add, edit and delete photo with minimal data", () => {
-  logInAndResetDb();
+  cy.logInAndResetDb("/photos");
 
   /// ////////////////////////////////////////////////
   // 1. expect save not to work if there's no photo
@@ -102,7 +83,7 @@ it("can add, edit and delete photo with minimal data", () => {
 });
 
 it("can add and edit photo with maximal data", () => {
-  logInAndResetDb();
+  cy.logInAndResetDb("/photos");
 
   /// ////////////////////////////////////////////////
   // 1. add photo with all data and save

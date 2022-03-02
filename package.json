@@ -3,7 +3,7 @@
   "scripts": {
     "build": "next build",
     "cypress:open": "source cypress/.env && cypress open",
-    "cypress:run": "source cypress/.env && cypress run",
+    "cypress:run": "source cypress/.env && cypress run --browser chrome",
     "dev": "source .env.local && next dev",
     "export": "next export",
     "lint": "next lint --fix --max-warnings 1",

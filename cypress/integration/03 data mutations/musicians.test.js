@@ -1,25 +1,6 @@
-const logInAndResetDb = () => {
-  // authenticate, adapted from
-  // https://docs.cypress.io/guides/testing-strategies/auth0-authentication#Custom-Command-for-Auth0-Authentication
-  cy.loginByAuth0Api(
-    Cypress.env("auth0_username"),
-    Cypress.env("auth0_password"),
-  );
-
-  // define whitelist
-  cy.intercept("/api/auth/whitelist", {
-    statusCode: 200,
-    body: { whitelist: [Cypress.env("auth0_username")] },
-  });
-
-  // reset the db, and load the page after
-  // This seems to be the best way to make sure the db is reset before page is visited
-  cy.task("db:reset").visit("/band");
-};
-
 // all data for musician is required, so minimal data === maximal data
 it("can add and edit musician", () => {
-  logInAndResetDb();
+  cy.logInAndResetDb("band");
 
   /// ////////////////////////////////////////////////
   // 1. expect save not to work if there's no performance date
