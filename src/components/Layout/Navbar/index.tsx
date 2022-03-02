@@ -20,7 +20,7 @@ const LogoutButton: React.FC = () => {
   return (
     // eslint-disable-next-line @next/next/no-html-link-for-pages
     <a href="/api/auth/logout">
-      <Button round>
+      <Button round label="logout">
         <RiLogoutCircleRLine />
       </Button>
     </a>
