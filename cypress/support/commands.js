@@ -7,6 +7,7 @@ import failOnConsoleError from "cypress-fail-on-console-error";
 import jwt from "jsonwebtoken";
 
 failOnConsoleError();
+// failOnConsoleError({excludeMessages: ["^"]});
 
 // source:
 // https://docs.cypress.io/guides/testing-strategies/auth0-authentication#Custom-Command-for-Auth0-Authentication

@@ -48,10 +48,7 @@ it("can add, edit and delete photo with minimal data", () => {
   cy.findByRole("button", { name: /dismiss alert/i }).click();
 
   // expect thumbnail image src
-  // TODO: flaky (why??)
-  cy.get("main")
-    .find("img")
-    .first() // will be the first image based on database data (don't love this way of identifying; seems fragile)
+  cy.get("img[src*='avalanche']")
     .invoke("attr", "src")
     .should("match", /avalanche-of-cheese-\d+-thumb.jpg/);
 
@@ -80,10 +77,9 @@ it("can add, edit and delete photo with minimal data", () => {
   cy.findByText("avalanche, made of cheese").should("exist");
 
   // check that large image is loaded
-  cy.get("main")
-    .find("img")
+  cy.get("img[src*='avalanche']")
     .invoke("attr", "src")
-    .should("match", /avalanche-of-cheese-\d+.jpg/);
+    .should("match", /avalanche-of-cheese-\d+\.jpg/);
 
   // go back to photos
   cy.findByText(/back to photos/i).click();
@@ -157,16 +153,16 @@ it("can add and edit photo with maximal data", () => {
   cy.findByText("Photo by Jane Q. Photographer").should("be.visible");
 
   // check that large image is loaded
-  cy.get("main")
-    .find("img")
+  cy.get("img[src*='avalanche']")
     .invoke("attr", "src")
-    .should("match", /avalanche-of-cheese-\d+.jpg/);
+    .should("match", /avalanche-of-cheese-\d+\.jpg/);
 
   // go back to photos
   cy.findByText(/back to photos/i).click();
 
   /// ////////////////////////////////////////////////
   // 3. edit the photo data
+
   cy.findByRole("button", {
     name: /edit photo a cheesy avalanche/i,
   }).click();

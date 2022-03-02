@@ -92,9 +92,9 @@ export const AddMusicianModal: React.FC = () => {
   const { addMusician } = useMusicians();
 
   const initialValues = {
-    firstName: undefined,
-    lastName: undefined,
-    bio: undefined,
+    firstName: "",
+    lastName: "",
+    bio: "",
     instrumentIds: [],
     imageFile: undefined,
   };

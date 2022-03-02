@@ -36,7 +36,7 @@ const transformData = (data: PhotoPatchData) => ({
   takenAt: data.takenAt ? new Date(data.takenAt) : undefined,
   description: data.description,
   show:
-    data.showId || data.showId === 0
+    data.showId && data.showId !== 0
       ? { connect: { id: Number(data.showId) } }
       : undefined,
 });
