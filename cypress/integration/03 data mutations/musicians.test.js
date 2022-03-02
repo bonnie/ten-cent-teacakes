@@ -18,7 +18,7 @@ const logInAndResetDb = () => {
 };
 
 // all data for musician is required, so minimal data === maximal data
-it("can add, edit and delete musician", () => {
+it("can add and edit musician", () => {
   logInAndResetDb();
 
   /// ////////////////////////////////////////////////

@@ -1,15 +1,14 @@
 import React from "react";
-import { dehydrate, QueryClient, useQueryClient } from "react-query";
+import { dehydrate, QueryClient } from "react-query";
 import { tw } from "twind";
 
 import { fetchPhotos } from "@/lib/photos";
 import { queryKeys } from "@/lib/react-query/query-keys";
-import { useWillUnmount } from "@/lib/react-query/useWillUnmount";
 
 import { usePhotos } from "../hooks/usePhotos";
 import { PhotoThumbnail } from "./PhotoThumbnail";
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(queryKeys.photos, ({ signal }) =>
     fetchPhotos(signal),
@@ -22,34 +21,21 @@ export async function getServerSideProps() {
 }
 
 export const Photos: React.FC<{ count?: number }> = ({ count = undefined }) => {
-  const queryClient = useQueryClient();
-
-  const cancelFetch = () => {
-    queryClient.cancelQueries(queryKeys.photos);
-  };
-  const { isMountedRef } = useWillUnmount(cancelFetch);
-
   const { photos } = usePhotos();
   const photosSlice = count ? photos.slice(0, count) : photos;
 
   return (
     <div
-      className={tw(["flex", "flex-wrap", "justify-center", "items-baseline"])}
+      className={tw([
+        "flex",
+        "flex-wrap",
+        "align-items-start",
+        "justify-center",
+      ])}
     >
-      {isMountedRef.current ? (
-        <div
-          className={tw([
-            "flex",
-            "flex-wrap",
-            "align-items-start",
-            "justify-center",
-          ])}
-        >
-          {photosSlice.map((photo) => (
-            <PhotoThumbnail key={photo.id} photo={photo} />
-          ))}
-        </div>
-      ) : null}
+      {photosSlice.map((photo) => (
+        <PhotoThumbnail key={photo.id} photo={photo} />
+      ))}
     </div>
   );
 };
