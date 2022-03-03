@@ -6,10 +6,35 @@ import { PhotoWithShowAndVenue } from "@/lib/photos/types";
 import { ShowWithVenue } from "@/lib/shows/types";
 import { VenueWithShowCount } from "@/lib/venues/types";
 
-export const yesterday = dayjs().subtract(1, "day").toDate();
-export const lastMonth = dayjs().subtract(1, "month").toDate();
-export const tomorrow = dayjs().add(1, "day").toDate();
-export const nextMonth = dayjs().add(1, "month").toDate();
+// set the time to avoid millisecond differences that cause flakiness
+export const yesterday = dayjs()
+  .subtract(1, "day")
+  .set("hour", 10)
+  .set("minute", 0)
+  .set("second", 0)
+  .set("millisecond", 0)
+  .toDate();
+export const lastMonth = dayjs()
+  .subtract(1, "month")
+  .set("hour", 10)
+  .set("minute", 0)
+  .set("second", 0)
+  .set("millisecond", 0)
+  .toDate();
+export const tomorrow = dayjs()
+  .add(1, "day")
+  .set("hour", 10)
+  .set("minute", 0)
+  .set("second", 0)
+  .set("millisecond", 0)
+  .toDate();
+export const nextMonth = dayjs()
+  .add(1, "month")
+  .set("hour", 10)
+  .set("minute", 0)
+  .set("second", 0)
+  .set("millisecond", 0)
+  .toDate();
 
 export const mockWhitelist = ["test@test.com"];
 
