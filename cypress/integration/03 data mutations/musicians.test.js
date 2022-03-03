@@ -1,6 +1,6 @@
 // all data for musician is required, so minimal data === maximal data
 it("can add and edit musician", () => {
-  cy.logInAndResetDb("band");
+  cy.logInAndResetDb("/band");
 
   /// ////////////////////////////////////////////////
   // 1. expect save not to work if there's no performance date

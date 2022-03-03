@@ -88,11 +88,12 @@ Cypress.Commands.add("logInAndResetDb", (route) => {
 
   // reset the db, and load the page after
   // This seems to be the best way to make sure the db is reset before page is visited
-
-  // also, visit home page first to avoid (intermittent) issue with waiting for page to load
-  // https://github.com/cypress-io/cypress/issues/1311#issuecomment-393896371
-  // (seems hacky, but less hacky solution below doesn't get async right somehow)
-  cy.task("db:reset").visit("/").visit(route);
+  if (route) {
+    cy.task("db:reset").visit(route);
+  } else {
+    // try to avoid load timeouts when visiting the same page on subsequent tests
+    cy.task("db:reset").reload();
+  }
 
   // this seems to load the page before db reset is complete 🤬
   // cy.task("db:reset").then(() => {

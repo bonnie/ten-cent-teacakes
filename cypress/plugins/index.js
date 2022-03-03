@@ -29,17 +29,15 @@ const getTestFileNames = async (supabase, folderName) => {
 
 export default (on, config) => {
   on("task", {
-    "db:reset": async () => {
-      await resetDB();
-      return null;
-    },
+    "db:reset": () => resetDB().then(() => null),
   });
   on("after:run", async () => {
     // eslint-disable-next-line no-console
     console.log("Clean-up: remove avalanche and gustopher images");
 
-    console.log("SUPABASE_URL", !!process.env.SUPABASE_URL);
-    console.log("SUPABASE_KEY", !!process.env.SUPABASE_KEY);
+    // console.log("SUPABASE_URL", !!process.env.SUPABASE_URL);
+    // console.log("SUPABASE_KEY", !!process.env.SUPABASE_KEY);
+    if (process.env.SUPABASE_URL) console.log("PROCESS.ENV", process.env);
 
     const supabase = createClient(
       process.env.SUPABASE_URL,

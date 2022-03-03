@@ -83,7 +83,7 @@ it("can add, edit and delete venue without URL", () => {
 });
 
 it("can add and edit venue with URL", () => {
-  cy.logInAndResetDb("/shows");
+  cy.logInAndResetDb();
 
   /// ////////////////////////////////////////////////
   // 1. add venue with url and save
@@ -129,7 +129,7 @@ it("can add and edit venue with URL", () => {
 });
 
 it("updates show display with updated venue name", () => {
-  cy.logInAndResetDb("/shows");
+  cy.logInAndResetDb();
 
   // edit venue associated with a show in the pre-populated db
   cy.findByRole("button", { name: /edit venue venue 2/i }).click();

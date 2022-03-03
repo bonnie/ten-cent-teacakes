@@ -84,7 +84,7 @@ it("can add, edit and delete photo with minimal data", () => {
 });
 
 it("can add and edit photo with maximal data", () => {
-  cy.logInAndResetDb("/photos");
+  cy.logInAndResetDb();
 
   /// ////////////////////////////////////////////////
   // 1. add photo with all data and save
@@ -95,7 +95,7 @@ it("can add and edit photo with maximal data", () => {
   cy.findByLabelText(/Choose a file to upload/i).selectFile(
     "cypress/files/avalanche-of-cheese.jpg",
   );
-  // message about upload should appear, then disappear (sometimes takes longer to disappear)
+  // message about upload should appear, then disappear
   cy.findByText(/compressing and uploading/i).should("exist");
   cy.findByText(/compressing and uploading/i, { timeout: 8000 }).should(
     "not.exist",

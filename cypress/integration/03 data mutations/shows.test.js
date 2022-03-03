@@ -82,7 +82,7 @@ it("can add, edit and delete show with minimal data", () => {
 });
 
 it("can add and edit show with maximal data", () => {
-  cy.logInAndResetDb("/shows");
+  cy.logInAndResetDb();
 
   /// ////////////////////////////////////////////////
   // 1. add show with url and save
