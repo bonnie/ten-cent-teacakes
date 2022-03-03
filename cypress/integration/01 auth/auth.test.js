@@ -37,6 +37,7 @@ it("provides edit buttons for whitelist user", () => {
   // expect edit and delete buttons
   cy.findAllByRole("button", { name: /edit/i }).should("exist");
   cy.findAllByRole("button", { name: /delete/i }).should("exist");
+  cy.findAllByRole("button", { name: /logout/i }).should("exist");
 
   // can't really test logout here, bc logout button doesn't connect to fake auth being used
 });
