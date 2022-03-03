@@ -28,36 +28,36 @@ const getTestFileNames = async (supabase, folderName) => {
 };
 
 export default (on, config) => {
+  // a way to get around env vars not being available in after:spec
+  const { SUPABASE_URL } = process.env;
+  const { SUPABASE_KEY } = process.env;
+
   on("task", {
     "db:reset": () => resetDB().then(() => null),
   });
-  on("after:run", async () => {
+  on("after:spec", async (spec) => {
+    let bucketDir;
+    if (spec.name === "musicians.test.js") {
+      bucketDir = "musicians";
+    } else if (spec.name === "photos.test.js") {
+      bucketDir = "photos";
+    } else {
+      return;
+    }
+
     // eslint-disable-next-line no-console
     console.log("Clean-up: remove avalanche and gustopher images");
 
-    // console.log("SUPABASE_URL", !!process.env.SUPABASE_URL);
-    // console.log("SUPABASE_KEY", !!process.env.SUPABASE_KEY);
-    if (process.env.SUPABASE_URL) console.log("PROCESS.ENV", process.env);
-
-    const supabase = createClient(
-      process.env.SUPABASE_URL,
-      process.env.SUPABASE_KEY,
-    );
-
-    const musicianFiles = await getTestFileNames(supabase, "musicians");
-    const photosFiles = await getTestFileNames(supabase, "photos");
-    const allTestFiles = musicianFiles.concat(photosFiles);
-
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    const testFiles = await getTestFileNames(supabase, bucketDir);
     // eslint-disable-next-line no-console
-    console.log("Removing", allTestFiles);
+    console.log("Removing", testFiles);
 
-    if (allTestFiles.length === 0) {
+    if (testFiles.length === 0) {
       throw new Error("NO TEST FILES FOUND");
     }
 
-    const { error } = await supabase.storage
-      .from("uploads")
-      .remove(allTestFiles);
+    const { error } = await supabase.storage.from("uploads").remove(testFiles);
     if (error) {
       throw new Error("could not delete files from supabase", error);
     } else {
