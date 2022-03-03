@@ -72,6 +72,10 @@ Cypress.Commands.add("loginByAuth0Api", (username, password) => {
   });
 });
 
+Cypress.Commands.add("logoutByLocalStorage", () => {
+  window.localStorage.removeItem(Cypress.env("cypress_localstorage_key"));
+});
+
 Cypress.Commands.add("logInAndResetDb", (route) => {
   // authenticate, adapted from
   // https://docs.cypress.io/guides/testing-strategies/auth0-authentication#Custom-Command-for-Auth0-Authentication

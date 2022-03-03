@@ -8,12 +8,13 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import { tw } from "twind";
 
 import { Button } from "@/components/lib/Button";
+import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 
 import { NavLink } from "./NavLink";
 import { SocialLinks } from "./SocialLinks";
 
 const LogoutButton: React.FC = () => {
-  const { user } = useUser();
+  const { user } = useWhitelistUser();
 
   if (!user) return <></>;
 

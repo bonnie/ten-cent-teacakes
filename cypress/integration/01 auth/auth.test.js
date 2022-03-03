@@ -16,6 +16,7 @@ it("does not provide edit buttons for non whitelist user", () => {
   // expect NO edit, delete or logout buttons (not on whitelist)
   cy.findByRole("button", { name: /edit/i }).should("not.exist");
   cy.findByRole("button", { name: /delete/i }).should("not.exist");
+  cy.findByRole("button", { name: /logout/ }).should("not.exist");
 });
 
 it("provides edit buttons for whitelist user", () => {
@@ -37,13 +38,5 @@ it("provides edit buttons for whitelist user", () => {
   cy.findAllByRole("button", { name: /edit/i }).should("exist");
   cy.findAllByRole("button", { name: /delete/i }).should("exist");
 
-  //   // TODO: logout button doesn't exist for this fake login...?
-  //   // log out
-  //   cy.findByRole("button", { name: /logout/ }).click();
-
-  //   // make sure buttons requiring auth don't exist
-  //   cy.findByRole("button", { name: /edit/i }).should("not.exist");
-  //   cy.findByRole("button", { name: /delete/i }).should("not.exist");
-  //   cy.findByRole("button", { name: /logout/ }).should("not.exist");
-  //
+  // can't really test logout here, bc logout button doesn't connect to fake auth being used
 });
