@@ -22,7 +22,8 @@ import { useSupabasePhoto } from "@/lib/supabase/hooks/useSupabasePhoto";
 const AdvanceButton: React.FC<{
   Icon: IconType;
   linkIndex: number | null | undefined;
-}> = ({ Icon, linkIndex }) => (
+  label: "next" | "previous";
+}> = ({ Icon, linkIndex, label }) => (
   <button
     type="button"
     className={tw([
@@ -34,7 +35,7 @@ const AdvanceButton: React.FC<{
     {linkIndex ? (
       <Link href={`/photos/${linkIndex}`}>
         <a>
-          <Icon size={25} />
+          <Icon size={25} aria-label={`${label}-photo`} />
         </a>
       </Link>
     ) : null}
@@ -90,7 +91,11 @@ const Photo: React.FC = () => {
             : "lg:row-span-1",
         ])}
       >
-        <AdvanceButton Icon={FaArrowLeft} linkIndex={prevIndex} />
+        <AdvanceButton
+          Icon={FaArrowLeft}
+          linkIndex={prevIndex}
+          label="previous"
+        />
         <div className={tw(["col-span-6"])}>
           <div className={tw(["flex", "justify-center", "items-center"])}>
             {user ? (
@@ -113,7 +118,7 @@ const Photo: React.FC = () => {
             </p>
           ) : null}
         </div>
-        <AdvanceButton Icon={FaArrowRight} linkIndex={nextIndex} />
+        <AdvanceButton Icon={FaArrowRight} linkIndex={nextIndex} label="next" />
       </div>
       <div
         className={tw([
