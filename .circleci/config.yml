@@ -91,7 +91,11 @@ jobs:
             - node_modules
       - run:
           name: migrate test DB
-          command: npm run test:db:migrate
+          # migration URL needs to have a different port
+          # Reference: https://supabase.com/docs/guides/integrations/prisma
+          command: |
+            export DATABASE_URL="$DB_BASEURL:5432/postgres"
+            npm run test:db:migrate
 
   test-api:
     docker:
