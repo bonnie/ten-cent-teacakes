@@ -29,8 +29,7 @@ const getTestFileNames = async (supabase, folderName) => {
 
 export default (on, config) => {
   // a way to get around env vars not being available in after:spec
-  const { SUPABASE_URL } = process.env;
-  const { SUPABASE_KEY } = process.env;
+  const { SUPABASE_URL, SUPABASE_KEY } = process.env;
 
   on("task", {
     "db:reset": () => resetDB().then(() => null),
