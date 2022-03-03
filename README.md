@@ -78,6 +78,7 @@ For Vercel / Cypress, the following variables are needed as GitHub secrets (repo
 1. `AUTH0_CLIENT_SECRET` (from Auth0 Application settings)
 1. `AUTH0_AUDIENCE` (should match the one in tenant -> settings -> API Authorization Settings)
 1. `AUTH0_SCOPE` (value should probably be `"openid profile email"`)
+1. `SUPABASE_URL` and `SUPABASE_KEY` (from `.env.local`)
 
 **Note**: Cypress is run as a Github action instead of through CircleCI so that it can depend on branch deploy success, and use the branch deploy url.
 
