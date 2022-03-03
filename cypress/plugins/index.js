@@ -3,15 +3,7 @@ const { resetDB } = require("../../src/__tests__/api/prisma/reset-db");
 const { createClient } = require("@supabase/supabase-js");
 const dayjs = require("dayjs");
 
-console.log("SUPABASE_URL", !!process.env.SUPABASE_URL);
-console.log("SUPABASE_KEY", !!process.env.SUPABASE_KEY);
-
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY,
-);
-
-const getTestFileNames = async (folderName) => {
+const getTestFileNames = async (supabase, folderName) => {
   const { data, error } = await supabase.storage
     .from("uploads")
     .list(folderName);
@@ -45,8 +37,17 @@ export default (on, config) => {
   on("after:run", async () => {
     // eslint-disable-next-line no-console
     console.log("Clean-up: remove avalanche and gustopher images");
-    const musicianFiles = await getTestFileNames("musicians");
-    const photosFiles = await getTestFileNames("photos");
+
+    console.log("SUPABASE_URL", !!process.env.SUPABASE_URL);
+    console.log("SUPABASE_KEY", !!process.env.SUPABASE_KEY);
+
+    const supabase = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_KEY,
+    );
+
+    const musicianFiles = await getTestFileNames(supabase, "musicians");
+    const photosFiles = await getTestFileNames(supabase, "photos");
     const allTestFiles = musicianFiles.concat(photosFiles);
 
     // eslint-disable-next-line no-console
