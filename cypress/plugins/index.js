@@ -1,5 +1,36 @@
 /* eslint-disable no-param-reassign */
 const { resetDB } = require("../../src/__tests__/api/prisma/reset-db");
+const { createClient } = require("@supabase/supabase-js");
+const dayjs = require("dayjs");
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_KEY,
+);
+
+const getTestFileNames = async (folderName) => {
+  const { data, error } = await supabase.storage
+    .from("uploads")
+    .list(folderName);
+  if (error) {
+    throw new Error(
+      `could not clean up -- ${folderName} query resulted in error`,
+      error,
+    );
+  }
+  if (!data) {
+    throw new Error(`could not clean up -- no ${folderName} data found`, data);
+  }
+
+  return data
+    .filter((item) => dayjs().diff(item.created_at, "minute") < 60)
+    .map((item) => item.name)
+    .filter(
+      (name) =>
+        name.startsWith("avalanche-of-cheese") || name.startsWith("gustopher"),
+    )
+    .map((name) => `${folderName}/${name}`);
+};
 
 export default (on, config) => {
   on("task", {
@@ -7,6 +38,30 @@ export default (on, config) => {
       await resetDB();
       return null;
     },
+  });
+  on("after:run", async () => {
+    // eslint-disable-next-line no-console
+    console.log("Clean-up: remove avalanche and gustopher images");
+    const musicianFiles = await getTestFileNames("musicians");
+    const photosFiles = await getTestFileNames("photos");
+    const allTestFiles = musicianFiles.concat(photosFiles);
+
+    // eslint-disable-next-line no-console
+    console.log("Removing", allTestFiles);
+
+    if (allTestFiles.length === 0) {
+      throw new Error("NO TEST FILES FOUND");
+    }
+
+    const { error } = await supabase.storage
+      .from("uploads")
+      .remove(allTestFiles);
+    if (error) {
+      throw new Error("could not delete files from supabase", error);
+    } else {
+      // eslint-disable-next-line no-console
+      console.log("SUCCESS: clean-up");
+    }
   });
 
   config.env.auth0_username = process.env.AUTH0_USERNAME;
