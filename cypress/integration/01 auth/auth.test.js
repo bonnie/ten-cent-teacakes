@@ -16,9 +16,6 @@ it("does not provide edit buttons for non whitelist user", () => {
   // expect NO edit, delete or logout buttons (not on whitelist)
   cy.findByRole("button", { name: /edit/i }).should("not.exist");
   cy.findByRole("button", { name: /delete/i }).should("not.exist");
-
-  // log out via api
-  cy.visit("/api/auth/logout");
 });
 
 it("provides edit buttons for whitelist user", () => {
