@@ -101,3 +101,11 @@ Cypress.Commands.add("logInAndResetDb", (newRoute, currentRoute) => {
     cy.task("db:reset").visit(newRoute);
   }
 });
+
+Cypress.Commands.add("dismissToast", () => {
+  cy.findByRole("button", { name: /dismiss alert/i })
+    // to avoid sporadic "element has been detached from the DOM" errors
+    // reference: https://www.cypress.io/blog/2020/07/22/do-not-get-too-detached/
+    .then(($button) => cy.wrap($button))
+    .click();
+});

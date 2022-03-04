@@ -13,7 +13,7 @@ it("can add, edit and delete photo with minimal data", () => {
 
   cy.findByRole("button", { name: /save/i }).click();
   cy.contains(/file is required/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   /// ////////////////////////////////////////////////
   // 2. add photo and save
@@ -29,7 +29,7 @@ it("can add, edit and delete photo with minimal data", () => {
 
   // expect success message
   cy.contains(/you have added a photo/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // expect thumbnail image src
   cy.get("img[src*='avalanche']")
@@ -48,7 +48,7 @@ it("can add, edit and delete photo with minimal data", () => {
 
   // expect a success message
   cy.contains(/you have updated the photo/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // check for the alt text
   cy.findByAltText("avalanche, made of cheese").as("newPhoto");
@@ -79,7 +79,7 @@ it("can add, edit and delete photo with minimal data", () => {
 
   // expect a success message
   cy.findByText(/you have deleted the photo/i).should("exist");
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // make sure show date is no longer represented
   cy.findByAltText("avalanche, made of cheese").should("not.exist");
@@ -114,7 +114,7 @@ it("can add and edit photo with maximal data", () => {
 
   // expect success message
   cy.contains(/you have added a photo/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // expect photographer text
   cy.findByText("taken by Jane Q. Photographer").should("exist");
@@ -168,7 +168,7 @@ it("can add and edit photo with maximal data", () => {
 
   // expect success message
   cy.contains(/you have updated the photo/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // expect photographer text
   cy.findByText("taken by Jane F. Photographer").should("exist");

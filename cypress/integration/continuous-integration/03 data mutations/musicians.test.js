@@ -16,7 +16,7 @@ it("can add and edit musician", () => {
   cy.findByText(
     "First name is required; Last name is required; Bio is required; Photo is required",
   ).should("exist");
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // cancel
   cy.findByRole("button", { name: /cancel/i }).click();
@@ -43,7 +43,7 @@ it("can add and edit musician", () => {
 
   // expect success message
   cy.contains(/you have added a musician/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // expect the musician data to be on the page
   cy.findByText(/^cheese$/i).should("exist"); // first name
@@ -91,7 +91,7 @@ it("can add and edit musician", () => {
   // save and expect success message
   cy.findByRole("button", { name: /save/i }).click();
   cy.contains(/you have updated the musician/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // check new information
   cy.findByText(/^cheddar$/i).should("exist"); // first name

@@ -31,7 +31,7 @@ it("can add, edit and delete show with minimal data", () => {
 
   // expect success message
   cy.contains(/you have added a show/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // expect show with today's date
   const today = dayjs().format("MMM D, YYYY");
@@ -53,7 +53,7 @@ it("can add, edit and delete show with minimal data", () => {
 
   // expect a success message
   cy.contains(/you have updated the show/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // old show date should not exist
   cy.contains(today).should("not.exist");
@@ -77,7 +77,7 @@ it("can add, edit and delete show with minimal data", () => {
 
   // expect a success message
   cy.findByText(/you have deleted the show/i).should("exist");
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // make sure show date is no longer represented
   cy.findByText(nextYear).should("not.exist");
@@ -103,7 +103,7 @@ it("can add and edit show with maximal data", () => {
 
   // expect success message
   cy.contains(/you have added a show/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // expect show link to be entered URL
   // easier with Cypress syntax than Cypress Testing Library
@@ -127,7 +127,7 @@ it("can add and edit show with maximal data", () => {
 
   // expect a success message
   cy.findByText(/you have updated the show/i).should("exist");
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // old URL link and edit button should not exist
   cy.get('a[href="http://rickroll.com"]').should("not.exist");

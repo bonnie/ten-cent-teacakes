@@ -10,7 +10,7 @@ it("can add, edit and delete venue without URL", () => {
     .click();
   cy.findByRole("button", { name: /save/i }).click();
   cy.contains(/venue name is required/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   /// ////////////////////////////////////////////////
   // 2. add venue and save
@@ -19,7 +19,7 @@ it("can add, edit and delete venue without URL", () => {
 
   // expect success message
   cy.contains(/you have added the venue "Carnegie Hall"/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // expect venue edit button to be on page
   cy.findByRole("button", { name: /edit venue Carnegie Hall/i }).as(
@@ -59,7 +59,7 @@ it("can add, edit and delete venue without URL", () => {
 
   // expect a success message
   cy.contains(/you have updated the venue "Berkeley Farmers Market"/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // old venue button should not exist
   cy.contains("Carnegie Hall").should("not.exist");
@@ -78,7 +78,7 @@ it("can add, edit and delete venue without URL", () => {
 
   // expect a success message
   cy.contains(/you have deleted the venue/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // make sure venue name is no longer represented
   cy.contains("Berkeley Farmers Market").should("not.exist");
@@ -101,7 +101,7 @@ it("can add and edit venue with URL", () => {
 
   // expect success message
   cy.contains(/you have added the venue "Carnegie Hall"/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // expect venue edit button to be on page
   cy.findByRole("button", { name: /edit venue Carnegie Hall/i }).as(
@@ -121,7 +121,7 @@ it("can add and edit venue with URL", () => {
 
   // expect a success message
   cy.contains(/you have updated the venue "Berkeley Farmers Market"/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   // old venue name and URL should not exist
   cy.contains("Carnegie Hall").should("not.exist");
