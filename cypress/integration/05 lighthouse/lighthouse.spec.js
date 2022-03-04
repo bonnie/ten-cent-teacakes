@@ -4,7 +4,7 @@ const lighthouseThresholds = {
   performance: 0,
   accessibility: 95,
   "best-practices": 0,
-  seo: 95,
+  seo: 90,
   pwa: 0,
 };
 
