@@ -31,7 +31,7 @@ jobs:
       # cypress is already installed with the container.
       # need to install a few things for Cypress to work properly with these tests
       - name: install
-        run: npm install @prisma/client @testing-library/cypress jsonwebtoken dayjs cypress-fail-on-console-error @supabase/supabase-js @cypress-audit/lighthouse
+        run: npm install @prisma/client @testing-library/cypress jsonwebtoken dayjs cypress-fail-on-console-error @supabase/supabase-js
 
       - name: Run tests
         env:
@@ -52,4 +52,5 @@ jobs:
           export BRANCH_NAME=$(git show -s --pretty=%D HEAD | tr -s ',' '\n' | sed 's/^ //' | grep -e 'origin/' | head -1 | sed 's/\origin\///g')
           echo "Deployed branch ${BRANCH_NAME}"
 
-          cypress run --browser chrome
+          # don't run "local only" tests
+          cypress run --browser chrome --spec "cypress/integration/continuous-integration/**/*"
