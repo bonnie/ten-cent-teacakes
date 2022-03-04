@@ -1,6 +1,8 @@
 import * as Sentry from "@sentry/nextjs";
 import { useState } from "react";
 
+import { useAsync } from "@/lib/hooks/useAsync";
+
 import { supabase } from "..";
 import { UPLOADS_BUCKET } from "../constants";
 
@@ -27,6 +29,9 @@ export const useSupabasePhoto = (
   path: string | null,
 ): { imgSrc: string | null } => {
   const [imgSrc, setImgSrc] = useState<string | null>(null);
-  getSignedStorageUrl(path).then((signedPath) => setImgSrc(signedPath));
+  useAsync<string | null>(
+    () => getSignedStorageUrl(path),
+    (signedPath) => setImgSrc(signedPath),
+  );
   return { imgSrc };
 };

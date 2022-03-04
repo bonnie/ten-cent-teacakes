@@ -8,7 +8,7 @@ import { queryKeys } from "@/lib/react-query/query-keys";
 import { usePhotos } from "../hooks/usePhotos";
 import { PhotoThumbnail } from "./PhotoThumbnail";
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(queryKeys.photos, ({ signal }) =>
     fetchPhotos(signal),

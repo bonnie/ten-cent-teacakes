@@ -19,7 +19,7 @@ import { usePhotos } from "../hooks/usePhotos";
 const editFields = (
   <>
     <EditableShow required={false} />
-    <TextInput name="photographer" label="Phototographer" required={false} />
+    <TextInput name="photographer" label="Photographer" required={false} />
     <TextInput name="description" label="Description" required={false} />
     <TextInput name="takenAt" label="Photo date" type="date" required={false} />
   </>
@@ -57,10 +57,12 @@ export const AddPhotoModal: React.FC = () => {
 
   const initialValues = {
     photographer: "",
-    showId: undefined,
+    showId: 0,
     photoFile: undefined,
-    photoDate: undefined,
+    description: "",
+    takenAt: dayjs().format("YYYY-MM-DD"),
   };
+
   const onSubmit = (values: PhotoFormData) => {
     if (values.photoFile)
       addUploadedPhoto({
@@ -80,7 +82,11 @@ export const AddPhotoModal: React.FC = () => {
   return (
     <EditItemModal
       title="Add Photo"
+      itemName="photo"
       FormFields={AddPhotoForm}
+      // I'm tired of trying to find values that both satisfy typescript **and**
+      // don't lead to an "uncontrolled to controlled field" error T.T
+      // @ts-expect-error
       formikConfig={formikConfig}
       buttonType="add"
     />
@@ -93,12 +99,12 @@ export const EditPhotoModal: React.FC<{ photo: PhotoWithShowAndVenue }> = ({
   const { updatePhoto } = usePhotos();
 
   const initialValues: PhotoPatchData = {
-    photographer: photo.photographer ?? undefined,
-    showId: photo.showId ?? undefined,
-    description: photo.description ?? undefined,
+    photographer: photo.photographer ?? "",
+    showId: photo.showId ?? 0,
+    description: photo.description ?? "",
     takenAt: photo.takenAt
       ? dayjs(photo.takenAt).format("YYYY-MM-DD")
-      : undefined,
+      : dayjs(photo.createdAt).format("YYYY-MM-DD"),
   };
 
   const onSubmit = (values: PhotoPatchData) => {
@@ -114,9 +120,15 @@ export const EditPhotoModal: React.FC<{ photo: PhotoWithShowAndVenue }> = ({
     onSubmit,
   };
 
+  const title =
+    photo.description && photo.description.length > 0
+      ? photo.description
+      : photo.imagePath;
+
   return (
     <EditItemModal
-      title={`Edit Photo ${photo.description ?? photo.imagePath}`}
+      title={`Edit Photo ${title}`}
+      itemName="photo"
       FormFields={EditPhotoForm}
       formikConfig={formikConfig}
       buttonType="edit"

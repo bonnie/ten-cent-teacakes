@@ -15,7 +15,7 @@ jobs:
     # Use a Docker image with Cypress installed globally
     # https://github.com/cypress-io/github-action#docker-image
     # https://github.com/cypress-io/cypress-docker-images
-    container: cypress/included:8.3.1
+    container: cypress/included:9.5.0
     steps:
       # see if there is GITHUB_REF
       - name: Check GITHUB_REF
@@ -29,9 +29,9 @@ jobs:
           fetch-depth: 0
 
       # cypress is already installed with the container.
-      # need to install a few things for Cypress to work properly with this app
+      # need to install a few things for Cypress to work properly with these tests
       - name: install
-        run: npm install @prisma/client @testing-library/cypress jsonwebtoken dayjs
+        run: npm install @prisma/client @testing-library/cypress jsonwebtoken dayjs cypress-fail-on-console-error @supabase/supabase-js
 
       - name: Run tests
         env:
@@ -52,4 +52,5 @@ jobs:
           export BRANCH_NAME=$(git show -s --pretty=%D HEAD | tr -s ',' '\n' | sed 's/^ //' | grep -e 'origin/' | head -1 | sed 's/\origin\///g')
           echo "Deployed branch ${BRANCH_NAME}"
 
-          cypress run
+          # don't run "local only" tests
+          cypress run --browser chrome --spec "cypress/integration/continuous-integration/**/*"

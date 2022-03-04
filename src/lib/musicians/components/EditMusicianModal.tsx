@@ -92,9 +92,9 @@ export const AddMusicianModal: React.FC = () => {
   const { addMusician } = useMusicians();
 
   const initialValues = {
-    firstName: undefined,
-    lastName: undefined,
-    bio: undefined,
+    firstName: "",
+    lastName: "",
+    bio: "",
     instrumentIds: [],
     imageFile: undefined,
   };
@@ -117,6 +117,7 @@ export const AddMusicianModal: React.FC = () => {
   return (
     <EditItemModal
       title="Add Musician"
+      itemName="musician"
       FormFields={AddMusicianForm}
       formikConfig={formikConfig}
       buttonType="add"
@@ -161,6 +162,7 @@ export const EditMusicianModal: React.FC<{
   return (
     <EditItemModal
       title={`Edit Musician ${musician.firstName}`}
+      itemName="musician"
       FormFields={EditMusicianForm}
       formikConfig={formikConfig}
       buttonType="edit"

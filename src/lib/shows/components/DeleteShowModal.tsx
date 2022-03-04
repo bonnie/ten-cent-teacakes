@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import React from "react";
 
 import { DeleteItemModal } from "@/components/lib/modals/DeleteItemModal";
@@ -12,7 +13,9 @@ export const DeleteShowModal: React.FC<{ show: ShowWithVenue }> = ({
   const description = `Delete show at ${show.venue.name}?`;
   return (
     <DeleteItemModal
-      title={`Delete Show at ${show.venue.name} on ${show.performAt}`}
+      title={`Delete Show at ${show.venue.name} on ${dayjs(
+        show.performAt,
+      ).format("MMM D, YYYY, hh:mm a")}`}
       description={description}
       handleDelete={() => deleteShow(show.id)}
     />

@@ -50,6 +50,9 @@ export const useInstruments = (): UseInstrumentsReturnValue => {
   const invalidateInstruments = () =>
     queryClient.invalidateQueries([queryKeys.instruments]);
 
+  const invalidateMusicians = () =>
+    queryClient.invalidateQueries([queryKeys.musicians]);
+
   const { data: instruments = [] } = useQuery<
     Array<InstrumentWithMusicianCount>
   >(queryKeys.instruments, fetchInstruments, {
@@ -89,6 +92,7 @@ export const useInstruments = (): UseInstrumentsReturnValue => {
     {
       onSuccess: (data) => {
         invalidateInstruments();
+        invalidateMusicians();
         showToast(
           "success",
           `You have updated the instrument "${data.instrument.name}"`,

@@ -1,26 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
 // adapted from
 // https://dev.to/andrewespejo/how-to-design-a-simple-and-beautiful-navbar-using-nextjs-and-tailwindcss-26p1
-import { useUser } from "@auth0/nextjs-auth0";
 import Link from "next/link";
 import React from "react";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { tw } from "twind";
 
 import { Button } from "@/components/lib/Button";
+import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 
 import { NavLink } from "./NavLink";
 import { SocialLinks } from "./SocialLinks";
 
 const LogoutButton: React.FC = () => {
-  const { user } = useUser();
+  const { user } = useWhitelistUser();
 
   if (!user) return <></>;
 
   return (
     // eslint-disable-next-line @next/next/no-html-link-for-pages
     <a href="/api/auth/logout">
-      <Button round>
+      <Button round label="logout">
         <RiLogoutCircleRLine />
       </Button>
     </a>
@@ -83,7 +83,12 @@ export const Navbar: React.FC = () => {
           </span>
         </button>
       </Link>
-      <button type="button" className={hamburgerClasses} onClick={handleClick}>
+      <button
+        type="button"
+        aria-label="hamburger-menu"
+        className={hamburgerClasses}
+        onClick={handleClick}
+      >
         <svg
           className={tw(["w-6", "h-6"])}
           fill="none"

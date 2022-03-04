@@ -38,7 +38,7 @@ export default function Toast({ status, message, id }: ToastType) {
   ]);
   return (
     <>
-      <div className={classes}>
+      <div className={classes} role="alert">
         <div className={tw(["flex"])}>
           <div className={tw(["flex-shrink-0"])}>
             <svg

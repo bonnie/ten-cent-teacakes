@@ -16,11 +16,11 @@ export const tomorrow = dayjs().add(1, "day").toDate();
 export const nextMonth = dayjs().add(1, "month").toDate();
 
 const deleteAll = async () => {
-  await prismaClient.musician.deleteMany({});
-  await prismaClient.instrument.deleteMany({});
-  await prismaClient.photo.deleteMany({});
-  await prismaClient.show.deleteMany({});
-  await prismaClient.venue.deleteMany({});
+  await prismaClient.musician.deleteMany();
+  await prismaClient.instrument.deleteMany();
+  await prismaClient.photo.deleteMany();
+  await prismaClient.show.deleteMany();
+  await prismaClient.venue.deleteMany();
 };
 
 const createVenues = async () => {

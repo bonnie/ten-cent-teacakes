@@ -22,7 +22,8 @@ import { useSupabasePhoto } from "@/lib/supabase/hooks/useSupabasePhoto";
 const AdvanceButton: React.FC<{
   Icon: IconType;
   linkIndex: number | null | undefined;
-}> = ({ Icon, linkIndex }) => (
+  label: "next" | "previous";
+}> = ({ Icon, linkIndex, label }) => (
   <button
     type="button"
     className={tw([
@@ -34,7 +35,7 @@ const AdvanceButton: React.FC<{
     {linkIndex ? (
       <Link href={`/photos/${linkIndex}`}>
         <a>
-          <Icon size={25} />
+          <Icon size={25} aria-label={`${label}-photo`} />
         </a>
       </Link>
     ) : null}
@@ -80,8 +81,21 @@ const Photo: React.FC = () => {
         "mx-4",
       ])}
     >
-      <div className={tw(["grid", "grid-cols-8", "w-full"])}>
-        <AdvanceButton Icon={FaArrowLeft} linkIndex={prevIndex} />
+      <div
+        className={tw([
+          "grid",
+          "grid-cols-8",
+          "w-full",
+          photo.description && photo.showVenue
+            ? "lg:row-span-2"
+            : "lg:row-span-1",
+        ])}
+      >
+        <AdvanceButton
+          Icon={FaArrowLeft}
+          linkIndex={prevIndex}
+          label="previous"
+        />
         <div className={tw(["col-span-6"])}>
           <div className={tw(["flex", "justify-center", "items-center"])}>
             {user ? (
@@ -90,10 +104,13 @@ const Photo: React.FC = () => {
                 <DeletePhotoModal photo={photo} />
               </div>
             ) : null}
-            <Heading textSize="5xl">
-              {dayjs(photoDate).format("MMM DD, YYYY")}
-              {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
-            </Heading>
+            <div className={tw(["flex", "flex-col", "items-center"])}>
+              <Heading textSize="5xl">
+                {dayjs(photoDate).format("MMM D, YYYY")}
+                {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
+              </Heading>
+              {photo.description ? <p>{photo.description}</p> : null}
+            </div>
           </div>
           {photo.photographer ? (
             <p className={tw(["text-lg", "text-center"])}>
@@ -101,12 +118,15 @@ const Photo: React.FC = () => {
             </p>
           ) : null}
         </div>
-        <AdvanceButton Icon={FaArrowRight} linkIndex={nextIndex} />
+        <AdvanceButton Icon={FaArrowRight} linkIndex={nextIndex} label="next" />
       </div>
       <div
         className={tw([
-          "row-span-5",
-          "lg:row-span-7",
+          "row-span-3",
+          "md:row-span-5",
+          photo.description && photo.showVenue
+            ? "lg:row-span-6"
+            : "lg:row-span-7",
           "h-full",
           "mb-3",
           "w-full",

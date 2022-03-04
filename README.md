@@ -20,7 +20,6 @@ To save time for CI and not bother to commit if lint / ts checks fail.
 #### Notes on Prisma and Supabase
 
 Reference: https://supabase.com/docs/guides/integrations/prisma
-(though migration seems to work fine with the pooled connection in CircleCI 🤷‍♀️)
 
 - _migration_
 
@@ -79,6 +78,7 @@ For Vercel / Cypress, the following variables are needed as GitHub secrets (repo
 1. `AUTH0_CLIENT_SECRET` (from Auth0 Application settings)
 1. `AUTH0_AUDIENCE` (should match the one in tenant -> settings -> API Authorization Settings)
 1. `AUTH0_SCOPE` (value should probably be `"openid profile email"`)
+1. `SUPABASE_URL` and `SUPABASE_KEY` (from `.env.local`)
 
 **Note**: Cypress is run as a Github action instead of through CircleCI so that it can depend on branch deploy success, and use the branch deploy url.
 
@@ -112,6 +112,7 @@ Since anything pushed / merged to `main` will be live right away, enact these re
 1. Create a new CircleCI project associated with this repository (https://circleci.com/docs/2.0/project-build/#adding-projects)
 1. Enable GitHub checks (https://circleci.com/docs/2.0/enable-checks/)
 1. Add `DATABASE_URL` environment variable (https://circleci.com/docs/2.0/env-vars/)
+1. Add `DB_BASEURL` environment variable (DB url before port; example: `DATABASE_URL="postgres://postgres:<password>@db.<db id>.supabase.co`). Needed because of difference between migration endpoint vs. queries endpoint.
 1. Add `CYPRESS_INSTALL_BINARY` environment variable, set to 0 (https://docs.cypress.io/guides/getting-started/installing-cypress#Environment-variables)
 
 ### Auth0 for Preview Deploys

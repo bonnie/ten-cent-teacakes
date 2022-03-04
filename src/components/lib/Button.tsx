@@ -20,9 +20,9 @@ export const Button: React.FC<ButtonProps> = ({
   label = undefined,
 }) => {
   const classes = tw([
-    disabled ? "bg-aqua-300" : "bg-aqua-500",
+    disabled ? "bg-aqua-400" : "bg-aqua-700",
     "text-white",
-    "active:bg-aqua-600",
+    "active:bg-aqua-800",
     "font-bold",
     "uppercase",
     "text-sm",

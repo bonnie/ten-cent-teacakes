@@ -3,7 +3,7 @@ import React from "react";
 import { MultiSelect } from "@/components/lib/form/MultiSelectInput";
 
 import { useInstruments } from "../../hooks/useInstruments";
-import { AddInstrumentModal } from "./EditInstrumentModal";
+// import { AddInstrumentModal } from "./EditInstrumentModal";
 
 export const InstrumentMultiSelect: React.FC = () => {
   const { instruments } = useInstruments();
@@ -20,7 +20,8 @@ export const InstrumentMultiSelect: React.FC = () => {
         label="Select instruments"
         options={instrumentOptions}
       />
-      <AddInstrumentModal />
+      {/* Avoiding dealing with "form within form" issues for now */}
+      {/* <AddInstrumentModal /> */}
     </>
   );
 };

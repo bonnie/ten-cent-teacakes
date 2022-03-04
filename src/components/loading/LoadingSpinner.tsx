@@ -22,7 +22,11 @@ export const LoadingSpinner: React.FC = () => {
       ])}
     >
       <div className={tw(["flex", "my-auto"])}>
-        <CgSpinner className={tw(["animate-spin", "absolute"])} size={50} />
+        <CgSpinner
+          aria-label="loading"
+          className={tw(["animate-spin", "absolute"])}
+          size={50}
+        />
       </div>
     </div>
   );

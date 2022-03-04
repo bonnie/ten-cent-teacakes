@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React from "react";
 import { IconType } from "react-icons";
 import { BiChat } from "react-icons/bi";
@@ -50,39 +51,44 @@ export const EmailSignupWithLabel: React.FC = () => (
 );
 
 const More: React.FC = () => (
-  <div className={tw(["flex", "flex-col", "items-center"])}>
-    <Heading>More</Heading>
-    <p
-      className={tw([
-        "font-display",
-        "text-center",
-        "text-4xl",
-        "text-aqua-700",
-      ])}
-    >
-      more Teacakes, less than 10¢
-    </p>
-    <div className={tw(["flex", "flex-col"])}>
-      <MoreElement
-        keyword="Watch"
-        tagline="videos on YouTube."
-        href="https://www.youtube.com/channel/UCPSpw7w0yCJ4MNuUpBiALxw"
-        Icon={FiYoutube}
-      />
-      <MoreElement
-        keyword="Follow"
-        tagline="on Twitter."
-        href="https://twitter.com/TenCentTeacakes"
-        Icon={FiTwitter}
-      />
-      <MoreElement
-        keyword="Contact us"
-        tagline="at info@tencentteacakes.com"
-        Icon={BiChat}
-      />
-      <EmailSignupWithLabel />
+  <>
+    <Head>
+      <title>Ten-Cent Teacakes: More</title>
+    </Head>
+    <div className={tw(["flex", "flex-col", "items-center"])}>
+      <Heading>More</Heading>
+      <p
+        className={tw([
+          "font-display",
+          "text-center",
+          "text-4xl",
+          "text-aqua-700",
+        ])}
+      >
+        more Teacakes, less than 10¢
+      </p>
+      <div className={tw(["flex", "flex-col"])}>
+        <MoreElement
+          keyword="Watch"
+          tagline="videos on YouTube."
+          href="https://www.youtube.com/channel/UCPSpw7w0yCJ4MNuUpBiALxw"
+          Icon={FiYoutube}
+        />
+        <MoreElement
+          keyword="Follow"
+          tagline="on Twitter."
+          href="https://twitter.com/TenCentTeacakes"
+          Icon={FiTwitter}
+        />
+        <MoreElement
+          keyword="Contact us"
+          tagline="at info@tencentteacakes.com"
+          Icon={BiChat}
+        />
+        <EmailSignupWithLabel />
+      </div>
     </div>
-  </div>
+  </>
 );
 
 export default More;

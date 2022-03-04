@@ -43,6 +43,7 @@ export const AddVenueModal: React.FC = () => {
   return (
     <EditItemModal
       title="Add Venue"
+      itemName="venue"
       FormFields={EditVenueForm}
       formikConfig={formikConfig}
       buttonType="add"
@@ -74,6 +75,7 @@ export const EditVenueModal: React.FC<{ venue: Venue }> = ({ venue }) => {
   return (
     <EditItemModal
       title={`Edit Venue ${venue.name}`}
+      itemName="venue"
       FormFields={EditVenueForm}
       formikConfig={formikConfig}
       buttonType="edit"

@@ -39,7 +39,7 @@ export const patchVenue = async ({ data, id }: VenuePatchData) => {
     throw new Error(`Bad venue id: ${id}`);
   }
 
-  await prisma.venue.update({ data, where: { id } });
+  return prisma.venue.update({ data, where: { id } });
 };
 
 export const deleteVenue = async (id: number) => {

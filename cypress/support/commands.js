@@ -2,8 +2,13 @@
 /* eslint-disable camelcase */
 
 import "@testing-library/cypress/add-commands";
+import "@cypress-audit/lighthouse/commands";
 
+import failOnConsoleError from "cypress-fail-on-console-error";
 import jwt from "jsonwebtoken";
+
+failOnConsoleError();
+// failOnConsoleError({excludeMessages: ["^"]});
 
 // source:
 // https://docs.cypress.io/guides/testing-strategies/auth0-authentication#Custom-Command-for-Auth0-Authentication
@@ -27,26 +32,6 @@ Cypress.Commands.add("loginByAuth0Api", (username, password) => {
       client_id,
       client_secret,
     },
-    //   }).then(({ body }) => {
-    //     const { access_token, expires_in, id_token } = body;
-    //     const auth0State = {
-    //       nonce: "",
-    //       state: "some-random-state",
-    //     };
-    //     const callbackUrl = `${Cypress.env(
-    //       "auth0_callback_url",
-    //     )}?access_token=${access_token}&scope=openid&id_token=${id_token}&expires_in=${expires_in}&token_type=Bearer&state=${
-    //       auth0State.state
-    //     }`;
-    //     cy.visit(callbackUrl, {
-    //       onBeforeLoad(win) {
-    //         win.document.cookie = `com.auth0.auth.some-random-state=${JSON.stringify(
-    //           auth0State,
-    //         )}`;
-    //       },
-    //     });
-    //   });
-    // });
   }).then(({ body }) => {
     const claims = jwt.decode(body.id_token);
     const {
@@ -86,4 +71,41 @@ Cypress.Commands.add("loginByAuth0Api", (username, password) => {
       JSON.stringify(item),
     );
   });
+});
+
+Cypress.Commands.add("logoutByLocalStorage", () => {
+  window.localStorage.removeItem(Cypress.env("cypress_localstorage_key"));
+});
+
+Cypress.Commands.add("logInAndResetDb", (newRoute, currentRoute) => {
+  // authenticate, adapted from
+  // https://docs.cypress.io/guides/testing-strategies/auth0-authentication#Custom-Command-for-Auth0-Authentication
+  cy.loginByAuth0Api(
+    Cypress.env("auth0_username"),
+    Cypress.env("auth0_password"),
+  );
+
+  // define whitelist
+  cy.intercept("/api/auth/whitelist", {
+    statusCode: 200,
+    body: { whitelist: [Cypress.env("auth0_username")] },
+  });
+
+  // reset the db, and load the page after
+  // This seems to be the best way to make sure the db is reset before page is visited
+  // getting location / pathname from within command does not work, so needs to be an arg
+  if (newRoute === currentRoute) {
+    // try to avoid load timeouts when visiting the same page on subsequent tests
+    cy.task("db:reset").reload();
+  } else {
+    cy.task("db:reset").visit(newRoute);
+  }
+});
+
+Cypress.Commands.add("dismissToast", () => {
+  cy.findByRole("button", { name: /dismiss alert/i })
+    // to avoid sporadic "element has been detached from the DOM" errors
+    // reference: https://www.cypress.io/blog/2020/07/22/do-not-get-too-detached/
+    .then(($button) => cy.wrap($button))
+    .click();
 });

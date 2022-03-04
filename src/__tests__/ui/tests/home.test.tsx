@@ -86,8 +86,8 @@ test("should show only three nearest future shows", async () => {
     .filter((element) => element.classList.contains("text-lg"))
     .map((date) => date.textContent);
   expect(showDates).toEqual([
-    dayjs(tomorrow).format("MMM DD, YYYY"),
-    dayjs(nextMonth).format("MMM DD, YYYY"),
+    dayjs(tomorrow).format("MMM D, YYYY"),
+    dayjs(nextMonth).format("MMM D, YYYY"),
     "Jan 1, 2200",
   ]);
 

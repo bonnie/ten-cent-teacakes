@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React from "react";
 import { tw } from "twind";
 
@@ -11,6 +12,9 @@ const PhotosPage: React.FC = () => {
 
   return (
     <>
+      <Head>
+        <title>Ten-Cent Teacakes: Photos</title>
+      </Head>
       <Heading>Photos</Heading>
       {user ? (
         <div className={tw(["text-center"])}>

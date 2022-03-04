@@ -21,3 +21,4 @@ tsconfig.tsbuildinfo
 # Cypress videos and screenshots
 cypress/videos/
 cypress/screenshots/
+cypress/reports

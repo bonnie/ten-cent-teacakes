@@ -22,7 +22,7 @@ export const PhotoThumbnail: React.FC<{
   const photoDate = getPhotoDate(photo);
 
   return (
-    <div
+    <figure
       style={{ width: "240px" }}
       className={tw(["m-5", "flex", "flex-col", "items-center"])}
     >
@@ -53,19 +53,21 @@ export const PhotoThumbnail: React.FC<{
         </div>
       </Link>
 
-      <p className={tw(["text-center"])}>
-        {dayjs(photoDate).format("MMM DD, YYYY")}
-        {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
-      </p>
-      <p className={tw(["text-sm"])}>
-        {photo.photographer ? `taken by ${photo.photographer}` : <br />}
-      </p>
+      <figcaption>
+        <p className={tw(["text-center"])}>
+          {dayjs(photoDate).format("MMM D, YYYY")}
+          {photo.showVenue ? ` at ${photo.showVenue.name}` : null}
+        </p>
+        <p className={tw(["text-sm"])}>
+          {photo.photographer ? `taken by ${photo.photographer}` : <br />}
+        </p>
+      </figcaption>
       {user ? (
         <div className={tw(["justify-self-end"])}>
           <EditPhotoModal photo={photo} />
           <DeletePhotoModal photo={photo} />
         </div>
       ) : null}
-    </div>
+    </figure>
   );
 };

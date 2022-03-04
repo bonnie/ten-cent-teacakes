@@ -36,13 +36,14 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
               "grid-cols-3",
               "place-items-start",
               "place-content-between",
+              "w-full",
             ])}
           >
             {options.map((option) => {
               const optionId = `option-${option.value}`;
               return (
                 <label
-                  className={tw(["ml-3"])}
+                  className={tw(["ml-3", "text-left"])}
                   key={option.value}
                   htmlFor={optionId}
                 >
@@ -67,7 +68,14 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
                       }
                     }}
                   />
-                  <span className={tw(["ml-1"])}>{option.label}</span>
+                  <span
+                    className={tw([
+                      "ml-1",
+                      option.label.length > 15 ? "text-sm" : "",
+                    ])}
+                  >
+                    {option.label}
+                  </span>
                 </label>
               );
             })}

@@ -10,7 +10,7 @@ import { Keyword } from "@/components/lib/Style/Keyword";
 import { LinkKeyword } from "@/components/lib/Style/LinkKeyword";
 
 import { useVenues } from "../hooks/useVenues";
-import { AddVenueModal } from "./venues/EditVenueModal";
+// import { AddVenueModal } from "./venues/EditVenueModal";
 
 export const DisplayShowVenue: React.FC<{
   venue: VenueType;
@@ -55,9 +55,10 @@ export const EditableShowVenue: React.FC = () => {
           </option>
         ))}
       </select>
-      <div className={tw(["mt-2"])}>
+      {/* avoiding dealing with "form within form" issues for now */}
+      {/* <div className={tw(["mt-2"])}>
         <AddVenueModal />
-      </div>
+      </div> */}
     </FieldContainer>
   );
 };

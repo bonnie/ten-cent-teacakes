@@ -16,6 +16,7 @@ import {
 
 type EditItemModalProps<Data> = {
   title: string;
+  itemName: string;
   FormFields: React.FC<{ props: FormikProps<Data> }>;
   formikConfig: FormikConfig<Data>;
   buttonType?: "edit" | "add";
@@ -23,6 +24,7 @@ type EditItemModalProps<Data> = {
 
 export function EditItemModal<Data>({
   title,
+  itemName,
   FormFields,
   formikConfig,
   buttonType = "edit",
@@ -51,6 +53,7 @@ export function EditItemModal<Data>({
                   <Button
                     type="submit"
                     disabled={Object.keys(props.errors).length > 0}
+                    label={`save ${itemName}`}
                     handleClick={async () => {
                       const errors = await props.validateForm(props.values);
                       if (Object.keys(errors).length === 0) {
