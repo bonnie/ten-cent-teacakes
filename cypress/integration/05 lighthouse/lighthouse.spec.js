@@ -2,9 +2,9 @@ import "@cypress-audit/lighthouse/commands";
 
 const lighthouseThresholds = {
   performance: 0,
-  accessibility: 100,
+  accessibility: 95,
   "best-practices": 0,
-  seo: 100,
+  seo: 95,
   pwa: 0,
 };
 
