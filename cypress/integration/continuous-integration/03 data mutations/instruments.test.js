@@ -1,5 +1,7 @@
 it("can add, edit and delete instrument", () => {
-  cy.logInAndResetDb("/band");
+  cy.location("pathname").then(($pathname) =>
+    cy.logInAndResetDb("/band", $pathname),
+  );
 
   /// ////////////////////////////////////////////////
   // 1. expect save not to work if there's no instrument name
@@ -83,7 +85,9 @@ it("can add, edit and delete instrument", () => {
 });
 
 it("updates musician display with updated instrument name", () => {
-  cy.logInAndResetDb();
+  cy.location("pathname").then(($pathname) =>
+    cy.logInAndResetDb("/band", $pathname),
+  );
 
   // edit venue associated with a show in the pre-populated db
   cy.findByRole("button", { name: /edit instrument baritone/i }).click();

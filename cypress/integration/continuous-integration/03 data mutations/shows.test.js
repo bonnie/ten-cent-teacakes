@@ -1,7 +1,9 @@
 const dayjs = require("dayjs");
 
 it("can add, edit and delete show with minimal data", () => {
-  cy.logInAndResetDb("/shows");
+  cy.location("pathname").then(($pathname) =>
+    cy.logInAndResetDb("/shows", $pathname),
+  );
 
   /// ////////////////////////////////////////////////
   // 1. expect save not to work if there's no performance date
@@ -82,7 +84,9 @@ it("can add, edit and delete show with minimal data", () => {
 });
 
 it("can add and edit show with maximal data", () => {
-  cy.logInAndResetDb();
+  cy.location("pathname").then(($pathname) =>
+    cy.logInAndResetDb("/shows", $pathname),
+  );
 
   /// ////////////////////////////////////////////////
   // 1. add show with url and save

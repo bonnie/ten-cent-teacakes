@@ -1,7 +1,9 @@
 const dayjs = require("dayjs");
 
 it("can add, edit and delete photo with minimal data", () => {
-  cy.logInAndResetDb("/photos");
+  cy.location("pathname").then(($pathname) =>
+    cy.logInAndResetDb("/photos", $pathname),
+  );
 
   /// ////////////////////////////////////////////////
   // 1. expect save not to work if there's no photo
@@ -84,7 +86,9 @@ it("can add, edit and delete photo with minimal data", () => {
 });
 
 it("can add and edit photo with maximal data", () => {
-  cy.logInAndResetDb();
+  cy.location("pathname").then(($pathname) =>
+    cy.logInAndResetDb("/photos", $pathname),
+  );
 
   /// ////////////////////////////////////////////////
   // 1. add photo with all data and save

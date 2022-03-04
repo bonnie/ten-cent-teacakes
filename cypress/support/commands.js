@@ -77,7 +77,7 @@ Cypress.Commands.add("logoutByLocalStorage", () => {
   window.localStorage.removeItem(Cypress.env("cypress_localstorage_key"));
 });
 
-Cypress.Commands.add("logInAndResetDb", (route) => {
+Cypress.Commands.add("logInAndResetDb", (newRoute, currentRoute) => {
   // authenticate, adapted from
   // https://docs.cypress.io/guides/testing-strategies/auth0-authentication#Custom-Command-for-Auth0-Authentication
   cy.loginByAuth0Api(
@@ -93,17 +93,11 @@ Cypress.Commands.add("logInAndResetDb", (route) => {
 
   // reset the db, and load the page after
   // This seems to be the best way to make sure the db is reset before page is visited
-  if (route) {
-    cy.task("db:reset").visit(route);
-  } else {
+  // getting location / pathname from within command does not work, so needs to be an arg
+  if (newRoute === currentRoute) {
     // try to avoid load timeouts when visiting the same page on subsequent tests
     cy.task("db:reset").reload();
+  } else {
+    cy.task("db:reset").visit(newRoute);
   }
-
-  // this seems to load the page before db reset is complete 🤬
-  // cy.task("db:reset").then(() => {
-  //   cy.location("pathname").then(($path) => {
-  //     if ($path !== route) cy.visit(route);
-  //   });
-  // });
 });
