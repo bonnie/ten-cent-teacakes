@@ -2,6 +2,14 @@
 const { resetDB } = require("../../src/__tests__/api/prisma/reset-db");
 const { createClient } = require("@supabase/supabase-js");
 const dayjs = require("dayjs");
+/* eslint-disable no-unused-vars */
+const { lighthouse, prepareAudit } = require("@cypress-audit/lighthouse");
+// eslint-disable-next-line import/no-extraneous-dependencies
+const ReportGenerator = require("lighthouse/report/generator/report-generator");
+const fs = require("fs");
+const path = require("path");
+
+const outDir = "cypress/reports";
 
 const getTestFileNames = async (supabase, folderName) => {
   const { data, error } = await supabase.storage
@@ -30,6 +38,35 @@ const getTestFileNames = async (supabase, folderName) => {
 export default (on, config) => {
   // a way to get around env vars not being available in after:spec
   const { SUPABASE_URL, SUPABASE_KEY } = process.env;
+
+  on("before:browser:launch", (browser = {}, launchOptions) => {
+    prepareAudit(launchOptions);
+  });
+  on("task", {
+    lighthouse: lighthouse((lighthouseReport) => {
+      try {
+        if (!fs.existsSync(outDir)) fs.mkdirSync(outDir);
+        const dateString = new Date().toISOString();
+        const fileName = path.join(
+          outDir,
+          `lighthouse-report-${dateString}.html`,
+        );
+
+        fs.writeFileSync(
+          fileName,
+          ReportGenerator.generateReport(lighthouseReport.lhr, "html"),
+        );
+        // eslint-disable-next-line no-console
+        console.log("---- INFO: wrote lighthouse report to", fileName);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(
+          "---- ERROR: failed to generate lighthouse report",
+          error,
+        );
+      }
+    }),
+  });
 
   on("task", {
     "db:reset": () => resetDB().then(() => null),

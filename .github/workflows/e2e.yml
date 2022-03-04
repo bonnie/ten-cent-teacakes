@@ -29,9 +29,9 @@ jobs:
           fetch-depth: 0
 
       # cypress is already installed with the container.
-      # need to install a few things for Cypress to work properly with this app
+      # need to install a few things for Cypress to work properly with these tests
       - name: install
-        run: npm install @prisma/client @testing-library/cypress jsonwebtoken dayjs cypress-fail-on-console-error @supabase/supabase-js
+        run: npm install @prisma/client @testing-library/cypress jsonwebtoken dayjs cypress-fail-on-console-error @supabase/supabase-js @cypress-audit/lighthouse
 
       - name: Run tests
         env:

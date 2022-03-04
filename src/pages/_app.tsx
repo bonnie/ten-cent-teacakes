@@ -24,6 +24,10 @@ function TenCentTeacake({ Component, pageProps }: AppProps) {
   return (
     <div>
       <Head>
+        <meta
+          name="description"
+          content="Eclectic string band music and cheap baked goods"
+        />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.tencentteacakes.com" />
         <meta property="og:title" content="Ten-Cent Teacakes" />

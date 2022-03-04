@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React from "react";
 import { dehydrate, QueryClient } from "react-query";
 import { tw } from "twind";
@@ -30,27 +31,32 @@ const Musicians: React.FC = () => {
   const { user } = useWhitelistUser();
 
   return (
-    <div className={tw(["w-full"])}>
-      <Heading>The Band</Heading>
-      {user ? (
-        <div className={tw(["text-center"])}>
-          <AddMusicianModal />
-        </div>
-      ) : null}
-      <ul
-        className={tw([
-          "flex",
-          "flex-wrap",
-          "justify-center",
-          "items-stretch mx-5",
-        ])}
-      >
-        {musicians.map((musician) => (
-          <MusicianCard key={musician.id} musician={musician} />
-        ))}
-      </ul>
-      {user ? <EditInstruments /> : null}
-    </div>
+    <>
+      <Head>
+        <title>Ten-Cent Teacakes: The Band</title>
+      </Head>
+      <div className={tw(["w-full"])}>
+        <Heading>The Band</Heading>
+        {user ? (
+          <div className={tw(["text-center"])}>
+            <AddMusicianModal />
+          </div>
+        ) : null}
+        <ul
+          className={tw([
+            "flex",
+            "flex-wrap",
+            "justify-center",
+            "items-stretch mx-5",
+          ])}
+        >
+          {musicians.map((musician) => (
+            <MusicianCard key={musician.id} musician={musician} />
+          ))}
+        </ul>
+        {user ? <EditInstruments /> : null}
+      </div>
+    </>
   );
 };
 

@@ -2,6 +2,7 @@
 /* eslint-disable camelcase */
 
 import "@testing-library/cypress/add-commands";
+import "@cypress-audit/lighthouse/commands";
 
 import failOnConsoleError from "cypress-fail-on-console-error";
 import jwt from "jsonwebtoken";

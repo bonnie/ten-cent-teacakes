@@ -83,7 +83,12 @@ export const Navbar: React.FC = () => {
           </span>
         </button>
       </Link>
-      <button type="button" className={hamburgerClasses} onClick={handleClick}>
+      <button
+        type="button"
+        aria-label="hamburger-menu"
+        className={hamburgerClasses}
+        onClick={handleClick}
+      >
         <svg
           className={tw(["w-6", "h-6"])}
           fill="none"
