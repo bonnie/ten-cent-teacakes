@@ -22,3 +22,6 @@ tsconfig.tsbuildinfo
 cypress/videos/
 cypress/screenshots/
 cypress/reports
+
+# `next export` out directory
+/out

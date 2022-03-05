@@ -1,6 +1,7 @@
 // import { test } from "@jest/globals";
 import { axe, toHaveNoViolations } from "jest-axe";
 
+import { mockMusicians } from "@/__mocks__/mockData";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import Musicians from "@/pages/band";
 import { render, screen } from "@/test-utils";
@@ -12,13 +13,13 @@ const mockedUseWhitelistUser = useWhitelistUser as jest.Mock;
 
 describe("not logged in", () => {
   test("hydrates on load", async () => {
-    render(<Musicians />, { renderOptions: { hydrate: true } });
+    render(<Musicians musicians={mockMusicians} />);
     // find all the Musician images; from msw, there are three expected
     const musicianImages = await screen.findAllByRole("img");
     expect(musicianImages).toHaveLength(3);
   });
   test("should not show mutate buttons", async () => {
-    render(<Musicians />, { renderOptions: { hydrate: true } });
+    render(<Musicians musicians={mockMusicians} />);
     await screen.findAllByRole("img");
     const mutateButtons = screen.queryAllByRole("button", {
       name: /add|edit|delete/i,
@@ -27,9 +28,7 @@ describe("not logged in", () => {
   });
 
   test("should have no a11y errors caught by jest-axe", async () => {
-    const { container } = render(<Musicians />, {
-      renderOptions: { hydrate: true },
-    });
+    const { container } = render(<Musicians musicians={mockMusicians} />);
 
     // to avoid "not wrapped in act"
     await screen.findAllByRole("img");
@@ -51,9 +50,7 @@ describe("logged in", () => {
     }));
   });
   test("should have no a11y errors caught by jest-axe", async () => {
-    const { container } = render(<Musicians />, {
-      renderOptions: { hydrate: true },
-    });
+    const { container } = render(<Musicians musicians={mockMusicians} />);
 
     // to avoid "not wrapped in act"
     await screen.findAllByRole("img");
@@ -61,7 +58,7 @@ describe("logged in", () => {
     expect(results).toHaveNoViolations();
   });
   test("musician and instrument add buttons", async () => {
-    render(<Musicians />, { renderOptions: { hydrate: true } });
+    render(<Musicians musicians={mockMusicians} />);
     const addButtons = screen.getAllByRole("button", { name: /add/i });
     expect(addButtons).toHaveLength(2);
     addButtons.forEach((button) => expect(button).toBeVisible());
@@ -70,7 +67,7 @@ describe("logged in", () => {
     await screen.findAllByRole("img");
   });
   test("musicians have edit button but not delete button", async () => {
-    render(<Musicians />, { renderOptions: { hydrate: true } });
+    render(<Musicians musicians={mockMusicians} />);
     await screen.findAllByRole("img");
 
     const editButtons = await screen.findAllByRole("button", {
@@ -85,7 +82,7 @@ describe("logged in", () => {
     expect(deleteButtons).toHaveLength(0);
   });
   test("Instruments show up, and have correct buttons", async () => {
-    render(<Musicians />, { renderOptions: { hydrate: true } });
+    render(<Musicians musicians={mockMusicians} />);
     const instrumentsTitle = screen.getByRole("heading", {
       name: /instruments/i,
     });
