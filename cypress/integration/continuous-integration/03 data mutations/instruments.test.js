@@ -10,7 +10,7 @@ it("can add, edit and delete instrument", () => {
     .click();
   cy.findByRole("button", { name: /save/i }).click();
   cy.contains(/instrument name is required/i);
-  cy.dismissToast();
+  cy.findByRole("button", { name: /dismiss alert/i }).click();
 
   /// ////////////////////////////////////////////////
   // 2. add instrument and save
@@ -19,7 +19,7 @@ it("can add, edit and delete instrument", () => {
 
   // expect success message
   cy.contains(/you have added the instrument "xylophone"/i);
-  cy.dismissToast();
+  cy.findByRole("button", { name: /dismiss alert/i }).click();
 
   // expect instrument edit button to be on page
   cy.findByRole("button", { name: /edit instrument xylophone/i }).as(
@@ -59,7 +59,7 @@ it("can add, edit and delete instrument", () => {
 
   // expect a success message
   cy.contains(/you have updated the instrument "sousaphone"/i);
-  cy.dismissToast();
+  cy.findByRole("button", { name: /dismiss alert/i }).click();
 
   // old instrument button should not exist
   cy.contains("xylophone").should("not.exist");
@@ -78,7 +78,7 @@ it("can add, edit and delete instrument", () => {
 
   // expect a success message
   cy.contains(/you have deleted the instrument/i);
-  cy.dismissToast();
+  cy.findByRole("button", { name: /dismiss alert/i }).click();
 
   // make sure instrument name is no longer represented
   cy.contains("sousaphone").should("not.exist");

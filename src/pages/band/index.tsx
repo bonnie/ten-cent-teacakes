@@ -1,35 +1,39 @@
 import Head from "next/head";
 import React from "react";
+import { dehydrate, QueryClient } from "react-query";
 import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
+import { fetchMusiciansWithInstruments } from "@/lib/musicians";
 import { AddMusicianModal } from "@/lib/musicians/components/EditMusicianModal";
 import { EditInstruments } from "@/lib/musicians/components/instruments/EditInstruments";
 import { MusicianCard } from "@/lib/musicians/components/MusicianCard";
-import { MusicianWithInstruments } from "@/lib/musicians/types";
-import { getMusiciansSortAscending } from "@/lib/prisma/queries/musicians";
+import { useMusicians } from "@/lib/musicians/hooks/useMusicians";
+import { queryKeys } from "@/lib/react-query/query-keys";
 
 export async function getStaticProps() {
-  // don't use client-style code (e.g. react-query or api calls) for getStaticProps
-  // reference: https://nextjs.org/docs/basic-features/data-fetching/get-static-props#write-server-side-code-directly
+  const queryClient = new QueryClient();
 
-  const musicians = await getMusiciansSortAscending();
+  await queryClient.prefetchQuery(queryKeys.musicians, ({ signal }) =>
+    fetchMusiciansWithInstruments(signal),
+  );
+
   return {
-    props: { musicians },
-    revalidate: 3600, // one hour, in seconds
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
   };
 }
 
-const Musicians: React.FC<{
-  musicians: MusicianWithInstruments[];
-}> = ({ musicians }) => {
+const Musicians: React.FC = () => {
+  const { musicians } = useMusicians();
   const { user } = useWhitelistUser();
 
   return (
     <>
       <Head>
-        <title>Ten-Cent Teacakes: The Band</title>
+        <title>Ten-Cent Teacakes: Shows</title>
       </Head>
       <div className={tw(["w-full"])}>
         <Heading>The Band</Heading>
