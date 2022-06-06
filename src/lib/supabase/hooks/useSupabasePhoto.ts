@@ -4,17 +4,17 @@ import { useState } from "react";
 import { useAsync } from "@/lib/hooks/useAsync";
 
 import { supabase } from "..";
-import { UPLOADS_BUCKET } from "../constants";
 
 const FIVE_MINUTES = 60 * 5;
 
 export const getSignedStorageUrl = async (
   path: string | null,
+  bucketPath: string,
 ): Promise<string | null> => {
   if (!path) return null;
 
   const { signedURL, error } = await supabase.storage
-    .from(UPLOADS_BUCKET)
+    .from(bucketPath)
     .createSignedUrl(path, FIVE_MINUTES);
 
   if (error) {
@@ -27,10 +27,11 @@ export const getSignedStorageUrl = async (
 
 export const useSupabasePhoto = (
   path: string | null,
+  bucketPath: string,
 ): { imgSrc: string | null } => {
   const [imgSrc, setImgSrc] = useState<string | null>(null);
   useAsync<string | null>(
-    () => getSignedStorageUrl(path),
+    () => getSignedStorageUrl(path, bucketPath),
     (signedPath) => setImgSrc(signedPath),
   );
   return { imgSrc };

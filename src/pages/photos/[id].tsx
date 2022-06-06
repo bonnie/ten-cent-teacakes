@@ -17,6 +17,7 @@ import { DeletePhotoModal } from "@/lib/photos/components/DeletePhotoModal";
 import { EditPhotoModal } from "@/lib/photos/components/EditPhotoModal";
 import { usePhoto } from "@/lib/photos/hooks/usePhoto";
 import { usePhotos } from "@/lib/photos/hooks/usePhotos";
+import { UPLOADS_BUCKET } from "@/lib/supabase/constants";
 import { useSupabasePhoto } from "@/lib/supabase/hooks/useSupabasePhoto";
 
 const AdvanceButton: React.FC<{
@@ -50,7 +51,7 @@ const Photo: React.FC = () => {
   const { photo } = usePhoto({ photoId });
   const { nextAndPrevIndexes } = usePhotos();
 
-  const { imgSrc } = useSupabasePhoto(photo?.imagePath ?? null);
+  const { imgSrc } = useSupabasePhoto(photo?.imagePath ?? null, UPLOADS_BUCKET);
 
   // TODO: this is pretty hack-y, but router.isReady is true even when it still
   // contains the [id] from the previous route, which leads to the wrong image
