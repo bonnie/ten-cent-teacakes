@@ -11,6 +11,7 @@ it("Navigates properly from photo to photo on the large photo pages", () => {
 
   // check for no previous button
   cy.findByRole("button", { name: "previous-photo" }).should("not.exist");
+  cy.findByRole("heading", { name: dayjs().format("MMM D, YYYY") });
 
   // click through to the second and third images; from the test db, there should be 3
   cy.findByRole("button", { name: "next-photo" }).click();

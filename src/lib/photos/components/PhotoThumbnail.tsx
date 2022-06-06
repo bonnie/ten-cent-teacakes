@@ -9,6 +9,7 @@ import { getThumbName } from "@/lib/api/utils";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { getPhotoDate } from "@/lib/photos";
 import { PhotoWithShowAndVenue } from "@/lib/photos/types";
+import { UPLOADS_BUCKET } from "@/lib/supabase/constants";
 import { useSupabasePhoto } from "@/lib/supabase/hooks/useSupabasePhoto";
 
 import { DeletePhotoModal } from "./DeletePhotoModal";
@@ -18,7 +19,10 @@ export const PhotoThumbnail: React.FC<{
   photo: PhotoWithShowAndVenue;
 }> = ({ photo }) => {
   const { user } = useWhitelistUser();
-  const { imgSrc } = useSupabasePhoto(getThumbName(photo.imagePath));
+  const { imgSrc } = useSupabasePhoto(
+    getThumbName(photo.imagePath),
+    UPLOADS_BUCKET,
+  );
   const photoDate = getPhotoDate(photo);
 
   return (

@@ -17,6 +17,7 @@ export const NavLink: React.FC<NavLinkProps> = ({
       <button
         type="button"
         onClick={setInactive}
+        style={{ maxWidth: "200px" }}
         className={tw([
           "md:inline-flex",
           "md:w-auto",
@@ -38,8 +39,8 @@ export const NavLink: React.FC<NavLinkProps> = ({
         ])}
       >
         <img
-          style={{ height: "40px", width: "300px" }}
-          src={`/nav-banners/${pageName}-light.png`}
+          style={{ height: "25px", width: "300px" }}
+          src={`/nav-banners/${pageName}.png`}
           // TODO: height should increase as page width gets smaller
           alt={`banner containing the word ${pageName}`}
         />

@@ -75,8 +75,8 @@ export const Navbar: React.FC = () => {
           <img
             src="/logo/tencent-tag.svg"
             alt="tag reading '10 cents'"
-            height={50}
-            width={50}
+            height={40}
+            width={40}
           />
           <span className={tw(["p-2", "text-3xl", "w-60"])}>
             Ten-Cent Teacakes
@@ -141,6 +141,11 @@ export const Navbar: React.FC = () => {
           <NavLink
             href="/band"
             pageName="band"
+            setInactive={() => setActive(false)}
+          />
+          <NavLink
+            href="/press"
+            pageName="press"
             setInactive={() => setActive(false)}
           />
           <NavLink

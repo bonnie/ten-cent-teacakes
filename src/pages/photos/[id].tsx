@@ -17,6 +17,7 @@ import { DeletePhotoModal } from "@/lib/photos/components/DeletePhotoModal";
 import { EditPhotoModal } from "@/lib/photos/components/EditPhotoModal";
 import { usePhoto } from "@/lib/photos/hooks/usePhoto";
 import { usePhotos } from "@/lib/photos/hooks/usePhotos";
+import { UPLOADS_BUCKET } from "@/lib/supabase/constants";
 import { useSupabasePhoto } from "@/lib/supabase/hooks/useSupabasePhoto";
 
 const AdvanceButton: React.FC<{
@@ -50,7 +51,7 @@ const Photo: React.FC = () => {
   const { photo } = usePhoto({ photoId });
   const { nextAndPrevIndexes } = usePhotos();
 
-  const { imgSrc } = useSupabasePhoto(photo?.imagePath ?? null);
+  const { imgSrc } = useSupabasePhoto(photo?.imagePath ?? null, UPLOADS_BUCKET);
 
   // TODO: this is pretty hack-y, but router.isReady is true even when it still
   // contains the [id] from the previous route, which leads to the wrong image
@@ -91,12 +92,7 @@ const Photo: React.FC = () => {
             : "lg:row-span-1",
         ])}
       >
-        <AdvanceButton
-          Icon={FaArrowLeft}
-          linkIndex={prevIndex}
-          label="previous"
-        />
-        <div className={tw(["col-span-6"])}>
+        <div className={tw(["col-start-2", "col-span-6"])}>
           <div className={tw(["flex", "justify-center", "items-center"])}>
             {user ? (
               <div className={tw(["mr-5"])}>
@@ -118,7 +114,6 @@ const Photo: React.FC = () => {
             </p>
           ) : null}
         </div>
-        <AdvanceButton Icon={FaArrowRight} linkIndex={nextIndex} label="next" />
       </div>
       <div
         className={tw([
@@ -131,8 +126,15 @@ const Photo: React.FC = () => {
           "mb-3",
           "w-full",
           "relative",
+          "flex",
+          "justify-center",
         ])}
       >
+        <AdvanceButton
+          Icon={FaArrowLeft}
+          linkIndex={prevIndex}
+          label="previous"
+        />
         {/* TODO: figure out how to use Image for optimization from Supabase */}
         {imgSrc && imageSrcMatches ? (
           <img
@@ -147,6 +149,7 @@ const Photo: React.FC = () => {
             <CgSpinner className={tw(["animate-spin"])} size="6em" />
           </div>
         )}
+        <AdvanceButton Icon={FaArrowRight} linkIndex={nextIndex} label="next" />
       </div>
       <InternalLinkKeyword href="/photos" className={tw(["mt-5"])}>
         Back to photos

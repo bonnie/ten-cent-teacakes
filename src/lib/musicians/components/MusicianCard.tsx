@@ -4,6 +4,7 @@ import { tw } from "twind";
 
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { MusicianWithInstruments } from "@/lib/musicians/types";
+import { UPLOADS_BUCKET } from "@/lib/supabase/constants";
 import { useSupabasePhoto } from "@/lib/supabase/hooks/useSupabasePhoto";
 
 import { EditMusicianModal } from "./EditMusicianModal";
@@ -47,7 +48,7 @@ const Instrument: React.FC<InstrumentProps> = ({ name }) => (
 type MusicianProps = { musician: MusicianWithInstruments };
 export const MusicianCard: React.FC<MusicianProps> = ({ musician }) => {
   const { user } = useWhitelistUser();
-  const { imgSrc } = useSupabasePhoto(musician.imagePath);
+  const { imgSrc } = useSupabasePhoto(musician.imagePath, UPLOADS_BUCKET);
 
   const imageTransitionClass = imgSrc
     ? tw([
