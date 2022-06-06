@@ -54,7 +54,8 @@
       {
         "printWidth": 80,
         "singleQuote": false,
-        "trailingComma": "all"
+        "trailingComma": "all",
+        "endOfLine": "auto"
       }
     ],
     "simple-import-sort/exports": "error",
