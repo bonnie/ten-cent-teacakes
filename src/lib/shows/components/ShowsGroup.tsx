@@ -8,7 +8,7 @@ import { ShowWithVenue } from "@/lib/shows/types";
 import { Show } from "./Show";
 
 type ShowsProps = {
-  title: "Upcoming Shows" | "Past Shows";
+  title: "Upcoming Shows" | "Recent Shows";
   shows: Array<ShowWithVenue>;
   showTitle?: boolean;
 };
@@ -18,8 +18,8 @@ export const ShowsGroup: React.FC<ShowsProps> = ({
   shows,
   showTitle,
 }) => {
-  // don't show past shows if there are none
-  if (title === "Past Shows" && shows.length === 0) {
+  // don't show Recent shows if there are none
+  if (title === "Recent Shows" && shows.length === 0) {
     return null;
   }
   return (

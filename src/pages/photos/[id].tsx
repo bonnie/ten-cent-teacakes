@@ -91,12 +91,7 @@ const Photo: React.FC = () => {
             : "lg:row-span-1",
         ])}
       >
-        <AdvanceButton
-          Icon={FaArrowLeft}
-          linkIndex={prevIndex}
-          label="previous"
-        />
-        <div className={tw(["col-span-6"])}>
+        <div className={tw(["col-start-2", "col-span-6"])}>
           <div className={tw(["flex", "justify-center", "items-center"])}>
             {user ? (
               <div className={tw(["mr-5"])}>
@@ -118,7 +113,6 @@ const Photo: React.FC = () => {
             </p>
           ) : null}
         </div>
-        <AdvanceButton Icon={FaArrowRight} linkIndex={nextIndex} label="next" />
       </div>
       <div
         className={tw([
@@ -131,8 +125,15 @@ const Photo: React.FC = () => {
           "mb-3",
           "w-full",
           "relative",
+          "flex",
+          "justify-center",
         ])}
       >
+        <AdvanceButton
+          Icon={FaArrowLeft}
+          linkIndex={prevIndex}
+          label="previous"
+        />
         {/* TODO: figure out how to use Image for optimization from Supabase */}
         {imgSrc && imageSrcMatches ? (
           <img
@@ -147,6 +148,7 @@ const Photo: React.FC = () => {
             <CgSpinner className={tw(["animate-spin"])} size="6em" />
           </div>
         )}
+        <AdvanceButton Icon={FaArrowRight} linkIndex={nextIndex} label="next" />
       </div>
       <InternalLinkKeyword href="/photos" className={tw(["mt-5"])}>
         Back to photos

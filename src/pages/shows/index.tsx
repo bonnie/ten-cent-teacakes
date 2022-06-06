@@ -32,7 +32,7 @@ const Shows: React.FC = () => {
         showTitle={false}
       />
       <div className={tw(["mt-10"])}>
-        <ShowsGroup title="Past Shows" shows={pastShows} />
+        <ShowsGroup title="Recent Shows" shows={pastShows.slice(0, 10)} />
       </div>
       {user ? <EditVenues /> : null}
     </>
