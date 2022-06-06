@@ -58,4 +58,17 @@ describe("Navigation", () => {
     // The new page should contain an h1 with "photos"
     cy.findByRole("heading", { name: "Photos" }).should("exist");
   });
+  it("should navigate to the press page", () => {
+    // Start from the index page
+    cy.visit("/");
+
+    // Find an img with alt text containing "press" and click it
+    cy.findByAltText(/press/).click();
+
+    // The new url should include "/press"
+    cy.url().should("include", "/press");
+
+    // The new page should contain an h1 with "press"
+    cy.findByRole("heading", { name: "Press" }).should("exist");
+  });
 });
