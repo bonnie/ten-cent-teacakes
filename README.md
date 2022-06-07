@@ -74,7 +74,7 @@ For Vercel / Cypress, the following variables are needed as GitHub secrets (repo
 1. `AUTH0_USERNAME` (some email that exists in Auth0 instance)
 1. `AUTH0_PASSWORD` (password for the above email)
 1. `AUTH0_DOMAIN` (example: `xyz.us.auth0.com`)
-1. `AUTH0_CLIENTID` (from Auth0 Application settings)
+1. `AUTH0_CLIENT_ID` (from Auth0 Application settings)
 1. `AUTH0_CLIENT_SECRET` (from Auth0 Application settings)
 1. `AUTH0_AUDIENCE` (should match the one in tenant -> settings -> API Authorization Settings)
 1. `AUTH0_SCOPE` (value should probably be `"openid profile email"`)
