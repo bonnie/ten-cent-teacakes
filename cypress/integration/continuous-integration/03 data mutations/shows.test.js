@@ -33,6 +33,9 @@ it("can add, edit and delete show with minimal data", () => {
   cy.contains(/you have added a show/i);
   cy.dismissToast();
 
+  // refresh the page to update ISR cache
+  cy.reload();
+
   // expect show with today's date
   const today = dayjs().format("MMM D, YYYY");
   cy.findByText(today).should("exist");
@@ -54,6 +57,9 @@ it("can add, edit and delete show with minimal data", () => {
   // expect a success message
   cy.contains(/you have updated the show/i);
   cy.dismissToast();
+
+  // refresh the page to update ISR cache
+  cy.reload();
 
   // old show date should not exist
   cy.contains(today).should("not.exist");
@@ -78,6 +84,9 @@ it("can add, edit and delete show with minimal data", () => {
   // expect a success message
   cy.findByText(/you have deleted the show/i).should("exist");
   cy.dismissToast();
+
+  // refresh the page to update ISR cache
+  cy.reload();
 
   // make sure show date is no longer represented
   cy.findByText(nextYear).should("not.exist");

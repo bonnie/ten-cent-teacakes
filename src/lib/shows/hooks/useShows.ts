@@ -3,7 +3,7 @@ import {
   UseMutateFunction,
   useMutation,
   useQuery,
-  useQueryClient,
+  // useQueryClient,
 } from "react-query";
 
 import { useToast } from "@/components/toasts/useToast";
@@ -48,16 +48,16 @@ export const useShows = (): UseShowsReturnValue => {
     },
   });
 
-  const queryClient = useQueryClient();
-  const invalidateShows = () =>
-    queryClient.invalidateQueries([queryKeys.shows]);
-  const invalidateVenues = () =>
-    queryClient.invalidateQueries([queryKeys.venues]);
+  // const queryClient = useQueryClient();
+  // const invalidateShows = () =>
+  //   queryClient.invalidateQueries([queryKeys.shows]);
+  // const invalidateVenues = () =>
+  //   queryClient.invalidateQueries([queryKeys.venues]);
 
   const { mutate: addShowMutate } = useMutation(queryKeys.shows, addShow, {
     onSuccess: () => {
-      invalidateShows();
-      invalidateVenues();
+      // invalidateShows();
+      // invalidateVenues();
       showToast("success", "You have added a show");
     },
     onError: (error) => handleMutateError(error, "add show"),
@@ -68,8 +68,8 @@ export const useShows = (): UseShowsReturnValue => {
     deleteShow,
     {
       onSuccess: () => {
-        invalidateShows();
-        invalidateVenues();
+        // invalidateShows();
+        // invalidateVenues();
         showToast("success", `You have deleted the show`);
       },
       onError: (error) => handleMutateError(error, "delete show"),
@@ -78,8 +78,8 @@ export const useShows = (): UseShowsReturnValue => {
 
   const { mutate: updateShow } = useMutation(queryKeys.shows, patchShow, {
     onSuccess: () => {
-      invalidateShows();
-      invalidateVenues();
+      // invalidateShows();
+      // invalidateVenues();
       showToast("success", "You have updated the show");
     },
     onError: (error) => handleMutateError(error, "update show"),

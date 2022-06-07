@@ -31,7 +31,7 @@ export const addShow = async (data: ShowPutData): Promise<ShowResponse> => {
   const { data: show } = await axiosInstance.put<
     { data: ShowPutData },
     AxiosResponse<Show>
-  >(`/api/${routes.shows}`, { data });
+  >(`/api/${routes.shows}?secret=${process.env.REVALIDATION_SECRET}`, { data });
   return { show };
 };
 
@@ -42,9 +42,13 @@ export const patchShow = async ({
   const { data: show } = await axiosInstance.patch<
     { data: ShowPatchData },
     AxiosResponse<Show>
-  >(`/api/${routes.shows}/${id}`, { data });
+  >(`/api/${routes.shows}/${id}?secret=${process.env.REVALIDATION_SECRET}`, {
+    data,
+  });
   return { show };
 };
 
 export const deleteShow = async (id: number): Promise<void> =>
-  axiosInstance.delete(`/api/${routes.shows}/${id}`);
+  axiosInstance.delete(
+    `/api/${routes.shows}?secret=${process.env.REVALIDATION_SECRET}/${id}`,
+  );
