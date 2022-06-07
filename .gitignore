@@ -4,6 +4,7 @@ node_modules
 .env.local
 .env.migrate
 .env.production
+.env.test.local
 
 .next
 .DS_Store

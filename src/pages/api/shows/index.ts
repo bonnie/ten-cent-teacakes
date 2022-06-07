@@ -8,8 +8,11 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) =>
   res.json(await getShows()),
 );
 
-handler.put(async (req: NextApiRequest, res: NextApiResponse) =>
-  res.status(200).json(await addShow(req.body.data)),
-);
+handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
+  const newShow = await addShow(req.body.data);
+  res.unstable_revalidate("/shows");
+  res.unstable_revalidate("/");
+  return res.status(200).json(newShow);
+});
 
 export default handler;

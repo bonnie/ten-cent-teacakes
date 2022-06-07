@@ -19,6 +19,7 @@ Cypress.Commands.add("loginByAuth0Api", (username, password) => {
   const client_secret = Cypress.env("auth0_client_secret");
   const audience = Cypress.env("auth0_audience");
   const scope = Cypress.env("auth0_scope");
+  console.log(Cypress.env("auth0_scope"));
 
   cy.request({
     method: "POST",

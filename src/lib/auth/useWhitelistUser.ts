@@ -51,15 +51,12 @@ export const useWhitelistUser = (): WhitelistUserReturn => {
         if (!cypressUser) {
           // don't bother logging during testing!
           if (email && !whitelisted) {
-            Sentry.captureMessage(
-              `unauthorized login: ${email}`,
-              Sentry.Severity.Warning,
-            );
+            Sentry.captureMessage(`unauthorized login: ${email}`, "warning");
             showToast("warning", `${email} not authorized`);
             Sentry.configureScope((scope) => scope.setUser(null));
           } else if (email) {
             Sentry.setUser({ email });
-            Sentry.captureMessage(`Login: ${email}`, Sentry.Severity.Info);
+            Sentry.captureMessage(`Login: ${email}`, "info");
           } else {
             Sentry.configureScope((scope) => scope.setUser(null));
           }

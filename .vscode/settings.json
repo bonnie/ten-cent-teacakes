@@ -30,5 +30,8 @@
   "eslint.alwaysShowStatus": true,
   "security.workspace.trust.untrustedFiles": "open",
   "typescript.tsdk": "node_modules/typescript/lib",
-  "prettier.trailingComma": "all"
+  "prettier.trailingComma": "all",
+  "files.associations": {
+    ".env*": "env"
+  }
 }

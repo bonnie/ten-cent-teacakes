@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import {
   UseMutateFunction,
@@ -17,36 +16,14 @@ import {
   patchShow,
   ShowResponse,
 } from "@/lib/shows";
-import { ShowPatchArgs, ShowPutData, ShowWithVenue } from "@/lib/shows/types";
+import {
+  ShowPatchArgs,
+  ShowPutData,
+  ShowWithVenue,
+  SortedShows,
+} from "@/lib/shows/types";
 
-type SortedShows = {
-  upcomingShows: Array<ShowWithVenue>;
-  pastShows: Array<ShowWithVenue>;
-};
-
-const sortShows = (data: Array<ShowWithVenue>): SortedShows => {
-  const sortedShows: SortedShows = {
-    upcomingShows: [],
-    pastShows: [],
-  };
-
-  // first sort into two buckets
-  data.forEach((show) => {
-    if (dayjs(show.performAt) < dayjs()) {
-      sortedShows.pastShows.push(show);
-    } else {
-      sortedShows.upcomingShows.push(show);
-    }
-  });
-
-  // then sort within the buckets
-  sortedShows.pastShows.sort((a, b) => (b.performAt < a.performAt ? -1 : 1));
-  sortedShows.upcomingShows.sort((a, b) =>
-    a.performAt < b.performAt ? -1 : 1,
-  );
-
-  return sortedShows;
-};
+import { sortShows } from "../utils";
 
 type UseShowsReturnValue = {
   pastShows: Array<ShowWithVenue>;

@@ -22,3 +22,8 @@ export type ShowPatchArgs = {
   id: number;
   data: ShowPatchData;
 };
+
+export type SortedShows = {
+  upcomingShows: Array<ShowWithVenue>;
+  pastShows: Array<ShowWithVenue>;
+};

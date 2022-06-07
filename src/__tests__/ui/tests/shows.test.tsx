@@ -1,10 +1,8 @@
 // import { test } from "@jest/globals";
 import dayjs from "dayjs";
 import { axe, toHaveNoViolations } from "jest-axe";
-import { rest } from "msw";
 
-import { mockOnlyPastShows, yesterday } from "@/__mocks__/mockData";
-import { server } from "@/__mocks__/msw/server";
+import { mockOnlyPastShows, mockShows, yesterday } from "@/__mocks__/mockData";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import Shows from "@/pages/shows";
 import { render, screen } from "@/test-utils";
@@ -14,16 +12,13 @@ expect.extend(toHaveNoViolations);
 // for typescript
 const mockedUseWhitelistUser = useWhitelistUser as jest.Mock;
 
-describe("not logged in", () => {
-  test("hydrates on load", async () => {
-    render(<Shows />, { renderOptions: { hydrate: true } });
-    // find all the show dates; from msw, there are three expected
-    const showDates = await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
-    expect(showDates).toHaveLength(3);
-  });
+// for JSON props
+const showsJSON = JSON.stringify(mockShows);
+const pastShowsJSON = JSON.stringify(mockOnlyPastShows);
 
+describe("not logged in", () => {
   test("should not show mutate buttons", async () => {
-    render(<Shows />, { renderOptions: { hydrate: true } });
+    render(<Shows showsJSON={showsJSON} />);
     await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
     const mutateButtons = screen.queryAllByRole("button", {
       name: /add|edit|delete/i,
@@ -32,7 +27,7 @@ describe("not logged in", () => {
   });
 
   test("link to email list does not display when there are future shows", async () => {
-    render(<Shows />, { renderOptions: { hydrate: true } });
+    render(<Shows showsJSON={showsJSON} />);
     await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
 
     const noFutureShowText = screen.queryByText(/No upcoming shows just now/i);
@@ -43,7 +38,7 @@ describe("not logged in", () => {
   });
 
   test("shows are correctly sorted", async () => {
-    render(<Shows />, { renderOptions: { hydrate: true } });
+    render(<Shows showsJSON={showsJSON} />);
     // find all the show dates; from msw, there are three expected
     const showDates = await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
     expect(showDates.map((date) => date.textContent)).toEqual([
@@ -54,7 +49,7 @@ describe("not logged in", () => {
   });
 
   test("links to shows are correct", async () => {
-    render(<Shows />, { renderOptions: { hydrate: true } });
+    render(<Shows showsJSON={showsJSON} />);
     await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
     const showLinks = screen.queryAllByRole("link");
     expect(showLinks.map((link) => link.getAttribute("href"))).toEqual([
@@ -64,7 +59,7 @@ describe("not logged in", () => {
   });
 
   test("should have no a11y errors caught by jest-axe", async () => {
-    const { container } = render(<Shows />, {
+    const { container } = render(<Shows showsJSON={showsJSON} />, {
       renderOptions: { hydrate: true },
     });
 
@@ -76,15 +71,8 @@ describe("not logged in", () => {
 });
 
 describe("no future shows", () => {
-  beforeEach(() => {
-    server.resetHandlers(
-      rest.get("http://localhost:3000/api/shows", (req, res, ctx) =>
-        res(ctx.json(mockOnlyPastShows)),
-      ),
-    );
-  });
   test("no shows message and link to email list displays", async () => {
-    render(<Shows />, { renderOptions: { hydrate: true } });
+    render(<Shows showsJSON={pastShowsJSON} />);
     await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
 
     const noFutureShowText = screen.queryByText(/No upcoming shows just now/i);
@@ -95,7 +83,7 @@ describe("no future shows", () => {
   });
 
   test("past shows still show up", async () => {
-    render(<Shows />, { renderOptions: { hydrate: true } });
+    render(<Shows showsJSON={pastShowsJSON} />);
     const showDates = await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
 
     expect(showDates.map((date) => date.textContent)).toEqual([
@@ -118,9 +106,7 @@ describe("logged in", () => {
     }));
   });
   test("should have no a11y errors caught by jest-axe", async () => {
-    const { container } = render(<Shows />, {
-      renderOptions: { hydrate: true },
-    });
+    const { container } = render(<Shows showsJSON={showsJSON} />);
 
     // to avoid "not wrapped in act"
     await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
@@ -129,7 +115,7 @@ describe("logged in", () => {
     expect(results).toHaveNoViolations();
   });
   test("show and venue add buttons", async () => {
-    render(<Shows />, { renderOptions: { hydrate: true } });
+    render(<Shows showsJSON={showsJSON} />);
     const addButtons = screen.getAllByRole("button", { name: /add/i });
     expect(addButtons).toHaveLength(2);
     addButtons.forEach((button) => expect(button).toBeVisible());
@@ -138,7 +124,7 @@ describe("logged in", () => {
     await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
   });
   test("shows have edit button and delete buttons", async () => {
-    render(<Shows />, { renderOptions: { hydrate: true } });
+    render(<Shows showsJSON={showsJSON} />);
     await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
 
     const editButtons = await screen.findAllByRole("button", {
@@ -153,7 +139,7 @@ describe("logged in", () => {
     expect(deleteButtons).toHaveLength(3);
   });
   test("Venues show up, and have correct buttons", async () => {
-    render(<Shows />, { renderOptions: { hydrate: true } });
+    render(<Shows showsJSON={showsJSON} />);
     const venuesTitle = screen.getByRole("heading", {
       name: /venues/i,
     });

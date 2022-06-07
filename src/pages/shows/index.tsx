@@ -4,16 +4,27 @@ import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
+import { getShows } from "@/lib/prisma/queries/shows";
 import { AddShowModal } from "@/lib/shows/components/EditShowModal";
 import { ShowsGroup } from "@/lib/shows/components/ShowsGroup";
 import { EditVenues } from "@/lib/shows/components/venues/EditVenues";
-import { useShows } from "@/lib/shows/hooks/useShows";
+import { sortShows } from "@/lib/shows/utils";
 
-// don't pre-fetch shows here; won't help with SEO and makes page load slow
+export async function getStaticProps() {
+  const shows = await getShows();
 
-const Shows: React.FC = () => {
-  const { pastShows, upcomingShows } = useShows();
+  return {
+    props: {
+      showsJSON: JSON.stringify(shows),
+    },
+  };
+}
+
+const Shows: React.FC<{ showsJSON: string }> = ({ showsJSON }) => {
   const { user } = useWhitelistUser();
+  const shows = JSON.parse(showsJSON);
+
+  const { pastShows, upcomingShows } = sortShows(shows);
 
   return (
     <>
