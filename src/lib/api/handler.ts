@@ -38,14 +38,24 @@ export const createHandler = () =>
 export const addStandardDelete = ({
   handler,
   deleteFunc,
+  revalidateRoutes = [],
 }: {
   handler: Handler;
   deleteFunc: (id: number) => Promise<void>;
+  revalidateRoutes?: Array<string>;
 }) => {
   handler.delete(async (req: NextApiRequest, res: NextApiResponse) => {
+    if (
+      revalidateRoutes.length > 0 &&
+      req.query.secret !== process.env.REVALIDATION_SECRET
+    ) {
+      return res.status(401).json({ message: "Invalid revalidation token" });
+    }
     const id = getIdNumFromReq(req);
     await deleteFunc(id);
-    res.status(204).end();
+
+    revalidateRoutes.forEach((route) => res.unstable_revalidate(route));
+    return res.status(204).end();
   });
 };
 

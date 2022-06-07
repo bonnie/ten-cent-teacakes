@@ -114,6 +114,9 @@ it("can add and edit show with maximal data", () => {
   cy.contains(/you have added a show/i);
   cy.dismissToast();
 
+  // refresh the page to update ISR cache
+  cy.reload();
+
   // expect show link to be entered URL
   // easier with Cypress syntax than Cypress Testing Library
   cy.get('a[href="http://rickroll.com"]').should("have.length", 1);
@@ -137,6 +140,9 @@ it("can add and edit show with maximal data", () => {
   // expect a success message
   cy.findByText(/you have updated the show/i).should("exist");
   cy.dismissToast();
+
+  // refresh the page to update ISR cache
+  cy.reload();
 
   // old URL link and edit button should not exist
   cy.get('a[href="http://rickroll.com"]').should("not.exist");

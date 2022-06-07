@@ -50,5 +50,5 @@ export const patchShow = async ({
 
 export const deleteShow = async (id: number): Promise<void> =>
   axiosInstance.delete(
-    `/api/${routes.shows}?secret=${process.env.REVALIDATION_SECRET}/${id}`,
+    `/api/${routes.shows}/${id}?secret=${process.env.REVALIDATION_SECRET}`,
   );
