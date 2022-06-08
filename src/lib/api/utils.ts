@@ -1,6 +1,6 @@
 import * as Sentry from "@sentry/nextjs";
 import dayjs from "dayjs";
-import type { NextApiRequest } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export const processApiError = (error: unknown) => {
   Sentry.captureException(error);
@@ -55,4 +55,14 @@ export const getIdNumFromReq = (req: NextApiRequest) => {
 export const getThumbName = (filename: string): string => {
   const { fileBasename, fileExtension } = getFilenameParts(filename);
   return `${fileBasename}-thumb.${fileExtension}`;
+};
+
+export const checkValidationSecret = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  // eslint-disable-next-line consistent-return
+) => {
+  if (req.query.secret !== process.env.REVALIDATION_SECRET) {
+    return res.status(401).json({ message: "Invalid revalidation token" });
+  }
 };

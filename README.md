@@ -80,6 +80,7 @@ For Vercel / Cypress, the following variables are needed as GitHub secrets (repo
 1. `AUTH0_SCOPE` (value should probably be `"openid profile email"`)
 1. `SUPABASE_URL` and `SUPABASE_KEY` (from `.env.local`)
 1. `REVALIDATION_SECRET` (**Must match** value from `.env.local`)
+1. `APP_ENV` (set to "test" -- for ISR revalidation endpoint)
 
 **Note**: Cypress is run as a Github action instead of through CircleCI so that it can depend on branch deploy success, and use the branch deploy url.
 

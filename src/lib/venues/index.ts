@@ -22,7 +22,9 @@ export const addVenue = async (data: VenuePutData): Promise<VenueResponse> => {
   const { data: venue } = await axiosInstance.put<
     { data: VenuePutData },
     AxiosResponse<VenueWithShowCount>
-  >(`/api/${routes.venues}`, { data });
+  >(`/api/${routes.venues}?secret=${process.env.REVALIDATION_SECRET}`, {
+    data,
+  });
   return { venue };
 };
 
@@ -33,9 +35,13 @@ export const patchVenue = async ({
   const { data: venue } = await axiosInstance.patch<
     { data: VenuePutData },
     AxiosResponse<Venue>
-  >(`/api/${routes.venues}/${id}`, { data });
+  >(`/api/${routes.venues}/${id}?secret=${process.env.REVALIDATION_SECRET}`, {
+    data,
+  });
   return { venue };
 };
 
 export const deleteVenue = async (id: number): Promise<void> =>
-  axiosInstance.delete(`/api/${routes.venues}/${id}`);
+  axiosInstance.delete(
+    `/api/${routes.venues}/${id}?secret=${process.env.REVALIDATION_SECRET}`,
+  );

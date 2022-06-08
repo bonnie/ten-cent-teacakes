@@ -33,10 +33,7 @@ it("can add, edit and delete show with minimal data", () => {
   cy.contains(/you have added a show/i);
   cy.dismissToast();
 
-  // refresh the page to update ISR cache
-  cy.reload();
-
-  // expect show with today's date
+  cy.reloadForISR(); // expect show with today's date
   const today = dayjs().format("MMM D, YYYY");
   cy.findByText(today).should("exist");
 
@@ -58,10 +55,7 @@ it("can add, edit and delete show with minimal data", () => {
   cy.contains(/you have updated the show/i);
   cy.dismissToast();
 
-  // refresh the page to update ISR cache
-  cy.reload();
-
-  // old show date should not exist
+  cy.reloadForISR(); // old show date should not exist
   cy.contains(today).should("not.exist");
 
   // check for the delete button for new show date
@@ -85,10 +79,7 @@ it("can add, edit and delete show with minimal data", () => {
   cy.findByText(/you have deleted the show/i).should("exist");
   cy.dismissToast();
 
-  // refresh the page to update ISR cache
-  cy.reload();
-
-  // make sure show date is no longer represented
+  cy.reloadForISR(); // make sure show date is no longer represented
   cy.findByText(nextYear).should("not.exist");
 });
 
@@ -114,10 +105,7 @@ it("can add and edit show with maximal data", () => {
   cy.contains(/you have added a show/i);
   cy.dismissToast();
 
-  // refresh the page to update ISR cache
-  cy.reload();
-
-  // expect show link to be entered URL
+  cy.reloadForISR(); // expect show link to be entered URL
   // easier with Cypress syntax than Cypress Testing Library
   cy.get('a[href="http://rickroll.com"]').should("have.length", 1);
 
@@ -141,10 +129,7 @@ it("can add and edit show with maximal data", () => {
   cy.findByText(/you have updated the show/i).should("exist");
   cy.dismissToast();
 
-  // refresh the page to update ISR cache
-  cy.reload();
-
-  // old URL link and edit button should not exist
+  cy.reloadForISR(); // old URL link and edit button should not exist
   cy.get('a[href="http://rickroll.com"]').should("not.exist");
   cy.findByRole("button", {
     name: /edit show at venue 2 on Feb 29, 2020, 10:00/i,

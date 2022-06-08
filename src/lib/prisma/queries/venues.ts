@@ -23,7 +23,7 @@ export const getVenues = async (): Promise<Array<VenueWithShowCount>> => {
   }));
 };
 
-export const getVenueById = (id: number) =>
+export const getVenueById = async (id: number) =>
   prisma.venue.findUnique({ where: { id } });
 
 export const addVenue = async (data: VenuePutData) => {

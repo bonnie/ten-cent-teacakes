@@ -1,8 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { addStandardDelete, createHandler } from "@/lib/api/handler";
-import { getIdNumFromReq } from "@/lib/api/utils";
+import { checkValidationSecret, getIdNumFromReq } from "@/lib/api/utils";
 import { deleteShow, patchShow } from "@/lib/prisma/queries/shows";
+
+const revalidateRoutes = ["/shows"];
 
 const handler = createHandler();
 addStandardDelete({
@@ -12,13 +14,10 @@ addStandardDelete({
 });
 
 handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.query.secret !== process.env.REVALIDATION_SECRET) {
-    return res.status(401).json({ message: "Invalid revalidation token" });
-  }
+  checkValidationSecret(req, res);
   const id = getIdNumFromReq(req);
   const patchedShow = await patchShow({ data: req.body.data, id });
-  res.unstable_revalidate("/shows");
-
+  Promise.all(revalidateRoutes.map((route) => res.unstable_revalidate(route)));
   return res.status(200).json(patchedShow);
 });
 

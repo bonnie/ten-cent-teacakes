@@ -68,7 +68,7 @@ export const EditVenueModal: React.FC<{ venue: Venue }> = ({ venue }) => {
 
   const formikConfig = {
     initialValues,
-    validate: venueFormValidation,
+    // validate: venueFormValidation,
     onSubmit,
   };
 

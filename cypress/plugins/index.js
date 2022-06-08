@@ -112,6 +112,8 @@ export default (on, config) => {
   config.env.auth0_callback_url = process.env.AUTH0_CALLBACK_URL;
   config.env.cypress_localstorage_key = process.env.CYPRESS_LOCALSTORAGE_KEY;
   config.env.cypress_baseUrl = process.env.CYPRESS_baseUrl;
+  config.env.cypress_baseUrl = process.env.CYPRESS_baseUrl;
+  config.env.revalidation_secret = process.env.REVALIDATION_SECRET;
 
   return config;
 };

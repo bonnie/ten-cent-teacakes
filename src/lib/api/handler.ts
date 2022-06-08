@@ -2,7 +2,11 @@ import * as Sentry from "@sentry/nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import nextConnect, { NextConnect } from "next-connect";
 
-import { getIdNumFromReq, processApiError } from "@/lib/api/utils";
+import {
+  checkValidationSecret,
+  getIdNumFromReq,
+  processApiError,
+} from "@/lib/api/utils";
 
 // import { DbItem, ItemPatchArgs } from "../prisma/types";
 
@@ -45,16 +49,15 @@ export const addStandardDelete = ({
   revalidateRoutes?: Array<string>;
 }) => {
   handler.delete(async (req: NextApiRequest, res: NextApiResponse) => {
-    if (
-      revalidateRoutes.length > 0 &&
-      req.query.secret !== process.env.REVALIDATION_SECRET
-    ) {
-      return res.status(401).json({ message: "Invalid revalidation token" });
+    if (revalidateRoutes.length > 0) {
+      checkValidationSecret(req, res);
     }
     const id = getIdNumFromReq(req);
     await deleteFunc(id);
 
-    revalidateRoutes.forEach((route) => res.unstable_revalidate(route));
+    Promise.all(
+      revalidateRoutes.map((route) => res.unstable_revalidate(route)),
+    );
     return res.status(204).end();
   });
 };
