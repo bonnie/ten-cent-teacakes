@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { addStandardDelete, createHandler } from "@/lib/api/handler";
-import apiUtils from "@/lib/api/utils";
+import { checkValidationSecret, getIdNumFromReq } from "@/lib/api/utils";
 import {
   deleteVenue,
   getVenueById,
@@ -18,14 +18,14 @@ addStandardDelete({
 });
 
 handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
-  const id = apiUtils.getIdNumFromReq(req);
+  const id = getIdNumFromReq(req);
   res.status(200).json(await getVenueById(id));
 });
 
 handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
-  apiUtils.checkValidationSecret(req, res);
+  checkValidationSecret(req, res);
 
-  const id = apiUtils.getIdNumFromReq(req);
+  const id = getIdNumFromReq(req);
   const patchedVenue = await patchVenue({ data: req.body.data, id });
 
   Promise.all(revalidateRoutes.map((route) => res.unstable_revalidate(route)));

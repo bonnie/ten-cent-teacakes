@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { createHandler } from "@/lib/api/handler";
-import apiUtils from "@/lib/api/utils";
+import { checkValidationSecret } from "@/lib/api/utils";
 import { addShow, getShows } from "@/lib/prisma/queries/shows";
 
 const revalidateRoutes = ["/shows"];
@@ -12,7 +12,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) =>
 );
 
 handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
-  apiUtils.checkValidationSecret(req, res);
+  checkValidationSecret(req, res);
 
   const newShow = await addShow(req.body.data);
   Promise.all(revalidateRoutes.map((route) => res.unstable_revalidate(route)));

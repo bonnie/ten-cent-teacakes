@@ -1,10 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { addStandardDelete, createHandler } from "@/lib/api/handler";
-import apiUtils from "@/lib/api/utils";
+import { checkValidationSecret, getIdNumFromReq } from "@/lib/api/utils";
 import { deleteShow, patchShow } from "@/lib/prisma/queries/shows";
 
-const { checkValidationSecret, getIdNumFromReq } = apiUtils;
 const revalidateRoutes = ["/shows"];
 
 const handler = createHandler();

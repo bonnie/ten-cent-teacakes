@@ -5,7 +5,7 @@ import Link from "next/link";
 import React from "react";
 import { tw } from "twind";
 
-import apiUtils from "@/lib/api/utils";
+import { getThumbName } from "@/lib/api/utils";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { getPhotoDate } from "@/lib/photos";
 import { PhotoWithShowAndVenue } from "@/lib/photos/types";
@@ -14,8 +14,6 @@ import { useSupabasePhoto } from "@/lib/supabase/hooks/useSupabasePhoto";
 
 import { DeletePhotoModal } from "./DeletePhotoModal";
 import { EditPhotoModal } from "./EditPhotoModal";
-
-const { getThumbName } = apiUtils;
 
 export const PhotoThumbnail: React.FC<{
   photo: PhotoWithShowAndVenue;

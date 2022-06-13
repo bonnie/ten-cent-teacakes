@@ -2,7 +2,11 @@ import * as Sentry from "@sentry/nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import nextConnect, { NextConnect } from "next-connect";
 
-import apiUtils from "@/lib/api/utils";
+import {
+  checkValidationSecret,
+  getIdNumFromReq,
+  processApiError,
+} from "@/lib/api/utils";
 
 // import { DbItem, ItemPatchArgs } from "../prisma/types";
 
@@ -12,7 +16,7 @@ export const createHandler = () =>
   nextConnect({
     onError(error, req: NextApiRequest, res: NextApiResponse) {
       Sentry.captureException(error);
-      const { status, message } = apiUtils.processApiError(error);
+      const { status, message } = processApiError(error);
       res.status(status).json({ message });
     },
     onNoMatch(req: NextApiRequest, res: NextApiResponse) {
@@ -46,9 +50,9 @@ export const addStandardDelete = ({
 }) => {
   handler.delete(async (req: NextApiRequest, res: NextApiResponse) => {
     if (revalidateRoutes.length > 0) {
-      apiUtils.checkValidationSecret(req, res);
+      checkValidationSecret(req, res);
     }
-    const id = apiUtils.getIdNumFromReq(req);
+    const id = getIdNumFromReq(req);
     await deleteFunc(id);
 
     Promise.all(

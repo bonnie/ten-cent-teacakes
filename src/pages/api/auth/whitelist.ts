@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import apiUtils from "@/lib/api/utils";
+import { processApiError } from "@/lib/api/utils";
 import { WhitelistResponse } from "@/lib/auth/types";
 
 export default async function handle(
@@ -21,7 +21,7 @@ export default async function handle(
         res.status(405).end(`Method ${method} Not Allowed`);
     }
   } catch (error) {
-    const { status, message } = apiUtils.processApiError(error);
+    const { status, message } = processApiError(error);
     res.status(status).json({ message });
   }
 }
