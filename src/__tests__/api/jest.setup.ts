@@ -12,6 +12,20 @@ import { describe, expect, test } from "@jest/globals";
 
 import { resetDB } from './prisma/reset-db'
 
+// mock revalidation secret tests and unstable_revalidate
+// can't mock from test files: https://github.com/facebook/jest/issues/335
+// (mocked module must be called directly from file imported by test file)
+jest.mock("@/lib/api/utils", () =>
+  jest.requireActual("@/__mocks__/modules/api/utils")
+);
+
+// don't ever actually run revalidation_secret
+// jest.mock();
+
+jest.mock("", () => 
+   jest.requireActual("@/__mocks__/modules/next/Link")
+);
+
 beforeAll(async () => {
   // seed db
   await resetDB();

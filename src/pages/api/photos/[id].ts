@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { addStandardDelete, createHandler } from "@/lib/api/handler";
-import { getIdNumFromReq } from "@/lib/api/utils";
+import apiUtils from "@/lib/api/utils";
 import {
   deletePhoto,
   getPhotoById,
@@ -12,12 +12,12 @@ const handler = createHandler();
 addStandardDelete({ handler, deleteFunc: deletePhoto });
 
 handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
-  const id = getIdNumFromReq(req);
+  const id = apiUtils.getIdNumFromReq(req);
   res.status(200).json(await getPhotoById(id));
 });
 
 handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
-  const id = getIdNumFromReq(req);
+  const id = apiUtils.getIdNumFromReq(req);
   res.status(200).json(await patchPhoto({ data: req.body.data, id }));
 });
 

@@ -2,7 +2,7 @@ import * as Sentry from "@sentry/nextjs";
 import dayjs from "dayjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-export const processApiError = (error: unknown) => {
+const processApiError = (error: unknown) => {
   Sentry.captureException(error);
 
   let status: number;
@@ -34,7 +34,7 @@ const getFilenameParts = (
   return { fileBasename: filename, fileExtension: "" };
 };
 
-export const uniquifyFilename = (
+const uniquifyFilename = (
   filename: string,
 ): { uniqueFileName: string; uniqueThumbnailFileName: string } => {
   const { fileBasename, fileExtension } = getFilenameParts(filename);
@@ -47,17 +47,17 @@ export const uniquifyFilename = (
   };
 };
 
-export const getIdNumFromReq = (req: NextApiRequest) => {
+const getIdNumFromReq = (req: NextApiRequest) => {
   const { id: idString } = req.query;
   return Number(idString);
 };
 
-export const getThumbName = (filename: string): string => {
+const getThumbName = (filename: string): string => {
   const { fileBasename, fileExtension } = getFilenameParts(filename);
   return `${fileBasename}-thumb.${fileExtension}`;
 };
 
-export const checkValidationSecret = (
+const checkValidationSecret = (
   req: NextApiRequest,
   res: NextApiResponse,
   // eslint-disable-next-line consistent-return
@@ -65,4 +65,13 @@ export const checkValidationSecret = (
   if (req.query.secret !== process.env.REVALIDATION_SECRET) {
     return res.status(401).json({ message: "Invalid revalidation token" });
   }
+};
+
+// for mocks
+export default {
+  processApiError,
+  uniquifyFilename,
+  getIdNumFromReq,
+  getThumbName,
+  checkValidationSecret,
 };

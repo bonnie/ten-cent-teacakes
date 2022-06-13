@@ -1,6 +1,7 @@
 import { Instrument, Venue } from "@prisma/client";
 
 import dayjs from "dayjs";
+import type {} from "next/jest";
 import { testApiHandler } from "next-test-api-route-handler";
 
 import { InstrumentPutData } from "@/lib/instruments/types";
@@ -151,6 +152,9 @@ test.each(testData)(
 
     await testApiHandler({
       handler,
+      paramsPatcher: (params) => {
+        params.queryStringURLParams = { secret: process.env.REVALIDATE_SECRET };
+      },
       test: async ({ fetch }) => {
         const res = await fetch({
           method: "PUT",
@@ -167,6 +171,9 @@ test.each(testData)(
     // TODO: different test for APIs that have GET /[id] ?
     await testApiHandler({
       handler,
+      paramsPatcher: (params) => {
+        params.queryStringURLParams = { secret: process.env.REVALIDATE_SECRET };
+      },
       test: async ({ fetch }) => {
         const res = await fetch({
           method: "GET",

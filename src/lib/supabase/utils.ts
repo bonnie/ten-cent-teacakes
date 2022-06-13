@@ -2,7 +2,7 @@ import * as Sentry from "@sentry/nextjs";
 import imageCompression from "browser-image-compression";
 import React from "react";
 
-import { uniquifyFilename } from "@/lib/api/utils";
+import apiUtils from "@/lib/api/utils";
 import { supabase } from "@/lib/supabase";
 import { UPLOADS_BUCKET } from "@/lib/supabase/constants";
 
@@ -53,9 +53,8 @@ export async function uploadPhotoAndThumbnailToSupabase({
     const photoFile = event.currentTarget.files[0];
     if (photoFile) {
       setUploading(true);
-      const { uniqueFileName, uniqueThumbnailFileName } = uniquifyFilename(
-        photoFile.name,
-      );
+      const { uniqueFileName, uniqueThumbnailFileName } =
+        apiUtils.uniquifyFilename(photoFile.name);
 
       // thumbnail
       if (maxThumbnailDimension) {
