@@ -5,9 +5,7 @@ it("can add, edit and delete instrument", () => {
 
   /// ////////////////////////////////////////////////
   // 1. expect save not to work if there's no instrument name
-  cy.findByRole("button", { name: /add instrument/i })
-    .as("addInstrumentButton")
-    .click();
+  cy.findByRole("button", { name: /add instrument/i }).click();
   cy.findByRole("button", { name: /save/i }).click();
   cy.contains(/instrument name is required/i);
   cy.dismissToast();
@@ -31,7 +29,7 @@ it("can add, edit and delete instrument", () => {
 
   /// ////////////////////////////////////////////////
   // 3. try to add an instrument with the same name
-  cy.get("@addInstrumentButton").click();
+  cy.findByRole("button", { name: /add instrument/i }).click();
   cy.findByLabelText(/Instrument name/i).type("xylophone");
 
   // focus away to trigger formik error
@@ -54,7 +52,7 @@ it("can add, edit and delete instrument", () => {
 
   /// ////////////////////////////////////////////////
   // 4. edit the instrument
-  cy.get("@editXylophoneButton").click();
+  cy.findByRole("button", { name: /edit instrument xylophone/i }).click();
   cy.findByLabelText(/Instrument name/i)
     .clear()
     .type("sousaphone");

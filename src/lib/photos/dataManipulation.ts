@@ -1,21 +1,11 @@
-import dayjs from "dayjs";
-
 import { getPhotos } from "../prisma/queries/photos";
-import { getPhotoDate } from ".";
+import { sortPhotos } from ".";
 import { NextAndPrevObject } from "./types";
 
 export const getPhotosSortedByDate = async () => {
   const photos = await getPhotos();
 
-  return photos.sort((a, b) => {
-    const photoDateA = dayjs(getPhotoDate(a)).unix();
-    const photoDateB = dayjs(getPhotoDate(b)).unix();
-    if (photoDateA === photoDateB) {
-      // Filename is only important when dates are the same
-      return a.imagePath.localeCompare(b.imagePath);
-    }
-    return photoDateA < photoDateB ? 1 : -1;
-  });
+  return sortPhotos(photos);
 };
 
 export const getNextAndPrevIndexes = async () => {
