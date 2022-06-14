@@ -45,8 +45,7 @@ it("can add and edit musician", () => {
   cy.contains(/you have added a musician/i);
   cy.dismissToast();
 
-  // reload to refresh ISR from cache
-  cy.reload();
+  cy.reloadForISR();
 
   // expect the musician data to be on the page
   cy.findByText(/^cheese$/i).should("exist"); // first name
@@ -96,8 +95,7 @@ it("can add and edit musician", () => {
   cy.contains(/you have updated the musician/i);
   cy.dismissToast();
 
-  // reload to refresh ISR from cache
-  cy.reload();
+  cy.reloadForISR();
 
   // check new information
   cy.findByText(/^cheddar$/i).should("exist"); // first name

@@ -19,8 +19,7 @@ it("can add, edit and delete instrument", () => {
   cy.contains(/you have added the instrument "xylophone"/i);
   cy.dismissToast();
 
-  // reload to refresh from isr cache
-  cy.reload();
+  cy.reloadForISR();
 
   // expect instrument edit button to be on page
   cy.findByRole("button", { name: /edit instrument xylophone/i }).as(
@@ -62,8 +61,7 @@ it("can add, edit and delete instrument", () => {
   cy.contains(/you have updated the instrument "sousaphone"/i);
   cy.dismissToast();
 
-  // reload to refresh from isr cache
-  cy.reload();
+  cy.reloadForISR();
 
   // old instrument button should not exist
   cy.contains("xylophone").should("not.exist");
@@ -84,8 +82,7 @@ it("can add, edit and delete instrument", () => {
   cy.contains(/you have deleted the instrument/i);
   cy.dismissToast();
 
-  // reload to refresh from isr cache
-  cy.reload();
+  cy.reloadForISR();
 
   // make sure instrument name is no longer represented
   cy.contains("sousaphone").should("not.exist");
@@ -104,8 +101,7 @@ it("updates musician display with updated instrument name", () => {
   cy.contains(/you have updated the instrument/i);
   cy.dismissToast();
 
-  // reload to refresh from isr cache
-  cy.reload();
+  cy.reloadForISR();
 
   // make sure there's no reference to the old venue name, even in the shows section
   cy.contains("ukulele").should("not.exist");

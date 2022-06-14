@@ -117,5 +117,10 @@ Cypress.Commands.add("resetDbAndIsrCache", () => {
 });
 
 Cypress.Commands.add("reloadForISR", () => {
+  // wait for 1/2 second to wait for db update to "take" before reloading page,
+  // to mitigate test flake, esp in CI
+  // TODO: is there a better way to do this?
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(500);
   cy.reload();
 });
