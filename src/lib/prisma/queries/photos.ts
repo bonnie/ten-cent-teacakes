@@ -68,7 +68,7 @@ export const patchPhoto = async ({ data, id }: PhotoPatchArgs) => {
   }
   const patchData = transformData(data);
 
-  await prisma.photo.update({ data: patchData, where: { id } });
+  return prisma.photo.update({ data: patchData, where: { id } });
 };
 
 export const getPhotoById = async (

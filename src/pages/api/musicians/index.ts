@@ -1,20 +1,22 @@
 import { withSentry } from "@sentry/nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { createHandler } from "@/lib/api/handler";
+import { revalidationRoutes } from "@/lib/api/constants";
+import { addStandardPut, createHandler } from "@/lib/api/handler";
 import {
   addMusician,
   getMusiciansSortAscending,
 } from "@/lib/prisma/queries/musicians";
 
-const handler = createHandler();
+const handler = createHandler(revalidationRoutes.musicians);
 handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
   res.json(await getMusiciansSortAscending());
 });
 
-handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
-  const musician = await addMusician(req.body.data);
-  res.status(200).json({ musician });
+addStandardPut({
+  handler,
+  addFunc: addMusician,
+  revalidationRoutes: revalidationRoutes.musicians,
 });
 
 export default withSentry(handler);

@@ -1,19 +1,24 @@
 import { withSentry } from "@sentry/nextjs";
-import type { NextApiRequest, NextApiResponse } from "next";
 
-import { addStandardDelete, createHandler } from "@/lib/api/handler";
-import { getIdNumFromReq } from "@/lib/api/utils";
+import { revalidationRoutes } from "@/lib/api/constants";
+import {
+  addStandardDelete,
+  addStandardPatch,
+  createHandler,
+} from "@/lib/api/handler";
 import { deleteMusician, patchMusician } from "@/lib/prisma/queries/musicians";
 
-const handler = createHandler();
+const handler = createHandler(revalidationRoutes.musicians);
 
-addStandardDelete({ handler, deleteFunc: deleteMusician });
-
-handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
-  const id = getIdNumFromReq(req);
-  const { data } = req.body;
-  const musician = await patchMusician({ data, id });
-  return res.status(200).json(musician);
+addStandardDelete({
+  handler,
+  deleteFunc: deleteMusician,
+  revalidationRoutes: revalidationRoutes.musicians,
+});
+addStandardPatch({
+  handler,
+  patchFunc: patchMusician,
+  revalidationRoutes: revalidationRoutes.musicians,
 });
 
 export default withSentry(handler);

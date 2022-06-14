@@ -10,7 +10,7 @@ it("can add, edit and delete instrument", () => {
     .click();
   cy.findByRole("button", { name: /save/i }).click();
   cy.contains(/instrument name is required/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
 
   /// ////////////////////////////////////////////////
   // 2. add instrument and save
@@ -19,7 +19,10 @@ it("can add, edit and delete instrument", () => {
 
   // expect success message
   cy.contains(/you have added the instrument "xylophone"/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
+
+  // reload to refresh from isr cache
+  cy.reload();
 
   // expect instrument edit button to be on page
   cy.findByRole("button", { name: /edit instrument xylophone/i }).as(
@@ -59,7 +62,10 @@ it("can add, edit and delete instrument", () => {
 
   // expect a success message
   cy.contains(/you have updated the instrument "sousaphone"/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
+
+  // reload to refresh from isr cache
+  cy.reload();
 
   // old instrument button should not exist
   cy.contains("xylophone").should("not.exist");
@@ -78,7 +84,10 @@ it("can add, edit and delete instrument", () => {
 
   // expect a success message
   cy.contains(/you have deleted the instrument/i);
-  cy.findByRole("button", { name: /dismiss alert/i }).click();
+  cy.dismissToast();
+
+  // reload to refresh from isr cache
+  cy.reload();
 
   // make sure instrument name is no longer represented
   cy.contains("sousaphone").should("not.exist");
@@ -93,6 +102,12 @@ it("updates musician display with updated instrument name", () => {
   cy.findByRole("button", { name: /edit instrument baritone/i }).click();
   cy.findByLabelText(/name/i).clear().type("baritone uke");
   cy.findByRole("button", { name: /save/i }).click();
+  // expect a success message
+  cy.contains(/you have updated the instrument/i);
+  cy.dismissToast();
+
+  // reload to refresh from isr cache
+  cy.reload();
 
   // make sure there's no reference to the old venue name, even in the shows section
   cy.contains("ukulele").should("not.exist");

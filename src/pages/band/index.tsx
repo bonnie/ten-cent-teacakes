@@ -1,33 +1,30 @@
 import Head from "next/head";
 import React from "react";
-import { dehydrate, QueryClient } from "react-query";
 import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
-import { fetchMusiciansWithInstruments } from "@/lib/musicians";
+import { InstrumentWithMusicianCount } from "@/lib/instruments/types";
 import { AddMusicianModal } from "@/lib/musicians/components/EditMusicianModal";
 import { EditInstruments } from "@/lib/musicians/components/instruments/EditInstruments";
 import { MusicianCard } from "@/lib/musicians/components/MusicianCard";
-import { useMusicians } from "@/lib/musicians/hooks/useMusicians";
-import { queryKeys } from "@/lib/react-query/query-keys";
+import { MusicianWithInstruments } from "@/lib/musicians/types";
+import { getInstruments } from "@/lib/prisma/queries/instruments";
+import { getMusiciansSortAscending } from "@/lib/prisma/queries/musicians";
 
 export async function getStaticProps() {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery(queryKeys.musicians, ({ signal }) =>
-    fetchMusiciansWithInstruments(signal),
-  );
+  const musicians = await getMusiciansSortAscending();
+  const instruments = await getInstruments();
 
   return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
+    props: { musicians, instruments },
   };
 }
 
-const Musicians: React.FC = () => {
-  const { musicians } = useMusicians();
+const Musicians: React.FC<{
+  musicians: Array<MusicianWithInstruments>;
+  instruments: Array<InstrumentWithMusicianCount>;
+}> = ({ musicians, instruments }) => {
   const { user } = useWhitelistUser();
 
   return (
@@ -54,7 +51,7 @@ const Musicians: React.FC = () => {
             <MusicianCard key={musician.id} musician={musician} />
           ))}
         </ul>
-        {user ? <EditInstruments /> : null}
+        {user ? <EditInstruments instruments={instruments} /> : null}
       </div>
     </>
   );

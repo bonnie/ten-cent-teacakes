@@ -19,7 +19,7 @@
     "ts-check": "tsc --noEmit",
     "cypress:build": "npm run build:test && npm run cypress:start",
     "cypress:open": "env-cmd -f .env.test.local cypress open",
-    "cypress:start": "start-server-and-test 'npm run start:test' 3000 'npm run cypress:open'",
+    "cypress:start": "npx browserslist@latest --update-db && start-server-and-test 'npm run start:test' 3000 'npm run cypress:open'",
     "cypress:run": "npm run build:test && start-server-and-test 'npm run start:test' 3000 'env-cmd -f .env.test.local cypress run'"
   },
   "dependencies": {

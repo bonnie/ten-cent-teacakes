@@ -6,8 +6,22 @@ import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import { AddPhotoModal } from "@/lib/photos/components/EditPhotoModal";
 import { Photos } from "@/lib/photos/components/Photos";
+import { getPhotosSortedByDate } from "@/lib/photos/dataManipulation";
+import { PhotoWithShowAndVenue } from "@/lib/photos/types";
 
-const PhotosPage: React.FC = () => {
+export async function getStaticProps() {
+  const sortedPhotos = await getPhotosSortedByDate();
+
+  return {
+    // dates in photos are not serializable
+    props: {
+      photosJSON: JSON.stringify(sortedPhotos),
+    },
+  };
+}
+
+const PhotosPage: React.FC<{ photosJSON: string }> = ({ photosJSON }) => {
+  const photos: Array<PhotoWithShowAndVenue> = JSON.parse(photosJSON);
   const { user } = useWhitelistUser();
 
   return (
@@ -21,7 +35,7 @@ const PhotosPage: React.FC = () => {
           <AddPhotoModal />
         </div>
       ) : null}
-      <Photos />
+      <Photos photos={photos} />
     </>
   );
 };

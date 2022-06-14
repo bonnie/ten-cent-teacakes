@@ -1,27 +1,14 @@
 import React from "react";
-import { dehydrate, QueryClient } from "react-query";
 import { tw } from "twind";
 
-import { fetchPhotos } from "@/lib/photos";
-import { queryKeys } from "@/lib/react-query/query-keys";
+import { PhotoWithShowAndVenue } from "@/lib/photos/types";
 
-import { usePhotos } from "../hooks/usePhotos";
 import { PhotoThumbnail } from "./PhotoThumbnail";
 
-export async function getStaticProps() {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(queryKeys.photos, ({ signal }) =>
-    fetchPhotos(signal),
-  );
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
-
-export const Photos: React.FC<{ count?: number }> = ({ count = undefined }) => {
-  const { photos } = usePhotos();
+export const Photos: React.FC<{
+  photos: Array<PhotoWithShowAndVenue>;
+  count?: number;
+}> = ({ photos, count = undefined }) => {
   const photosSlice = count ? photos.slice(0, count) : photos;
 
   return (

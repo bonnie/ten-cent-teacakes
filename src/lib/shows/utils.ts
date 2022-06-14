@@ -5,14 +5,13 @@ import { ShowWithVenue, SortedShows } from "./types";
 export const formattedPerformAt = (performAt: Date): string =>
   dayjs(performAt).format("YYYY MMM D hh:MM a");
 
-export const sortShows = (data: Array<ShowWithVenue>): SortedShows => {
+export const sortShows = (shows: Array<ShowWithVenue>) => {
   const sortedShows: SortedShows = {
     upcomingShows: [],
     pastShows: [],
   };
 
-  // first sort into two buckets
-  data.forEach((show) => {
+  shows.forEach((show) => {
     if (dayjs(show.performAt) < dayjs()) {
       sortedShows.pastShows.push(show);
     } else {

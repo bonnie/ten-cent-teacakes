@@ -5,7 +5,10 @@ import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 
-import { axiosInstance } from "../axios/axiosInstance";
+import {
+  axiosInstance,
+  revalidationAxiosInstance,
+} from "../axios/axiosInstance";
 import { routes } from "../axios/constants";
 import {
   ShowPatchArgs,
@@ -28,10 +31,10 @@ export const fetchShows = async (): Promise<Array<ShowWithVenue>> => {
 };
 
 export const addShow = async (data: ShowPutData): Promise<ShowResponse> => {
-  const { data: show } = await axiosInstance.put<
+  const { data: show } = await revalidationAxiosInstance.put<
     { data: ShowPutData },
     AxiosResponse<Show>
-  >(`/api/${routes.shows}?secret=${process.env.REVALIDATION_SECRET}`, { data });
+  >(`/api/${routes.shows}`, { data });
   return { show };
 };
 
@@ -39,16 +42,14 @@ export const patchShow = async ({
   id,
   data,
 }: ShowPatchArgs): Promise<ShowResponse> => {
-  const { data: show } = await axiosInstance.patch<
+  const { data: show } = await revalidationAxiosInstance.patch<
     { data: ShowPatchData },
     AxiosResponse<Show>
-  >(`/api/${routes.shows}/${id}?secret=${process.env.REVALIDATION_SECRET}`, {
+  >(`/api/${routes.shows}/${id}`, {
     data,
   });
   return { show };
 };
 
 export const deleteShow = async (id: number): Promise<void> =>
-  axiosInstance.delete(
-    `/api/${routes.shows}/${id}?secret=${process.env.REVALIDATION_SECRET}`,
-  );
+  revalidationAxiosInstance.delete(`/api/${routes.shows}/${id}`);

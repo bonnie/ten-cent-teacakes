@@ -8,20 +8,45 @@ import { InternalLinkKeyword } from "@/components/lib/Style/InternalLinkKeyword"
 import { Section } from "@/components/lib/Style/Section";
 import { validateUser } from "@/lib/auth/utils";
 import { Photos } from "@/lib/photos/components/Photos";
+import { getPhotosSortedByDate } from "@/lib/photos/dataManipulation";
+import { PhotoWithShowAndVenue } from "@/lib/photos/types";
+import { getSortedShows } from "@/lib/prisma/queries/shows";
 import { ShowsGroup } from "@/lib/shows/components/ShowsGroup";
-import { useShows } from "@/lib/shows/hooks/useShows";
+import { ShowWithVenue } from "@/lib/shows/types";
 import { EmailSignupWithLabel } from "@/pages/more";
 
-export default function Home() {
+export async function getStaticProps() {
+  const { upcomingShows } = await getSortedShows();
+  const sortedPhotos = await getPhotosSortedByDate();
+
+  return {
+    // dates in shows and photos are not serializable
+    props: {
+      upcomingShowsJSON: JSON.stringify(upcomingShows),
+      photosJSON: JSON.stringify(sortedPhotos),
+    },
+  };
+}
+
+export default function Home({
+  upcomingShowsJSON,
+  photosJSON,
+}: {
+  upcomingShowsJSON: string;
+  photosJSON: string;
+}) {
+  const upcomingShows: Array<ShowWithVenue> = JSON.parse(upcomingShowsJSON);
+  const photos: Array<PhotoWithShowAndVenue> = JSON.parse(photosJSON);
+
   const tenCentLogoAltText =
     "Ten-Cent Teacakes logo: teacake with a tag reading '10¢', and a banner reading 'String Band'";
   const { user } = useUser();
-  const { upcomingShows } = useShows();
 
   React.useEffect(() => {
     // TODO: put this on other pages if redirecting to somewhere other than home page after login
     if (user && user.email) validateUser(user.email);
   }, [user]);
+
   return (
     <div
       className={tw([
@@ -59,7 +84,7 @@ export default function Home() {
         </Section>
       ) : null}
       <Section>
-        <Photos count={3} />
+        <Photos photos={photos} count={3} />
         <div className={tw(["text-center"])}>
           <InternalLinkKeyword href="/photos">More photos</InternalLinkKeyword>
         </div>

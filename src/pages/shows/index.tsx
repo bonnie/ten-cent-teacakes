@@ -4,21 +4,22 @@ import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
-import { getShows } from "@/lib/prisma/queries/shows";
+import { getSortedShows } from "@/lib/prisma/queries/shows";
 import { getVenues } from "@/lib/prisma/queries/venues";
 import { AddShowModal } from "@/lib/shows/components/EditShowModal";
 import { ShowsGroup } from "@/lib/shows/components/ShowsGroup";
 import { EditVenues } from "@/lib/shows/components/venues/EditVenues";
-import { sortShows } from "@/lib/shows/utils";
+import { ShowWithVenue } from "@/lib/shows/types";
 import { VenueWithShowCount } from "@/lib/venues/types";
 
 export async function getStaticProps() {
-  const shows = await getShows();
   const venues = await getVenues();
+  const sortedShows = await getSortedShows();
 
   return {
     props: {
-      showsJSON: JSON.stringify(shows),
+      // dates in shows are not serializable
+      showsJSON: JSON.stringify(sortedShows),
       venues,
     },
   };
@@ -29,9 +30,11 @@ const Shows: React.FC<{
   venues: Array<VenueWithShowCount>;
 }> = ({ showsJSON, venues }) => {
   const { user } = useWhitelistUser();
-  const shows = JSON.parse(showsJSON);
-
-  const { pastShows, upcomingShows } = sortShows(shows);
+  const {
+    upcomingShows,
+    pastShows,
+  }: { upcomingShows: Array<ShowWithVenue>; pastShows: Array<ShowWithVenue> } =
+    JSON.parse(showsJSON);
 
   return (
     <>

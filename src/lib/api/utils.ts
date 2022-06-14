@@ -57,12 +57,13 @@ export const getThumbName = (filename: string): string => {
   return `${fileBasename}-thumb.${fileExtension}`;
 };
 
-export const checkValidationSecret = (
-  req: NextApiRequest,
-  res: NextApiResponse,
-  // eslint-disable-next-line consistent-return
-) => {
-  if (req.query.secret !== process.env.REVALIDATION_SECRET) {
-    return res.status(401).json({ message: "Invalid revalidation token" });
-  }
-};
+export const revalidateRoutes = ({
+  revalidationRoutes,
+  res,
+}: {
+  revalidationRoutes: Array<string>;
+  res: NextApiResponse;
+}) =>
+  Promise.all(
+    revalidationRoutes.map((route) => res.unstable_revalidate(route)),
+  );

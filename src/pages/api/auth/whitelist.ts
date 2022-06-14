@@ -14,14 +14,13 @@ export default async function handle(
     const response: WhitelistResponse = { whitelist };
     switch (method) {
       case "GET":
-        res.json(response);
-        break;
+        return res.json(response);
       default:
         res.setHeader("Allow", ["GET"]);
-        res.status(405).end(`Method ${method} Not Allowed`);
+        return res.status(405).end(`Method ${method} Not Allowed`);
     }
   } catch (error) {
     const { status, message } = processApiError(error);
-    res.status(status).json({ message });
+    return res.status(status).json({ message });
   }
 }

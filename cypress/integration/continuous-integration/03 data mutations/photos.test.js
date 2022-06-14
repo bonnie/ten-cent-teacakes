@@ -31,6 +31,9 @@ it("can add, edit and delete photo with minimal data", () => {
   cy.contains(/you have added a photo/i);
   cy.dismissToast();
 
+  // reload to refresh from isr cache
+  cy.reload();
+
   // expect thumbnail image src
   cy.get("img[src*='avalanche']")
     .invoke("attr", "src")
@@ -49,6 +52,9 @@ it("can add, edit and delete photo with minimal data", () => {
   // expect a success message
   cy.contains(/you have updated the photo/i);
   cy.dismissToast();
+
+  // reload to refresh from isr cache
+  cy.reload();
 
   // check for the alt text
   cy.findByAltText("avalanche, made of cheese").as("newPhoto");
@@ -116,6 +122,9 @@ it("can add and edit photo with maximal data", () => {
   cy.contains(/you have added a photo/i);
   cy.dismissToast();
 
+  // reload to refresh from isr cache
+  cy.reload();
+
   // expect photographer text
   cy.findByText("taken by Jane Q. Photographer").should("exist");
 
@@ -169,6 +178,9 @@ it("can add and edit photo with maximal data", () => {
   // expect success message
   cy.contains(/you have updated the photo/i);
   cy.dismissToast();
+
+  // reload to refresh from isr cache
+  cy.reload();
 
   // expect photographer text
   cy.findByText("taken by Jane F. Photographer").should("exist");

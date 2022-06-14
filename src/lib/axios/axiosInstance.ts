@@ -13,3 +13,13 @@ if (process.env.NODE === "test") {
 }
 
 export const axiosInstance = axios.create(config);
+
+// for revalidation routes
+const revalidationConfig = {
+  ...config,
+  params: {
+    secret: process.env.REVALIDATION_SECRET,
+  },
+};
+
+export const revalidationAxiosInstance = axios.create(revalidationConfig);
