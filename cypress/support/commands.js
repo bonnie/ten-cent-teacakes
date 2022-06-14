@@ -118,11 +118,22 @@ Cypress.Commands.add("resetDbAndIsrCache", () => {
 
 Cypress.Commands.add("reloadForISR", () => {
   if (Cypress.env("github_action")) {
-    // wait for 1 second to wait for db update to "take" before reloading page,
-    // to mitigate test flake, esp in CI
-    // TODO: is there a better way to do this?
+    // exponential dropoff for failing CI tests to wait for db
+    // update to "take" before reloading page, to mitigate test flake
+
+    //  https://docs.cypress.io/guides/guides/test-retries#Can-I-access-the-current-attempt-counter-from-the-test
+    // eslint-disable-next-line no-underscore-dangle
+    const attempt = cy.state("runnable")._currentRetry;
+    const waitDelay = 2000 ** attempt;
+    if (attempt > 0) {
+      // eslint-disable-next-line no-console
+      console.log(
+        `!! increasing ISR cache refresh delay to ${waitDelay}ms for attempt ${attempt}`,
+      );
+    }
+
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    cy.wait(waitDelay);
   }
   cy.reload();
 });
