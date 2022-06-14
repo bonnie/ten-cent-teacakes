@@ -69,7 +69,7 @@ npm run cypress:run
 For Vercel / Cypress, the following variables are needed as GitHub secrets (repo -> settings -> secrets -> actions -> repository secrets):
 
 1. `VERCEL_TOKEN` (https://vercel.com/account/tokens)
-1. `CYPRESS_LOCALSTORAGE_KEY` (For more secure Cypress user. **Must match** the value in .env.local)
+1. `CYPRESS_LOCALSTORAGE_KEY` (For more secure Cypress user. **Must match** the value in Vercel)
 1. `AUTH0_USERNAME` (some email that exists in Auth0 instance)
 1. `AUTH0_PASSWORD` (password for the above email)
 1. `AUTH0_DOMAIN` (example: `xyz.us.auth0.com`)
@@ -100,12 +100,13 @@ Since anything pushed / merged to `main` will be live right away, enact these re
    - same for all environments
      - `SENTRY_AUTH_TOKEN` (from `.sentryclirc`)
      - `SENTRY_DSN` (from `.env.local`)
-     - `CYPRESS_LOCALSTORAGE_KEY` (**Must match** value in GitHub and .env.local )
+     - `CYPRESS_LOCALSTORAGE_KEY` (**Must match** value in GitHub)
      - `REVALIDATION_SECRET` (**Must match** value in GitHub and CircleCI)
    - diffferent for production vs. preview / development
      - `DATABASE_URL` (from `.env`)
      - `AUTH0_*` (from `.env.local`)
      - `SUPABASE_*` (from `.env.local`)
+     - `APP_ENV` (set to `test` for preview and development; don't set for production)
 
 ### Circle CI
 
