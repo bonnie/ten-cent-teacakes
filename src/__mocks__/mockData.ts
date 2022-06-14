@@ -102,13 +102,22 @@ export const mockManyFutureShows = [
 ];
 
 export const mockShows: Array<ShowWithVenue> = [
-  ...mockManyFutureShows,
+  {
+    id: 1,
+    performAt: dayjs("2200-01-01").toDate(),
+    venueId: 1,
+    url: null,
+    venue: mockVenues[0],
+  },
   ...mockOnlyPastShows,
 ];
 
 export const mockSortedShowsJSON = JSON.stringify(sortShows(mockShows));
 export const mockSortedPastShowsJSON = JSON.stringify(
   sortShows(mockOnlyPastShows),
+);
+export const mockManyFutureShowsJSON = JSON.stringify(
+  sortShows(mockManyFutureShows).upcomingShows,
 );
 
 export const mockInstruments: Array<InstrumentWithMusicianCount> = [

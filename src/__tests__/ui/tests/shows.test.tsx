@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { axe, toHaveNoViolations } from "jest-axe";
 
 import {
-  mockOnlyPastShows,
+  mockSortedPastShowsJSON,
   mockSortedShowsJSON,
   mockVenues,
   yesterday,
@@ -16,9 +16,6 @@ expect.extend(toHaveNoViolations);
 
 // for typescript
 const mockedUseWhitelistUser = useWhitelistUser as jest.Mock;
-
-// for JSON props
-const pastShowsJSON = JSON.stringify(mockOnlyPastShows);
 
 describe("not logged in", () => {
   test("should not show mutate buttons", async () => {
@@ -76,7 +73,7 @@ describe("not logged in", () => {
 
 describe("no future shows", () => {
   test("no shows message and link to email list displays", async () => {
-    render(<Shows showsJSON={pastShowsJSON} venues={mockVenues} />);
+    render(<Shows showsJSON={mockSortedPastShowsJSON} venues={mockVenues} />);
     await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
 
     const noFutureShowText = screen.queryByText(/No upcoming shows just now/i);
@@ -87,7 +84,7 @@ describe("no future shows", () => {
   });
 
   test("past shows still show up", async () => {
-    render(<Shows showsJSON={pastShowsJSON} venues={mockVenues} />);
+    render(<Shows showsJSON={mockSortedPastShowsJSON} venues={mockVenues} />);
     const showDates = await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
 
     expect(showDates.map((date) => date.textContent)).toEqual([

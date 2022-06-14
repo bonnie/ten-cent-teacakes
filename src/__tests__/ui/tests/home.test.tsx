@@ -4,6 +4,7 @@ import { axe, toHaveNoViolations } from "jest-axe";
 
 import {
   mockManyFutureShows,
+  mockManyFutureShowsJSON,
   mockSortedPhotosJSON,
   nextMonth,
   tomorrow,
@@ -74,7 +75,7 @@ test("should show only three nearest future shows", async () => {
   render(
     <Home
       photosJSON={mockSortedPhotosJSON}
-      upcomingShowsJSON={upcomingShowsJSON}
+      upcomingShowsJSON={mockManyFutureShowsJSON}
     />,
   );
   await screen.findAllByText(/Venue/i);
@@ -83,13 +84,13 @@ test("should show only three nearest future shows", async () => {
     expect(imgs).toHaveLength(4);
   });
 
-  const upcomingShows = screen.queryByRole("heading", {
+  const upcomingShows = screen.getByRole("heading", {
     name: "Upcoming Shows",
   });
   expect(upcomingShows).toBeInTheDocument();
 
   const showDates = screen
-    .queryAllByText(/\w\w\w \d?\d, \d\d\d\d/)
+    .getAllByText(/\w\w\w \d?\d, \d\d\d\d/)
     .filter((element) => element.classList.contains("text-lg"))
     .map((date) => date.textContent);
   expect(showDates).toEqual([
