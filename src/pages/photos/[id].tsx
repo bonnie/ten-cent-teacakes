@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import dayjs from "dayjs";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React from "react";
 import { IconType } from "react-icons";
 import { CgSpinner } from "react-icons/cg";
@@ -16,21 +15,22 @@ import { getPhotoDate } from "@/lib/photos";
 import { DeletePhotoModal } from "@/lib/photos/components/DeletePhotoModal";
 import { EditPhotoModal } from "@/lib/photos/components/EditPhotoModal";
 import { getNextAndPrevIndexes } from "@/lib/photos/dataManipulation";
-import { NextAndPrevObject, PhotoWithShowAndVenue } from "@/lib/photos/types";
+import { NextAndPrev, PhotoWithShowAndVenue } from "@/lib/photos/types";
 import { getPhotoById, getPhotos } from "@/lib/prisma/queries/photos";
 import { UPLOADS_BUCKET } from "@/lib/supabase/constants";
 import { useSupabasePhoto } from "@/lib/supabase/hooks/useSupabasePhoto";
 
 export async function getStaticProps({ params }: { params: { id: number } }) {
   const { id } = params;
-  const photo = await getPhotoById(Number(id));
-  const nextAndPrevIndexes = getNextAndPrevIndexes();
+  const idNum = Number(id);
+  const photo = await getPhotoById(idNum);
+  const nextAndPrevIndexes = await getNextAndPrevIndexes(idNum);
 
   // non-serializeable things
   return {
     props: {
       photoJSON: JSON.stringify(photo),
-      nextAndPrevIndexesJSON: JSON.stringify(nextAndPrevIndexes),
+      nextAndPrevIndexes,
     },
   };
 }
@@ -74,16 +74,12 @@ const AdvanceButton: React.FC<{
 
 const Photo: React.FC<{
   photoJSON: string;
-  nextAndPrevIndexesJSON: string;
-}> = ({ photoJSON, nextAndPrevIndexesJSON }) => {
+  nextAndPrevIndexes: NextAndPrev;
+}> = ({ photoJSON, nextAndPrevIndexes }) => {
   const photo: PhotoWithShowAndVenue = JSON.parse(photoJSON);
-  const nextAndPrevIndexes: NextAndPrevObject = JSON.parse(
-    nextAndPrevIndexesJSON,
-  );
   const { user } = useWhitelistUser();
-  const router = useRouter();
-  const { id } = router.query;
-  const photoId = Number(id);
+
+  const { next: nextIndex, prev: prevIndex } = nextAndPrevIndexes;
 
   const { imgSrc } = useSupabasePhoto(photo?.imagePath ?? null, UPLOADS_BUCKET);
 
@@ -91,13 +87,6 @@ const Photo: React.FC<{
   // contains the [id] from the previous route, which leads to the wrong image
   // showing for half a second or so (without this check)
   const imageSrcMatches = imgSrc && photo && imgSrc.search(photo.imagePath) > 0;
-
-  let nextIndex;
-  let prevIndex;
-  if (nextAndPrevIndexes[photoId]) {
-    nextIndex = nextAndPrevIndexes[photoId].next;
-    prevIndex = nextAndPrevIndexes[photoId].prev;
-  }
 
   const photoDate = photo ? getPhotoDate(photo) : undefined;
 
