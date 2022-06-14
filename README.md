@@ -116,6 +116,7 @@ Since anything pushed / merged to `main` will be live right away, enact these re
 1. Add `DATABASE_URL` environment variable (https://circleci.com/docs/2.0/env-vars/)
 1. Add `DB_BASEURL` environment variable (DB url before port; example: `DATABASE_URL="postgres://postgres:<password>@db.<db id>.supabase.co`). Needed because of difference between migration endpoint vs. queries endpoint.
 1. Add `CYPRESS_INSTALL_BINARY` environment variable, set to 0 (https://docs.cypress.io/guides/getting-started/installing-cypress#Environment-variables)
+1. `REVALIDATION_SECRET` (**Must match** value in GitHub, Vercel and .env.local)
 
 ### Auth0 for Preview Deploys
 
