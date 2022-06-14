@@ -59,7 +59,6 @@ npm run test:api
 
 ```bash
 npm run test:db:migrate
-npm run dev
 npm run cypress:run
 ```
 
