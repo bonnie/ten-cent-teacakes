@@ -114,6 +114,7 @@ export default (on, config) => {
   config.env.cypress_baseUrl = process.env.CYPRESS_baseUrl;
   config.env.cypress_baseUrl = process.env.CYPRESS_baseUrl;
   config.env.revalidation_secret = process.env.REVALIDATION_SECRET;
+  config.env.github_action = process.env.GITHUB_ACTION;
 
   return config;
 };
