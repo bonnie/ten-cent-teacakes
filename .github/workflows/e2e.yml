@@ -18,9 +18,11 @@ jobs:
     container: cypress/included:9.5.0
     steps:
       # see if there is GITHUB_REF
-      - name: Check GITHUB_REF
+      - name: Check GitHub ref_name
         run: |
-          echo "GITHUB_REF is ${GITHUB_REF}"
+          echo "GitHub ref_name is ${{ github.ref_name }}"
+          echo "GitHub ref is ${{ github.ref }}"
+          echo "GitHub base_ref is ${{ github.base_ref }}"
       # to compute the branch name for the deployed commit
       # need to grab the repo
       - name: Checkout

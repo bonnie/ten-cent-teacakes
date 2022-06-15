@@ -8,7 +8,13 @@ workflows:
   lint-and-test:
     jobs:
       - lint
+          filters:
+            branches:
+              ignore: "main"
       - ts-check
+          filters:
+            branches:
+              ignore: "main"
       - test-ui:
           requires:
             - ts-check
