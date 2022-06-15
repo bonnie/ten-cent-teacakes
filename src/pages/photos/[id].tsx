@@ -53,24 +53,26 @@ const AdvanceButton: React.FC<{
   Icon: IconType;
   linkIndex: number | null | undefined;
   label: "next" | "previous";
-}> = ({ Icon, linkIndex, label }) => (
-  <button
-    type="button"
-    className={tw([
-      "hover:text-aqua-600",
-      "place-self-center",
-      "focus:outline-none",
-    ])}
-  >
-    {linkIndex ? (
-      <Link href={`/photos/${linkIndex}`}>
-        <a>
-          <Icon size={25} aria-label={`${label}-photo`} />
-        </a>
-      </Link>
-    ) : null}
-  </button>
-);
+  hide: boolean;
+}> = ({ Icon, linkIndex, label, hide }) =>
+  hide ? null : (
+    <button
+      type="button"
+      className={tw([
+        "hover:text-aqua-600",
+        "place-self-center",
+        "focus:outline-none",
+      ])}
+    >
+      {linkIndex ? (
+        <Link href={`/photos/${linkIndex}`}>
+          <a>
+            <Icon size={25} aria-label={`${label}-photo`} />
+          </a>
+        </Link>
+      ) : null}
+    </button>
+  );
 
 const Photo: React.FC<{
   photoJSON: string;
@@ -154,6 +156,7 @@ const Photo: React.FC<{
           Icon={FaArrowLeft}
           linkIndex={prevIndex}
           label="previous"
+          hide={!imageSrcMatches}
         />
         {/* TODO: figure out how to use Image for optimization from Supabase */}
         {imgSrc && imageSrcMatches ? (
@@ -169,7 +172,12 @@ const Photo: React.FC<{
             <CgSpinner className={tw(["animate-spin"])} size="6em" />
           </div>
         )}
-        <AdvanceButton Icon={FaArrowRight} linkIndex={nextIndex} label="next" />
+        <AdvanceButton
+          Icon={FaArrowRight}
+          linkIndex={nextIndex}
+          label="next"
+          hide={!imageSrcMatches}
+        />
       </div>
       <InternalLinkKeyword href="/photos" className={tw(["mt-5"])}>
         Back to photos
