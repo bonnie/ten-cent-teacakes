@@ -8,6 +8,7 @@ const { lighthouse, prepareAudit } = require("@cypress-audit/lighthouse");
 const ReportGenerator = require("lighthouse/report/generator/report-generator");
 const fs = require("fs");
 const path = require("path");
+const failedLog = require("cypress-failed-log/src/failed");
 
 const outDir = "cypress/reports";
 
@@ -70,6 +71,9 @@ export default (on, config) => {
 
   on("task", {
     "db:reset": () => resetDB().then(() => null),
+  });
+  on("task", {
+    failed: failedLog(),
   });
   on("after:spec", async (spec) => {
     let bucketDir;

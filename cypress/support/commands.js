@@ -124,16 +124,16 @@ Cypress.Commands.add("reloadForISR", () => {
     //  https://docs.cypress.io/guides/guides/test-retries#Can-I-access-the-current-attempt-counter-from-the-test
     // eslint-disable-next-line no-underscore-dangle
     const attempt = cy.state("runnable")._currentRetry;
-    const waitDelay = 2000 ** attempt;
     if (attempt > 0) {
+      const waitDelay = 2 ** attempt * 1000;
+
       // eslint-disable-next-line no-console
       console.log(
         `!! increasing ISR cache refresh delay to ${waitDelay}ms for attempt ${attempt}`,
       );
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(waitDelay);
     }
-
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(waitDelay);
   }
   cy.reload();
 });
