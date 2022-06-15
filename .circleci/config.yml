@@ -7,8 +7,16 @@ workflows:
   version: 2
   lint-and-test:
     jobs:
-      - lint
-      - ts-check
+      - lint:
+          filters:
+            branches:
+              ignore:
+                - main
+      - ts-check:
+          filters:
+            branches:
+              ignore:
+                - main
       - test-ui:
           requires:
             - ts-check
