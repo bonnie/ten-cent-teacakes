@@ -1,15 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { createHandler } from "@/lib/api/handler";
+import { revalidationRoutes } from "@/lib/api/constants";
+import { addStandardPut, createHandler } from "@/lib/api/handler";
 import { addVenue, getVenues } from "@/lib/prisma/queries/venues";
 
-const handler = createHandler();
+const handler = createHandler(revalidationRoutes.venues);
 handler.get(async (req: NextApiRequest, res: NextApiResponse) =>
   res.json(await getVenues()),
 );
 
-handler.put(async (req: NextApiRequest, res: NextApiResponse) =>
-  res.status(200).json(await addVenue(req.body.data)),
-);
+addStandardPut({
+  handler,
+  addFunc: addVenue,
+  revalidationRoutes: revalidationRoutes.venues,
+});
 
 export default handler;

@@ -4,16 +4,37 @@ import { tw } from "twind";
 
 import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
+import { getSortedShows } from "@/lib/prisma/queries/shows";
+import { getVenues } from "@/lib/prisma/queries/venues";
 import { AddShowModal } from "@/lib/shows/components/EditShowModal";
 import { ShowsGroup } from "@/lib/shows/components/ShowsGroup";
 import { EditVenues } from "@/lib/shows/components/venues/EditVenues";
-import { useShows } from "@/lib/shows/hooks/useShows";
+import { ShowWithVenue } from "@/lib/shows/types";
+import { VenueWithShowCount } from "@/lib/venues/types";
 
-// don't pre-fetch shows here; won't help with SEO and makes page load slow
+export async function getStaticProps() {
+  const venues = await getVenues();
+  const sortedShows = await getSortedShows();
 
-const Shows: React.FC = () => {
-  const { pastShows, upcomingShows } = useShows();
+  return {
+    props: {
+      // dates in shows are not serializable
+      showsJSON: JSON.stringify(sortedShows),
+      venues,
+    },
+  };
+}
+
+const Shows: React.FC<{
+  showsJSON: string;
+  venues: Array<VenueWithShowCount>;
+}> = ({ showsJSON, venues }) => {
   const { user } = useWhitelistUser();
+  const {
+    upcomingShows,
+    pastShows,
+  }: { upcomingShows: Array<ShowWithVenue>; pastShows: Array<ShowWithVenue> } =
+    JSON.parse(showsJSON);
 
   return (
     <>
@@ -34,7 +55,7 @@ const Shows: React.FC = () => {
       <div className={tw(["mt-10"])}>
         <ShowsGroup title="Recent Shows" shows={pastShows.slice(0, 10)} />
       </div>
-      {user ? <EditVenues /> : null}
+      {user ? <EditVenues venues={venues} /> : null}
     </>
   );
 };

@@ -52,7 +52,7 @@ export const AddVenueModal: React.FC = () => {
 };
 
 export const EditVenueModal: React.FC<{ venue: Venue }> = ({ venue }) => {
-  const { updateVenue, venueFormValidation } = useVenues();
+  const { updateVenue } = useVenues();
 
   const initialValues: VenuePutData = {
     name: venue.name,
@@ -68,7 +68,7 @@ export const EditVenueModal: React.FC<{ venue: Venue }> = ({ venue }) => {
 
   const formikConfig = {
     initialValues,
-    validate: venueFormValidation,
+    // validate: venueFormValidation,
     onSubmit,
   };
 

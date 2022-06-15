@@ -1,6 +1,6 @@
 import * as Sentry from "@sentry/nextjs";
 import dayjs from "dayjs";
-import type { NextApiRequest } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export const processApiError = (error: unknown) => {
   Sentry.captureException(error);
@@ -56,3 +56,14 @@ export const getThumbName = (filename: string): string => {
   const { fileBasename, fileExtension } = getFilenameParts(filename);
   return `${fileBasename}-thumb.${fileExtension}`;
 };
+
+export const revalidateRoutes = ({
+  revalidationRoutes,
+  res,
+}: {
+  revalidationRoutes: Array<string>;
+  res: NextApiResponse;
+}) =>
+  Promise.all(
+    revalidationRoutes.map((route) => res.unstable_revalidate(route)),
+  );

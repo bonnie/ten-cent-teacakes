@@ -2,7 +2,10 @@ import { Venue } from ".prisma/client";
 
 import { AxiosResponse } from "axios";
 
-import { axiosInstance } from "../axios/axiosInstance";
+import {
+  axiosInstance,
+  revalidationAxiosInstance,
+} from "../axios/axiosInstance";
 import { routes } from "../axios/constants";
 import {
   VenuePatchArgs,
@@ -19,10 +22,12 @@ export const fetchVenues = async (): Promise<Array<VenueWithShowCount>> => {
 };
 
 export const addVenue = async (data: VenuePutData): Promise<VenueResponse> => {
-  const { data: venue } = await axiosInstance.put<
+  const { data: venue } = await revalidationAxiosInstance.put<
     { data: VenuePutData },
     AxiosResponse<VenueWithShowCount>
-  >(`/api/${routes.venues}`, { data });
+  >(`/api/${routes.venues}`, {
+    data,
+  });
   return { venue };
 };
 
@@ -30,12 +35,14 @@ export const patchVenue = async ({
   id,
   data,
 }: VenuePatchArgs): Promise<VenuePatchResponse> => {
-  const { data: venue } = await axiosInstance.patch<
+  const { data: venue } = await revalidationAxiosInstance.patch<
     { data: VenuePutData },
     AxiosResponse<Venue>
-  >(`/api/${routes.venues}/${id}`, { data });
+  >(`/api/${routes.venues}/${id}`, {
+    data,
+  });
   return { venue };
 };
 
 export const deleteVenue = async (id: number): Promise<void> =>
-  axiosInstance.delete(`/api/${routes.venues}/${id}`);
+  revalidationAxiosInstance.delete(`/api/${routes.venues}/${id}`);

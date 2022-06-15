@@ -2,7 +2,8 @@
 import { Prisma } from ".prisma/client";
 
 import prisma from "@/lib/prisma";
-import { ShowPatchArgs, ShowPutData } from "@/lib/shows/types";
+import { ShowPatchArgs, ShowPutData, SortedShows } from "@/lib/shows/types";
+import { sortShows } from "@/lib/shows/utils";
 
 export const getShows = () =>
   prisma.show.findMany({
@@ -34,9 +35,15 @@ export const patchShow = async ({ data, id }: ShowPatchArgs) => {
     url: data.url ?? undefined,
   };
 
-  await prisma.show.update({ data: updatedData, where: { id } });
+  return prisma.show.update({ data: updatedData, where: { id } });
 };
 
 export const deleteShow = async (id: number) => {
   await prisma.show.delete({ where: { id } });
+};
+
+export const getSortedShows = async (): Promise<SortedShows> => {
+  const shows = await getShows();
+
+  return sortShows(shows);
 };

@@ -3,7 +3,7 @@ import {
   UseMutateFunction,
   useMutation,
   useQuery,
-  useQueryClient,
+  // useQueryClient,
 } from "react-query";
 
 import { useToast } from "@/components/toasts/useToast";
@@ -37,10 +37,10 @@ type UseVenuesReturnValue = {
 export const useVenues = (): UseVenuesReturnValue => {
   const { showToast } = useToast();
   const { handleQueryError, handleMutateError } = useHandleError();
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  const invalidateVenues = () =>
-    queryClient.invalidateQueries([queryKeys.venues]);
+  // const invalidateVenues = () =>
+  //   queryClient.invalidateQueries([queryKeys.venues]);
 
   const { data: venues = [] } = useQuery<Array<VenueWithShowCount>>(
     queryKeys.venues,
@@ -52,7 +52,6 @@ export const useVenues = (): UseVenuesReturnValue => {
 
   const { mutate: addVenueMutate } = useMutation(queryKeys.venues, addVenue, {
     onSuccess: (data) => {
-      invalidateVenues();
       showToast("success", `You have added the venue "${data.venue.name}"`);
     },
     onError: (error) => handleMutateError(error, "add venue"),
@@ -63,7 +62,6 @@ export const useVenues = (): UseVenuesReturnValue => {
     deleteVenue,
     {
       onSuccess: () => {
-        invalidateVenues();
         showToast("success", "You have deleted the venue");
       },
       onError: (error) => handleMutateError(error, "delete venue"),
@@ -72,9 +70,6 @@ export const useVenues = (): UseVenuesReturnValue => {
 
   const { mutate: updateVenue } = useMutation(queryKeys.venues, patchVenue, {
     onSuccess: (data) => {
-      invalidateVenues();
-      // update shows too, since venue data may have changed
-      queryClient.invalidateQueries([queryKeys.shows]);
       showToast("success", `You have updated the venue "${data.venue.name}"`);
     },
     onError: (error) => handleMutateError(error, "update venue"),

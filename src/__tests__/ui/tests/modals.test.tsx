@@ -1,5 +1,6 @@
 import { toHaveNoViolations } from "jest-axe";
 
+import { mockInstruments, mockMusicians } from "@/__mocks__/mockData";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import Musicians from "@/pages/band";
 import { fireEvent, render, screen } from "@/test-utils";
@@ -24,7 +25,7 @@ afterEach(() => {
 });
 
 test("Add modal appearance / disappearance", async () => {
-  render(<Musicians />, { renderOptions: { hydrate: true } });
+  render(<Musicians musicians={mockMusicians} instruments={mockInstruments} />);
   await screen.findAllByRole("img");
 
   // find add buttons
@@ -73,7 +74,7 @@ test("Add modal appearance / disappearance", async () => {
 });
 
 test("Edit modal appearance / disappearance", async () => {
-  render(<Musicians />, { renderOptions: { hydrate: true } });
+  render(<Musicians musicians={mockMusicians} instruments={mockInstruments} />);
 
   // wait for musicians to load
   await screen.findAllByRole("img");
@@ -127,7 +128,7 @@ test("Edit modal appearance / disappearance", async () => {
 });
 
 test("Delete modal appearance / disappearance", async () => {
-  render(<Musicians />, { renderOptions: { hydrate: true } });
+  render(<Musicians musicians={mockMusicians} instruments={mockInstruments} />);
 
   // find (instrument) delete buttons -- musicians don't have delete button
   const deleteButtons = await screen.findAllByRole("button", {

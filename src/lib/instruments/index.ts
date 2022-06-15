@@ -2,7 +2,10 @@ import { Instrument } from ".prisma/client";
 
 import { AxiosResponse } from "axios";
 
-import { axiosInstance } from "../axios/axiosInstance";
+import {
+  axiosInstance,
+  revalidationAxiosInstance,
+} from "../axios/axiosInstance";
 import { routes } from "../axios/constants";
 import {
   InstrumentPatchArgs,
@@ -22,7 +25,7 @@ export const fetchInstruments = async (): Promise<
 export const addInstrument = async (
   data: InstrumentPutData,
 ): Promise<InstrumentResponse> => {
-  const { data: instrument } = await axiosInstance.put<
+  const { data: instrument } = await revalidationAxiosInstance.put<
     { data: InstrumentPutData },
     AxiosResponse<Instrument>
   >(`/api/${routes.instruments}`, { data });
@@ -33,7 +36,7 @@ export const patchInstrument = async ({
   id,
   data,
 }: InstrumentPatchArgs): Promise<InstrumentResponse> => {
-  const { data: instrument } = await axiosInstance.patch<
+  const { data: instrument } = await revalidationAxiosInstance.patch<
     { data: InstrumentPutData },
     AxiosResponse<Instrument>
   >(`/api/${routes.instruments}/${id}`, { data });
@@ -41,4 +44,4 @@ export const patchInstrument = async ({
 };
 
 export const deleteInstrument = async (id: number): Promise<void> =>
-  axiosInstance.delete(`/api/${routes.instruments}/${id}`);
+  revalidationAxiosInstance.delete(`/api/${routes.instruments}/${id}`);

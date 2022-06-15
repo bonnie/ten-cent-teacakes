@@ -42,3 +42,9 @@ export type PhotoWithShowAndVenue = Photo & {
   showVenue?: Venue | null;
   takenAt?: Date | null;
 };
+
+export type NextAndPrev = {
+  next: number | null;
+  prev: number | null;
+};
+export type NextAndPrevObject = Record<number, NextAndPrev>;

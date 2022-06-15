@@ -2,7 +2,11 @@ import dayjs from "dayjs";
 import { axe, toHaveNoViolations } from "jest-axe";
 import React from "react";
 
-import { lastMonth, yesterday } from "@/__mocks__/mockData";
+import {
+  lastMonth,
+  mockSortedPhotosJSON,
+  yesterday,
+} from "@/__mocks__/mockData";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
 import Photos from "@/pages/photos";
 import { render, screen } from "@/test-utils";
@@ -14,14 +18,14 @@ const mockedUseWhitelistUser = useWhitelistUser as jest.Mock;
 
 describe("not logged in", () => {
   test("hydrates on load", async () => {
-    render(<Photos />, { renderOptions: { hydrate: true } });
+    render(<Photos photosJSON={mockSortedPhotosJSON} />);
     // find all the images; from msw, there are three expected
     const images = await screen.findAllByRole("img");
     expect(images).toHaveLength(5);
   });
 
   test("should not show mutate buttons", async () => {
-    render(<Photos />, { renderOptions: { hydrate: true } });
+    render(<Photos photosJSON={mockSortedPhotosJSON} />);
     await screen.findAllByRole("img");
     const mutateButtons = screen.queryAllByRole("button", {
       name: /add|edit|delete/i,
@@ -33,7 +37,7 @@ describe("not logged in", () => {
   // in setup.test.js (thanks to
   // https://github.com/vercel/next.js/issues/20048#issuecomment-813426025)
   test("photos are in correct order, with correct labels", async () => {
-    render(<Photos />, { renderOptions: { hydrate: true } });
+    render(<Photos photosJSON={mockSortedPhotosJSON} />);
     const images = await screen.findAllByRole("img");
     const imgSources = images.map((image) => image.getAttribute("src"));
     expect(imgSources).toEqual([
@@ -61,7 +65,7 @@ describe("not logged in", () => {
 
   // NOTE: need to test this when Link is not mocked
   test("photos have link to individual photo page", async () => {
-    render(<Photos />, { renderOptions: { hydrate: true } });
+    render(<Photos photosJSON={mockSortedPhotosJSON} />);
     const links = await screen.findAllByRole("link");
 
     // ids corresponding to the photo order
@@ -75,9 +79,7 @@ describe("not logged in", () => {
   });
 
   test("should have no a11y errors caught by jest-axe", async () => {
-    const { container } = render(<Photos />, {
-      renderOptions: { hydrate: true },
-    });
+    const { container } = render(<Photos photosJSON={mockSortedPhotosJSON} />);
 
     await screen.findAllByRole("img"); // to avoid "not wrapped in act"
     const results = await axe(container);
@@ -98,7 +100,7 @@ describe("logged in", () => {
     }));
   });
   test("should have mutate buttons", async () => {
-    render(<Photos />, { renderOptions: { hydrate: true } });
+    render(<Photos photosJSON={mockSortedPhotosJSON} />);
     await screen.findAllByRole("img");
 
     // add button
@@ -120,9 +122,7 @@ describe("logged in", () => {
   });
 
   test("should have no a11y errors caught by jest-axe", async () => {
-    const { container } = render(<Photos />, {
-      renderOptions: { hydrate: true },
-    });
+    const { container } = render(<Photos photosJSON={mockSortedPhotosJSON} />);
 
     await screen.findAllByRole("img"); // to avoid "not wrapped in act"
     const results = await axe(container);

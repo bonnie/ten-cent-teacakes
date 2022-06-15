@@ -1,25 +1,27 @@
 // import { test } from "@jest/globals";
 import dayjs from "dayjs";
 import { axe, toHaveNoViolations } from "jest-axe";
-import { rest } from "msw";
 
 import {
   mockManyFutureShows,
-  mockOnlyPastShows,
-  mockPhotos,
+  mockManyFutureShowsJSON,
+  mockSortedPhotosJSON,
   nextMonth,
   tomorrow,
 } from "@/__mocks__/mockData";
-import { server } from "@/__mocks__/msw/server";
 import Home from "@/pages";
 import { render, screen, waitFor } from "@/test-utils";
 
 expect.extend(toHaveNoViolations);
+const upcomingShowsJSON = JSON.stringify(mockManyFutureShows);
 
 test("should have no a11y errors caught by jest-axe", async () => {
-  const { container } = render(<Home />, {
-    renderOptions: { hydrate: true },
-  });
+  const { container } = render(
+    <Home
+      photosJSON={mockSortedPhotosJSON}
+      upcomingShowsJSON={upcomingShowsJSON}
+    />,
+  );
 
   await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
   // necessary since there's a sync image on the page
@@ -33,14 +35,24 @@ test("should have no a11y errors caught by jest-axe", async () => {
 });
 
 test("should have 'subscribe' button", async () => {
-  render(<Home />, { renderOptions: { hydrate: true } });
+  render(
+    <Home
+      photosJSON={mockSortedPhotosJSON}
+      upcomingShowsJSON={upcomingShowsJSON}
+    />,
+  );
   await screen.findAllByText(/\w\w\w \d?\d, \d\d\d\d/);
   const subscribeButton = screen.getByRole("button", { name: /subscribe/i });
   expect(subscribeButton).toBeInTheDocument();
 });
 
 test("should show only three most recent photos", async () => {
-  render(<Home />, { renderOptions: { hydrate: true } });
+  render(
+    <Home
+      photosJSON={mockSortedPhotosJSON}
+      upcomingShowsJSON={upcomingShowsJSON}
+    />,
+  );
   await waitFor(() => {
     const imgs = screen.getAllByRole("img");
     expect(imgs).toHaveLength(4);
@@ -60,29 +72,25 @@ test("should show only three most recent photos", async () => {
 });
 
 test("should show only three nearest future shows", async () => {
-  server.resetHandlers(
-    rest.get("http://localhost:3000/api/shows", (req, res, ctx) =>
-      res(ctx.json(mockManyFutureShows)),
-    ),
-    rest.get("http://localhost:3000/api/photos", (req, res, ctx) =>
-      res(ctx.json(mockPhotos)),
-    ),
+  render(
+    <Home
+      photosJSON={mockSortedPhotosJSON}
+      upcomingShowsJSON={mockManyFutureShowsJSON}
+    />,
   );
-
-  render(<Home />, { renderOptions: { hydrate: true } });
   await screen.findAllByText(/Venue/i);
   await waitFor(() => {
     const imgs = screen.getAllByRole("img");
     expect(imgs).toHaveLength(4);
   });
 
-  const upcomingShows = screen.queryByRole("heading", {
+  const upcomingShows = screen.getByRole("heading", {
     name: "Upcoming Shows",
   });
   expect(upcomingShows).toBeInTheDocument();
 
   const showDates = screen
-    .queryAllByText(/\w\w\w \d?\d, \d\d\d\d/)
+    .getAllByText(/\w\w\w \d?\d, \d\d\d\d/)
     .filter((element) => element.classList.contains("text-lg"))
     .map((date) => date.textContent);
   expect(showDates).toEqual([
@@ -96,15 +104,7 @@ test("should show only three nearest future shows", async () => {
 });
 
 test("should not show any shows if there are no future shows", async () => {
-  server.resetHandlers(
-    rest.get("http://localhost:3000/api/shows", (req, res, ctx) =>
-      res(ctx.json(mockOnlyPastShows)),
-    ),
-    rest.get("http://localhost:3000/api/photos", (req, res, ctx) =>
-      res(ctx.json(mockPhotos)),
-    ),
-  );
-  render(<Home />, { renderOptions: { hydrate: true } });
+  render(<Home photosJSON={mockSortedPhotosJSON} upcomingShowsJSON="[]" />);
   await waitFor(() => {
     const imgs = screen.getAllByRole("img");
     expect(imgs).toHaveLength(4);

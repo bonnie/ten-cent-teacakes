@@ -47,17 +47,15 @@ export const useInstruments = (): UseInstrumentsReturnValue => {
   const { handleQueryError, handleMutateError } = useHandleError();
   const queryClient = useQueryClient();
 
-  const invalidateInstruments = () =>
-    queryClient.invalidateQueries([queryKeys.instruments]);
-
-  const invalidateMusicians = () =>
-    queryClient.invalidateQueries([queryKeys.musicians]);
-
+  // TODO: use static props here instead of fetching from server
   const { data: instruments = [] } = useQuery<
     Array<InstrumentWithMusicianCount>
   >(queryKeys.instruments, fetchInstruments, {
     onError: handleQueryError,
   });
+
+  const invalidateInstruments = () =>
+    queryClient.invalidateQueries([queryKeys.instruments]);
 
   const { mutate: addInstrumentMutate } = useMutation(
     queryKeys.instruments,
@@ -92,7 +90,6 @@ export const useInstruments = (): UseInstrumentsReturnValue => {
     {
       onSuccess: (data) => {
         invalidateInstruments();
-        invalidateMusicians();
         showToast(
           "success",
           `You have updated the instrument "${data.instrument.name}"`,

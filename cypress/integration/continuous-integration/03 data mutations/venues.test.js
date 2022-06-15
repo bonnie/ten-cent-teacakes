@@ -5,9 +5,7 @@ it("can add, edit and delete venue without URL", () => {
 
   /// ////////////////////////////////////////////////
   // 1. expect save not to work if there's no venue name
-  cy.findByRole("button", { name: /add venue/i })
-    .as("addVenueButton")
-    .click();
+  cy.findByRole("button", { name: /add venue/i }).click();
   cy.findByRole("button", { name: /save/i }).click();
   cy.contains(/venue name is required/i);
   cy.dismissToast();
@@ -21,14 +19,14 @@ it("can add, edit and delete venue without URL", () => {
   cy.contains(/you have added the venue "Carnegie Hall"/i);
   cy.dismissToast();
 
-  // expect venue edit button to be on page
+  cy.reloadForISR(); // expect venue edit button to be on page
   cy.findByRole("button", { name: /edit venue Carnegie Hall/i }).as(
     "editCarnegieHallButton",
   );
 
   /// ////////////////////////////////////////////////
   // 3. try to add an venue with the same name
-  cy.get("@addVenueButton").click();
+  cy.findByRole("button", { name: /add venue/i }).click();
   cy.findByLabelText(/venue name/i).type("Carnegie Hall");
 
   // focus away to trigger formik error
@@ -61,7 +59,7 @@ it("can add, edit and delete venue without URL", () => {
   cy.contains(/you have updated the venue "Berkeley Farmers Market"/i);
   cy.dismissToast();
 
-  // old venue button should not exist
+  cy.reloadForISR(); // old venue button should not exist
   cy.contains("Carnegie Hall").should("not.exist");
 
   // check for the delete button for new venue name
@@ -80,7 +78,7 @@ it("can add, edit and delete venue without URL", () => {
   cy.contains(/you have deleted the venue/i);
   cy.dismissToast();
 
-  // make sure venue name is no longer represented
+  cy.reloadForISR(); // make sure venue name is no longer represented
   cy.contains("Berkeley Farmers Market").should("not.exist");
 });
 
@@ -103,7 +101,7 @@ it("can add and edit venue with URL", () => {
   cy.contains(/you have added the venue "Carnegie Hall"/i);
   cy.dismissToast();
 
-  // expect venue edit button to be on page
+  cy.reloadForISR(); // expect venue edit button to be on page
   cy.findByRole("button", { name: /edit venue Carnegie Hall/i }).as(
     "editCarnegieHallButton",
   );
@@ -123,7 +121,7 @@ it("can add and edit venue with URL", () => {
   cy.contains(/you have updated the venue "Berkeley Farmers Market"/i);
   cy.dismissToast();
 
-  // old venue name and URL should not exist
+  cy.reloadForISR(); // old venue name and URL should not exist
   cy.contains("Carnegie Hall").should("not.exist");
   cy.contains("carnegiehall.com").should("not.exist");
 
@@ -144,6 +142,6 @@ it("updates show display with updated venue name", () => {
     .type("Venue 12345");
   cy.findByRole("button", { name: /save/i }).click();
 
-  // make sure there's no reference to the old venue name, even in the shows section
+  cy.reloadForISR(); // make sure there's no reference to the old venue name, even in the shows section
   cy.contains("Venue 2").should("not.exist");
 });

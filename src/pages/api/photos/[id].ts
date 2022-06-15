@@ -1,24 +1,28 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-
-import { addStandardDelete, createHandler } from "@/lib/api/handler";
-import { getIdNumFromReq } from "@/lib/api/utils";
+import { revalidationRoutes } from "@/lib/api/constants";
+import {
+  addStandardDelete,
+  addStandardGetById,
+  addStandardPatch,
+  createHandler,
+} from "@/lib/api/handler";
 import {
   deletePhoto,
   getPhotoById,
   patchPhoto,
 } from "@/lib/prisma/queries/photos";
 
-const handler = createHandler();
+const handler = createHandler(revalidationRoutes.photos);
 addStandardDelete({ handler, deleteFunc: deletePhoto });
-
-handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
-  const id = getIdNumFromReq(req);
-  res.status(200).json(await getPhotoById(id));
+addStandardGetById({
+  handler,
+  getByIdFunc: getPhotoById,
 });
-
-handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
-  const id = getIdNumFromReq(req);
-  res.status(200).json(await patchPhoto({ data: req.body.data, id }));
+addStandardPatch({
+  handler,
+  patchFunc: patchPhoto,
+  // TODO: this should redo all photo IDs, since order might change if date changes
+  // https://github.com/vercel/next.js/discussions/34585
+  revalidationRoutes: [...revalidationRoutes.photos, "/photos/:id"],
 });
 
 export default handler;

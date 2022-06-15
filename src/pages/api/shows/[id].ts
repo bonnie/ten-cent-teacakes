@@ -1,15 +1,22 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-
-import { addStandardDelete, createHandler } from "@/lib/api/handler";
-import { getIdNumFromReq } from "@/lib/api/utils";
+import { revalidationRoutes } from "@/lib/api/constants";
+import {
+  addStandardDelete,
+  addStandardPatch,
+  createHandler,
+} from "@/lib/api/handler";
 import { deleteShow, patchShow } from "@/lib/prisma/queries/shows";
 
-const handler = createHandler();
-addStandardDelete({ handler, deleteFunc: deleteShow });
+const handler = createHandler(revalidationRoutes.shows);
+addStandardDelete({
+  handler,
+  deleteFunc: deleteShow,
+  revalidationRoutes: ["/shows"],
+});
 
-handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
-  const id = getIdNumFromReq(req);
-  res.status(200).json(await patchShow({ data: req.body.data, id }));
+addStandardPatch({
+  handler,
+  patchFunc: patchShow,
+  revalidationRoutes: revalidationRoutes.shows,
 });
 
 export default handler;

@@ -45,6 +45,8 @@ it("can add and edit musician", () => {
   cy.contains(/you have added a musician/i);
   cy.dismissToast();
 
+  cy.reloadForISR();
+
   // expect the musician data to be on the page
   cy.findByText(/^cheese$/i).should("exist"); // first name
   cy.findByText(/I am an unstoppable avalanche of cheese./i).should("exist");
@@ -92,6 +94,8 @@ it("can add and edit musician", () => {
   cy.findByRole("button", { name: /save/i }).click();
   cy.contains(/you have updated the musician/i);
   cy.dismissToast();
+
+  cy.reloadForISR();
 
   // check new information
   cy.findByText(/^cheddar$/i).should("exist"); // first name

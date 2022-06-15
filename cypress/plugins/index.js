@@ -10,6 +10,7 @@ const fs = require("fs");
 const path = require("path");
 
 const outDir = "cypress/reports";
+const failLog = require("cypress-failed-log/src/failed");
 
 const getTestFileNames = async (supabase, folderName) => {
   const { data, error } = await supabase.storage
@@ -71,6 +72,9 @@ export default (on, config) => {
   on("task", {
     "db:reset": () => resetDB().then(() => null),
   });
+  on("task", {
+    failed: failLog(),
+  });
   on("after:spec", async (spec) => {
     let bucketDir;
     if (spec.name === "musicians.test.js") {
@@ -107,11 +111,14 @@ export default (on, config) => {
   config.env.auth0_domain = process.env.AUTH0_DOMAIN;
   config.env.auth0_audience = process.env.AUTH0_AUDIENCE;
   config.env.auth0_scope = process.env.AUTH0_SCOPE;
-  config.env.auth0_client_id = process.env.AUTH0_CLIENTID;
+  config.env.auth0_client_id = process.env.AUTH0_CLIENT_ID;
   config.env.auth0_client_secret = process.env.AUTH0_CLIENT_SECRET;
   config.env.auth0_callback_url = process.env.AUTH0_CALLBACK_URL;
   config.env.cypress_localstorage_key = process.env.CYPRESS_LOCALSTORAGE_KEY;
   config.env.cypress_baseUrl = process.env.CYPRESS_baseUrl;
+  config.env.cypress_baseUrl = process.env.CYPRESS_baseUrl;
+  config.env.revalidation_secret = process.env.REVALIDATION_SECRET;
+  config.env.github_action = process.env.GITHUB_ACTION;
 
   return config;
 };

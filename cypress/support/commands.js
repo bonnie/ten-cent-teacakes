@@ -96,9 +96,9 @@ Cypress.Commands.add("logInAndResetDb", (newRoute, currentRoute) => {
   // getting location / pathname from within command does not work, so needs to be an arg
   if (newRoute === currentRoute) {
     // try to avoid load timeouts when visiting the same page on subsequent tests
-    cy.task("db:reset").reload();
+    cy.resetDbAndIsrCache().reload();
   } else {
-    cy.task("db:reset").visit(newRoute);
+    cy.resetDbAndIsrCache().visit(newRoute);
   }
 });
 
@@ -108,4 +108,30 @@ Cypress.Commands.add("dismissToast", () => {
     // reference: https://www.cypress.io/blog/2020/07/22/do-not-get-too-detached/
     .then(($button) => cy.wrap($button))
     .click();
+});
+
+Cypress.Commands.add("resetDbAndIsrCache", () => {
+  cy.task("db:reset");
+  const secret = Cypress.env("revalidation_secret");
+  cy.request("GET", `/api/revalidate?secret=${secret}`);
+});
+
+Cypress.Commands.add("reloadForISR", () => {
+  if (Cypress.env("github_action")) {
+    // exponential dropoff for failing CI tests to wait for db
+    // update to "take" before reloading page, to mitigate test flake
+
+    //  https://docs.cypress.io/guides/guides/test-retries#Can-I-access-the-current-attempt-counter-from-the-test
+    // eslint-disable-next-line no-underscore-dangle
+    const attempt = cy.state("runnable")._currentRetry;
+    if (attempt > 0) {
+      const waitDelay = 2 ** attempt * 1000;
+      cy.log(
+        `!! increasing ISR cache refresh delay to ${waitDelay}ms for attempt ${attempt}`,
+      );
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(waitDelay);
+    }
+  }
+  cy.reload();
 });

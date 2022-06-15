@@ -1,28 +1,17 @@
-import {
-  UseMutateFunction,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "react-query";
+import { UseMutateFunction, useMutation } from "react-query";
 
 import { useToast } from "@/components/toasts/useToast";
-import {
-  addMusician,
-  deleteMusician,
-  fetchMusiciansWithInstruments,
-  patchMusician,
-} from "@/lib/musicians";
+import { addMusician, deleteMusician, patchMusician } from "@/lib/musicians";
 import {
   MusicianPatchArgs,
   MusicianPutData,
   MusicianResponse,
-  MusicianWithInstruments,
 } from "@/lib/musicians/types";
 import { queryKeys } from "@/lib/react-query/query-keys";
 import { useHandleError } from "@/lib/react-query/useHandleError";
 
 type UseMusiciansReturnValue = {
-  musicians: Array<MusicianWithInstruments>;
+  // musicians: Array<MusicianWithInstruments>;
   addMusician: UseMutateFunction<
     MusicianResponse,
     unknown,
@@ -40,26 +29,13 @@ type UseMusiciansReturnValue = {
 
 export const useMusicians = (): UseMusiciansReturnValue => {
   const { showToast } = useToast();
-  const { handleQueryError, handleMutateError } = useHandleError();
-  const queryClient = useQueryClient();
-
-  const { data: musicians = [] } = useQuery<Array<MusicianWithInstruments>>(
-    queryKeys.musicians,
-    ({ signal }) => fetchMusiciansWithInstruments(signal),
-    {
-      onError: handleQueryError,
-    },
-  );
-
-  const invalidateMusicians = () =>
-    queryClient.invalidateQueries([queryKeys.musicians]);
+  const { handleMutateError } = useHandleError();
 
   const { mutate: addMusicianMutate } = useMutation(
     queryKeys.musicians,
     addMusician,
     {
       onSuccess: () => {
-        invalidateMusicians();
         showToast("success", "You have added a musician");
       },
       onError: (error) => handleMutateError(error, "add musician"),
@@ -71,9 +47,6 @@ export const useMusicians = (): UseMusiciansReturnValue => {
     deleteMusician,
     {
       onSuccess: () => {
-        invalidateMusicians();
-        // invalidate instruments since musician counts will have changed
-        queryClient.invalidateQueries(queryKeys.instruments);
         showToast("success", "You have deleted the musician");
       },
       onError: (error) => handleMutateError(error, "delete musician"),
@@ -85,7 +58,6 @@ export const useMusicians = (): UseMusiciansReturnValue => {
     patchMusician,
     {
       onSuccess: () => {
-        invalidateMusicians();
         showToast("success", "You have updated the musician");
       },
       onError: (error) => handleMutateError(error, "update musician"),
@@ -93,7 +65,6 @@ export const useMusicians = (): UseMusiciansReturnValue => {
   );
 
   return {
-    musicians,
     addMusician: addMusicianMutate,
     updateMusician,
     deleteMusician: deleteMusicianMutate,

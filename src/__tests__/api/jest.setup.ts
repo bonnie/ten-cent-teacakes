@@ -22,6 +22,3 @@ afterEach(async () => {
   await resetDB();
 });
 
-afterAll(async () => {
-
-});

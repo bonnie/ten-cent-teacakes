@@ -1,8 +1,12 @@
 import { Photo } from ".prisma/client";
 
 import { AxiosResponse } from "axios";
+import dayjs from "dayjs";
 
-import { axiosInstance } from "../axios/axiosInstance";
+import {
+  axiosInstance,
+  revalidationAxiosInstance,
+} from "../axios/axiosInstance";
 import { routes } from "../axios/constants";
 import {
   PhotoPatchArgs,
@@ -34,7 +38,7 @@ export const addUploadedPhoto = async (
   data: UploadedPhotoFormData,
 ): Promise<PhotoResponse> => {
   if (!data.imagePath) throw new Error("Can't create; no photo path");
-  const { data: photo } = await axiosInstance.put<
+  const { data: photo } = await revalidationAxiosInstance.put<
     { data: UploadedPhotoFormData },
     AxiosResponse<Photo>
   >(`/api/${routes.photos}`, { data });
@@ -45,7 +49,7 @@ export const patchPhoto = async ({
   id,
   data,
 }: PhotoPatchArgs): Promise<PhotoResponse> => {
-  const { data: photo } = await axiosInstance.patch<
+  const { data: photo } = await revalidationAxiosInstance.patch<
     { data: PhotoPatchData },
     AxiosResponse<Photo>
   >(`/api/${routes.photos}/${id}`, { data });
@@ -53,7 +57,7 @@ export const patchPhoto = async ({
 };
 
 export const deletePhoto = async (id: number): Promise<void> =>
-  axiosInstance.delete(`/api/${routes.photos}/${id}`);
+  revalidationAxiosInstance.delete(`/api/${routes.photos}/${id}`);
 
 export const getPhotoDate = (photo: PhotoWithShowAndVenue): Date => {
   if (photo.show) {
@@ -64,3 +68,14 @@ export const getPhotoDate = (photo: PhotoWithShowAndVenue): Date => {
   }
   return photo.createdAt;
 };
+
+export const sortPhotos = (photos: Array<PhotoWithShowAndVenue>) =>
+  photos.sort((a, b) => {
+    const photoDateA = dayjs(getPhotoDate(a)).unix();
+    const photoDateB = dayjs(getPhotoDate(b)).unix();
+    if (photoDateA === photoDateB) {
+      // Filename is only important when dates are the same
+      return a.imagePath.localeCompare(b.imagePath);
+    }
+    return photoDateA < photoDateB ? 1 : -1;
+  });

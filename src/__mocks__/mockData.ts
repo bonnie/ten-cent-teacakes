@@ -2,10 +2,11 @@ import dayjs from "dayjs";
 
 import { InstrumentWithMusicianCount } from "@/lib/instruments/types";
 import { MusicianWithInstruments } from "@/lib/musicians/types";
+import { sortPhotos } from "@/lib/photos";
 import { PhotoWithShowAndVenue } from "@/lib/photos/types";
 import { ShowWithVenue } from "@/lib/shows/types";
+import { sortShows } from "@/lib/shows/utils";
 import { VenueWithShowCount } from "@/lib/venues/types";
-
 // set the time to avoid millisecond differences that cause flakiness
 export const yesterday = dayjs()
   .subtract(1, "day")
@@ -75,17 +76,6 @@ export const mockOnlyPastShows: Array<ShowWithVenue> = [
   },
 ];
 
-export const mockShows: Array<ShowWithVenue> = [
-  {
-    id: 1,
-    performAt: dayjs("2200-01-01").toDate(),
-    venueId: 1,
-    url: null,
-    venue: mockVenues[0],
-  },
-  ...mockOnlyPastShows,
-];
-
 export const mockManyFutureShows = [
   {
     id: 1,
@@ -110,6 +100,25 @@ export const mockManyFutureShows = [
     venue: mockVenues[0],
   },
 ];
+
+export const mockShows: Array<ShowWithVenue> = [
+  {
+    id: 1,
+    performAt: dayjs("2200-01-01").toDate(),
+    venueId: 1,
+    url: null,
+    venue: mockVenues[0],
+  },
+  ...mockOnlyPastShows,
+];
+
+export const mockSortedShowsJSON = JSON.stringify(sortShows(mockShows));
+export const mockSortedPastShowsJSON = JSON.stringify(
+  sortShows(mockOnlyPastShows),
+);
+export const mockManyFutureShowsJSON = JSON.stringify(
+  sortShows(mockManyFutureShows).upcomingShows,
+);
 
 export const mockInstruments: Array<InstrumentWithMusicianCount> = [
   { id: 1, name: "guitar", musicianCount: 1 },
@@ -203,3 +212,5 @@ export const mockPhotos: Array<PhotoWithShowAndVenue> = [
     description: "This is Photo 1B",
   },
 ];
+
+export const mockSortedPhotosJSON = JSON.stringify(sortPhotos(mockPhotos));
