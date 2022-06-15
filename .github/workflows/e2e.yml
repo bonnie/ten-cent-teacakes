@@ -55,4 +55,4 @@ jobs:
           echo "Deployed branch ${BRANCH_NAME}"
 
           # don't run "local only" tests
-          cypress run --browser chrome --spec "cypress/integration/continuous-integration/**/*" --config "video=false"
+          cypress run --browser chrome --spec "cypress/integration/continuous-integration/**/*" --config "video=false" --config "screenshotOnRunFailure=false"

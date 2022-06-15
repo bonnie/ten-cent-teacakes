@@ -85,6 +85,8 @@ it("can add, edit and delete photo with minimal data", () => {
   cy.findByText(/you have deleted the photo/i).should("exist");
   cy.dismissToast();
 
+  cy.reloadForISR();
+
   // make sure show date is no longer represented
   cy.findByAltText("avalanche, made of cheese").should("not.exist");
 });
