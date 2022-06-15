@@ -17,13 +17,6 @@ jobs:
     # https://github.com/cypress-io/cypress-docker-images
     container: cypress/included:9.5.0
     steps:
-      # see if there is GITHUB_REF
-      - name: Check GITHUB_REF
-        run: |
-          echo "GITHUB_REF is ${GITHUB_REF}"
-          echo "${{ <github> }}"
-      # to compute the branch name for the deployed commit
-      # need to grab the repo
       - name: Checkout
         uses: actions/checkout@v2
         with:
