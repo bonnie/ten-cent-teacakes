@@ -10,11 +10,13 @@ workflows:
       - lint
           filters:
             branches:
-              ignore: "main"
+              ignore:
+                - main
       - ts-check
           filters:
             branches:
-              ignore: "main"
+              ignore:
+                - main
       - test-ui:
           requires:
             - ts-check
