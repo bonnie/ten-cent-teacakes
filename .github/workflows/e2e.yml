@@ -5,7 +5,7 @@ name: deploy
 on: deployment_status
 jobs:
   cypress-e2e:
-    if: github.event.deployment_status.state == 'success' && ${{ github.ref_name != 'main' }}
+    if: github.event.deployment_status.state == 'success' && ${{ github.ref != 'refs/heads/main' }}
     # Note: This will run regardless of jest test outcome
     # TODO: make dependent on jest test (circleCI) outcome
     # Note: can't use CircleCI for this test bc it can't access
@@ -21,7 +21,7 @@ jobs:
       - name: Check GITHUB_REF
         run: |
           echo "GITHUB_REF is ${GITHUB_REF}"
-          echo "${{ github }}"
+          echo "${{ <github> }}"
       # to compute the branch name for the deployed commit
       # need to grab the repo
       - name: Checkout
