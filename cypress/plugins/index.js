@@ -10,6 +10,7 @@ const fs = require("fs");
 const path = require("path");
 
 const outDir = "cypress/reports";
+const failLog = require("cypress-failed-log/src/failed");
 
 const getTestFileNames = async (supabase, folderName) => {
   const { data, error } = await supabase.storage
@@ -70,6 +71,9 @@ export default (on, config) => {
 
   on("task", {
     "db:reset": () => resetDB().then(() => null),
+  });
+  on("task", {
+    failed: failLog(),
   });
   on("after:spec", async (spec) => {
     let bucketDir;
