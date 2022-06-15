@@ -5,12 +5,12 @@ name: deploy
 on: deployment_status
 jobs:
   cypress-e2e:
+    if: github.event.deployment_status.state == 'success' && ${{ github.ref_name }} != 'main'
     # Note: This will run regardless of jest test outcome
     # TODO: make dependent on jest test (circleCI) outcome
     # Note: can't use CircleCI for this test bc it can't access
     # deployment status / deployment URL.
     # Possibly: migrate all tests to GitHub actions
-    if: github.event.deployment_status.state == 'success'
     runs-on: ubuntu-20.04
     # Use a Docker image with Cypress installed globally
     # https://github.com/cypress-io/github-action#docker-image
