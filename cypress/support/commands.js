@@ -126,9 +126,7 @@ Cypress.Commands.add("reloadForISR", () => {
     const attempt = cy.state("runnable")._currentRetry;
     if (attempt > 0) {
       const waitDelay = 2 ** attempt * 1000;
-
-      // eslint-disable-next-line no-console
-      console.log(
+      cy.log(
         `!! increasing ISR cache refresh delay to ${waitDelay}ms for attempt ${attempt}`,
       );
       // eslint-disable-next-line cypress/no-unnecessary-waiting
