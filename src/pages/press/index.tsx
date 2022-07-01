@@ -30,7 +30,7 @@ const PressPage: React.FC = () => {
           guitar and baritone uke (and sometimes the scandalously string-free
           accordion). Vocal harmonies round out the band&apos;s vintage sound.
           The Teacakes repertoire includes lots of swing tunes from the 1930s,
-          with some occasional twang thrown — and a few cowboy songs from the
+          with some occasional twang thrown in — and a few cowboy songs from the
           1930s to tie it all together.
         </div>
         <div
