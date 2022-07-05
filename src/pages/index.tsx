@@ -25,6 +25,7 @@ export async function getStaticProps() {
       upcomingShowsJSON: JSON.stringify(upcomingShows),
       photosJSON: JSON.stringify(sortedPhotos),
     },
+    revalidate: 60 * 60 * 24, // revalidate once a day to clear old shows
   };
 }
 
