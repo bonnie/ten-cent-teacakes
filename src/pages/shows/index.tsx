@@ -22,6 +22,7 @@ export async function getStaticProps() {
       showsJSON: JSON.stringify(sortedShows),
       venues,
     },
+    revalidate: 60 * 60 * 24, // revalidate once a day to clear old shows
   };
 }
 
