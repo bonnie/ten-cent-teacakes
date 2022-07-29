@@ -76,6 +76,79 @@ export const mockOnlyPastShows: Array<ShowWithVenue> = [
   },
 ];
 
+export const mockManyPastShows: Array<ShowWithVenue> = [
+  {
+    id: 2,
+    performAt: yesterday,
+    venueId: 2,
+    url: "http://venue.com/show",
+    venue: mockVenues[1],
+  },
+  {
+    id: 3,
+    performAt: dayjs("2021-01-01").toDate(),
+    venueId: 2,
+    url: null,
+    venue: mockVenues[1],
+  },
+  {
+    id: 4,
+    performAt: dayjs("2021-01-02").toDate(),
+    venueId: 2,
+    url: null,
+    venue: mockVenues[1],
+  },
+  {
+    id: 5,
+    performAt: dayjs("2021-01-03").toDate(),
+    venueId: 2,
+    url: null,
+    venue: mockVenues[1],
+  },
+  {
+    id: 6,
+    performAt: dayjs("2021-01-04").toDate(),
+    venueId: 2,
+    url: null,
+    venue: mockVenues[1],
+  },
+  {
+    id: 7,
+    performAt: dayjs("2021-01-05").toDate(),
+    venueId: 2,
+    url: null,
+    venue: mockVenues[1],
+  },
+  {
+    id: 8,
+    performAt: dayjs("2021-01-06").toDate(),
+    venueId: 2,
+    url: null,
+    venue: mockVenues[1],
+  },
+  {
+    id: 9,
+    performAt: dayjs("2021-01-07").toDate(),
+    venueId: 2,
+    url: null,
+    venue: mockVenues[1],
+  },
+  {
+    id: 10,
+    performAt: dayjs("2021-01-08").toDate(),
+    venueId: 2,
+    url: null,
+    venue: mockVenues[1],
+  },
+  {
+    id: 11,
+    performAt: dayjs("2021-01-09").toDate(),
+    venueId: 2,
+    url: null,
+    venue: mockVenues[1],
+  },
+];
+
 export const mockManyFutureShows = [
   {
     id: 1,

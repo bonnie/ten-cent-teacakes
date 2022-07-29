@@ -1,42 +1,25 @@
 import Head from "next/head";
-import React from "react";
+import React, { useState } from "react";
 import { tw } from "twind";
 
+import { Button } from "@/components/lib/Button";
 import { Heading } from "@/components/lib/Style/Heading";
 import { useWhitelistUser } from "@/lib/auth/useWhitelistUser";
-import { getSortedShows } from "@/lib/prisma/queries/shows";
-import { getVenues } from "@/lib/prisma/queries/venues";
 import { AddShowModal } from "@/lib/shows/components/EditShowModal";
 import { ShowsGroup } from "@/lib/shows/components/ShowsGroup";
 import { EditVenues } from "@/lib/shows/components/venues/EditVenues";
-import { ShowWithVenue } from "@/lib/shows/types";
-import { VenueWithShowCount } from "@/lib/venues/types";
+import { useShows } from "@/lib/shows/hooks/useShows";
 
-export async function getStaticProps() {
-  const venues = await getVenues();
-  const sortedShows = await getSortedShows();
+// don't pre-fetch shows here; won't help with SEO and makes page load slow
 
-  return {
-    props: {
-      // dates in shows are not serializable
-      showsJSON: JSON.stringify(sortedShows),
-      venues,
-    },
-    revalidate: 60 * 60 * 24, // revalidate once a day to clear old shows
-  };
-}
-
-const Shows: React.FC<{
-  showsJSON: string;
-  venues: Array<VenueWithShowCount>;
-}> = ({ showsJSON, venues }) => {
+const Shows: React.FC = () => {
+  const { pastShows, upcomingShows } = useShows();
   const { user } = useWhitelistUser();
-  const {
-    upcomingShows,
-    pastShows,
-  }: { upcomingShows: Array<ShowWithVenue>; pastShows: Array<ShowWithVenue> } =
-    JSON.parse(showsJSON);
+  const [showAllPastShows, setShowAllPastShows] = useState(false);
 
+  const handleClick = () => {
+    setShowAllPastShows((prev) => !prev);
+  };
   return (
     <>
       <Head>
@@ -54,9 +37,17 @@ const Shows: React.FC<{
         showTitle={false}
       />
       <div className={tw(["mt-10"])}>
-        <ShowsGroup title="Recent Shows" shows={pastShows.slice(0, 10)} />
+        <ShowsGroup
+          title="Recent Shows"
+          shows={showAllPastShows ? pastShows : pastShows.slice(0, 5)}
+        />
+        <div className={tw(["text-center"])}>
+          <Button handleClick={handleClick}>
+            {showAllPastShows ? "Fewer shows" : "More shows"}
+          </Button>
+        </div>
       </div>
-      {user ? <EditVenues venues={venues} /> : null}
+      {user ? <EditVenues /> : null}
     </>
   );
 };

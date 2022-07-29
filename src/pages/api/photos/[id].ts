@@ -20,9 +20,7 @@ addStandardGetById({
 addStandardPatch({
   handler,
   patchFunc: patchPhoto,
-  // TODO: this should redo all photo IDs, since order might change if date changes
-  // https://github.com/vercel/next.js/discussions/34585
-  revalidationRoutes: [...revalidationRoutes.photos, "/photos/:id"],
+  revalidationRoutes: revalidationRoutes.photos,
 });
 
 export default handler;

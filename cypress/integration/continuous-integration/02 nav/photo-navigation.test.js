@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 
 it("Navigates properly from photo to photo on the large photo pages", () => {
+  cy.resetDbAndIsrCache();
+  cy.reloadForISR();
   cy.visit("/photos");
 
   // click on the first photo
