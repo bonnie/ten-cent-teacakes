@@ -10,7 +10,7 @@ const handler = createHandler(revalidationRoutes.shows);
 addStandardDelete({
   handler,
   deleteFunc: deleteShow,
-  revalidationRoutes: ["/shows"],
+  revalidationRoutes: [],
 });
 
 addStandardPatch({

@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { createHandler } from "@/lib/api/handler";
 
-const revalidationRoutes = ["/", "/shows", "/photos", "/band"];
+const revalidationRoutes = ["/", "/photos", "/band"];
 
 const handler = createHandler();
 handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
